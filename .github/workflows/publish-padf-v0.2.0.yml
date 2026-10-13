@@ -32,7 +32,9 @@ jobs:
 
           gh api "repos/$GITHUB_REPOSITORY/git/commits/$RELEASE_TARGET" --jq '.sha' | grep -Fx "$RELEASE_TARGET"
 
-          tag_ref=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" --jq '.object.sha // empty' 2>/dev/null || true)
+          tag_info=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" 2>/dev/null || true)
+          tag_ref=$(printf '%s' "$tag_info" | jq -r --arg ref "refs/tags/$RELEASE_TAG" 'if type == "object" and .ref == $ref then .object.sha else empty end' 2>/dev/null || true)
+          echo "Exact release tag lookup: $([ -z "$tag_ref" ] && echo ABSENT || echo PRESENT)"
           if [ -n "$tag_ref" ] && [ "$tag_ref" != "$RELEASE_TARGET" ]; then
             echo "ERROR: Existing $RELEASE_TAG does not point to expected audited merge commit; refusing to overwrite."
             exit 1
