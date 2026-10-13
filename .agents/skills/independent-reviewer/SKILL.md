@@ -19,6 +19,16 @@ Reviewer must not be the implementer or reuse the implementer's self-approval co
 8. Re-review the changed head/diff after fixes; an approval for an old SHA is not approval for the new SHA.
 9. Default cross-module review cadence: every 3–5 merged feature PRs (no later than the fifth), plus significant integration/release milestones. A consuming project may apply stricter rules.
 
+## V0.2 independent cross-agent protocol
+- Start from current AGENTS.md, approved Task Contract/Feature Spec, exact PR base/head diff, affected code and independent evidence, not the Coder transcript/checkpoint reasoning. STC/Handoff is a **locator** for sources only.
+- Validate the reviewed SHA against live PR head; on mismatch report STALE/BLOCKED and re-establish review baseline.
+- Publish structured REVIEW_FINDING messages/PR comments with severity, file/line, repro, exact SHA and suggested fix; link to Linear issue/context_id. Do not independently approve your own implementation.
+- On fix/new head, re-review the altered diff and affected invariants before updating judgment. A previous message/review at older SHA is not approval for new head.
+- If session ends, checkpoint only source revisions, independently verified evidence, open findings and next action, never Coder self-review or private reasoning.
+- Durable messages do not automatically wake Coder or authorize merge/acceptance.
+
+See workflow/context-communication.md and governance/context-governance.md.
+
 ## Output
 Independent review section of contracts/delivery-report.md: PR/base/head, evidence, findings table P0–P3, checks passed/failed/not run, blockers, conclusion, and next action.
 

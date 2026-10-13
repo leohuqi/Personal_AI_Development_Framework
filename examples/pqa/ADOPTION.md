@@ -1,4 +1,4 @@
-# PQA Adoption Example — AI-SDF V0.1
+# PQA Adoption Example — AI-SDF V0.2
 
 Project: [Personal Quant Analyst (PQA)](https://linear.app/leohuqi/project/personal-quant-analyst-pqa-4cbef78ec5cd) / [GitHub repository](https://github.com/leohuqi/Personal_Quant_Analyst).
 
@@ -8,6 +8,14 @@ Project: [Personal Quant Analyst (PQA)](https://linear.app/leohuqi/project/perso
 - Linear owns backlog, priorities, blocking relations, Cycles and issue state. No duplicate full PRD/Feature Spec in Linear.
 - AGENTS.md and docs/development-guidelines.md remain authoritative for PQA security, review, test and documentation policy.
 - The existing .github/workflows/check.yml already runs checks on pull requests and main; the PADF framework does not alter it.
+
+## V0.2 context and communication adoption (example, not active configuration)
+- Use a stable context_id combining project and **actual** Linear issue, e.g. PQA-LEO-134; keep original Feature ID separately.
+- Construct Shared Task Context from live PQA AGENTS.md, relevant Feature Spec at an approved revision, task approval and Git HEAD. Do **not** store a duplicate PRD or rely on old ChatGPT transcript.
+- Place typed Agent Messages for Coder/Architect/UI/QA in the assigned Linear issue; review findings anchored to exact PR SHA belong in GitHub PR discussions. Record message_id, thread_id, status, source revision and durable permalink.
+- At session/role boundaries, persist Context Checkpoint / Agent Handoff refs in issue/PR; receiver validates current HEAD/spec/authorization and ACKs. A recorded message alone cannot start Work/Codex or approve scope.
+- Master reconciles these records before DoR, reviews and Owner acceptance; no auto-Done, auto-merge or deployment.
+- Follow [PQA V0.2 collaboration walkthrough](CONTEXT-COLLABORATION.md) and root [CACF workflow](../../workflow/context-communication.md).
 
 ## Starting inventory (2026-10-11)
 151 Feature IDs in Linear: 111 historic implementation Done, 4 In Review pending production acceptance, 36 Backlog. Do not auto-close the latter 4; status in source docs may evolve. Read live Linear/GitHub before acting.
@@ -29,7 +37,7 @@ Pick one unblocked, bounded, not-yet-implemented feature or a low-risk enhanceme
 - [ ] Owner enables and verifies Codex Automatic Review for this private repository.
 - [ ] Ensure code review findings and GitHub Actions statuses are visible to the coordinator (access/permissions).
 - [ ] Run one trial task with explicit owner approval, review its actual results.
-- [ ] Only later extract generic Skills to independent framework repository. No service/Loop engine required.
+- [ ] After PADF review, pin an approved PADF commit/tag in PQA and update its pending Draft PR #7 only with separate Owner direction. No service/Loop engine required.
 
 ## Example dispatch text
 "Use feature-coder for Linear LEO-134 / PORT-015 only after PORT-006 is satisfied and the owner authorizes development. Load the linked Feature Spec plus relevant UI/API docs; implement approved scope, test with isolated PG/Playwright as applicable, open PR and do not merge or deploy. Submit Delivery Report for independent review."

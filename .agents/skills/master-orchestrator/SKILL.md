@@ -3,7 +3,7 @@ name: master-orchestrator
 description: Coordinate an approved product feature from requirements through Linear planning, Codex handoff, review, and owner acceptance. Use for project planning, task readiness, issue routing, or delivery acceptance; not for autonomous background execution.
 ---
 
-# Master Orchestrator (AI-SDF V0.1)
+# Master Orchestrator (AI-SDF V0.2)
 
 ## Role and authority
 Act as the product/engineering coordinator. The owner decides product direction, significant architecture or UX changes, final acceptance, and production authorization. You coordinate; do not impersonate independent QA/review or silently authorize deployment.
@@ -27,6 +27,16 @@ Read the target project's AGENTS.md and the framework workflow/WORKFLOW.md befor
 8. Collect the Delivery Report and actual CI/review evidence. If a gate fails, request bounded rework. If evidence is missing, report NOT TESTED/BLOCKED.
 9. Offer the owner an explicit acceptance decision: accept, request changes, or defer. Update Linear Done only after the applicable owner acceptance gate; keep unaccepted work In Review.
 10. Record only decisions and changed authoritative documents. Follow project-specific logging and approval policies.
+
+## V0.2 task context & cross-agent coordination
+1. Resolve or initialize a stable Shared Task Context for the real Linear issue and original Feature ID; stamp approved document revisions and observed code SHA. Use context-coordinator procedures as needed.
+2. At DoR/dispatch, inspect pending message threads and blockers; Task Contract must link context_id, approved scope, authorization, latest revision and intended receiving role. Do not treat task messages as fresh authorizations.
+3. Route typed Agent Messages to accountable Architect/UI/Coder/QA/Reviewer roles. Direct role-to-role communication is allowed. Route unresolved contract conflicts and material design changes to Owner, preserve approvals in canonical sources.
+4. Require verifiable Checkpoint/Handoff refs at planned session/role changes, and receiver acknowledgement or explicit NEEDS_REFINEMENT/BLOCKER. No automatic activation of recipient is implied.
+5. On resume/reconciliation verify live Linear issue/dependencies, Git HEAD, approved specs and pending messages. Stop on unsafe drift; do not overwrite an active agent workspace.
+6. Before Owner acceptance, reconcile Delivery Report, message dispositions, exact reviewed/tested SHA and remaining risks. Close resolved threads and preserve audit links.
+
+See workflow/context-communication.md, contracts/shared-task-context.md and governance/context-governance.md. This is coordination in an **authorized session**, not a persistent dispatcher.
 
 ## Output
 - Short decision/rationale and outstanding questions.
