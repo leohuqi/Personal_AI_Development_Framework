@@ -1,0 +1,50 @@
+name: Publish PADF v0.2.0 (one-time)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-padf-v0.2.0.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: padf-v0.2.0-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'leohuqi/Personal_AI_Development_Framework'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Publish immutable release tag and GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: v0.2.0
+          RELEASE_TARGET: c2caac0a6eac220f65667b7fe7cd5e6943dbe807
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          gh api "repos/$GITHUB_REPOSITORY/git/commits/$RELEASE_TARGET" --jq '.sha' | grep -Fx "$RELEASE_TARGET"
+
+          tag_ref=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" --jq '.object.sha' 2>/dev/null || true)
+          if [ -n "$tag_ref" ] && [ "$tag_ref" != "$RELEASE_TARGET" ]; then
+            echo "ERROR: Existing $RELEASE_TAG does not point to expected audited merge commit; refusing to overwrite."
+            exit 1
+          fi
+          if [ -z "$tag_ref" ]; then
+            gh api -X POST "repos/$GITHUB_REPOSITORY/git/refs" -f "ref=refs/tags/$RELEASE_TAG" -f "sha=$RELEASE_TARGET"
+          fi
+
+          if ! gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --latest \
+              --title "PADF v0.2.0 — Context & Agent Communication Framework" \
+              --notes-file docs/releases/v0.2.0.md
+          fi
+
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json url,tagName,isDraft,isPrerelease,createdAt
