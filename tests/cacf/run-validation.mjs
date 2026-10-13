@@ -9,45 +9,83 @@ import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 
 const file = fileURLToPath(import.meta.url);
-const testRoot = process.env.PADF_CACF_STORE_DIR || fs.mkdtempSync(path.join(os.tmpdir(), 'padf-cacf-'));
-const store = path.join(testRoot, 'shared-context.json');
 const inAgentMode = process.argv[2] === '--agent';
+// A suite owns only a fresh child directory; agent processes use that exact child.
+const parentRoot = fs.realpathSync(process.env.PADF_CACF_STORE_DIR || os.tmpdir());
+if (!fs.statSync(parentRoot).isDirectory() || parentRoot === path.parse(parentRoot).root) {
+  throw new Error('Store parent must be an existing non-root directory');
+}
+if (inAgentMode && !process.env.PADF_CACF_STORE_DIR) {
+  throw new Error('Agent mode requires an explicit fixture directory');
+}
+const testRoot = inAgentMode ? parentRoot : fs.mkdtempSync(path.join(parentRoot, 'padf-cacf-'));
+const store = path.join(testRoot, 'shared-context.json');
 function load(){return JSON.parse(fs.readFileSync(store, 'utf8'));}
 function save(s){fs.writeFileSync(store, JSON.stringify(s, null, 2));}
 function output(value){process.stdout.write(JSON.stringify(value) + '\n');}
 function blocked(reason){output({ok:false, status:'BLOCKED',reason});process.exitCode=3;}
+function pending(s, role){
+  return s.messages.filter(m=>m.receiver===role && !['RESOLVED','CLOSED'].includes(m.status));
+}
+function immutablePayload(message){
+  const {status, resolution_ref, evidence_ref, ...payload}=message;
+  return payload;
+}
+function persistMessage(s, message, details={}){
+  const existing=s.messages.filter(m=>m.message_id===message.message_id);
+  if(existing.length){
+    if(existing.length!==1 || !assertPayloadEqual(existing[0],message)) blocked('MESSAGE_ID_CONFLICT');
+    else output({ok:true,duplicate:true,count:s.messages.length,...details});
+  }else{
+    s.messages.push(message);save(s);output({ok:true,persisted:true,count:s.messages.length,...details});
+  }
+}
+function assertPayloadEqual(a,b){
+  try{assert.deepEqual(immutablePayload(a),immutablePayload(b));return true;}catch{return false;}
+}
 
 if (inAgentMode){
   const [, , , role, command, id] = process.argv;
   const s=load();
   if (command === 'send'){
     if (role!=='coder') blocked('WRONG_SENDER');
-    else if(!s.messages.find(m=>m.message_id===id)){
-      s.messages.push({schema_version:'padf.agent-message/v1',message_id:id,thread_id:'THREAD-001',context_id:s.context_id,
-        sender:'coder',receiver:'architect',type:'CLARIFICATION_REQUEST',status:'OPEN',requires_response:true,
-        source_refs:['docs/api-spec.md@'+s.spec]});save(s);output({ok:true,persisted:true,count:s.messages.length});
-    }else output({ok:true,duplicate:true,count:s.messages.length});
+    else persistMessage(s,{schema_version:'padf.agent-message/v1',message_id:id,thread_id:'THREAD-001',context_id:s.context_id,
+      sender:'coder',receiver:'architect',type:'CLARIFICATION_REQUEST',status:'OPEN',requires_response:true,
+      source_refs:['docs/api-spec.md@'+s.spec]});
   }else if(command === 'reply'){
     const request=s.messages.find(m=>m.message_id===id);
     if(role!=='architect'||!request||request.receiver!=='architect') blocked('NO_DELIVERABLE_MESSAGE');
     else {
-      request.status='RESPONDED';
-      s.messages.push({schema_version:'padf.agent-message/v1',message_id:id+'-reply',in_reply_to:id,thread_id:request.thread_id,
-        context_id:s.context_id,sender:'architect',receiver:'coder',type:'RESPONSE',status:'OPEN',body:'Per strategy isolation within approved spec; owner approval required for scope expansion',source_refs:['docs/api-spec.md@'+s.spec]});
-      save(s);output({ok:true,response_to:id});
+      const reply={schema_version:'padf.agent-message/v1',message_id:id+'-reply',in_reply_to:id,thread_id:request.thread_id,
+        context_id:s.context_id,sender:'architect',receiver:'coder',type:'RESPONSE',status:'OPEN',requires_response:false,
+        body:'Per strategy isolation within approved spec; owner approval required for scope expansion',source_refs:['docs/api-spec.md@'+s.spec]};
+      const existing=s.messages.filter(m=>m.message_id===reply.message_id);
+      if(existing.length && (existing.length!==1 || !assertPayloadEqual(existing[0],reply))) blocked('MESSAGE_ID_CONFLICT');
+      else {
+        if(!['RESOLVED','CLOSED','BLOCKED','ESCALATED'].includes(request.status)) request.status='RESPONDED';
+        persistMessage(s,reply,{response_to:id});
+      }
+    }
+  }else if(command === 'consume'){
+    const message=s.messages.find(m=>m.message_id===id);
+    if(!message||message.receiver!==role) blocked('WRONG_RECEIVER');
+    else if(message.requires_response || ['BLOCKED','ESCALATED'].includes(message.status)) blocked('REQUIRES_RECONCILIATION');
+    else {
+      message.status='CLOSED';message.resolution_ref='fixture-consumption:'+id;
+      save(s);output({ok:true,status:'CLOSED'});
     }
   }else if(command === 'checkpoint'){
     if(role!=='coder'||!s.ownerApproval)blocked('NO_OWNER_APPROVAL');
     else {s.checkpoint={schema_version:'padf.context-checkpoint/v1',checkpoint_id:'CP-001',context_id:s.context_id,
       approved_scope:'TEST-001',owner_approval_ref:s.ownerApproval,observed_head_sha:s.head,approved_spec:s.spec,
-      pending_message_ids:s.messages.filter(m=>m.receiver==='coder'&&m.status==='OPEN').map(m=>m.message_id),
+      pending_message_ids:pending(s,'coder').map(m=>m.message_id),
       next_authorized_action:'continue assigned task'}; save(s);output({ok:true,checkpoint_id:'CP-001'});}
   }else if(command === 'resume'){
     if(!s.checkpoint)blocked('NO_CHECKPOINT');
     else if(!s.ownerApproval||s.ownerApproval!==s.checkpoint.owner_approval_ref)blocked('NO_OWNER_APPROVAL');
     else if(s.head!==s.checkpoint.observed_head_sha)blocked('SHA_DRIFT');
     else if(s.spec!==s.checkpoint.approved_spec)blocked('SPEC_DRIFT');
-    else output({ok:true,context_id:s.context_id,read_messages:s.messages.filter(m=>m.receiver===role&&m.status==='OPEN').map(m=>m.message_id),
+    else output({ok:true,context_id:s.context_id,read_messages:pending(s,role).map(m=>m.message_id),
       next_action:s.checkpoint.next_authorized_action});
   }else if(command === 'handoff'){
     if(role!=='coder'||!s.ownerApproval)blocked('NO_OWNER_APPROVAL');

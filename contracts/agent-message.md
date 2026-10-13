@@ -5,7 +5,7 @@ Purpose: **durable, traceable, asynchronous communication** between agent roles,
 ## Canonical envelope
 Required fields:
 - schema_version: padf.agent-message/v1
-- message_id: unique immutable id, e.g. MSG-<task-id>-0001; do not reuse after retries
+- message_id: unique immutable id, e.g. MSG-<task-id>-0001; keep the same ID for every retry of the same logical message; use a new ID only for a new logical message
 - thread_id / in_reply_to: correlate multi-message conversations; null for first message
 - context_id; project/repository; Linear issue URL/ID; original Feature ID(s)
 - sender role; receiver role or named accountable role; created_at (ISO-8601 with offset)
@@ -30,9 +30,12 @@ No credentials, tokens, private user datasets, raw customer/account records or f
 Acknowledgement is a **status transition** (ACKNOWLEDGED), not a new authorization message. Replies must reference in_reply_to and thread_id.
 
 ## Lifecycle and delivery semantics
-- OPEN -> ACKNOWLEDGED -> RESPONDED -> RESOLVED -> CLOSED.
-- OPEN/ACKNOWLEDGED can become ESCALATED or BLOCKED. On resolution, close with the decision/evidence link.
-- Only the assigned receiver/accountable role acknowledges/responds; sender or Master reconciles resolution. Do not mark RESOLVED merely because a reply exists.
+- Status belongs to each individual message, not to the whole thread. A new RESPONSE has a new message_id, starts OPEN and points to the request via in_reply_to; publishing it may move the **request** to RESPONDED. RESPONSE is a message type; RESPONDED means that this particular message has received an answer, not that its recipient has consumed it.
+- Normal request path: OPEN -> ACKNOWLEDGED -> RESPONDED -> RESOLVED -> CLOSED. An immediate correlated response may move OPEN directly to RESPONDED. Only the assigned receiver acknowledges or responds; sender or Master records resolution with evidence and closes it. A reply alone does not resolve a request.
+- For requires_response=false events (including answers), receiver records actual retrieval as ACKNOWLEDGED; sender or Master may then record RESOLVED -> CLOSED with the receipt/action evidence, without inventing an additional response. In a bounded test, explicit authorization may let the receiver record this disposition on behalf of the sender/Master.
+- OPEN/ACKNOWLEDGED may become BLOCKED or ESCALATED. Sender or Master records the reason, accountable role and prior status; return to that prior status only after linking the unblock/decision evidence, or explicitly resolve with a cancellation/decision record. No silent reset or acceptance is implied.
+- Pending retrieval/reconciliation includes addressed OPEN, ACKNOWLEDGED, RESPONDED, BLOCKED and ESCALATED messages; never filter solely on OPEN. A RESPONDED reply in an older record remains pending until explicit consumption/resolution evidence is present. RESOLVED/CLOSED are excluded only when their evidence has been verified.
+- Keep status changes append-only or revisioned, referencing message_id and prior state. A lifecycle transition does not create a new logical message or overwrite its immutable payload. Same-ID retries must have the same immutable envelope/body/source refs; a different payload is an ID conflict and must be BLOCKED. Optional delivery-attempt IDs are separate from message_id. Inspect existing records after uncertain writes before retrying.
 - Message persistence is at-least-once in concept, **not automatic**: writers must verify the created Linear comment/PR comment link. On retry, inspect message_id to avoid duplicate side effects.
 - Receiving agents **pull pending messages on start, resume and before handoff**. No guarantee of real-time push, notification delivery or autonomous wake-up.
 - Default placement: task communication in Linear issue comments; code review and exact-diff discussion in GitHub PR comments/reviews. Link across systems by context_id, message_id, thread_id and PR SHA. If a connector does not support the placement, keep a durable equivalent link and report the limitation.

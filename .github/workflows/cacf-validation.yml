@@ -32,3 +32,5 @@ jobs:
         run: node --check tests/cacf/run-validation.mjs
       - name: Cross-process protocol simulation
         run: node tests/cacf/run-validation.mjs
+      - name: Review safety and protocol regressions
+        run: node tests/cacf/run-regressions.mjs

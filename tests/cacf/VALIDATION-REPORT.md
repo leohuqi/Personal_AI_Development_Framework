@@ -66,3 +66,30 @@ Manual trial instructions: `tests/cacf/README.md`.
 4. For the current framework PR, independently review the final diff/CI and obtain explicit merge authorization if the repository policy requires it.
 
 This report will itself alter the PR head and trigger another CI run. For the final head, read the latest Actions result before representing CI as passed.
+
+## PR #1 independent-review remediation (2026-10-13)
+
+Authorized by Owner's follow-up request to fix P1 and address P2 from
+[review 5501774071](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/1#pullrequestreview-5501774071).
+Scope is CACF-F01 through F04 only; no Linear production issue was supplied and
+none is invented. Source baseline: `d43044ea32469b5e0b3ec2d701170879a64dddec`.
+
+- F01: suite owns a unique child directory; configured parent/store and unrelated
+  files survive success and failure; filesystem root parents are rejected.
+- F02: immutable logical message ID remains stable across delivery retries;
+  conflicting same-ID payloads are rejected.
+- F03: request and response lifecycle are distinct; all non-terminal addressed
+  messages remain pending; explicit consumption records closure evidence.
+- F04: reply retries deduplicate without reopening closed events.
+
+Implementation verification: structural check, both JavaScript syntax checks,
+seven original L2 cases and eight review regression cases PASS locally on
+Node v26.11.0. CI now includes the regression suite; new-head Actions result must
+be checked separately after publication. These results are implementation
+verification, **not independent re-review approval**. The implementing session
+cannot independently approve its own fixes.
+
+Historical Issue #2 records are unchanged. SES-01 remains independently BLOCKED
+and QA NEEDS_REFINEMENT is retained; Linear transport and broader live-agent L3
+cases remain NOT RUN. The amended lifecycle has fixture evidence only and needs
+a separate live pilot before claiming full cross-session acceptance.

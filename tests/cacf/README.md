@@ -17,6 +17,7 @@ The first command verifies required Skill and contract files, schema markers, lo
 
 ```bash
 node tests/cacf/run-validation.mjs
+node tests/cacf/run-regressions.mjs
 ```
 
 The fixture starts **separate Node processes** that communicate by a temporary on-disk JSON store. It checks:
@@ -29,6 +30,18 @@ The fixture starts **separate Node processes** that communicate by a temporary o
 7. Missing Owner approval blocks resume and new checkpoint.
 
 The temporary fixture directory is deleted at the end. No production code, PQA data, live agents, Linear or GitHub are touched. This is a **protocol behavior simulation**, not E2E.
+
+The suite always creates a unique child directory. Optional `PADF_CACF_STORE_DIR`
+selects an existing, non-filesystem-root **parent**, never a directory to overwrite
+or delete; existing files (including `shared-context.json`) are preserved on both
+success and failure. Internal `--agent` mode receives the exact child directory
+from the parent and does not create or clean directories.
+
+The additional review regression suite checks caller-data preservation on success
+and failure, root-directory rejection, request/response retry deduplication,
+same-ID payload conflict rejection, retrieval of every non-terminal response
+status (including historical RESPONDED records), receiver identity, blocked-event
+reconciliation and explicit event consumption/closure. These remain fixture tests.
 
 ## L3 — Real cross-session agent acceptance (separately authorized/manual)
 
