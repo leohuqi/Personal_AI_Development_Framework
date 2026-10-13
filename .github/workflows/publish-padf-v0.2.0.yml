@@ -32,7 +32,7 @@ jobs:
 
           gh api "repos/$GITHUB_REPOSITORY/git/commits/$RELEASE_TARGET" --jq '.sha' | grep -Fx "$RELEASE_TARGET"
 
-          tag_ref=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" --jq '.object.sha' 2>/dev/null || true)
+          tag_ref=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" --jq '.object.sha // empty' 2>/dev/null || true)
           if [ -n "$tag_ref" ] && [ "$tag_ref" != "$RELEASE_TARGET" ]; then
             echo "ERROR: Existing $RELEASE_TAG does not point to expected audited merge commit; refusing to overwrite."
             exit 1
