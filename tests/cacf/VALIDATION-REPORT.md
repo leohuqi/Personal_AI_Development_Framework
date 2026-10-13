@@ -11,7 +11,9 @@ Environment: Node.js 22 / GitHub Actions ubuntu-latest
 | L1 | Required Skills/contracts, schema markers, local links | **PASS** | GitHub Actions CACF contract validation, run **38346227484**, step "CACF structural references and schema markers" |
 | L1 | Validation JavaScript syntax | **PASS** | Same run, step "JavaScript syntax" |
 | L2 | Cross-process protocol fixture suite (7 scenarios) | **PASS** | Same run, step "Cross-process protocol simulation" |
-| L3 | Fresh independent AI agents exchange persisted messages and acknowledge handoff | **NOT RUN** | Requires independent ChatGPT/Work/Codex sessions and a deliberately authorized safe trial issue |
+| L3 (Issue #2) | Four-role GitHub message/response/checkpoint/handoff pilot | **CORE BEHAVIOR PASS / QA NEEDS_REFINEMENT** | [Test Issue #2](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/2), [Master evidence reconciliation](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/2#issuecomment-6142641843); Owner confirmed separate sessions, but session identity not independently auditable |
+| L3 | Historical independent session identity SES-01 | **BLOCKED (owner-attested)** | [QA report](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/2#issuecomment-6142551087): session_run_id null; GitHub messages alone cannot authenticate distinct sessions |
+| L3 | Full expanded workflow: live Linear, code-diff review, deliberately induced live Git/spec drift and unauthorized CHANGE_REQUEST | **NOT RUN** | Issue #2 bounded pilot did not include these broader playbook cases |
 | L3 | Live Linear/GitHub cross-system message delivery | **NOT RUN** | No dedicated safe Linear pilot task or cross-connector trial configured |
 | L4 | PQA real-world small Feature pilot | **NOT RUN** | Intentionally deferred; PQA Draft PR #7 not touched |
 
@@ -29,10 +31,21 @@ The CI outcome is **success**; it checks the **fixture protocol simulator**, not
 ### Observed release gates
 - Owner approval of original framework scope: **RECORDED** on PR #1.
 - Framework L1/L2: **PASS** at the commit that introduced the workflow, `db1005a81b978d12ca1e87ac1c74abfd53970636`.
-- L3 genuine fresh-session collaboration: **NOT RUN**.
+- L3 GitHub four-role bounded collaboration: **core evidence PASS; Owner attests distinct sessions; QA NEEDS_REFINEMENT for independent session identity**. Broader full L3 test cases are **NOT RUN**.
 - Independent Reviewer approval for final head: **PENDING**.
 - Merge: **NOT PERFORMED**; remains Draft for further review.
 - PQA adoption/PR #7: **NOT MODIFIED**.
+
+### L3 GitHub pilot evidence (Issue #2)
+
+- Coder CLARIFICATION_REQUEST: [MSG-001](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/2#issuecomment-6142267589) — schema `padf.agent-message/v1`, thread `THREAD-PADF-CACF-PILOT-001`, context `PADF-CACF-PILOT-001`.
+- Architect correlated RESPONSE: [MSG-002](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/2#issuecomment-6142315841) — `in_reply_to: MSG-PADF-CACF-PILOT-001-001`, correctly rejects message-as-development-approval.
+- Fresh Coder task recovery evidence: [Checkpoint CP-001](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/2#issuecomment-6142384065) — retrieved both messages and checked source PR head `f6201813b78eedcfa5d54180785f39eebd18ce31`.
+- QA independently checked messages/checkpoint/governance: [QA report](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/2#issuecomment-6142551087) — **5 PASS, 1 BLOCKED (SES-01), 3 NOT RUN**; handoff acknowledgement **NEEDS_REFINEMENT**, not an unconditional QA approval.
+- QA-to-Master durable transfer: [HANDOFF MSG-003](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/2#issuecomment-6142566526).
+- Master Step 5 [evidence reconciliation](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/2#issuecomment-6142641843) — Owner reports four separate sessions and overall success; independently auditable historical session identity is still unavailable. No false claim of authenticated distinct-session evidence or Linear coverage.
+
+This demonstrates a **working GitHub Issue-comment-based communication and handoff convention**. It does not implement or verify live A2A transport, autonomous dispatch, Linear connector delivery, full feature code development, or independent PR diff review. The Owner's attestation reduces practical concern for this bounded pilot but does not replace QA's documented evidence limitation.
 
 ### How to reproduce
 In a local PADF checkout:
@@ -46,10 +59,10 @@ node tests/cacf/run-validation.mjs
 GitHub Actions workflow: `.github/workflows/cacf-validation.yml`.  
 Manual trial instructions: `tests/cacf/README.md`.
 
-### Minimal Owner actions for L3
-1. Authorize a **non-PQA sandbox** task (e.g. a trial issue within PADF) and permit limited GitHub/Linear access for the chosen independent sessions. Do not authorize production, merge or PQA changes.
-2. Launch separate fresh-role sessions using the Task Context ID and provided trial instructions, one Coder and one Architect; verify the Architect obtains the question **from durable storage** rather than a pasted conversation.
-3. Launch a separate QA (and ideally independent Reviewer) session to verify handoff and exact head.
-4. Record permalinks, PASS/FAIL/BLOCKED/NOT RUN and blockers; return results for Owner acceptance. Avoid moving the framework PR to Ready/Merged until the agreed gates pass.
+### Follow-on acceptance actions (optional broader L3 scope)
+1. If independent auditability is required, retain **non-sensitive** per-session IDs or signed session evidence in a dedicated pilot while avoiding transcript sharing. Do not pretend GitHub usernames prove distinct sessions.
+2. If full L3 is required, authorize a separate isolated trial exercising a real Linear message flow, controlled Git/spec drift and independent diff review; do not reuse real PQA production work.
+3. Track any additional QA findings with exact test evidence and revised head SHA. Keep original QA NEEDS_REFINEMENT recorded for the first pilot.
+4. For the current framework PR, independently review the final diff/CI and obtain explicit merge authorization if the repository policy requires it.
 
 This report will itself alter the PR head and trigger another CI run. For the final head, read the latest Actions result before representing CI as passed.
