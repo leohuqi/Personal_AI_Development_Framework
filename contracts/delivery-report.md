@@ -7,6 +7,19 @@
 - PR URL; base SHA; head SHA:
 - Environment and versions:
 
+## V0.2 context continuity / communication
+- context_id and Shared Task Context permalink:
+- Task Contract and Owner authorization refs:
+- Input checkpoint/handoff IDs and versions (or N/A):
+- Outgoing handoff ID, receiver, durable permalink and ACK/NEEDS_REFINEMENT state:
+- Resolved message IDs with evidence links:
+- Unresolved message IDs, BLOCKER/CHANGE_REQUEST state and responsible role:
+- Observed Linear status and timestamp; approved spec revision; current branch/head SHA:
+- Reconciliation result for stale checkpoints/spec/HEAD differences:
+- Context finalization / open residual task refs:
+
+These entries are observations/links, not evidence of implicit approval, message delivery or agent wake-up.
+
 ## Implementation (Coder)
 - Approved scope delivered / not delivered:
 - Changed paths and affected API/schema/design contracts:
