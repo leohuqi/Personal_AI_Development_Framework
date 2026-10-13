@@ -37,7 +37,7 @@ Pick one unblocked, bounded, not-yet-implemented feature or a low-risk enhanceme
 - [ ] Owner enables and verifies Codex Automatic Review for this private repository.
 - [ ] Ensure code review findings and GitHub Actions statuses are visible to the coordinator (access/permissions).
 - [ ] Run one trial task with explicit owner approval, review its actual results.
-- [ ] Only later extract generic Skills to independent framework repository. No service/Loop engine required.
+- [ ] After PADF review, pin an approved PADF commit/tag in PQA and update its pending Draft PR #7 only with separate Owner direction. No service/Loop engine required.
 
 ## Example dispatch text
 "Use feature-coder for Linear LEO-134 / PORT-015 only after PORT-006 is satisfied and the owner authorizes development. Load the linked Feature Spec plus relevant UI/API docs; implement approved scope, test with isolated PG/Playwright as applicable, open PR and do not merge or deploy. Submit Delivery Report for independent review."
