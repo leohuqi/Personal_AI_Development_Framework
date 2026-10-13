@@ -24,6 +24,15 @@ Original Feature ID and Linear ID, Task Contract, approved Feature Spec/UX, PR/h
 6. Log reproducible defects with expected/actual, steps and risk; request rework, never silently waive failing acceptance cases.
 7. Fill the testing section of contracts/delivery-report.md.
 
+## V0.2 inbound/outbound communication
+- On start or resume: resolve current Shared Task Context and Coder Handoff, verify owner-authorized task, approved ACs and exact PR head SHA against live Git/Linear; consume assigned pending messages.
+- If handoff is incomplete or its revision stale, ACK with NEEDS_REFINEMENT/BLOCKER; do not call skipped tests PASS.
+- Publish reproducible failures as typed REVIEW_FINDING or BLOCKER messages with AC ID, expected/actual, environment, evidence, exact SHA and owner; task-level notices go to Linear, diff-specific findings to PR.
+- On bug fix/new SHA, re-test affected checks and publish a new evidence link/status; no stale QA PASS carries over without validation.
+- Before leaving session, checkpoint pending test work with evidence refs and next authorized action. Do not assume sending the message automatically runs Coder.
+
+See contracts/agent-handoff.md and workflow/context-communication.md.
+
 ## Outcomes
 - PASS: specified required tests passed with evidence.
 - FAIL: reproducible requirement defect.
