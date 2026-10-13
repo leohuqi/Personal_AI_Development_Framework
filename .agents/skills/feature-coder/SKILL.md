@@ -19,6 +19,15 @@ Require an owner-authorized task, Linear ID + original Feature ID, approved scop
 8. Commit and open a reviewable PR. Reference **both** Linear ID and original Feature ID in PR description; include scope, tests, screenshots (when UI), migration/rollback concerns, and known risks.
 9. Hand over contracts/delivery-report.md evidence. Leave review and owner acceptance to independent agents/owner.
 
+## V0.2 cross-agent continuity
+- On start/resume: resolve context_id and current Task Contract/approval, compare checkpoint with real branch HEAD/approved spec revisions, and pull pending addressed Agent Messages. Stop on material drift or unsupported permission.
+- During implementation: send concise CLARIFICATION_REQUEST/BLOCKER/CHANGE_REQUEST to proper recipient when needed; persist to Linear task thread/PR with message ID, references and verifiable link. Do not treat an answer as approval of new scope.
+- At pause or context limit: produce short Context Checkpoint recording completed evidence, last observed HEAD, pending messages and next authorized action; do not dump session transcript or secrets.
+- On PR ready: publish Agent Handoff to QA/Reviewer with exact head SHA, AC coverage, PASS/FAIL/BLOCKED/NOT RUN as observed and known risks. This does not trigger an automatic receiving agent.
+- Continue only from a checked live state; keep distinct worktree/branch for parallel tasks. Reviewer/QA independently verify rather than inheriting Coder conclusions.
+
+See contracts/agent-message.md, contracts/context-checkpoint.md, contracts/agent-handoff.md and workflow/context-communication.md.
+
 ## Completion gate (developer handoff; not owner Done)
 - Approved scope implemented and traceable to each acceptance criterion.
 - Appropriate tests run and evidenced; missing tests explicitly flagged.
