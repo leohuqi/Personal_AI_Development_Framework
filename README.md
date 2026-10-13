@@ -49,6 +49,14 @@ Cross-session ChatGPT/Work/Codex continuity and multi-agent collaboration use a 
 - [Pull request template](templates/pull_request_template.md)
 - [PQA adoption example](examples/pqa/ADOPTION.md)
 
+## Validation
+
+Run the dependency-free CACF structural checker after cloning PADF:
+
+    node scripts/validate-cacf.mjs
+
+It verifies required files, local Markdown links, schema markers and role integration. It does **not** exercise live Linear/GitHub message delivery, automatic agent dispatch, external integrations or actual multi-session recovery; validate those manually in an authorized pilot.
+
 ## Project adoption
 
 1. Review and approve an exact PADF commit/tag.
