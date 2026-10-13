@@ -8,3 +8,10 @@
 6. Keep exact feature and source SHA references in Task Contract/Delivery Report; never include secrets or real customer/account data in prompts or repos.
 
 GitHub versioned documentation and code are authoritative for technical scope; Linear is authoritative for current execution state, dependencies, priority and Cycle.
+
+## V0.2 shared context and resume
+- Resolve [Shared Task Context](../contracts/shared-task-context.md) as an **index of links**, not a copy of PRD or prior chat. Check context_id, both task and Feature IDs, Owner approval, source SHA and pending threads.
+- On new session, use [Checkpoint & Resume](../contracts/context-checkpoint.md): fetch live Git HEAD, approved spec/ADR revisions, Linear status/dependencies and messages before continuing. Mark stale context and escalate mismatches.
+- Minimal profile (Coder/QA): AGENTS, Task Contract, affected spec/contracts and pending messages. Design profile (Architect/UI): affected design/API/ADR context. Review profile: requirements/ACs, exact diff and verifiable evidence, with independent reasoning.
+- Do not load Coder's transcript or chain of thought into fresh-context review. Do not assume a saved checkpoint, comment or handoff is owner authorization or an accurate current state.
+- Publish only task-relevant links and concise status; never store credentials, raw customer data or full transcripts in shared messages/snapshots. See [Context Governance](context-governance.md).
