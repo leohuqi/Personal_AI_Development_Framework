@@ -33,6 +33,12 @@ Original Feature ID and Linear ID, Task Contract, approved Feature Spec/UX, PR/h
 
 See contracts/agent-handoff.md and workflow/context-communication.md.
 
+## V0.3 design-conformance QA
+- Link actual approved Architect/UI design manifests and Design Gate at pinned source revisions; verify implemented API/schema/workflow against structured technical sources, not diagrams alone.
+- For UI changes compare actual browser behavior with approved project UI Profile, documented responsive and accessible interaction states, high-fi screens, and working interactive prototype if required. A screenshot/mock is not proof that interactions work.
+- Flag missing artifacts, stale design source and visual/code divergence with reproducible evidence. Do not confuse designer self-validation or reviewer DESIGN approval with implementation QA PASS.
+- Keep implementation acceptance separate from the earlier DESIGN gate; test exact candidate head SHA.
+
 ## Outcomes
 - PASS: specified required tests passed with evidence.
 - FAIL: reproducible requirement defect.

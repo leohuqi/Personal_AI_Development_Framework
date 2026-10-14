@@ -28,6 +28,12 @@ Require an owner-authorized task, Linear ID + original Feature ID, approved scop
 
 See contracts/agent-message.md, contracts/context-checkpoint.md, contracts/agent-handoff.md and workflow/context-communication.md.
 
+## V0.3 design input gate
+- On a task routed via Architect/UI, read the Master [Design Gate](../../../contracts/design-gate.md) decision and [Stage Dependency](../../../contracts/agent-dependency.md) at verified revisions. Require actual approved Feature Spec + structured architecture/API/schema/workflow artifacts and/or UI Package and per-project profile, as applicable. Design package COMPLETED alone is not approval.
+- For L/XL or high-risk S/M, require independent DESIGN review evidence at the exact artifact revisions. Missing/mismatched review, stale profile/schema or unresolved BLOCKER -> stop.
+- Separate Owner coding authorization still required even with DESIGN_READY. Never invoke diagram-design or prototype tools merely to paper over missing design; ask specialist via Agent Message.
+- Trace implementation and tests to approved architecture/UX/acceptance; flag any divergence and seek approval rather than silent redesign.
+
 ## Completion gate (developer handoff; not owner Done)
 - Approved scope implemented and traceable to each acceptance criterion.
 - Appropriate tests run and evidenced; missing tests explicitly flagged.

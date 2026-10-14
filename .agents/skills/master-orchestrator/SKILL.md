@@ -3,7 +3,7 @@ name: master-orchestrator
 description: Coordinate an approved product feature from requirements through Linear planning, Codex handoff, review, and owner acceptance. Use for project planning, task readiness, issue routing, or delivery acceptance; not for autonomous background execution.
 ---
 
-# Master Orchestrator (AI-SDF V0.2)
+# Master Orchestrator (AI-SDF V0.3 candidate)
 
 ## Role and authority
 Act as the product/engineering coordinator. The owner decides product direction, significant architecture or UX changes, final acceptance, and production authorization. You coordinate; do not impersonate independent QA/review or silently authorize deployment.
@@ -37,6 +37,15 @@ Read the target project's AGENTS.md and the framework workflow/WORKFLOW.md befor
 6. Before Owner acceptance, reconcile Delivery Report, message dispositions, exact reviewed/tested SHA and remaining risks. Close resolved threads and preserve audit links.
 
 See workflow/context-communication.md, contracts/shared-task-context.md and governance/context-governance.md. This is coordination in an **authorized session**, not a persistent dispatcher.
+
+## V0.3 professional routing & Design Gate
+1. Classify size S/M/L/XL, `impacts`, `risk_flags`; justify included and skipped roles according to [agent routing](../../../workflow/agent-routing.md). Do not start irrelevant specialist agents for simple bugs.
+2. Route Solution Architect for material topology/API/schema/workflow/integration; UI Designer for visual/interaction work with approved project UI Profile. Sequence them to satisfy dependency rather than complex concurrent work.
+3. Require versioned Architect/UI packages and V0.2 Handoff acknowledgment. Evaluate [Stage Dependency](../../../contracts/agent-dependency.md) and [Design Gate](../../../contracts/design-gate.md); actual artifact SHA, Design Profile revision and source contract must align.
+4. Own Gate status and dependency resolution, **not** the specialist's design reasoning: for L/XL and risk-triggered S/M, dispatch an independent Reviewer with DESIGN mode at exact artifact revisions. Reviewer judges quality; does not start coding or approve the Gate. For skipped S/M review, record specific risk-based rationale.
+5. Stop on P0/P1 and missing mandatory design review; P2 requires fix or separately documented Owner-approved conditions. Material design changes always go to Owner.
+6. DESIGN_READY is never coding permission. Assemble bounded Task Contract and request explicit Owner coding authorization, then route to Coder, QA and independent Implementation Review as before.
+7. Do not interpret the read-only evaluator as agent automation or a live source of task truth. Reconcile current Linear/GitHub revisions and pending messages.
 
 ## Output
 - Short decision/rationale and outstanding questions.

@@ -7,7 +7,7 @@
 | L — cross-module | Architecture impact & feature splitting → bounded delivery → integration review |
 | XL — new product / major change | Discovery / UX / architecture approval → Roadmap → incremental MVP Cycles |
 
-Default to a single Coder; parallel work requires clear non-overlapping boundaries, separate worktrees and explicit authorization. Future UI Designer, Architect, Product Analyst, Planner and Iteration Manager Skills are planned, **not included** in V0.1.
+Default to a single Coder; parallel work requires clear non-overlapping boundaries, separate worktrees and explicit authorization. V0.3 adds a specialized Architect and UI Designer, invoked only where scope/risk justifies the work; no new Product Analyst or scheduler.
 
 ## V0.2 context routing (all task sizes)
 - Master is accountable for resolving context_id, issue + immutable Feature ID, approved source revisions, owner authorization, and actionable unresolved messages **before** task dispatch.
@@ -17,3 +17,12 @@ Default to a single Coder; parallel work requires clear non-overlapping boundari
 - Clarifications go to relevant role, unresolved blockers/conflicts to Master, significant product/UX/architecture scope changes to Owner. Message routing does not change approval policy.
 - Fresh-context Independent Reviewer gets approved source contracts, exact diff and evidence—not the Coder's whole conversation.
 - Follow [CACF workflow](context-communication.md) and [Agent Message](../contracts/agent-message.md) rules.
+
+## V0.3 capability-based routing
+Master analyzes actual Feature Spec and sets `task_class`, `impacts`, `risk_flags` with rationale. Use [sequential design workflow](design-collaboration.md) and [declarative evaluator](../lib/design-gate.mjs) as optional read-only checks, not an execution engine.
+- Backend/database/API/integration/workflow: **solution-architect**; generate required diagrams only for material changes.
+- UI/navigation/shared components/interaction: **ui-ux-designer**; use per-project approved design profile, choose concept/high-fi/interactive level by complexity.
+- Mixed feature: sequence based on dependency; early UX exploration can precede API feasibility discussion or vice versa. Don't require both for UI-only or backend-only work.
+- L/XL: mandatory independent DESIGN Review. S/M: review mandatory when high-risk; otherwise Master records skip rationale. Owner approves significant design changes regardless of size.
+- Master owns dependency assessment, Gate, blockers and next role; Reviewer independently assesses the design at exact source revisions. Do not conflate `DESIGN_READY` with authorized coding.
+- Producer handoff uses [existing V0.2 contract](../contracts/agent-handoff.md); Context Coordinator persists messages/checkpoints as before.

@@ -3,7 +3,7 @@ name: independent-reviewer
 description: Conduct fresh-context, evidence-based GitHub PR or cross-module integration review, especially for auth, finance, data lineage, migrations, strategy, concurrency, and releases.
 ---
 
-# Independent Reviewer (AI-SDF V0.1)
+# Independent Reviewer (AI-SDF V0.3 candidate)
 
 ## Independence gate
 Reviewer must not be the implementer or reuse the implementer's self-approval context for important/high-risk changes. Review the **actual base-to-head diff** at the exact SHA and relevant surrounding code/specs. Read only relevant material from AGENTS.md, Task Contract, Feature Spec and architecture/contracts.
@@ -28,6 +28,11 @@ Reviewer must not be the implementer or reuse the implementer's self-approval co
 - Durable messages do not automatically wake Coder or authorize merge/acceptance.
 
 See workflow/context-communication.md and governance/context-governance.md.
+
+## V0.3 dual review modes
+**DESIGN (before coding)**: Mandatory for L/XL and risk-triggered S/M. Read approved Feature Spec, exact Architect/API/DDL/workflow source, diagram HTML/SVG and UI Design Package/Profile revision as applicable. Independently check diagram ↔ schema/API/workflow edges and version alignment; UI concept/prototype ↔ actual project tokens/components/interaction; loading/error/permissions/accessibility and deployment/security/risk. Missing generator/render proof is NOT RUN or BLOCKED, not PASS. Produce P0-P3 findings and `APPROVE`, `APPROVE WITH CONDITIONS` or `REQUEST CHANGES` with exact artifact refs/SHA. P2 may be Owner-accepted only with explicit conditions. A later design revision invalidates impacted review.
+**IMPLEMENTATION (after coding)**: Keep V0.2 base-to-head PR review rules. Inspect code/tests against approved design and actual user-visible behavior, not just a screenshot.
+The Reviewer is **not** Master or Owner: cannot mark the Design Gate DESIGN_READY, authorize coding, approve its own design, merge or deploy. Master coordinates/decides readiness using review evidence; Owner retains material design and coding authority. See [Design Gate](../../../contracts/design-gate.md) and [design workflow](../../../workflow/design-collaboration.md).
 
 ## Output
 Independent review section of contracts/delivery-report.md: PR/base/head, evidence, findings table P0–P3, checks passed/failed/not run, blockers, conclusion, and next action.

@@ -1,6 +1,6 @@
 # Personal AI Development Framework (PADF / AI-SDF)
 
-**V0.2 — canonical reusable AI software development Skills, task-centered context continuity, and cross-agent communication contracts.**
+**V0.3 development candidate (Draft PR, not yet released)** — specialized solution architecture and UI/UX Skills with task-dependent Design Gate; retains the stable V0.2 context/communication foundation.
 
 PADF defines owner-governed, agent-executed incremental software development. Each application maintains its **own PRD, Architecture, UX baseline, Feature Catalog, source code, AGENTS.md and CI**. PADF is shared across all projects, not a PQA feature branch.
 
@@ -32,12 +32,26 @@ Cross-session ChatGPT/Work/Codex continuity and multi-agent collaboration use a 
 
 **Scope boundary:** V0.2 supplies Skills, message contracts, and human/runtime-initiated workflows—not an A2A server, message broker, continuous scheduler, new database, automated agent dispatch or live notification service. Integration and actual agent delivery still depend on the connected tools and approved task execution.
 
+## V0.3 — Specialized Design Agents (development candidate)
+
+The V0.3 extension adds a [Solution Architect](.agents/skills/solution-architect/SKILL.md) that can call the **pinned external** [diagram-design](integrations/diagram-design.md) skill to produce architecture, workflow and database schema visualizations with versioned authoritative source models. A [UI/UX Designer](.agents/skills/ui-ux-designer/SKILL.md) outputs design philosophy, UI concept, high-fidelity and risk-appropriate interactive prototypes, all traced to each project's [UI Profile](contracts/project-ui-profile.md).
+
+Master performs [capability-based routing](workflow/agent-routing.md), checks [agent-stage dependencies](contracts/agent-dependency.md) and operates a [Design Gate](contracts/design-gate.md). **Governance model C**: L/XL and risk-triggered S/M require independent DESIGN review; Master controls process/readiness, Reviewer assesses design quality and Owner approves material decisions and coding. Designers produce [existing V0.2 handoffs](contracts/agent-handoff.md); recipients ACK/NEEDS_REFINEMENT. No parallel Coder scheduler or agent daemon.
+
+- [Sequential design workflow](workflow/design-collaboration.md) · [Architect package](contracts/architecture-design.md) · [UI package](contracts/ui-design.md)
+- [Pinned diagram-design integration](integrations/diagram-design.md) · [Dependency/gate evaluator](lib/design-gate.mjs)
+- Validation: `node tests/v0.3/run-tests.mjs` (fixture checks, not real diagram/prototype generation).
+
+**Status: V0.3 is proposed for Owner review and testing, not merged/released.** Projects remain on immutable [PADF v0.2.0](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.2.0) until separately approved.
+
 ## Core Skills
 
 | Skill | Responsibility |
 | --- | --- |
 | [master-orchestrator](.agents/skills/master-orchestrator/SKILL.md) | Scope, design coordination, task readiness, conflict routing and acceptance |
 | [context-coordinator](.agents/skills/context-coordinator/SKILL.md) | Minimal shared context, durable messages, checkpoint/resume and cross-agent handoff |
+| [solution-architect](.agents/skills/solution-architect/SKILL.md) | Structured architecture, API, schema, workflow and aligned diagrams |
+| [ui-ux-designer](.agents/skills/ui-ux-designer/SKILL.md) | Project-specific consistent UI concepts, prototypes and interaction contracts |
 | [feature-coder](.agents/skills/feature-coder/SKILL.md) | Authorized implementation and PR handoff |
 | [qa-tester](.agents/skills/qa-tester/SKILL.md) | Test design, integration/E2E verification, evidence |
 | [independent-reviewer](.agents/skills/independent-reviewer/SKILL.md) | Fresh-context review of exact PR diff and risks |
@@ -54,6 +68,7 @@ Cross-session ChatGPT/Work/Codex continuity and multi-agent collaboration use a 
 Run the dependency-free CACF structural checker after cloning PADF:
 
     node scripts/validate-cacf.mjs
+    node tests/v0.3/run-tests.mjs
 
 It verifies required files, local Markdown links, schema markers and role integration. It does **not** exercise live Linear/GitHub message delivery, automatic agent dispatch, external integrations or actual multi-session recovery; validate those manually in an authorized pilot.
 
@@ -71,4 +86,4 @@ It verifies required files, local Markdown links, schema markers and role integr
 
 This repository is the framework review target. [PQA Draft PR #7](https://github.com/leohuqi/Personal_Quant_Analyst/pull/7) stays **open, unchanged and unmerged** until PADF has been reviewed and explicitly approved. PADF commits do not modify PQA or its production environment.
 
-**Future specialized Skills (not yet implemented):** Product Analyst, UI/UX Designer, Solution Architect, Feature Planner/Designer and Iteration Manager.
+**Future specialized Skills (not included in V0.3):** Product Analyst, Feature Planner/Designer, Iteration Manager and any parallel execution runtime.

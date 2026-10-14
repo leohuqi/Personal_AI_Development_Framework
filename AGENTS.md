@@ -17,3 +17,10 @@
 - A Reviewer must use approved requirements and the exact diff with independent reasoning; never import Coder conclusions as review.
 - No new runtime, task scheduler, message broker, DB, automatic dispatch, A2A server, autonomous merge or production action is enabled by V0.2.
 - PQA Draft PR #7 must remain unchanged during PADF review.
+
+## V0.3 specialized design rules (candidate)
+- Master routes only relevant Architect/UI Designer Skills and documents S/M/L/XL risk and skipped roles; must not auto-run agents.
+- For material architecture/schema/API/workflow changes the Solution Architect supplies structured contracts **and justified diagrams** using the pinned external diagram-design Skill; renderer absence is BLOCKED/NOT RUN, never fabricated.
+- For UI changes the UI Designer loads the **project's own approved UI Profile** and cites its revision; concept/high-fi/interactive levels are chosen by complexity. Static images are not interactive source.
+- Design Handoff uses V0.2 contract; Master owns readiness/approval routing, Independent Reviewer audits DESIGN mode for L/XL and risk-triggered S/M, Owner approves material design changes and coding.
+- V0.3 is under review on a feature branch; immutable PADF v0.2.0 release remains unchanged. Never modify PQA PR #7 as a side effect.

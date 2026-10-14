@@ -1,4 +1,4 @@
-# AI-SDF V0.2 Core Development Workflow
+# AI-SDF V0.3 Development Candidate — Core Workflow (includes V0.2)
 
 **Specification, not an engine.** This workflow is human-initiated with hosted GitHub Actions and separately configured Codex review; it does not run continuously.
 
@@ -44,3 +44,12 @@ This section is binding in addition to all existing DoR, Owner authorization, re
 7. **Finalize**: Master links final Delivery Report, ensures approved decisions are reflected in canonical docs, closes resolved messages, tracks deferred work and requests Owner acceptance.
 
 V0.2 does **not** implement a long-running orchestrator, automatic notifications, background agents, self-triggered tasks, Redis, a new database, or an A2A server. Human/authorized runtime invocation remains required.
+
+## V0.3 specialized design stages (candidate)
+1. Master classifies S/M/L/XL + impacted capabilities and risk, routes Architect/UI Designer as needed. See [design collaboration](design-collaboration.md).
+2. Architect builds a structured design package with diagrams aligned to approved contracts; UI Designer builds concepts/prototypes under a pinned project UI Profile. Each producer independently validates **its own** work, then sends a V0.2 Handoff.
+3. Master verifies [stage and artifact dependencies](../contracts/agent-dependency.md) including source revision, exact link, stale status and N/A/waiver rationale.
+4. **Mandatory independent DESIGN review** for L/XL or high-risk S/M (security, permissions, risky schema/migration, breaking API, critical rules/workflow, shared UI/component etc.). Ordinary S/M gets a documented risk-based review decision.
+5. Master operates the [Design Gate](../contracts/design-gate.md). Independent Reviewer judges quality and versioned evidence, not approvals or job dispatch. Design READY does not grant coding authorization.
+6. Owner records material design decisions and separately authorizes bounded coding. Coder/QA/Implementation Reviewer follow unchanged V0.2 quality gates and immutable PR SHA.
+7. This is **declarative sequential coordination** with a pure optional evaluator, not a new runtime or parallel Coder orchestrator.
