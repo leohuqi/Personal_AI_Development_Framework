@@ -3,7 +3,11 @@ import assert from 'node:assert/strict';
 import {evaluateStageDependencies,evaluateDesignGate,routeAgents} from '../../lib/design-gate.mjs';
 const A='a'.repeat(40),B='b'.repeat(40),C='c'.repeat(40);
 const ref=(p,s=A)=>p+'@'+s;
-const artifact=(p,type,rev=A)=>({type,ref:ref(p,rev),source_revision:rev,current_revision:rev,verified:true});
+const artifact=(p,type,rev=A)=>({type,ref:ref(p,rev),source_revision:rev,current_revision:rev,verified:true,
+ evidence_ref:'https://github.com/example/repo/issues/1#artifact-review',
+ ...(type.endsWith('-diagram')?{generator:'diagram-design',generator_sha:C,render_status:'PASS'}:{}),
+ ...(type==='interactive-prototype'?{interaction_test_status:'PASS',editable_source:true}:{})
+});
 const stage=(id,agent,deps=[],revision=A)=>{
  const arch=agent==='solution-architect';
  return {id,agent,required:true,depends_on:deps,status:'COMPLETED',
@@ -15,7 +19,7 @@ const stage=(id,agent,deps=[],revision=A)=>{
 };
 const baseline=()=>({
  context_id:'TEST-001',task_class:'L',feature_spec_ref:ref('docs/feature.md'),ui_profile_ref:ref('docs/ui-profile.md'),ui_level:'L1',
- impacts:['architecture','ui'],risk_flags:[],
+ impacts:['architecture','ui'],risk_flags:[],diagram_skill_sha:C,
  stages:[stage('ARCH','solution-architect'),stage('UX','ui-ux-designer',['ARCH'])],
  consistency_checks:[{scope:'api-ui',status:'PASS',evidence_ref:'https://github.com/example/repo/issues/1#comment'}],
  design_review:{independent:true,mode:'DESIGN',decision:'APPROVE',evidence_ref:'https://github.com/example/repo/pull/4#review',
@@ -118,6 +122,25 @@ check('L3 requires a verified interactive prototype artifact',()=>{
  x.stages[1].artifacts.push(artifact('docs/prototype.html','interactive-prototype'));
  x.design_review.reviewed_refs.push(ref('docs/prototype.html'));
  assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+});
+check('Unverified visual rendering cannot satisfy diagram artifact',()=>{
+ const x=baseline();x.stages[0].artifacts[1].render_status='NOT_RUN';
+ assert(evaluateDesignGate(x).reasons.includes('UNSATISFIED_STAGE:ARCH'));
+});
+check('Diagram generator pin mismatch blocks gate',()=>{
+ const x=baseline();x.stages[0].artifacts[1].generator_sha=B;
+ assert(evaluateDesignGate(x).reasons.includes('DIAGRAM_SKILL_VERSION_MISMATCH'));
+});
+check('Artifact must include independent evidence link',()=>{
+ const x=baseline();delete x.stages[1].artifacts[0].evidence_ref;
+ assert(evaluateDesignGate(x).reasons.includes('UNSATISFIED_STAGE:UX'));
+});
+check('Interactive prototype must have passing interaction check and editable source',()=>{
+ const x=baseline();x.ui_level='L3';
+ x.stages[1].artifacts.push(artifact('docs/prototype.html','interactive-prototype'));
+ x.design_review.reviewed_refs.push(ref('docs/prototype.html'));
+ x.stages[1].artifacts.at(-1).interaction_test_status='NOT_RUN';
+ assert(evaluateDesignGate(x).reasons.includes('UNSATISFIED_STAGE:UX'));
 });
 check('Invalid task class and unsupported status rejected',()=>{
  assert.equal(routeAgents({task_class:'unknown'}).valid,false);
