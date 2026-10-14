@@ -9,7 +9,7 @@ node --check tests/v0.3/run-tests.mjs
 node tests/v0.3/run-tests.mjs
 ```
 
-21 deterministic fixture tests exercise routing, mandatory L/XL design review, S/M risk escalation, stage graph validity, blocked/STALE dependencies, immutable artifact references, project UI Profile version match, structured Architecture+diagram alignment, database source+diagram, L3 interactive prototype, handoff review versions, Owner approval and coding authorization separation. Test numbers are determined from the actual suite. **No external diagram-design execution or UI generation is implied.**
+25 deterministic fixture tests exercise routing, mandatory L/XL design review, S/M risk escalation, stage graph validity, blocked/STALE dependencies, immutable artifact references, project UI Profile version match, structured Architecture+diagram alignment, database source+diagram, L3 interactive prototype, handoff review versions, Owner approval and coding authorization separation. Test numbers are determined from the actual suite. **No external diagram-design execution or UI generation is implied.**
 
 ## Manual independent specialist-agent pilot — NOT RUN until separately executed
 
