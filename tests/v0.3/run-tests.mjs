@@ -3,15 +3,23 @@ import assert from 'node:assert/strict';
 import {evaluateStageDependencies,evaluateDesignGate,routeAgents} from '../../lib/design-gate.mjs';
 const A='a'.repeat(40),B='b'.repeat(40),C='c'.repeat(40);
 const ref=(p,s=A)=>p+'@'+s;
-const stage=(id,agent,deps=[],revision=A)=>({id,agent,required:true,depends_on:deps,status:'COMPLETED',
-  artifacts:[{type:'design',ref:ref('docs/'+id+'.md',revision),source_revision:revision,current_revision:revision,verified:true}]});
+const artifact=(p,type,rev=A)=>({type,ref:ref(p,rev),source_revision:rev,current_revision:rev,verified:true});
+const stage=(id,agent,deps=[],revision=A)=>{
+ const arch=agent==='solution-architect';
+ return {id,agent,required:true,depends_on:deps,status:'COMPLETED',
+   ...(arch?{}:{profile_ref:ref('docs/ui-profile.md')}),
+   artifacts:arch?[artifact('docs/'+id+'.md','architecture-design',revision),
+     artifact('docs/'+id+'-diagram.html','architecture-diagram',revision)]:
+     [artifact('docs/'+id+'.md','ui-design',revision),
+       artifact('docs/'+id+'-concept.html','ui-concept',revision)]};
+};
 const baseline=()=>({
- context_id:'TEST-001',task_class:'L',feature_spec_ref:ref('docs/feature.md'),
+ context_id:'TEST-001',task_class:'L',feature_spec_ref:ref('docs/feature.md'),ui_profile_ref:ref('docs/ui-profile.md'),ui_level:'L1',
  impacts:['architecture','ui'],risk_flags:[],
  stages:[stage('ARCH','solution-architect'),stage('UX','ui-ux-designer',['ARCH'])],
  consistency_checks:[{scope:'api-ui',status:'PASS',evidence_ref:'https://github.com/example/repo/issues/1#comment'}],
  design_review:{independent:true,mode:'DESIGN',decision:'APPROVE',evidence_ref:'https://github.com/example/repo/pull/4#review',
-   reviewed_refs:[ref('docs/ARCH.md'),ref('docs/UX.md')],findings:[]},
+   reviewed_refs:[ref('docs/ARCH.md'),ref('docs/ARCH-diagram.html'),ref('docs/UX.md'),ref('docs/UX-concept.html')],findings:[]},
  coding_authorization:{owner_approval_ref:'https://github.com/example/repo/issues/1#owner',task_contract_ref:'https://github.com/example/repo/issues/1#contract',scope_confirmed:true}
 });
 const tests=[];
@@ -86,6 +94,29 @@ check('P0/P1 findings block; P2 requires owner-approved conditions',()=>{
  x.design_review.findings=[{severity:'P2',status:'OPEN',
    owner_risk_acceptance_ref:'https://github.com/example/repo/issues/1#decision',
    acceptance_conditions:'monitor rollback'}];
+ assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+});
+check('UI profile version mismatch blocks design readiness',()=>{
+ const x=baseline();x.stages[1].profile_ref=ref('docs/ui-profile.md',B);
+ assert(evaluateDesignGate(x).reasons.includes('UI_PROFILE_VERSION_MISMATCH'));
+});
+check('Missing diagram blocks Architect design',()=>{
+ const x=baseline();x.stages[0].artifacts=x.stages[0].artifacts.filter(a=>a.type!=='architecture-diagram');
+ assert(evaluateDesignGate(x).reasons.includes('MISSING_ARCHITECT_DIAGRAM'));
+});
+check('Database needs authoritative schema and matching diagram',()=>{
+ const x=baseline();x.impacts=['database','ui'];
+ assert(evaluateDesignGate(x).reasons.includes('MISSING_DATABASE_SCHEMA_AND_DIAGRAM'));
+ x.stages[0].artifacts.push(artifact('docs/schema.sql','database-schema'));
+ x.stages[0].artifacts.push(artifact('docs/schema.html','database-schema-diagram'));
+ x.design_review.reviewed_refs.push(ref('docs/schema.sql'),ref('docs/schema.html'));
+ assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+});
+check('L3 requires a verified interactive prototype artifact',()=>{
+ const x=baseline();x.ui_level='L3';
+ assert(evaluateDesignGate(x).reasons.includes('MISSING_INTERACTIVE_PROTOTYPE'));
+ x.stages[1].artifacts.push(artifact('docs/prototype.html','interactive-prototype'));
+ x.design_review.reviewed_refs.push(ref('docs/prototype.html'));
  assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
 });
 check('Invalid task class and unsupported status rejected',()=>{
