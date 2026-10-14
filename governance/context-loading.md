@@ -15,3 +15,9 @@ GitHub versioned documentation and code are authoritative for technical scope; L
 - Minimal profile (Coder/QA): AGENTS, Task Contract, affected spec/contracts and pending messages. Design profile (Architect/UI): affected design/API/ADR context. Review profile: requirements/ACs, exact diff and verifiable evidence, with independent reasoning.
 - Do not load Coder's transcript or chain of thought into fresh-context review. Do not assume a saved checkpoint, comment or handoff is owner authorization or an accurate current state.
 - Publish only task-relevant links and concise status; never store credentials, raw customer data or full transcripts in shared messages/snapshots. See [Context Governance](context-governance.md).
+
+## V0.3 specialized design context
+- Architect profile: affected Feature Spec, current architecture/API/DDL/ADR/workflow, diagram-design pinned integration references and task-specific approved style profile; do not preload unrelated diagrams or all schema tables.
+- UI Designer profile: approved project UI Profile, current component library/tokens, affected screens and task interactions, relevant Architect API contracts, not another project's visual tokens.
+- Master/Reviewer: lightweight dependency manifest, exact Architect/UI artifact versions, review/gate decisions and Owner approvals. Reviewer in DESIGN mode reads source artifacts and requirements independently; do not import designer's private reasoning as proof.
+- New versions of approved API, design/profile or schema require targeted dependent stage and Design Gate freshness re-evaluation.

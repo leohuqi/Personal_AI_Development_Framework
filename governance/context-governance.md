@@ -45,3 +45,10 @@
 
 ## Acceptance boundaries
 The following are **distinct evidence states**: implementation completed; CI green; QA PASS; independent review approved; PR merged; Owner accepted; deployed. Do not infer one from another. A missing artifact/test is NOT RUN/UNKNOWN, not PASS. See approval-policy.md and WORKFLOW.md.
+
+## V0.3 design source-of-truth additions
+- Database: authoritative schema/DDL/migration and approved model at exact revision; HTML/SVG ER/schema drawing is a traceable visualization **not** the authoritative schema.
+- API: exact approved OpenAPI/API contract; sequence/integration diagram must match endpoint and failure semantics.
+- UI: each product owns its own approved [Project UI Profile](../contracts/project-ui-profile.md); Feature UI designs pin profile/real component versions. Site-specific exceptions need written approval, not a global PADF style override.
+- Diagram-design is third-party external skill, not bundled; lock version and verify installation/use before saying diagram was generated.
+- Design Gate is separate from specialist COMPLETED and Owner coding authorization; exact upstream revisions invalidate affected downstream design/review gates.

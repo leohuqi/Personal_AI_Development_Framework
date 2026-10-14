@@ -55,3 +55,13 @@ A handoff transfers **task responsibility and verifiable artifacts**, not an age
     stop_conditions: ["Spec revision conflict", "Unapproved scope change"]
 
 A HANDOFF event records a transfer request; it does not automatically run the receiving agent.
+
+## V0.3 design artifact extension
+For Architect/UI Producer -> downstream Agent, include `handoff_kind: DESIGN` and cite [Architecture Package](architecture-design.md) or [UI Package](ui-design.md), immutable versions and Owner-approved Feature Spec. Use the **same V0.2 envelope**, message IDs and ACK rules; do not introduce a parallel handoff transport.
+
+Optional-as-applicable fields:
+- `architecture_design_ref`, `schema/api/workflow_contract_refs`, `diagram_manifest_ref`, `diagram_generator_lock_ref`, `diagram_render_status`.
+- `project_ui_profile_ref`, `ui_design_ref`, `prototype_level`, `concept/high-fi/interactive_artifact_refs`, interaction test status.
+- `dependency_manifest_ref`, `design_review_ref` (only if actually completed), `design_gate_ref`, `stale_checks`, and `unresolved_design_conflicts`.
+
+Producer marks completed only with actual evidence. Receiver checks required artifacts/source revisions and ACKs or responds NEEDS_REFINEMENT/BLOCKED. **Master** owns Design Gate and next-role routing; **Independent Reviewer** owns risk-required design quality opinion, never the Gate. Completed Handoff does not start Coder automatically.

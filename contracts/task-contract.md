@@ -25,6 +25,20 @@
 
 A Task Contract grants no authorization without applicable Owner approval. Messages and checkpoints only reference or transmit already-authorized tasks.
 
+## V0.3 design stage and dependency inputs (when applicable)
+- Task class (S/M/L/XL) and risk flags / risk assessment rationale:
+- Impact domains: architecture / api / database / workflow / integration / ui / shared-component / security / etc.:
+- Required specialist stages and `padf.agent-dependency/v1` manifest permalink:
+- Architecture package + diagram/design source revisions, or N/A with reason:
+- UI package level L1/L2/L3 + approved project UI Profile revision, or N/A with reason:
+- Design Handoff links and receiving agent ACK / NEEDS_REFINEMENT:
+- Independent DESIGN Review decision/evidence (mandatory L/XL or risk-triggered S/M), otherwise Master skip rationale:
+- Design Consistency Gate result/evidence `padf.design-gate/v1`:
+- Owner material design approval (if changed) and **separate bounded coding authorization**:
+- Review expected at exact artifact revisions; versions that changed invalidate relevant gate evidence.
+
+This section is an extension of V0.2 contracts, not a second Task Contract or permission to execute from DESIGN_READY alone.
+
 ## Objective
 - User-visible outcome:
 - In scope:

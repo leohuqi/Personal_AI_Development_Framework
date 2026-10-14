@@ -41,6 +41,11 @@ Project/repository, task/Linear issue URL or ID, original immutable Feature ID, 
 - On new session, re-fetch **live** sources; never assume resumed execution is safe simply because checkpoint says In Progress.
 - Fresh-context Reviewer only consumes approved requirements, exact PR diff and verifiable evidence; do not preload Coder's reasoning or accept self-review.
 
+## V0.3 specialist artifacts and dependencies
+- Link versioned Architecture/UI Design Packages, actual diagram/prototype assets, project UI Profile and Stage Dependency manifest in Shared Task Context by references only.
+- Before design Handoff/resume compare source Feature Spec/API/schema/UI Profile SHA to the package and DESIGN review evidence; on drift mark STALE/BLOCKED and route to Master.
+- Do not create a second Handoff/message protocol, auto-activate specialist agents or reclassify a proposal as approved.
+
 ## Output
 Concise context_id, authoritative refs/revisions, observed task/head state, pending message refs, verified checkpoint/handoff permalinks, risk/blocker status and next responsible role. Distinguish CREATED/PERSISTED from DRAFT/NOT_PERSISTED.
 

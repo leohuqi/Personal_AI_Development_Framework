@@ -20,6 +20,19 @@
 
 These entries are observations/links, not evidence of implicit approval, message delivery or agent wake-up.
 
+## V0.3 design and dependency evidence
+- Specialist routing: Task class + impacts/risk flags, excluded roles and reason:
+- Architecture package / diagrams / exact structured source/model and version (or N/A):
+- External diagram-design installation/pinned upstream SHA/render check (PASS/FAIL/BLOCKED/NOT RUN):
+- Project UI Profile revision, UI Concept, high-fi and interactive prototype artifacts as applicable:
+- UI consistency, accessibility and interaction check evidence:
+- Dependency manifest, revision freshness, downstream statuses and blockers:
+- Design Handoff links and receiver acknowledgement:
+- Independent DESIGN review decision, reviewed artifact SHA and P0–P3 findings (or Master risk-based skip reason):
+- Master Design Gate result and Owner material design decision, distinct from bounded coding authorization:
+
+Do not infer that a visual prototype, simulated stage evaluation or designer self-check proves actual implementation.
+
 ## Implementation (Coder)
 - Approved scope delivered / not delivered:
 - Changed paths and affected API/schema/design contracts:
