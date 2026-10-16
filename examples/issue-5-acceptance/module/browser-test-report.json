@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "renderer": "Playwright 1.62.1",
+  "browser": "155.0.8059.80",
+  "deviceScaleFactor": 2,
+  "checks": [
+    {
+      "view": "component-ports",
+      "test": "actual render, node count, node/canvas text bounds",
+      "status": "PASS"
+    },
+    {
+      "view": "import-sequence",
+      "test": "actual render, node count, node/canvas text bounds",
+      "status": "PASS"
+    },
+    {
+      "view": "source-identity",
+      "test": "actual render, node count, node/canvas text bounds",
+      "status": "PASS"
+    },
+    {
+      "view": "ledger-model",
+      "test": "actual render, node count, node/canvas text bounds",
+      "status": "PASS"
+    },
+    {
+      "view": "import-state",
+      "test": "actual render, node count, node/canvas text bounds",
+      "status": "PASS"
+    },
+    {
+      "test": "viewer navigation keyboard and source-contract disclosure",
+      "status": "PASS"
+    },
+    {
+      "test": "390px local scrolling without page overflow",
+      "status": "PASS"
+    },
+    {
+      "test": "print all five figures",
+      "status": "PASS"
+    },
+    {
+      "test": "no-JavaScript complete static viewer",
+      "status": "PASS"
+    },
+    {
+      "test": "zero external requests/page errors",
+      "status": "PASS"
+    }
+  ],
+  "networkRequests": [],
+  "pageErrors": [],
+  "fonts": "Geist, system-ui, sans-serif",
+  "scope": "Actual diagram rendering/UI viewer checks only, not application tests"
+}

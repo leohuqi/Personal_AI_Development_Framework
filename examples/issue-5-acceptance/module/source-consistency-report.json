@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "scope": "author source/diagram alignment; not independent review",
+  "checks": [
+    {
+      "test": "RefundLink original exact inverse and multiplicities",
+      "status": "PASS"
+    },
+    {
+      "test": "RefundLink refund exact inverse and multiplicities",
+      "status": "PASS"
+    },
+    {
+      "test": "both named refund relationships actually in rendered source",
+      "status": "PASS"
+    },
+    {
+      "test": "source ER AccountNamespace.sources",
+      "status": "PASS"
+    },
+    {
+      "test": "source ER SourceIdentity.observations",
+      "status": "PASS"
+    },
+    {
+      "test": "source ER BatchReceipt.observations",
+      "status": "PASS"
+    },
+    {
+      "test": "source ER Entry.observations",
+      "status": "PASS"
+    },
+    {
+      "test": "state diagram parsing -> review",
+      "status": "PASS"
+    },
+    {
+      "test": "state diagram review -> committing",
+      "status": "PASS"
+    },
+    {
+      "test": "state diagram committing -> committed",
+      "status": "PASS"
+    },
+    {
+      "test": "state diagram committing -> recoverable",
+      "status": "PASS"
+    },
+    {
+      "test": "state diagram recoverable -> review",
+      "status": "PASS"
+    },
+    {
+      "test": "state diagram review -> cancelled",
+      "status": "PASS"
+    },
+    {
+      "test": "same approved SYSTEM ref in state/model",
+      "status": "PASS"
+    },
+    {
+      "test": "component ports match typed source",
+      "status": "PASS"
+    }
+  ],
+  "fidelity": "Overview/detail cuts explicitly disclosed in README and figure descriptions; full 12-entity/17-relationship model is canonical. All six ports named. State subset checked against complete transition list."
+}

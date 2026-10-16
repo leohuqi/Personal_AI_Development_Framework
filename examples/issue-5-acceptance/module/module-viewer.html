@@ -1,0 +1,1134 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ExpenseRecord module design</title><style>*{box-sizing:border-box}body{margin:0;padding:32px;background:#f5f5f5;color:#2d3142;font-family:'Geist',system-ui,sans-serif}main{max-width:1320px;margin:auto}h1{font:400 34px 'Instrument Serif',Georgia,serif;margin:8px 0 20px}h2{font-size:23px}p,li{line-height:1.6;max-width:95ch}a{color:#2e5aa8}nav{display:flex;gap:16px;flex-wrap:wrap}.diagram-container{width:100%;overflow-x:auto}svg{width:100%;min-width:1280px;display:block}.node-name{font:600 18px 'Geist',system-ui,sans-serif;fill:#2d3142}.sub{font:14px 'Geist Mono',ui-monospace,monospace;fill:#4f5d75}.tag{font:12px 'Geist Mono',ui-monospace,monospace;fill:#5a6580;letter-spacing:1px}.edge{fill:none;stroke:#4f5d75;stroke-width:1.5}.label{font:13px 'Geist Mono',ui-monospace,monospace;fill:#4f5d75}section{margin:36px 0;border-top:1px solid #ccd0d7;padding-top:24px}table{border-collapse:collapse;width:100%}th,td{padding:10px;text-align:left;vertical-align:top;border-bottom:1px solid #ccd0d7}pre{overflow:auto;background:#ececec;padding:18px;font:13px/1.5 ui-monospace,monospace}summary{cursor:pointer}footer{font-size:13px;color:#4f5d75}@media(max-width:600px){body{padding:16px}}@media print{.diagram-container{overflow:visible}svg{min-width:0}nav{display:none}section{break-inside:avoid}}</style></head><body><main><p class="tag">ISSUE 5 · BOUNDED MODULE DESIGN</p><h1>ExpenseRecord: from source evidence to a durable ledger</h1><p>Manual entry and reviewed imports inside the approved native offline baseline. Technical contracts, editable diagrams and actual renders; application implementation and independent review remain pending.</p><nav><a href="#component-ports">Module components and ports</a><a href="#import-sequence">Preview then one atomic commit</a><a href="#source-identity">Immutable source identity and receipts</a><a href="#ledger-model">Ledger, refunds and location provenance</a><a href="#import-state">Import transaction and recovery states</a></nav><p><a href="MODULE-DESIGN.md">MODULE-DESIGN.md</a> · <a href="CODE-STRUCTURE.md">CODE-STRUCTURE.md</a> · <a href="INTERFACES.swift.txt">INTERFACES.swift.txt</a> · <a href="CORE-DATA-MODEL.json">CORE-DATA-MODEL.json</a> · <a href="PROFILES.md">PROFILES.md</a> · <a href="STATE-CONTRACT.json">STATE-CONTRACT.json</a> · <a href="TEST-PLAN.md">TEST-PLAN.md</a></p><section id="component-ports"><p class="tag">MODULE ARCHITECT · DIAGRAM-DESIGN</p><h2>Module components and ports</h2><div class="diagram-container"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="component-ports-title component-ports-desc"><title id="component-ports-title">Module components and ports</title><desc id="component-ports-desc">Compile dependencies/calls shown. All adapters also depend on Domain; App wiring and UI DesignSystem remain in the approved SYSTEM topology. Six named ports are expanded in INTERFACES.swift.txt, not six new packages.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker></defs><rect width="1280" height="720" fill="#f5f5f5"/><line class="edge" x1="244" y1="300" x2="304" y2="300" marker-end="url(#arrow)"/><rect x="249.2" y="266" width="49.6" height="24" fill="#f5f5f5"/><text x="274" y="280" class="label" text-anchor="middle">CALL</text><path class="edge" d="M 560,280 H 604 Q 612,280 612,272 V 180 Q 612,172 620,172 H 672" marker-end="url(#arrow)"/><path class="edge" d="M 560,328 H 596 Q 604,328 604,336 V 484 Q 604,492 612,492 H 672" marker-end="url(#arrow)"/><line class="edge" x1="1000" y1="492" x2="912" y2="492" marker-end="url(#arrow)"/><rect x="906.0" y="458" width="100.0" height="24" fill="#f5f5f5"/><text x="956" y="472" class="label" text-anchor="middle">IMPLEMENTS</text><g data-node="presentation"><rect class="node-box" x="48" y="256" width="196" height="112" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="64" y="280" class="tag" text-anchor="start">COMPONENT</text><text x="64" y="308" class="node-name" text-anchor="start">Presentation</text><text x="64" y="336" class="sub" text-anchor="start">MainActor state</text></g><g data-node="usecases"><rect class="node-box" x="304" y="256" width="256" height="128" rx="6" fill="#f8ece7" stroke="#bf4520"/><text x="320" y="280" class="tag" text-anchor="start">COMPONENT</text><text x="320" y="308" class="node-name" text-anchor="start">ExpenseUseCases</text><text x="320" y="336" class="sub" text-anchor="start">ImportCoordinator</text><text x="320" y="358" class="sub" text-anchor="start">coordinates all writes</text></g><g data-node="domain"><rect class="node-box" x="672" y="116" width="240" height="112" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="688" y="140" class="tag" text-anchor="start">COMPONENT</text><text x="688" y="168" class="node-name" text-anchor="start">LedgerDomain</text><text x="688" y="196" class="sub" text-anchor="start">Money / IdentityPolicy</text></g><g data-node="ports"><rect class="node-box" x="672" y="436" width="240" height="160" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="688" y="460" class="tag" text-anchor="start">COMPONENT</text><text x="688" y="488" class="node-name" text-anchor="start">Application ports</text><text x="688" y="516" class="sub" text-anchor="start">LedgerStore / Import</text><text x="688" y="538" class="sub" text-anchor="start">Category / Location</text><text x="688" y="560" class="sub" text-anchor="start">Identity / Maintenance</text></g><g data-node="adapters"><rect class="node-box" x="1000" y="416" width="232" height="180" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="1016" y="440" class="tag" text-anchor="start">COMPONENT</text><text x="1016" y="468" class="node-name" text-anchor="start">Approved adapters</text><text x="1016" y="496" class="sub" text-anchor="start">CoreData / BillImport</text><text x="1016" y="518" class="sub" text-anchor="start">Rules / CoreLocation</text><text x="1016" y="540" class="sub" text-anchor="start">IdentityVault / Archive</text></g><text x="48" y="84" class="node-name" text-anchor="start">One process. No adapter-to-adapter imports. No HTTP.</text><text x="48" y="628" class="sub" text-anchor="start">Ports and use cases live in LedgerApplication; composition wires concrete adapters.</text><line class="edge" x1="40" y1="652" x2="1240" y2="652"/><text x="40" y="684" class="tag" text-anchor="start">EXPENSE RECORD · ARCHITECTURE</text><text x="1240" y="684" class="sub" text-anchor="end">Source contracts define complete behavior</text></svg></div><p>Compile dependencies/calls shown. All adapters also depend on Domain; App wiring and UI DesignSystem remain in the approved SYSTEM topology. Six named ports are expanded in INTERFACES.swift.txt, not six new packages.</p><p>Authoritative source: CODE-STRUCTURE.md + INTERFACES.swift.txt. <a href="component-ports.svg">SVG</a> · <a href="component-ports.png">PNG</a></p></section><section id="import-sequence"><p class="tag">MODULE ARCHITECT · DIAGRAM-DESIGN</p><h2>Preview then one atomic commit</h2><div class="diagram-container"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="import-sequence-title import-sequence-desc"><title id="import-sequence-title">Preview then one atomic commit</title><desc id="import-sequence-desc">Happy path only: parser stages/normalizes, category rules suggest, coordinator compares immutable identities and returns review. Confirm revalidates revision and all decisions inside one durable save; UI obtains the receipt and success through commit result/status. Failure/cancel paths are in STATE-CONTRACT.json. GPS never runs as part of import.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker></defs><rect width="1280" height="720" fill="#f5f5f5"/><line class="edge" x1="140" y1="156" x2="140" y2="616" stroke-dasharray="5,4"/><line class="edge" x1="460" y1="156" x2="460" y2="616" stroke-dasharray="5,4"/><line class="edge" x1="780" y1="156" x2="780" y2="616" stroke-dasharray="5,4"/><line class="edge" x1="1100" y1="156" x2="1100" y2="616" stroke-dasharray="5,4"/><line class="edge" x1="140" y1="204" x2="460" y2="204" marker-end="url(#arrow)"/><rect x="262.6" y="174" width="74.80000000000001" height="24" fill="#f5f5f5"/><text x="300.0" y="188" class="label" text-anchor="middle">PREVIEW</text><line class="edge" x1="460" y1="252" x2="780" y2="252" marker-end="url(#arrow)"/><rect x="557.4" y="222" width="125.2" height="24" fill="#f5f5f5"/><text x="620.0" y="236" class="label" text-anchor="middle">PARSE + RULES</text><line class="edge" x1="780" y1="300" x2="460" y2="300" marker-end="url(#arrow)" stroke-dasharray="5,4"/><rect x="595.2" y="270" width="49.6" height="24" fill="#f5f5f5"/><text x="620.0" y="284" class="label" text-anchor="middle">ROWS</text><line class="edge" x1="460" y1="348" x2="1100" y2="348" marker-end="url(#arrow)"/><rect x="838.4" y="318" width="83.2" height="24" fill="#f5f5f5"/><text x="880.0" y="332" class="label" text-anchor="middle">SNAPSHOT</text><line class="edge" x1="1100" y1="396" x2="460" y2="396" marker-end="url(#arrow)" stroke-dasharray="5,4"/><rect x="838.4" y="366" width="83.2" height="24" fill="#f5f5f5"/><text x="880.0" y="380" class="label" text-anchor="middle">REVISION</text><line class="edge" x1="460" y1="444" x2="140" y2="444" marker-end="url(#arrow)" stroke-dasharray="5,4"/><rect x="266.8" y="414" width="66.4" height="24" fill="#f5f5f5"/><text x="300.0" y="428" class="label" text-anchor="middle">REVIEW</text><line class="edge" x1="140" y1="492" x2="460" y2="492" marker-end="url(#arrow)"/><rect x="262.6" y="462" width="74.80000000000001" height="24" fill="#f5f5f5"/><text x="300.0" y="476" class="label" text-anchor="middle">CONFIRM</text><line class="edge" x1="460" y1="540" x2="1100" y2="540" marker-end="url(#arrow)"/><rect x="838.4" y="510" width="83.2" height="24" fill="#f5f5f5"/><text x="880.0" y="524" class="label" text-anchor="middle">TRANSACT</text><line class="edge" x1="1100" y1="588" x2="460" y2="588" marker-end="url(#arrow)" stroke-dasharray="5,4"/><rect x="842.6" y="558" width="74.80000000000001" height="24" fill="#f5f5f5"/><text x="880.0" y="572" class="label" text-anchor="middle">RECEIPT</text><g data-node="0"><rect class="node-box" x="28" y="48" width="224" height="108" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="44" y="72" class="tag" text-anchor="start">ACTOR</text><text x="44" y="100" class="node-name" text-anchor="start">Review UI</text><text x="44" y="128" class="sub" text-anchor="start">explicit user choices</text></g><g data-node="1"><rect class="node-box" x="348" y="48" width="224" height="108" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="364" y="72" class="tag" text-anchor="start">ACTOR</text><text x="364" y="100" class="node-name" text-anchor="start">ImportCoordinator</text><text x="364" y="128" class="sub" text-anchor="start">pure use-case logic</text></g><g data-node="2"><rect class="node-box" x="668" y="48" width="224" height="108" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="684" y="72" class="tag" text-anchor="start">ACTOR</text><text x="684" y="100" class="node-name" text-anchor="start">Import + rules</text><text x="684" y="128" class="sub" text-anchor="start">untrusted file / local</text></g><g data-node="3"><rect class="node-box" x="988" y="48" width="224" height="108" rx="6" fill="#f8ece7" stroke="#bf4520"/><text x="1004" y="72" class="tag" text-anchor="start">ACTOR</text><text x="1004" y="100" class="node-name" text-anchor="start">LedgerStore</text><text x="1004" y="128" class="sub" text-anchor="start">one private writer</text></g><line class="edge" x1="40" y1="652" x2="1240" y2="652"/><text x="40" y="684" class="tag" text-anchor="start">EXPENSE RECORD · SEQUENCE</text><text x="1240" y="684" class="sub" text-anchor="end">Source contracts define complete behavior</text></svg></div><p>Happy path only: parser stages/normalizes, category rules suggest, coordinator compares immutable identities and returns review. Confirm revalidates revision and all decisions inside one durable save; UI obtains the receipt and success through commit result/status. Failure/cancel paths are in STATE-CONTRACT.json. GPS never runs as part of import.</p><p>Authoritative source: MODULE-DESIGN.md transaction + INTERFACES.swift.txt. <a href="import-sequence.svg">SVG</a> · <a href="import-sequence.png">PNG</a></p></section><section id="source-identity"><p class="tag">MODULE ARCHITECT · DIAGRAM-DESIGN</p><h2>Immutable source identity and receipts</h2><div class="diagram-container"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="source-identity-title source-identity-desc"><title id="source-identity-title">Immutable source identity and receipts</title><desc id="source-identity-desc">Subset of logical model: namespace owns identities; identity has observations; observations belong to one entry/batch; command optionally belongs to one batch. Additional namespace-to-observation/batch and Entry-to-identity relations are explicit in JSON, omitted here to avoid crossing. No raw provider IDs or files persist.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker></defs><rect width="1280" height="720" fill="#f5f5f5"/><line class="edge" x1="264" y1="172" x2="480" y2="172"/><rect x="330.4" y="138" width="83.2" height="24" fill="#f5f5f5"/><text x="372" y="152" class="label" text-anchor="middle">1 : 0..N</text><line class="edge" x1="696" y1="172" x2="960" y2="172"/><rect x="773.8" y="138" width="108.4" height="24" fill="#f5f5f5"/><text x="828" y="152" class="label" text-anchor="middle">0..1 : 1..N</text><line class="edge" x1="1068" y1="252" x2="1068" y2="436"/><rect x="1103.0" y="330" width="58.0" height="24" fill="#f5f5f5"/><text x="1132" y="344" class="label" text-anchor="middle">N : 1</text><path class="edge" d="M 588,436 V 352 Q 588,344 596,344 H 1000 Q 1008,344 1008,336 V 252"/><rect x="762.4" y="314" width="83.2" height="24" fill="#f5f5f5"/><text x="804" y="328" class="label" text-anchor="middle">1 : 0..N</text><line class="edge" x1="264" y1="516" x2="480" y2="516"/><rect x="343.0" y="482" width="58.0" height="24" fill="#f5f5f5"/><text x="372" y="496" class="label" text-anchor="middle">N : 0..1</text><g data-node="namespace"><rect class="node-box" x="48" y="92" width="216" height="160" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="64" y="116" class="tag" text-anchor="start">ENTITY</text><text x="64" y="144" class="node-name" text-anchor="start">AccountNamespace</text><text x="64" y="172" class="sub" text-anchor="start"># id / provider</text><text x="64" y="194" class="sub" text-anchor="start">random local alias</text></g><g data-node="identity"><rect class="node-box" x="480" y="92" width="216" height="160" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="496" y="116" class="tag" text-anchor="start">ENTITY</text><text x="496" y="144" class="node-name" text-anchor="start">SourceIdentity</text><text x="496" y="172" class="sub" text-anchor="start"># strongKey UNIQUE</text><text x="496" y="194" class="sub" text-anchor="start">economicDigest</text></g><g data-node="obs"><rect class="node-box" x="960" y="92" width="256" height="160" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="976" y="116" class="tag" text-anchor="start">ENTITY</text><text x="976" y="144" class="node-name" text-anchor="start">SourceObservation</text><text x="976" y="172" class="sub" text-anchor="start">batch + row UNIQUE</text><text x="976" y="194" class="sub" text-anchor="start">fingerprint NON-unique</text></g><g data-node="command"><rect class="node-box" x="48" y="436" width="216" height="160" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="64" y="460" class="tag" text-anchor="start">ENTITY</text><text x="64" y="488" class="node-name" text-anchor="start">CommandReceipt</text><text x="64" y="516" class="sub" text-anchor="start"># commandID UNIQUE</text><text x="64" y="538" class="sub" text-anchor="start">requestDigest / result</text></g><g data-node="batch"><rect class="node-box" x="480" y="436" width="216" height="160" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="496" y="460" class="tag" text-anchor="start">ENTITY</text><text x="496" y="488" class="node-name" text-anchor="start">BatchReceipt</text><text x="496" y="516" class="sub" text-anchor="start"># fileDigest UNIQUE</text><text x="496" y="538" class="sub" text-anchor="start">committed result</text></g><g data-node="entry"><rect class="node-box" x="960" y="436" width="256" height="160" rx="6" fill="#f8ece7" stroke="#bf4520"/><text x="976" y="460" class="tag" text-anchor="start">ENTITY</text><text x="976" y="488" class="node-name" text-anchor="start">Entry</text><text x="976" y="516" class="sub" text-anchor="start"># UUID</text><text x="976" y="538" class="sub" text-anchor="start">edited values separate</text></g><line class="edge" x1="40" y1="652" x2="1240" y2="652"/><text x="40" y="684" class="tag" text-anchor="start">EXPENSE RECORD · ER / DATA MODEL</text><text x="1240" y="684" class="sub" text-anchor="end">Source contracts define complete behavior</text></svg></div><p>Subset of logical model: namespace owns identities; identity has observations; observations belong to one entry/batch; command optionally belongs to one batch. Additional namespace-to-observation/batch and Entry-to-identity relations are explicit in JSON, omitted here to avoid crossing. No raw provider IDs or files persist.</p><p>Authoritative source: CORE-DATA-MODEL.json + identity algorithm in MODULE-DESIGN.md. <a href="source-identity.svg">SVG</a> · <a href="source-identity.png">PNG</a></p></section><section id="ledger-model"><p class="tag">MODULE ARCHITECT · DIAGRAM-DESIGN</p><h2>Ledger, refunds and location provenance</h2><div class="diagram-container"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ledger-model-title ledger-model-desc"><title id="ledger-model-title">Ledger, refunds and location provenance</title><desc id="ledger-model-desc">Entity relationships shown at aggregate level. Entry owns append-only location/override evidence; selected pointers must reference the same Entry. RefundLink has two named Entry relationships shown separately: each link has one original and one refund; an original has 0..N links and a refund 0..1. Pair labels read left-to-right. MerchantMapping and singleton StoreMetadata are text-listed rather than disconnected boxes; full attributes, inverses, constraints and indexes remain authoritative in JSON.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker></defs><rect width="1280" height="720" fill="#f5f5f5"/><line class="edge" x1="624" y1="296" x2="624" y2="180"/><rect x="659.0" y="226" width="58.0" height="24" fill="#f5f5f5"/><text x="688" y="240" class="label" text-anchor="middle">N : 1</text><line class="edge" x1="296" y1="352" x2="512" y2="352"/><rect x="345.6" y="322" width="116.80000000000001" height="24" fill="#f5f5f5"/><text x="404" y="336" class="label" text-anchor="middle">ORIGINAL N:1</text><line class="edge" x1="296" y1="416" x2="512" y2="416"/><rect x="341.4" y="386" width="125.2" height="24" fill="#f5f5f5"/><text x="404" y="400" class="label" text-anchor="middle">REFUND 0..1:1</text><line class="edge" x1="736" y1="376" x2="960" y2="376"/><rect x="806.4" y="342" width="83.2" height="24" fill="#f5f5f5"/><text x="848" y="356" class="label" text-anchor="middle">1 : 0..N</text><line class="edge" x1="624" y1="456" x2="624" y2="536"/><rect x="642.4" y="490" width="83.2" height="24" fill="#f5f5f5"/><text x="684" y="504" class="label" text-anchor="middle">1 : 0..N</text><g data-node="category"><rect class="node-box" x="512" y="48" width="224" height="132" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="528" y="72" class="tag" text-anchor="start">ENTITY</text><text x="528" y="100" class="node-name" text-anchor="start">Category</text><text x="528" y="128" class="sub" text-anchor="start"># id / retired</text></g><g data-node="entry"><rect class="node-box" x="512" y="296" width="224" height="160" rx="6" fill="#f8ece7" stroke="#bf4520"/><text x="528" y="320" class="tag" text-anchor="start">ENTITY</text><text x="528" y="348" class="node-name" text-anchor="start">Entry</text><text x="528" y="376" class="sub" text-anchor="start">signed minorUnits</text><text x="528" y="398" class="sub" text-anchor="start">currency / timestamp</text></g><g data-node="refund"><rect class="node-box" x="48" y="296" width="248" height="160" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="64" y="320" class="tag" text-anchor="start">ENTITY</text><text x="64" y="348" class="node-name" text-anchor="start">RefundLink</text><text x="64" y="376" class="sub" text-anchor="start">refund UNIQUE</text><text x="64" y="398" class="sub" text-anchor="start">original / revision</text></g><g data-node="location"><rect class="node-box" x="960" y="296" width="272" height="160" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="976" y="320" class="tag" text-anchor="start">ENTITY</text><text x="976" y="348" class="node-name" text-anchor="start">LocationEvidence</text><text x="976" y="376" class="sub" text-anchor="start">kind / collectedAt</text><text x="976" y="398" class="sub" text-anchor="start">consent / accuracy</text></g><g data-node="override"><rect class="node-box" x="512" y="536" width="224" height="104" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="528" y="560" class="tag" text-anchor="start">ENTITY</text><text x="528" y="588" class="node-name" text-anchor="start">CategoryOverride</text><text x="528" y="616" class="sub" text-anchor="start">entry / category</text></g><text x="48" y="112" class="node-name" text-anchor="start">RefundLink: each refund → one original</text><text x="48" y="144" class="sub" text-anchor="start">Original spend has 0..N links; refund 0..1.</text><text x="48" y="188" class="sub" text-anchor="start">Linked magnitudes ≤ original; same currency.</text><text x="960" y="112" class="node-name" text-anchor="start">Also specified in full JSON</text><text x="960" y="144" class="sub" text-anchor="start">MerchantMapping → Category</text><text x="960" y="176" class="sub" text-anchor="start">StoreMetadata epoch + revision</text><text x="960" y="208" class="sub" text-anchor="start">Selected location / override</text><line class="edge" x1="40" y1="652" x2="1240" y2="652"/><text x="40" y="684" class="tag" text-anchor="start">EXPENSE RECORD · ER / DATA MODEL</text><text x="1240" y="684" class="sub" text-anchor="end">Source contracts define complete behavior</text></svg></div><p>Entity relationships shown at aggregate level. Entry owns append-only location/override evidence; selected pointers must reference the same Entry. RefundLink has two named Entry relationships shown separately: each link has one original and one refund; an original has 0..N links and a refund 0..1. Pair labels read left-to-right. MerchantMapping and singleton StoreMetadata are text-listed rather than disconnected boxes; full attributes, inverses, constraints and indexes remain authoritative in JSON.</p><p>Authoritative source: CORE-DATA-MODEL.json + MODULE-DESIGN.md invariants. <a href="ledger-model.svg">SVG</a> · <a href="ledger-model.png">PNG</a></p></section><section id="import-state"><p class="tag">MODULE ARCHITECT · DIAGRAM-DESIGN</p><h2>Import transaction and recovery states</h2><div class="diagram-container"><svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="import-state-title import-state-desc"><title id="import-state-title">Import transaction and recovery states</title><desc id="import-state-desc">Ordinary state machine chosen because guarded transitions and commit race dominate; not a lifecycle phase map. Idle selection starts parsing. Unsupported and parse failures use the full JSON table. Terminal batches never revert; cleanup failure is committed success. Retry after rollback requires a fresh review. Interrupted save resumes receipt query, not an assumed failure.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker></defs><rect width="1280" height="720" fill="#f5f5f5"/><line class="edge" x1="264" y1="196" x2="384" y2="196" marker-end="url(#arrow)"/><rect x="295.0" y="162" width="58.0" height="24" fill="#f5f5f5"/><text x="324" y="176" class="label" text-anchor="middle">VALID</text><line class="edge" x1="600" y1="196" x2="720" y2="196" marker-end="url(#arrow)"/><rect x="622.6" y="162" width="74.80000000000001" height="24" fill="#f5f5f5"/><text x="660" y="176" class="label" text-anchor="middle">CONFIRM</text><line class="edge" x1="936" y1="196" x2="1056" y2="196" marker-end="url(#arrow)"/><rect x="967.0" y="162" width="58.0" height="24" fill="#f5f5f5"/><text x="996" y="176" class="label" text-anchor="middle">SAVED</text><line class="edge" x1="492" y1="260" x2="492" y2="468" marker-end="url(#arrow)"/><rect x="522.8" y="346" width="66.4" height="24" fill="#f5f5f5"/><text x="556" y="360" class="label" text-anchor="middle">CANCEL</text><line class="edge" x1="828" y1="260" x2="828" y2="468" marker-end="url(#arrow)"/><rect x="858.4" y="346" width="83.2" height="24" fill="#f5f5f5"/><text x="900" y="360" class="label" text-anchor="middle">ROLLBACK</text><path class="edge" d="M 720,532 H 648 Q 640,532 640,524 V 252 Q 640,244 632,244 H 600" marker-end="url(#arrow)"/><rect x="505.6" y="402" width="116.80000000000001" height="24" fill="#f5f5f5"/><text x="564" y="416" class="label" text-anchor="middle">REVIEW AGAIN</text><g data-node="parsing"><rect class="node-box" x="48" y="132" width="216" height="128" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="64" y="156" class="tag" text-anchor="start">STATE</text><text x="64" y="184" class="node-name" text-anchor="start">Parsing</text><text x="64" y="212" class="sub" text-anchor="start">selected file</text><text x="64" y="234" class="sub" text-anchor="start">cancel ≤100 rows</text></g><g data-node="review"><rect class="node-box" x="384" y="132" width="216" height="128" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="400" y="156" class="tag" text-anchor="start">STATE</text><text x="400" y="184" class="node-name" text-anchor="start">Review</text><text x="400" y="212" class="sub" text-anchor="start">explicit decisions</text><text x="400" y="234" class="sub" text-anchor="start">epoch + revision</text></g><g data-node="committing"><rect class="node-box" x="720" y="132" width="216" height="128" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="736" y="156" class="tag" text-anchor="start">STATE</text><text x="736" y="184" class="node-name" text-anchor="start">Committing</text><text x="736" y="212" class="sub" text-anchor="start">recheck all</text><text x="736" y="234" class="sub" text-anchor="start">one durable save</text></g><g data-node="committed"><rect class="node-box" x="1056" y="132" width="184" height="128" rx="6" fill="#f8ece7" stroke="#bf4520"/><text x="1072" y="156" class="tag" text-anchor="start">STATE</text><text x="1072" y="184" class="node-name" text-anchor="start">Committed</text><text x="1072" y="212" class="sub" text-anchor="start">receipt replay</text></g><g data-node="cancelled"><rect class="node-box" x="384" y="468" width="216" height="128" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="400" y="492" class="tag" text-anchor="start">STATE</text><text x="400" y="520" class="node-name" text-anchor="start">Cancelled</text><text x="400" y="548" class="sub" text-anchor="start">staging deleted</text></g><g data-node="recoverable"><rect class="node-box" x="720" y="468" width="216" height="128" rx="6" fill="#f5f5f5" stroke="#7c8493"/><text x="736" y="492" class="tag" text-anchor="start">STATE</text><text x="736" y="520" class="node-name" text-anchor="start">Recoverable</text><text x="736" y="548" class="sub" text-anchor="start">locked/full/stale</text><text x="736" y="570" class="sub" text-anchor="start">no partial writes</text></g><text x="48" y="84" class="node-name" text-anchor="start">Primary lifecycle; full transition/error table in STATE-CONTRACT.json</text><text x="48" y="564" class="sub" text-anchor="start">Unsupported format → stop/reselect.</text><text x="48" y="592" class="sub" text-anchor="start">Parse cancel → cancelled.</text><text x="1016" y="476" class="sub" text-anchor="start">Cancel during save:</text><text x="1016" y="508" class="sub" text-anchor="start">check outcome/receipt;</text><text x="1016" y="540" class="sub" text-anchor="start">commit may already win.</text><line class="edge" x1="40" y1="652" x2="1240" y2="652"/><text x="40" y="684" class="tag" text-anchor="start">EXPENSE RECORD · STATE MACHINE</text><text x="1240" y="684" class="sub" text-anchor="end">Source contracts define complete behavior</text></svg></div><p>Ordinary state machine chosen because guarded transitions and commit race dominate; not a lifecycle phase map. Idle selection starts parsing. Unsupported and parse failures use the full JSON table. Terminal batches never revert; cleanup failure is committed success. Retry after rollback requires a fresh review. Interrupted save resumes receipt query, not an assumed failure.</p><p>Authoritative source: STATE-CONTRACT.json + MODULE-DESIGN.md. <a href="import-state.svg">SVG</a> · <a href="import-state.png">PNG</a></p></section><section><h2>Complete source contracts</h2><details><summary>MODULE-DESIGN.md</summary><pre># ExpenseRecord module design 0.1
+schema_version: padf.module-design/v1
+context_id: PADF-ISSUE-5-EXPENSE-ACCEPTANCE
+original_feature_ids: [EXPENSE-ACCEPTANCE-005]
+linear_issue: none supplied
+issue: https://github.com/leohuqi/Personal_AI_Development_Framework/issues/5
+task_class: L
+architecture_scope: both (this delivery: module only)
+author: module-architect /root/module_architect
+task_contract_ref: MODULE-DISPATCH.md@9b0395177352f449ace247e5c1054acbe60b6594
+system_baseline_ref: examples/issue-5-acceptance/system/SYSTEM-BASELINE.md@f4dbf0d3fac707db1b57252c529618c38d26f0bc
+owner_approval_ref: OWNER-SYSTEM-APPROVAL.md@05ba2117e2fbb5ac924913accb76b763a2fc268c
+current_source: design-only repository; no ExpenseLedger executable/module exists
+status: COMPLETED means own design delivery only; independent DESIGN review and Owner scoring pending
+
+## Boundaries and responsibilities
+Conform exactly to Xcode 26.0 / Swift 6.2 / iOS 26 SDK / minimum iOS 17, native SwiftUI, Core Data LedgerModel v1, one offline process. Application ports coordinate adapters; adapters do not call one another. No network API: REST/OpenAPI/server DDL are N/A because no server or external HTTP contract exists. Core Data logical model and typed local APIs define the applicable API/DB contract. No new stack or material SYSTEM policy proposed.
+
+ExpenseRecord covers manual entry, immutable import evidence, preview/review/atomic commit, local suggestions plus explicit override, duplicate decisions, refunds, location evidence and recovery seams. Full backup implementation, real provider compatibility, application build, UX styling, coding permission and release are outside this delivery.
+
+## Invariants
+I01 Money = ISO currency + signed Int64 minor units. Spend records carry positive amount; refund records carry negative amount, never Int64.min; zero invalid. Parse decimal strings exactly with checked multiply/add and currency exponent registry v1 (CNY/USD=2, JPY=0); no Float/Double. Unsupported currencies/excess decimals reject; no FX or cross-currency totals.
+I02 Import evidence is immutable and separate from editable ledger values. Entry merchant/category/date/location corrections never rewrite source observations or source identity. Reimport cannot silently replace any existing value or explicit category choice.
+I03 A commit is one durable persistent-store save for all selected entries, observations, identity reservations, refund links, overrides, batch and command receipts plus ledgerRevision increment. No intermediate child-context save counts as durable. Any validation/save failure rolls back all changes.
+I04 Strong provider identity is unique per provider plus explicit local account namespace. Missing IDs are candidates only; identical economic fields may be different purchases. File identity alone never deduplicates overlapping exports.
+I05 Refund records preserve independent identity, sign and evidence. Unresolved refunds remain visible separately and excluded from settled net. Links are same currency, negative refund to positive spend; sum of linked refund magnitudes cannot exceed spend. Original is never deleted or reduced.
+I06 Current GPS is an optional present observation, never historical purchase location. Import does not request GPS. Denial/unavailability never prevents entry/import.
+I07 Cancellation before transaction discards transient staging. Once atomic save begins, commit wins or fails; cancellation cannot claim rollback after durable save. Retry returns stored receipt after a successful commit.
+I08 Logs contain only stable codes, counts/durations, ephemeral random correlation IDs; no amounts/merchant/coordinates/file names/raw IDs or hashes/keys. Store/provenance remain sensitive protected data, not anonymous analytics.
+
+## Ownership and calculations
+Category is a snapshot of suggestion (rule version, reason enum, confidence enum) unless an explicit user override exists. Override outranks user merchant mapping, which outranks bundled rules; ties use longest normalized literal match then rule ID ascending. No remote AI. Reclassification is an explicit reviewed command on selected entry IDs, never automatic mutation. Unknown/retired category cannot be selected for a new save; historical category remains readable after retirement.
+Manual entries get UUID identity and no provider SourceIdentity. Imported entries get UUID plus zero/one strong identity; observations may also attach to an already known entry after review. A duplicate decision records keepSeparate, linkExisting, or skip with candidate IDs and observed revision. keepSeparate is allowed only for no-ID rows. Known conflicting provider ID cannot become a second entry; user may skip it and separately create a manual correction. Source original never mutates.
+Settled net per currency = sum positive spend + sum negative refunds having valid RefundLink. Unresolved/refund-conflict subtotal is separate. All sums checked Int64; overflow returns INVALID_AMOUNT and no misleading total. No totals spanning currencies. Negative net for a particular spend is forbidden by link invariant.
+
+## Timestamp, merchant and source rules
+Normalize text NFC, trim Unicode outer whitespace, preserve case in display; merchant comparison uses locale-independent case fold and collapse internal whitespace. Do not strip punctuation/digits or resolve merchant aliases implicitly. Keep immutable normalized source merchant plus editable display merchant. HMAC fingerprint uses normalized comparison merchant.
+occurredAtUTC is an exact second timestamp plus original offset seconds and precision enum. Synthetic profiles require RFC3339 explicit offset and second precision; reject missing zone, leap seconds, invalid calendar dates or ambiguous local time. Manual form supplies explicit IANA zone and fold choice for DST ambiguity, persists selected offset and UTC; nonexistent wall time rejects. Zone identifier is optional for fixed-offset imports. Local display changes never rewrite source time. A provider profile with another precision/timezone must define new normalization version and review, never assume device zone.
+Account namespace is user-selected random UUID per local provider account, no login/account number; preview explicitly confirms it. Provider ID is exact NFC string with outer whitespace trimmed only, case-sensitive, max 256 UTF-8 bytes. Wrong namespace is user risk surfaced at review; never infer from names. Profile provider marker and namespace/provider pairing must match.
+
+## Exact identity, overlap and conflict algorithm
+All identity encodings use versioned domain-separated length-prefixed UTF-8 components (4-byte big-endian length), not delimiter joins. HMAC-SHA256 with random per-ledger 256-bit identityKey protects low-entropy IDs/fingerprints; key lives in protected private key material, never logs. Key exported only inside authenticated encrypted archive; restores preserve it. Key loss means recovery mode, not silently generating new keys for old data. This is an internal persistence detail under SYSTEM CryptoKit, not a new security boundary.
+strongKey = HMAC(identityKey, [strong-v1, provider, namespaceUUID, providerID]).
+economicDigest = HMAC(identityKey, [economic-v1, provider, namespace, kind, minorUnits decimal, ISO currency, UTC seconds, offset seconds, precision, normalizedMerchant, originalStrongKey-or-empty]). Status normalization participates; only settled records eligible. Category/location/suggestions/user edits/filename/row index do not participate.
+fingerprint = HMAC(identityKey, [candidate-v1, provider, namespace, kind, minorUnits, currency, UTC seconds, precision, normalizedMerchant]); offset omitted here because equivalent instants can use different offsets. It is indexed NON-unique.
+1. Stream bounded file to protected random staging name; SHA256 bytes; look up global fileDigest receipt. If already committed, same namespace/profile returns existing receipt; differing namespace/profile returns SOURCE_CONFLICT. Never apply new override decisions during replay.
+2. Detect exactly one synthetic profile; parse/validate every row; failed rows are listed by ordinal+code. No commit until invalid rows explicitly excluded and all remaining review decisions complete. Preview is immutable candidate snapshot at storeEpoch/ledgerRevision and reviewRevision.
+3. For each strong ID, search current store AND earlier rows in same batch. Same key+economicDigest -&gt; exact duplicate proposal, preselected skip but visible until explicit confirmation. Same key+different digest -&gt; SOURCE_CONFLICT (including changed amount/currency/status/refund reference); blocked row must be excluded. Do not silently replace evidence or merge statuses. Two identical strong rows may collapse to one identity/entry with two observation ordinals on explicit confirmation.
+4. Without ID, search fingerprint across store and batch. Zero match proposes new entry; one/multiple matches require explicit linkExisting, keepSeparate or skip. Even within the same file no automatic collapse. keepSeparate creates UUID entry/source observation, no unique fingerprint constraint. linkExisting requires matching kind/currency/amount/instant/merchant source digest and explicit candidate selection; user corrections on existing entry remain intact. Ambiguous rows cannot be committed undecided.
+5. Overlap example: export A IDs X,Y; B IDs Y,Z =&gt; Y proposed duplicate, Z new regardless file hash. Same no-ID rows in A/B =&gt; candidate review; multiple identical purchases remain separately representable. If canonical merchant was edited, match uses original immutable observations rather than edits.
+6. Inside writer transaction, recheck epoch/revision, all identities, selected candidates, category validity and refund caps. Any stale observation returns STALE_REVIEW with no writes, forcing refreshed preview and explicit review. No automatic rebase of financial decisions.
+
+## Refund algorithm and edge cases
+A refund is one negative Entry associated with at most one positive original. Partial refund -300 of +1000 and another -200 leave +500 settled. Original ID references use strongKey with same provider/namespace; refund own strongKey is distinct. Self-reference, refund-to-refund, cross-currency, nonpositive original or over-cap are REFUND_UNLINKED/SOURCE_CONFLICT review blockers for linking, not data loss. Preview may choose retainUnresolved for missing/ambiguous original; commit negative entry with resolution=unresolved, no link. Explicit link command with expected revisions may later link all amount or leave all unresolved; splitting a single refund among multiple originals is unsupported and surfaced, never guessed. Multiple refunds have different IDs or reviewed separate no-ID entries.
+When refund precedes original, retain unresolved and keyed originalStrongKeyHint. Arrival of original offers candidates but does not silently link; explicit review links it. Sort proposed refund links by original UUID then refund UUID only for deterministic checks; evaluate aggregate proposed+existing magnitudes together with checked arithmetic, not arrival order. If total exceeds cap, entire chosen link plan fails; user can leave selected refunds unresolved or skip rows, preserving all evidence. If several originals match a no-ID hint, explicit selection required. A full refund plus later partial exceeds cap and cannot settle automatically. Duplicate refund retries must never count twice. Non-settled/cancelled provider rows are excluded with code, not rewritten as refunds.
+
+## Location and privacy
+LocationEvidence is append-only, separated from Entry.occurredAt. source_provided_historical stores bounded text, no inferred coordinates/geocoding; user_entered_historical stores explicit text/coordinates if entered with provenance. device_current requires a foreground purpose token from explicit user action, collectedAtUTC, accuracy meters and authorization snapshot. Max wait 10 s, accept age &lt;=60 s, horizontal accuracy &gt;=0 and &lt;=1000 m; reduced accuracy remains optional with UI warning and explicit accept, otherwise retain prior evidence. Denied/restricted/timeout/unavailable =&gt; nonfatal LOCATION_UNAVAILABLE or PERMISSION_DENIED, entry save remains available. A source history label and attached current observation coexist. Replacing display choice changes selectedLocationEvidenceID only; original source stays immutable. Consent token is bound to one entry/draft, expires 60 s, cannot attach to all batch rows. No background permission, no automatic retry/GPS on app reopen/import.
+
+## Transaction, concurrency and restore
+LedgerPersistence owns actor LedgerStore; its dedicated private NSManagedObjectContext runs perform closures. No managed objects cross actor boundaries; return Sendable value DTOs/UUIDs. MainActor owns presentation state. Parser/rules run non-main, cancellation every &lt;=100 rows and before entering commit. One writer serializes manual/import/override/refund commands; error merge policy, no property-trump. No NSBatchInsert/NSBatchDelete bypassing constraints. Writer checks all uniqueness/domain rules; Core Data constraints are final race defense. Commit performs exactly one context.save; on error rollback and map stable code. Commit receipt contains batchID, commandID, counts, entry IDs and new revision, not raw rows. In-memory store does not prove persistent atomicity; disk store crash fault tests required.
+commandID UUID plus requestDigest uniquely guards save/override/link commands: same ID+same digest returns receipt, same ID+different digest SOURCE_CONFLICT. BatchReceipt fileDigest unique globally. No await/yield between transactional revalidation and save; actor isolation alone does not imply Core Data queue safety. Cancel during save returns outcome by querying receipt; if process dies client asks commandStatus/batchStatus on resume. Unknown outcome remains checking, never display failure that encourages duplicate re-entry.
+Preview/staging are transient, not canonical store writes. In-process review handles expire after 30 min/background interruption and delete staging; relaunch shows committed receipts, uncommitted preview must be reselected. Failed commit may retain protected review staging only while foreground handle valid; retry revalidates. Cleanup failure after durable commit yields success with CLEANUP_PENDING; startup removes orphan staging by random known paths, never follows source filenames/symlinks. Batch history contains no raw documents.
+Restore/migration acquire maintenance lease, pause all writes, invalidate preview handles and increment storeEpoch after validated swap. Valid encrypted backup v1 exports allowlisted DTOs including identity key, namespaces, receipts and linked evidence; no raw documents. Checksums/counts, unique identities, refs, signs/currencies/refund caps/category IDs and timestamp bounds validate before candidate store creation. No archive merge. BackupArchive uses SYSTEM envelope/KDF unchanged; module ports provide data snapshot and candidate validation only. Restore failure leaves current store intact. Migration v1 initial model; future v2 requires version/hash, explicit mapping if non-lightweight, verified protected pre-migration backup, failure read-only recovery and tested prior binary/store rollback; never downgrade in place or open empty ledger on failure.
+
+## UI contract and decisions
+Use stable row tokens + safe row ordinal/code, editable drafts, suggested category/reason, explicit override and review counts. Commit enabled iff all included rows valid and duplicate/refund decisions resolved or explicitly retained unresolved, source conflicts excluded, preview current. UI states/errors in STATE-CONTRACT.json and INTERFACES.swift.txt are authoritative; UI role chooses visuals/accessibility under its separately approved profile. No UI Profile consumed because it does not exist yet. All module choices refine approved conservative policies; no CHANGE_REQUEST needed. Provider-format compatibility and device build/performance/security remain NOT_RUN. Fresh independent DESIGN review and MA-Q1–5 Owner grading are required, with no self-grading.
+</pre></details><details><summary>CODE-STRUCTURE.md</summary><pre># Concrete proposed code and test map
+Current: no application code; framework contracts and synthetic design evidence only. Target is the approved SYSTEM packages, no new top-level runtime package.
+
+| Package / file | Concrete type and responsibility | Allowed imports |
+|---|---|---|
+| LedgerDomain/Money.swift | Money, CurrencyRegistry, checked parsing/totals | Foundation |
+| LedgerDomain/ExpenseRecord.swift | ExpenseRecord, EntryKind, immutable SourceSnapshot values | Foundation |
+| LedgerDomain/IdentityPolicy.swift | canonical component encoding, identity material and candidate policy | Foundation; crypto executed through port |
+| LedgerDomain/RefundPolicy.swift | RefundPlan validation, signs/currency/cap | Foundation |
+| LedgerDomain/LocationEvidence.swift | provenance cases and sample acceptance policy | Foundation |
+| LedgerApplication/ExpenseCommands.swift | command/query DTOs, envelope v1 | Domain |
+| LedgerApplication/ExpenseUseCases.swift | actor ExpenseUseCases save/override/link | Domain |
+| LedgerApplication/ImportCoordinator.swift | actor ImportCoordinator transient handles and review revisions | Domain |
+| LedgerApplication/Ports.swift | LedgerStorePort, ImportPort, CategoryPort, LocationPort, IdentityPort, MaintenancePort | Domain |
+| LedgerPersistence/CoreDataLedgerStore.swift | actor serial writer, DTO mapping/receipts | Application, Domain, CoreData |
+| LedgerPersistence/LedgerModel.xcdatamodeld | LedgerModel v1 model described in CORE-DATA-MODEL.json | CoreData model resource |
+| LedgerPersistence/StoreRecovery.swift | protection checks, maintenance lease, candidate validation/swap | Application, Domain, CoreData |
+| LedgerPersistence/IdentityVault.swift | protected identity key + HMAC implementation for IdentityPort | Application, Domain, CryptoKit, Security |
+| BillImport/ProfileRegistry.swift | exact synthetic marker/header profile matching | Application, Domain, Foundation |
+| BillImport/StreamingCSV.swift | bounded RFC4180 reader; never formula execute | Application, Domain, Foundation |
+| BillImport/SyntheticBillAdapter.swift | normalize approved synthetic v1 rows | Application, Domain, Foundation |
+| CategoryRules/LocalCategoryRules.swift | user mapping then pinned local deterministic rules | Application, Domain |
+| LocationAccess/CurrentLocationSampler.swift | @MainActor CoreLocation delegate bridge, explicit consent token | Application, Domain, CoreLocation |
+| BackupArchive/ArchiveSnapshotAdapter.swift | approved encrypted envelope v1; immutable snapshot/candidate ports | Application, Domain, CryptoKit, CommonCrypto |
+| LedgerPresentation/ExpenseFormModel.swift | @MainActor form state; no direct persistence | Application, Domain, SwiftUI |
+| LedgerPresentation/ImportReviewModel.swift | @MainActor review/commit/retry/error state | Application, Domain, SwiftUI |
+| App/ExpenseComposition.swift | inject concrete adapters/permissions; only composition sees all | Presentation + adapters |
+
+Application -&gt; Domain. Adapters -&gt; Application ports + Domain. Presentation -&gt; Application (+ approved DesignSystem later); no adapter-to-adapter or presentation-to-CoreData edge. IdentityVault is persistence-private implementation of application IdentityPort, does not become a shared adapter dependency. Use case obtains identity material/snapshot through ports and passes values to parser/rules. Existing topology unchanged.
+
+Tests/Domain: MoneyTests, IdentityCanonicalizationTests, DuplicatePlanTests, RefundPolicyTests, LocationPolicyTests. Tests/Application: ImportCoordinatorTests with deterministic clock/UUID/fake ports; mutation and retry tests. Tests/Persistence: actual temporary SQLite Core Data store, fault injection before/after save, constraints and maintenance recovery. Fixtures/Synthetic only; Tests/UI later XCUITest maps UI-facing seams. No implementation has been written in this pilot.
+</pre></details><details><summary>INTERFACES.swift.txt</summary><pre>// Precise typed DESIGN PSEUDOCODE, Swift 6.2 intent. Not a compiled app/API claim.
+// Envelope schema v1. All DTOs Sendable; no NSManagedObject or file URL in UI DTOs.
+struct Money: Sendable { let minorUnits: Int64; let currency: CurrencyCode }
+struct Revision: Sendable, Equatable { let storeEpoch: UUID; let ledger: UInt64 }
+struct RowToken: Sendable, Hashable { let batchID: UUID; let ordinal: Int }
+struct Receipt: Sendable { let commandID: UUID; let batchID: UUID?; let entryIDs: [UUID]; let revision: Revision; let inserted: Int; let duplicates: Int; let unresolvedRefunds: Int; let cleanupPending: Bool }
+struct Failure: Sendable { let code: ErrorCode; let recovery: Recovery; let safeMessageKey: String; let rowOrdinal: Int? }
+enum Recovery: Sendable { case edit, reselectFile, reviewAgain, retryAfterUnlock, retryAfterFreeSpace, optionalLocation, recoveryReadOnly, none }
+enum ResultV1&lt;T: Sendable&gt;: Sendable { case success(commandID: UUID, value: T); case failure(commandID: UUID, error: Failure) }
+enum EntryKind: Sendable { case spend, refund }
+enum CategoryChoice: Sendable { case suggested(categoryID: UUID, ruleVersion: String, reason: String), user(categoryID: UUID) }
+enum DuplicateDecision: Sendable { case new, linkExisting(UUID), keepSeparate, skip }
+enum RefundDecision: Sendable { case notRefund, link(originalID: UUID), retainUnresolved, skip }
+struct ManualDraft: Sendable { let amount: Money; let kind: EntryKind; let merchant: String; let occurredAtUTC: Date; let originalOffsetSeconds: Int32; let zoneID: String?; let fold: UInt8?; let category: CategoryChoice; let historicalLocation: HistoricalInput?; let currentObservation: CurrentObservation?; let originalForRefund: UUID? }
+struct SaveManual: Sendable { let schemaVersion: Int /*1*/; let commandID: UUID; let expected: Revision; let draft: ManualDraft }
+struct PreviewImport: Sendable { let commandID: UUID; let selection: SelectedFileHandle; let namespaceID: UUID; let provider: Provider }
+// SelectedFileHandle is opaque app/file-picker token. Adapter bounded-copies via security-scoped access; closes access on all outcomes.
+struct Preview: Sendable { let batchID: UUID; let reviewRevision: UInt64; let basedOn: Revision; let profile: ProfileVersion; let rows: [ReviewRow]; let expiresAt: Date; let counts: ReviewCounts }
+struct ReviewRow: Sendable { let token: RowToken; let source: ReadonlySourceSummary; let suggestion: Suggestion?; let duplicateCandidates: [UUID]; let refundCandidates: [UUID]; let issues: [ErrorCode]; let defaultIncluded: Bool }
+struct RowDecision: Sendable { let token: RowToken; let included: Bool; let editedDraft: EditableFields; let category: CategoryChoice; let duplicate: DuplicateDecision; let refund: RefundDecision }
+struct CommitImport: Sendable { let schemaVersion: Int /*1*/; let commandID: UUID; let batchID: UUID; let reviewRevision: UInt64; let basedOn: Revision; let decisions: [RowDecision] }
+struct OverrideCategory: Sendable { let commandID: UUID; let expected: Revision; let entryID: UUID; let categoryID: UUID; let alsoRememberMerchant: Bool }
+struct LinkRefund: Sendable { let commandID: UUID; let expected: Revision; let refundID: UUID; let originalID: UUID }
+struct LedgerQuery: Sendable { let currency: CurrencyCode; let cursor: LedgerCursor?; let limit: Int /*1...100*/ }
+struct LedgerPage: Sendable { let entries: [ExpenseRecordDTO]; let next: LedgerCursor?; let revision: Revision; let currencyTotals: CheckedTotals }
+// Cursor binds storeEpoch + ledgerRevision + occurredAtUTC + entryUUID. Stale cursor -&gt; STALE_REVIEW/restart; deterministic keyset order.
+protocol ExpenseCommands: Sendable {
+ func saveManual(_ request: SaveManual) async -&gt; ResultV1&lt;Receipt&gt;
+ func previewImport(_ request: PreviewImport) async -&gt; ResultV1&lt;Preview&gt;
+ func reviseReview(batchID: UUID, expectedReview: UInt64, decisions: [RowDecision]) async -&gt; ResultV1&lt;Preview&gt;
+ func commitImport(_ request: CommitImport) async -&gt; ResultV1&lt;Receipt&gt;
+ func cancelReview(batchID: UUID) async -&gt; ResultV1&lt;CancelOutcome&gt;
+ func overrideCategory(_ request: OverrideCategory) async -&gt; ResultV1&lt;Receipt&gt;
+ func linkRefund(_ request: LinkRefund) async -&gt; ResultV1&lt;Receipt&gt;
+ func entries(_ query: LedgerQuery) async -&gt; ResultV1&lt;LedgerPage&gt;
+ func commandStatus(commandID: UUID) async -&gt; ResultV1&lt;CommandStatus&gt; // unknown | committed(receipt)
+ func batchStatus(batchID: UUID) async -&gt; ResultV1&lt;BatchStatus&gt; // transient | expired | committed(receipt)
+ func sampleCurrent(_ request: ExplicitConsentRequest) async -&gt; ResultV1&lt;CurrentObservation&gt;
+}
+// Every query also receives/creates a correlation command ID; pseudocode omits IDs only in convenience argument lists.
+protocol ImportPort: Sendable { func parse(_ handle: ProtectedStagingHandle, expectedProfile: ProfileVersion?, cancel: CancellationProbe) async -&gt; ResultV1&lt;NormalizedRows&gt; }
+protocol CategoryPort: Sendable { func suggest(merchantKey: String, mappings: [UserMapping], catalog: CategoryCatalog, ruleVersion: String) async -&gt; Suggestion? }
+protocol IdentityPort: Sendable { func derive(_ components: CanonicalIdentityComponents) async -&gt; IdentityDigest }
+protocol LocationPort: Sendable { func oneForegroundSample(consent: ExplicitConsentRequest, timeoutSeconds: UInt8 /*10*/) async -&gt; ResultV1&lt;CurrentObservation&gt; }
+protocol LedgerStorePort: Sendable {
+ func snapshot() async -&gt; ResultV1&lt;LedgerSnapshot&gt;
+ func transact(_ plan: ValidatedMutationPlan, expected: Revision, requestDigest: IdentityDigest) async -&gt; ResultV1&lt;Receipt&gt;
+ func commandStatus(_ id: UUID) async -&gt; CommandStatus
+ func batchStatus(_ id: UUID) async -&gt; BatchStatus
+}
+protocol MaintenancePort: Sendable {
+ func acquireExclusive() async -&gt; ResultV1&lt;MaintenanceLease&gt;
+ func exportSnapshot(lease: MaintenanceLease) async -&gt; ResultV1&lt;PortableLedgerV1&gt;
+ func validateCandidate(_ archive: PortableLedgerV1, lease: MaintenanceLease) async -&gt; ResultV1&lt;CandidateStoreHandle&gt;
+ func swapValidated(_ candidate: CandidateStoreHandle, lease: MaintenanceLease) async -&gt; ResultV1&lt;Revision&gt;
+}
+// No external HTTP routes/authorization tokens. Local OS user, protected store, app lifecycle lock.
+// Failure code mapping in STATE-CONTRACT.json. Cancellation is explicit outcome, never a thrown generic error after commit.
+
+// Referenced value shapes (all fields required unless ?):
+struct ProfileVersion: Sendable { let id: String; let version: UInt16; let normalizationVersion: UInt16 }
+struct ReadonlySourceSummary: Sendable { let ordinal: Int; let kind: EntryKind; let amount: Money; let merchant: String; let occurredAtUTC: Date; let originalOffsetSeconds: Int32; let historicalText: String?; let hasProviderIdentity: Bool }
+struct EditableFields: Sendable { let merchant: String; let historicalLocation: HistoricalInput? }
+// Import review does not silently edit source financial economics. Correct amount/time via exclude + separate manual entry; source remains immutable.
+struct Suggestion: Sendable { let categoryID: UUID; let ruleVersion: String; let reason: String; let confidence: Confidence }
+enum Confidence: String, Sendable { case exactUserMapping, exactRule, heuristic }
+struct ReviewCounts: Sendable { let rows: Int; let included: Int; let invalid: Int; let duplicates: Int; let sourceConflicts: Int; let unresolvedRefunds: Int }
+struct HistoricalInput: Sendable { let text: String?; let latitude: Double?; let longitude: Double? }
+// latitude/longitude both present or both absent; finite -90...90/-180...180. User-entered provenance only.
+struct ExplicitConsentRequest: Sendable { let commandID: UUID; let token: UUID; let targetDraftID: UUID; let purpose: String; let explicitlyConfirmedAtUTC: Date; let acceptReducedAccuracy: Bool }
+struct CurrentObservation: Sendable { let targetDraftID: UUID; let token: UUID; let latitude: Double; let longitude: Double; let collectedAtUTC: Date; let accuracyMeters: Double; let consentAtUTC: Date; let purpose: String; let authorizationSnapshot: String }
+enum CancelOutcome: Sendable { case discarded, alreadyCommitted(Receipt), checkingOutcome(commandID: UUID) }
+enum CommandStatus: Sendable { case unknown, committed(Receipt) }
+enum BatchStatus: Sendable { case transient, expired, committed(Receipt) }
+// Opaque types SelectedFileHandle/ProtectedStagingHandle/CandidateStoreHandle/MaintenanceLease carry random UUID capabilities, not user-supplied paths; cannot be constructed by cells or UI text.
+// LedgerSnapshot = Revision + immutable entry/source/category/mapping DTO collections used for matching; bounded 10k-row query pages, no managed objects.
+// ValidatedMutationPlan = commandID + batch metadata? + entry/source/link/override/location inserts + matched identity expectations + result IDs. Writer always revalidates; caller cannot bypass validation with this name.
+// PortableLedgerV1 is exactly the allowlisted entities/relationships/identity material described in CORE-DATA-MODEL.json and SYSTEM ADR-007; version/count/checksum rules mandatory.
+// ExpenseRecordDTO includes UUID, signed Money, kind, display merchant, occurredAtUTC/offset, category+override/suggestion, refund resolution/original UUID?, selected/available location provenance DTOs, updatedRevision.
+// CheckedTotals contains one ISO currency, checked settledNet Int64, unresolvedRefunds Int64; never cross-currency.
+// LedgerCursor is opaque typed key {storeEpoch,ledgerRevision,occurredAtUTC,entryUUID} with descending time then UUID order.
+</pre></details><details><summary>CORE-DATA-MODEL.json</summary><pre>{
+  &quot;schema_version&quot;: &quot;padf.core-data-logical-model/v1&quot;,
+  &quot;model&quot;: &quot;LedgerModel_v1&quot;,
+  &quot;system_baseline_ref&quot;: &quot;examples/issue-5-acceptance/system/SYSTEM-BASELINE.md@f4dbf0d3fac707db1b57252c529618c38d26f0bc&quot;,
+  &quot;entities&quot;: {
+    &quot;StoreMetadata&quot;: {
+      &quot;attributes&quot;: {
+        &quot;id&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;fixed&quot;: &quot;ledger&quot;
+        },
+        &quot;storeEpoch&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;ledgerRevision&quot;: {
+          &quot;type&quot;: &quot;Integer64&quot;,
+          &quot;optional&quot;: false,
+          &quot;minimum&quot;: 0
+        },
+        &quot;modelVersion&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;fixed&quot;: &quot;LedgerModel_v1&quot;
+        },
+        &quot;identityKeyRef&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;currencyRegistryVersion&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;fixed&quot;: &quot;1&quot;
+        }
+      },
+      &quot;unique&quot;: [
+        [
+          &quot;id&quot;
+        ]
+      ],
+      &quot;indexes&quot;: []
+    },
+    &quot;AccountNamespace&quot;: {
+      &quot;attributes&quot;: {
+        &quot;id&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;provider&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;enum&quot;: [
+            &quot;wechat&quot;,
+            &quot;alipay&quot;
+          ]
+        },
+        &quot;displayAlias&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;maxBytes&quot;: 128
+        },
+        &quot;createdAtUTC&quot;: {
+          &quot;type&quot;: &quot;Date&quot;,
+          &quot;optional&quot;: false
+        }
+      },
+      &quot;unique&quot;: [
+        [
+          &quot;id&quot;
+        ]
+      ],
+      &quot;indexes&quot;: [
+        [
+          &quot;provider&quot;
+        ]
+      ]
+    },
+    &quot;Entry&quot;: {
+      &quot;attributes&quot;: {
+        &quot;id&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;kind&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;enum&quot;: [
+            &quot;spend&quot;,
+            &quot;refund&quot;
+          ]
+        },
+        &quot;minorUnits&quot;: {
+          &quot;type&quot;: &quot;Integer64&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;currency&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;maxBytes&quot;: 3
+        },
+        &quot;occurredAtUTC&quot;: {
+          &quot;type&quot;: &quot;Date&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;offsetSeconds&quot;: {
+          &quot;type&quot;: &quot;Integer32&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;zoneID&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: true
+        },
+        &quot;precision&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;fixed&quot;: &quot;second&quot;
+        },
+        &quot;merchant&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;maxBytes&quot;: 1024
+        },
+        &quot;categoryID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;suggestionCategoryID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: true
+        },
+        &quot;suggestionRuleVersion&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: true
+        },
+        &quot;suggestionReason&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: true
+        },
+        &quot;suggestionConfidence&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: true
+        },
+        &quot;refundResolution&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;enum&quot;: [
+            &quot;not_refund&quot;,
+            &quot;unresolved&quot;,
+            &quot;linked&quot;
+          ]
+        },
+        &quot;originalStrongKeyHint&quot;: {
+          &quot;type&quot;: &quot;BinaryData&quot;,
+          &quot;optional&quot;: true,
+          &quot;length&quot;: 32
+        },
+        &quot;createdAtUTC&quot;: {
+          &quot;type&quot;: &quot;Date&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;updatedRevision&quot;: {
+          &quot;type&quot;: &quot;Integer64&quot;,
+          &quot;optional&quot;: false
+        }
+      },
+      &quot;unique&quot;: [
+        [
+          &quot;id&quot;
+        ]
+      ],
+      &quot;indexes&quot;: [
+        [
+          &quot;currency&quot;,
+          &quot;occurredAtUTC&quot;,
+          &quot;id&quot;
+        ],
+        [
+          &quot;refundResolution&quot;,
+          &quot;originalStrongKeyHint&quot;
+        ]
+      ]
+    },
+    &quot;SourceIdentity&quot;: {
+      &quot;attributes&quot;: {
+        &quot;id&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;strongKey&quot;: {
+          &quot;type&quot;: &quot;BinaryData&quot;,
+          &quot;optional&quot;: false,
+          &quot;length&quot;: 32
+        },
+        &quot;provider&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;namespaceID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;economicDigest&quot;: {
+          &quot;type&quot;: &quot;BinaryData&quot;,
+          &quot;optional&quot;: false,
+          &quot;length&quot;: 32
+        },
+        &quot;normalizationVersion&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;fixed&quot;: &quot;1&quot;
+        }
+      },
+      &quot;unique&quot;: [
+        [
+          &quot;id&quot;
+        ],
+        [
+          &quot;strongKey&quot;
+        ]
+      ],
+      &quot;indexes&quot;: [
+        [
+          &quot;namespaceID&quot;
+        ]
+      ]
+    },
+    &quot;SourceObservation&quot;: {
+      &quot;attributes&quot;: {
+        &quot;id&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;rowOrdinal&quot;: {
+          &quot;type&quot;: &quot;Integer32&quot;,
+          &quot;optional&quot;: false,
+          &quot;minimum&quot;: 1
+        },
+        &quot;profileID&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;profileVersion&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;fixed&quot;: &quot;1&quot;
+        },
+        &quot;normalizationVersion&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;fixed&quot;: &quot;1&quot;
+        },
+        &quot;namespaceID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;kind&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;minorUnits&quot;: {
+          &quot;type&quot;: &quot;Integer64&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;currency&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;occurredAtUTC&quot;: {
+          &quot;type&quot;: &quot;Date&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;offsetSeconds&quot;: {
+          &quot;type&quot;: &quot;Integer32&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;precision&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;sourceMerchant&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;maxBytes&quot;: 1024
+        },
+        &quot;sourceLocationText&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: true,
+          &quot;maxBytes&quot;: 4096
+        },
+        &quot;economicDigest&quot;: {
+          &quot;type&quot;: &quot;BinaryData&quot;,
+          &quot;optional&quot;: false,
+          &quot;length&quot;: 32
+        },
+        &quot;fingerprint&quot;: {
+          &quot;type&quot;: &quot;BinaryData&quot;,
+          &quot;optional&quot;: false,
+          &quot;length&quot;: 32
+        },
+        &quot;originalStrongKeyHint&quot;: {
+          &quot;type&quot;: &quot;BinaryData&quot;,
+          &quot;optional&quot;: true,
+          &quot;length&quot;: 32
+        },
+        &quot;decision&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;enum&quot;: [
+            &quot;new&quot;,
+            &quot;link_existing&quot;,
+            &quot;keep_separate&quot;,
+            &quot;confirmed_duplicate&quot;
+          ]
+        },
+        &quot;batchID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;status&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;fixed&quot;: &quot;settled&quot;
+        }
+      },
+      &quot;unique&quot;: [
+        [
+          &quot;id&quot;
+        ],
+        [
+          &quot;batchID&quot;,
+          &quot;rowOrdinal&quot;
+        ]
+      ],
+      &quot;indexes&quot;: [
+        [
+          &quot;fingerprint&quot;
+        ],
+        [
+          &quot;namespaceID&quot;,
+          &quot;occurredAtUTC&quot;
+        ]
+      ]
+    },
+    &quot;BatchReceipt&quot;: {
+      &quot;attributes&quot;: {
+        &quot;id&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;fileDigest&quot;: {
+          &quot;type&quot;: &quot;BinaryData&quot;,
+          &quot;optional&quot;: false,
+          &quot;length&quot;: 32
+        },
+        &quot;namespaceID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;profileID&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;profileVersion&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;committedAtUTC&quot;: {
+          &quot;type&quot;: &quot;Date&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;insertedCount&quot;: {
+          &quot;type&quot;: &quot;Integer32&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;duplicateCount&quot;: {
+          &quot;type&quot;: &quot;Integer32&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;skippedCount&quot;: {
+          &quot;type&quot;: &quot;Integer32&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;unresolvedCount&quot;: {
+          &quot;type&quot;: &quot;Integer32&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;resultEntryIDs&quot;: {
+          &quot;type&quot;: &quot;BinaryData&quot;,
+          &quot;optional&quot;: false,
+          &quot;encoding&quot;: &quot;allowlisted UUID array&quot;
+        },
+        &quot;ledgerRevision&quot;: {
+          &quot;type&quot;: &quot;Integer64&quot;,
+          &quot;optional&quot;: false
+        }
+      },
+      &quot;unique&quot;: [
+        [
+          &quot;id&quot;
+        ],
+        [
+          &quot;fileDigest&quot;
+        ]
+      ],
+      &quot;indexes&quot;: [
+        [
+          &quot;committedAtUTC&quot;
+        ]
+      ]
+    },
+    &quot;CommandReceipt&quot;: {
+      &quot;attributes&quot;: {
+        &quot;id&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;requestDigest&quot;: {
+          &quot;type&quot;: &quot;BinaryData&quot;,
+          &quot;optional&quot;: false,
+          &quot;length&quot;: 32
+        },
+        &quot;commandKind&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;committedAtUTC&quot;: {
+          &quot;type&quot;: &quot;Date&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;resultEntryIDs&quot;: {
+          &quot;type&quot;: &quot;BinaryData&quot;,
+          &quot;optional&quot;: false,
+          &quot;encoding&quot;: &quot;allowlisted UUID array&quot;
+        },
+        &quot;ledgerRevision&quot;: {
+          &quot;type&quot;: &quot;Integer64&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;storeEpoch&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;batchID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: true
+        }
+      },
+      &quot;unique&quot;: [
+        [
+          &quot;id&quot;
+        ]
+      ],
+      &quot;indexes&quot;: [
+        [
+          &quot;committedAtUTC&quot;
+        ]
+      ]
+    },
+    &quot;RefundLink&quot;: {
+      &quot;attributes&quot;: {
+        &quot;id&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;refundID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;originalID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;linkedAtUTC&quot;: {
+          &quot;type&quot;: &quot;Date&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;revision&quot;: {
+          &quot;type&quot;: &quot;Integer64&quot;,
+          &quot;optional&quot;: false
+        }
+      },
+      &quot;unique&quot;: [
+        [
+          &quot;id&quot;
+        ],
+        [
+          &quot;refundID&quot;
+        ]
+      ],
+      &quot;indexes&quot;: [
+        [
+          &quot;originalID&quot;
+        ]
+      ]
+    },
+    &quot;Category&quot;: {
+      &quot;attributes&quot;: {
+        &quot;id&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;name&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;maxBytes&quot;: 128
+        },
+        &quot;retired&quot;: {
+          &quot;type&quot;: &quot;Boolean&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;catalogVersion&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false
+        }
+      },
+      &quot;unique&quot;: [
+        [
+          &quot;id&quot;
+        ]
+      ],
+      &quot;indexes&quot;: [
+        [
+          &quot;retired&quot;
+        ]
+      ]
+    },
+    &quot;CategoryOverride&quot;: {
+      &quot;attributes&quot;: {
+        &quot;id&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;entryID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;categoryID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;createdAtUTC&quot;: {
+          &quot;type&quot;: &quot;Date&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;revision&quot;: {
+          &quot;type&quot;: &quot;Integer64&quot;,
+          &quot;optional&quot;: false
+        }
+      },
+      &quot;unique&quot;: [
+        [
+          &quot;id&quot;
+        ]
+      ],
+      &quot;indexes&quot;: [
+        [
+          &quot;entryID&quot;,
+          &quot;revision&quot;
+        ]
+      ]
+    },
+    &quot;MerchantMapping&quot;: {
+      &quot;attributes&quot;: {
+        &quot;id&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;merchantKey&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;maxBytes&quot;: 1024
+        },
+        &quot;categoryID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;revision&quot;: {
+          &quot;type&quot;: &quot;Integer64&quot;,
+          &quot;optional&quot;: false
+        }
+      },
+      &quot;unique&quot;: [
+        [
+          &quot;id&quot;
+        ],
+        [
+          &quot;merchantKey&quot;
+        ]
+      ],
+      &quot;indexes&quot;: []
+    },
+    &quot;LocationEvidence&quot;: {
+      &quot;attributes&quot;: {
+        &quot;id&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;entryID&quot;: {
+          &quot;type&quot;: &quot;UUID&quot;,
+          &quot;optional&quot;: false
+        },
+        &quot;kind&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: false,
+          &quot;enum&quot;: [
+            &quot;source_provided_historical&quot;,
+            &quot;user_entered_historical&quot;,
+            &quot;device_current&quot;
+          ]
+        },
+        &quot;text&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: true,
+          &quot;maxBytes&quot;: 4096
+        },
+        &quot;latitude&quot;: {
+          &quot;type&quot;: &quot;Double&quot;,
+          &quot;optional&quot;: true
+        },
+        &quot;longitude&quot;: {
+          &quot;type&quot;: &quot;Double&quot;,
+          &quot;optional&quot;: true
+        },
+        &quot;collectedAtUTC&quot;: {
+          &quot;type&quot;: &quot;Date&quot;,
+          &quot;optional&quot;: true
+        },
+        &quot;accuracyMeters&quot;: {
+          &quot;type&quot;: &quot;Double&quot;,
+          &quot;optional&quot;: true
+        },
+        &quot;consentPurpose&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: true
+        },
+        &quot;consentAtUTC&quot;: {
+          &quot;type&quot;: &quot;Date&quot;,
+          &quot;optional&quot;: true
+        },
+        &quot;authorizationSnapshot&quot;: {
+          &quot;type&quot;: &quot;String&quot;,
+          &quot;optional&quot;: true
+        }
+      },
+      &quot;unique&quot;: [
+        [
+          &quot;id&quot;
+        ]
+      ],
+      &quot;indexes&quot;: [
+        [
+          &quot;entryID&quot;
+        ]
+      ]
+    }
+  },
+  &quot;relationships&quot;: [
+    [
+      &quot;AccountNamespace&quot;,
+      &quot;sources&quot;,
+      &quot;SourceIdentity&quot;,
+      &quot;namespace&quot;,
+      &quot;1&quot;,
+      &quot;0..N&quot;
+    ],
+    [
+      &quot;AccountNamespace&quot;,
+      &quot;observations&quot;,
+      &quot;SourceObservation&quot;,
+      &quot;namespace&quot;,
+      &quot;1&quot;,
+      &quot;0..N&quot;
+    ],
+    [
+      &quot;AccountNamespace&quot;,
+      &quot;batches&quot;,
+      &quot;BatchReceipt&quot;,
+      &quot;namespace&quot;,
+      &quot;1&quot;,
+      &quot;0..N&quot;
+    ],
+    [
+      &quot;Entry&quot;,
+      &quot;identity&quot;,
+      &quot;SourceIdentity&quot;,
+      &quot;entry&quot;,
+      &quot;1&quot;,
+      &quot;0..1&quot;
+    ],
+    [
+      &quot;Entry&quot;,
+      &quot;observations&quot;,
+      &quot;SourceObservation&quot;,
+      &quot;entry&quot;,
+      &quot;1&quot;,
+      &quot;0..N&quot;
+    ],
+    [
+      &quot;BatchReceipt&quot;,
+      &quot;observations&quot;,
+      &quot;SourceObservation&quot;,
+      &quot;batch&quot;,
+      &quot;1&quot;,
+      &quot;0..N&quot;
+    ],
+    [
+      &quot;SourceIdentity&quot;,
+      &quot;observations&quot;,
+      &quot;SourceObservation&quot;,
+      &quot;identity&quot;,
+      &quot;0..1&quot;,
+      &quot;1..N&quot;
+    ],
+    [
+      &quot;Entry&quot;,
+      &quot;refundLinks&quot;,
+      &quot;RefundLink&quot;,
+      &quot;original&quot;,
+      &quot;1&quot;,
+      &quot;0..N&quot;
+    ],
+    [
+      &quot;Entry&quot;,
+      &quot;asRefundLink&quot;,
+      &quot;RefundLink&quot;,
+      &quot;refund&quot;,
+      &quot;1&quot;,
+      &quot;0..1&quot;
+    ],
+    [
+      &quot;Category&quot;,
+      &quot;entries&quot;,
+      &quot;Entry&quot;,
+      &quot;category&quot;,
+      &quot;1&quot;,
+      &quot;0..N&quot;
+    ],
+    [
+      &quot;Entry&quot;,
+      &quot;overrides&quot;,
+      &quot;CategoryOverride&quot;,
+      &quot;entry&quot;,
+      &quot;1&quot;,
+      &quot;0..N&quot;
+    ],
+    [
+      &quot;Category&quot;,
+      &quot;overrides&quot;,
+      &quot;CategoryOverride&quot;,
+      &quot;category&quot;,
+      &quot;1&quot;,
+      &quot;0..N&quot;
+    ],
+    [
+      &quot;Category&quot;,
+      &quot;mappings&quot;,
+      &quot;MerchantMapping&quot;,
+      &quot;category&quot;,
+      &quot;1&quot;,
+      &quot;0..N&quot;
+    ],
+    [
+      &quot;Entry&quot;,
+      &quot;locations&quot;,
+      &quot;LocationEvidence&quot;,
+      &quot;entry&quot;,
+      &quot;1&quot;,
+      &quot;0..N&quot;
+    ],
+    [
+      &quot;Entry&quot;,
+      &quot;selectedLocation&quot;,
+      &quot;LocationEvidence&quot;,
+      &quot;selectedByEntry&quot;,
+      &quot;0..1&quot;,
+      &quot;0..1&quot;
+    ],
+    [
+      &quot;Entry&quot;,
+      &quot;effectiveOverride&quot;,
+      &quot;CategoryOverride&quot;,
+      &quot;effectiveForEntry&quot;,
+      &quot;0..1&quot;,
+      &quot;0..1&quot;
+    ],
+    [
+      &quot;BatchReceipt&quot;,
+      &quot;commands&quot;,
+      &quot;CommandReceipt&quot;,
+      &quot;batch&quot;,
+      &quot;0..1&quot;,
+      &quot;1..N&quot;
+    ]
+  ],
+  &quot;relationship_notation&quot;: &quot;[leftEntity,leftProperty,rightEntity,inverseProperty,leftMultiplicityPerRight,rightMultiplicityPerLeft]&quot;,
+  &quot;delete_rules&quot;: &quot;Deny for all to-many ownership/referenced edges; Nullify only optional selectedLocation/effectiveOverride pointers. No hard-delete command in module v1. Explicit store replacement only under maintenance. All inverses explicit.&quot;,
+  &quot;invariants&quot;: [
+    &quot;Scalar UUID FKs agree with relationship destination; validate on writer and restore&quot;,
+    &quot;Every SourceIdentity has one Entry and &gt;=1 SourceObservation; manual Entry has none&quot;,
+    &quot;SourceObservation always has one BatchReceipt, AccountNamespace and Entry; identity optional for no-ID&quot;,
+    &quot;RefundLink.original/refund are different Entry instances with spend/refund kinds and same currency; refund amount negative, original positive; aggregate cap enforced in writer&quot;,
+    &quot;Every Entry has one Category, selectedLocation/effectiveOverride must belong to same Entry&quot;,
+    &quot;No managed-object validation can replace aggregate transaction checks&quot;,
+    &quot;StoreMetadata singleton and key presence required before reads/writes&quot;
+  ],
+  &quot;storage_rules&quot;: [
+    &quot;No transformable or insecure unarchive; binary arrays decoded data-only with quotas&quot;,
+    &quot;No raw provider ID/account credentials/raw file/filename/path persisted&quot;,
+    &quot;HMAC bytes and file hashes are sensitive protected evidence; no logs&quot;,
+    &quot;Core Data uniqueness/index descriptions are logical design; generated xcdatamodel and migration/build NOT_RUN&quot;,
+    &quot;BinaryData hashes fixed 32 bytes validated by writer; Integer64 revision checked &lt;=Int64.max&quot;,
+    &quot;All non-optional fields required unless explicitly optional; defaults supplied by writer, not guessed by migration&quot;
+  ]
+}
+</pre></details><details><summary>PROFILES.md</summary><pre># Synthetic bill adapter profile v1
+These are invented acceptance fixtures. They do not establish compatibility with real WeChat/Alipay exports. Production adapters require separately captured redacted format evidence, versioned profile specs and tests; no auto-detection guesses.
+
+File: UTF-8 optionally one BOM; no GBK/UTF16 guessing. RFC4180 CSV with CRLF/LF, quoted commas/newlines and doubled quote escape; reject NUL, invalid UTF-8, duplicate headers, inconsistent fields, unterminated quotes. Never evaluate spreadsheet formulas, URLs or paths. A cell beginning =,+,-,@ is inert text; sign parsing applies only to typed amount grammar. Spreadsheet exports must prefix hazardous text with apostrophe; raw financial numeric cells use exact safe numeric serialization.
+First record exactly `PADF-SYNTHETIC-BILL,1,WECHAT` or `PADF-SYNTHETIC-BILL,1,ALIPAY`. Second record exact ordered header:
+`transaction_id,original_transaction_id,kind,status,amount,currency,occurred_at,merchant,location_text`
+Exactly one marker maps profile `padf.synthetic.wechat.v1` or `padf.synthetic.alipay.v1`; mismatch requested provider, unknown version/headers/encoding -&gt; UNSUPPORTED_EXPORT, show row ordinal and code only. No archives, spreadsheets, macros or attachments accepted. Do not unzip or traverse file names.
+
+kind = spend|refund; status = settled|pending|cancelled. Only settled included; pending/cancelled rows yield NON_SETTLED_ROW and require explicit exclusion. amount grammar `[0-9]+(.[0-9]+)?` for spend or `-[0-9]+(.[0-9]+)?` for refund (literal dot); no leading plus, exponent, group separators or implicit unit conversion. Zero/overflow/excess currency decimals reject. amount integer string and ISO code canonicalize under registry v1. occurred_at strict RFC3339 with explicit offset and seconds; no locale dates or inferred zone. original_transaction_id only meaningful for refunds. Merchant required nonempty, max 1024 UTF8 bytes; location_text optional &lt;=4096 UTF8 bytes; IDs &lt;=256 UTF8 bytes. Blank transaction ID is supported only by candidate review algorithm. Original IDs HMAC derived same namespace/provider; raw IDs deleted with staging after review, only protected digests persist.
+
+Limits: file &lt;=10 MiB, &lt;=10,000 data rows, row &lt;=256 KiB including embedded newlines, &lt;=9 cells, each generic cell &lt;=16 KiB, quote nesting not applicable. Bound parser buffer before allocation; stop at first quota breach FILE_TOO_LARGE. File picker security-scope only for copy; reject directory/non-regular file/symlink, never construct paths from cell/file name, random protected staging path and cleanup allowlist. Fail changes during copy by copying once then hashing/parsing the immutable staged bytes. Validate complete file before review; invalid rows excluded explicitly, no silent truncation. Cancel probe &lt;=100 rows.
+
+Profile normalization version is part of SourceObservation and immutable source digest contract. Profile upgrades do not re-key existing identities or reinterpret old observations automatically; matching existing strong ID with changed economics requires conflict review. Unknown future profile unavailable, never fallback to synthetic profile.
+</pre></details><details><summary>STATE-CONTRACT.json</summary><pre>{
+  &quot;schema_version&quot;: &quot;padf.module-state/v1&quot;,
+  &quot;system_baseline_ref&quot;: &quot;examples/issue-5-acceptance/system/SYSTEM-BASELINE.md@f4dbf0d3fac707db1b57252c529618c38d26f0bc&quot;,
+  &quot;states&quot;: [
+    &quot;idle&quot;,
+    &quot;parsing&quot;,
+    &quot;review&quot;,
+    &quot;committing&quot;,
+    &quot;committed&quot;,
+    &quot;recoverable&quot;,
+    &quot;cancelled&quot;,
+    &quot;unsupported&quot;
+  ],
+  &quot;transitions&quot;: [
+    [
+      &quot;idle&quot;,
+      &quot;parsing&quot;,
+      &quot;selected file + namespace&quot;
+    ],
+    [
+      &quot;parsing&quot;,
+      &quot;review&quot;,
+      &quot;validated profile and rows&quot;
+    ],
+    [
+      &quot;parsing&quot;,
+      &quot;unsupported&quot;,
+      &quot;format or quota rejected&quot;
+    ],
+    [
+      &quot;parsing&quot;,
+      &quot;cancelled&quot;,
+      &quot;cancel acknowledged&quot;
+    ],
+    [
+      &quot;review&quot;,
+      &quot;cancelled&quot;,
+      &quot;cancel / expire / background&quot;
+    ],
+    [
+      &quot;review&quot;,
+      &quot;committing&quot;,
+      &quot;explicit confirm; all included row decisions valid&quot;
+    ],
+    [
+      &quot;committing&quot;,
+      &quot;committed&quot;,
+      &quot;durable save or receipt replay&quot;
+    ],
+    [
+      &quot;committing&quot;,
+      &quot;recoverable&quot;,
+      &quot;rollback: locked/full/stale&quot;
+    ],
+    [
+      &quot;recoverable&quot;,
+      &quot;review&quot;,
+      &quot;revalidate; new review revision&quot;
+    ],
+    [
+      &quot;review&quot;,
+      &quot;parsing&quot;,
+      &quot;reselect invalidated staging&quot;
+    ],
+    [
+      &quot;committing&quot;,
+      &quot;committed&quot;,
+      &quot;cancel races save: committed receipt wins&quot;
+    ]
+  ],
+  &quot;notes&quot;: [
+    &quot;committing cancellation waits for outcome; process interruption resumes commandStatus; unknown -&gt; checking outcome UI substate&quot;,
+    &quot;parsing adapters may return permission/store errors to recoverable UI without canonical writes; state diagram shows primary lifecycle, these common failures noted outside main flow&quot;,
+    &quot;unsupported/cancelled reselect starts fresh idle-&gt;parsing; committed is durable terminal for batch; cleanup failure does not alter it&quot;,
+    &quot;review rows use included/invalid/duplicate/source_conflict/unresolved_refund substate; commit guard validates every included row&quot;,
+    &quot;Every revision/epoch change invalidates plans; no automatic rebase&quot;
+  ],
+  &quot;errors&quot;: {
+    &quot;INVALID_AMOUNT&quot;: &quot;edit&quot;,
+    &quot;UNSUPPORTED_CURRENCY&quot;: &quot;edit&quot;,
+    &quot;INVALID_TIMESTAMP&quot;: &quot;edit&quot;,
+    &quot;UNKNOWN_CATEGORY&quot;: &quot;edit&quot;,
+    &quot;DUPLICATE_CANDIDATE&quot;: &quot;reviewAgain&quot;,
+    &quot;REFUND_UNLINKED&quot;: &quot;reviewAgain or retainUnresolved&quot;,
+    &quot;SOURCE_CONFLICT&quot;: &quot;exclude row or correct selected namespace; never overwrite identity&quot;,
+    &quot;UNSUPPORTED_EXPORT&quot;: &quot;reselectFile&quot;,
+    &quot;FILE_TOO_LARGE&quot;: &quot;reselectFile&quot;,
+    &quot;PERMISSION_DENIED&quot;: &quot;reselectFile or optionalLocation, according to operation&quot;,
+    &quot;LOCATION_UNAVAILABLE&quot;: &quot;optionalLocation&quot;,
+    &quot;STORE_LOCKED&quot;: &quot;retryAfterUnlock&quot;,
+    &quot;STORE_FULL&quot;: &quot;retryAfterFreeSpace&quot;,
+    &quot;STORE_CORRUPT&quot;: &quot;recoveryReadOnly&quot;,
+    &quot;BACKUP_INVALID&quot;: &quot;current store unchanged&quot;,
+    &quot;STALE_REVIEW&quot;: &quot;reviewAgain&quot;,
+    &quot;REVIEW_EXPIRED&quot;: &quot;reselectFile&quot;,
+    &quot;NON_SETTLED_ROW&quot;: &quot;explicit exclude&quot;,
+    &quot;CLEANUP_PENDING&quot;: &quot;success; retry staging cleanup only&quot;
+  }
+}
+</pre></details><details><summary>TEST-PLAN.md</summary><pre># Verification scope and required implementation tests
+Executed in this design delivery: reproducible metadata/model/diagram consistency checks, synthetic identity/money/refund reference examples, actual browser renders and visual inspection. No Swift or Core Data executable implemented; application/device/integration/performance tests below are NOT_RUN and mandatory before coding acceptance.
+
+| ID | Layer / case | Required assertion |
+|---|---|---|
+| U01 | exact money CNY/JPY, .01, excessive decimals, Int64 bounds, totals overflow | no Float, checked parse/sum, no write on invalid |
+| U02 | canonical length encoding, Unicode NFC/case, punctuation, IDs case, absent IDs | stable vectors; delimiter collisions impossible; no false unique fingerprint |
+| U03 | A[X,Y], B[Y,Z], same-file replay, wrong namespace | one new Z; explicit duplicate Y; old receipt; wrong namespace conflict |
+| U04 | same ID changed amount/currency/status, same ID twice within batch | block conflicting row; no property-trump; duplicate observation audit preserved |
+| U05 | no-ID identical purchases, multiple candidates, override then reimport | explicit decisions; separate possible; original override unchanged |
+| U06 | full/partial/multiple refunds, duplicate refund, before original | cap checks order-independent; unresolved excluded; later explicit linking |
+| U07 | original refund/self/cross-currency/over-cap reference | no link or net corruption; retained evidence |
+| U08 | category mapping/rule tie/version update/retirement | user override wins; no automatic reclassification |
+| I01 | disk SQLite all-or-none before/after save crash, full disk, locked store | entries+identities+links+receipts atomic; retry returns one result |
+| I02 | concurrent manual edits and commit; stale preview/category; epoch swap | serial writer, revision/epoch mismatch aborts all |
+| I03 | cancel parse/review/pre-save/during-save/post-save, cleanup fail | no pre-save writes; during save outcome checked; committed success preserved |
+| I04 | same command different payload, same request twice, unknown receipt | SOURCE_CONFLICT or receipt replay; checking state never false retry |
+| S01 | CSV formulas, path traversal, symlink, malformed quotes, invalid UTF8, BOM/GBK/UTF16, headers | inert text, random staging paths, unsupported reject, no logs of raw values |
+| S02 | 10MiB/10k/256KiB/field limits +/-1, long quotes/newlines, cancel interval | bound before allocation, no truncation, responsive cancellation |
+| L01 | GPS denied/restricted/no fix/timeout/reduced/stale fix, expired/reused consent | manual/import usable; existing evidence retained; current timestamp label; no background request |
+| R01 | encrypted backup wrong password/corrupt/schema/counts/key/ref/duplicate/cap | current store unchanged; data-only allowlist; limits; no raw files |
+| R02 | v1-&gt;v2 compatible/incompatible migration failure/crash/swap rollback | protected verified prebackup; read-only recovery; no empty ledger; epoch invalidates preview |
+| UI01 | review includes invalid/source conflict/duplicates/unresolved, stale/locked/full/retry | typed states and enable guards; user choices preserved; safe codes |
+| UI02 | current GPS vs transaction historical text, override dropdown | truthful time/provenance and suggestions; VoiceOver/Dynamic Type by UI role |
+| P01 | approved iPhone13/iOS17, 100k records/10k rows and memory | measure baseline budgets, no claim from this design |
+
+Fixtures must be synthetic. Use deterministic clock, UUID generator, consent fake and store fault injector; Core Data tests use actual disk SQLite not only in-memory. Separate true process-kill durability from exception rollback. Crash harness checkpoints before save/after save/before reply. OS file-protection/WAL/SHM/cloud-backup exclusion and iOS17 availability tests require authorized device build. Run independent DESIGN review against exact immutable sources; author assertions are not independent acceptance.
+</pre></details></section><footer>diagram-design pinned 11b08eade8049c441ed3df1895e3b527c26c0fbe. Author verification only; no Owner quality acceptance implied.</footer></main></body></html>

@@ -1,0 +1,137 @@
+{
+  "status": "PASS",
+  "scope": "design schema/metadata and reference vectors; no Swift/CoreData/device tests",
+  "checks": [
+    {
+      "test": "exact approved baseline SHA in model/state/design",
+      "status": "PASS"
+    },
+    {
+      "test": "12 logical entities including namespace/receipts/provenance",
+      "status": "PASS"
+    },
+    {
+      "test": "StoreMetadata constraints/indexes use declared attributes",
+      "status": "PASS"
+    },
+    {
+      "test": "AccountNamespace constraints/indexes use declared attributes",
+      "status": "PASS"
+    },
+    {
+      "test": "Entry constraints/indexes use declared attributes",
+      "status": "PASS"
+    },
+    {
+      "test": "SourceIdentity constraints/indexes use declared attributes",
+      "status": "PASS"
+    },
+    {
+      "test": "SourceObservation constraints/indexes use declared attributes",
+      "status": "PASS"
+    },
+    {
+      "test": "BatchReceipt constraints/indexes use declared attributes",
+      "status": "PASS"
+    },
+    {
+      "test": "CommandReceipt constraints/indexes use declared attributes",
+      "status": "PASS"
+    },
+    {
+      "test": "RefundLink constraints/indexes use declared attributes",
+      "status": "PASS"
+    },
+    {
+      "test": "Category constraints/indexes use declared attributes",
+      "status": "PASS"
+    },
+    {
+      "test": "CategoryOverride constraints/indexes use declared attributes",
+      "status": "PASS"
+    },
+    {
+      "test": "MerchantMapping constraints/indexes use declared attributes",
+      "status": "PASS"
+    },
+    {
+      "test": "LocationEvidence constraints/indexes use declared attributes",
+      "status": "PASS"
+    },
+    {
+      "test": "all relationship endpoints exist",
+      "status": "PASS"
+    },
+    {
+      "test": "strong identity unique; fingerprint deliberately nonunique",
+      "status": "PASS"
+    },
+    {
+      "test": "file receipt and command receipt uniqueness",
+      "status": "PASS"
+    },
+    {
+      "test": "canonical length encoding prevents delimiter collision",
+      "status": "PASS"
+    },
+    {
+      "test": "HMAC stable and namespace-sensitive",
+      "status": "PASS"
+    },
+    {
+      "test": "NFC merchant vector",
+      "status": "PASS"
+    },
+    {
+      "test": "exact minor-unit vectors",
+      "status": "PASS"
+    },
+    {
+      "test": "zero/precision/overflow/exponent/grouping rejected",
+      "status": "PASS"
+    },
+    {
+      "test": "partial/multiple refunds and permutation stability",
+      "status": "PASS"
+    },
+    {
+      "test": "overlap identifies Y duplicate and Z new",
+      "status": "PASS"
+    },
+    {
+      "test": "conflicting same ID never overwrites",
+      "status": "PASS"
+    },
+    {
+      "test": "no-ID policy requires review, separate UUID allowed",
+      "status": "PASS"
+    },
+    {
+      "test": "every state transition names legal endpoints",
+      "status": "PASS"
+    },
+    {
+      "test": "committed is terminal",
+      "status": "PASS"
+    },
+    {
+      "test": "five diagrams within 9 nodes/12 edges",
+      "status": "PASS"
+    },
+    {
+      "test": "synthetic-wechat-v1.csv marker/header/row width",
+      "status": "PASS"
+    },
+    {
+      "test": "synthetic-alipay-v1.csv marker/header/row width",
+      "status": "PASS"
+    }
+  ],
+  "not_run": [
+    "Swift compile",
+    "Core Data disk atomicity/crash",
+    "iOS17 device/GPS",
+    "production provider exports",
+    "migration/backup/performance/security"
+  ]
+}

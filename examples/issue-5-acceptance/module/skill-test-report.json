@@ -1,0 +1,96 @@
+{
+  "status": "PASS",
+  "skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+  "checks": [
+    {
+      "figure": "component-ports",
+      "tool": "self_check.py",
+      "status": "PASS",
+      "output": "OK component-ports.html\n"
+    },
+    {
+      "figure": "component-ports",
+      "tool": "verify-geometry.py",
+      "status": "PASS",
+      "output": "Summary: 1 file(s) checked, 0 finding(s).\n"
+    },
+    {
+      "figure": "component-ports",
+      "tool": "export_svg.py",
+      "status": "PASS",
+      "output": "component-ports.svg\n"
+    },
+    {
+      "figure": "import-sequence",
+      "tool": "self_check.py",
+      "status": "PASS",
+      "output": "OK import-sequence.html\n"
+    },
+    {
+      "figure": "import-sequence",
+      "tool": "verify-geometry.py",
+      "status": "PASS",
+      "output": "Summary: 1 file(s) checked, 0 finding(s).\n"
+    },
+    {
+      "figure": "import-sequence",
+      "tool": "export_svg.py",
+      "status": "PASS",
+      "output": "import-sequence.svg\n"
+    },
+    {
+      "figure": "source-identity",
+      "tool": "self_check.py",
+      "status": "PASS",
+      "output": "OK source-identity.html\n"
+    },
+    {
+      "figure": "source-identity",
+      "tool": "verify-geometry.py",
+      "status": "PASS",
+      "output": "Summary: 1 file(s) checked, 0 finding(s).\n"
+    },
+    {
+      "figure": "source-identity",
+      "tool": "export_svg.py",
+      "status": "PASS",
+      "output": "source-identity.svg\n"
+    },
+    {
+      "figure": "ledger-model",
+      "tool": "self_check.py",
+      "status": "PASS",
+      "output": "OK ledger-model.html\n"
+    },
+    {
+      "figure": "ledger-model",
+      "tool": "verify-geometry.py",
+      "status": "PASS",
+      "output": "Summary: 1 file(s) checked, 0 finding(s).\n"
+    },
+    {
+      "figure": "ledger-model",
+      "tool": "export_svg.py",
+      "status": "PASS",
+      "output": "ledger-model.svg\n"
+    },
+    {
+      "figure": "import-state",
+      "tool": "self_check.py",
+      "status": "PASS",
+      "output": "OK import-state.html\n"
+    },
+    {
+      "figure": "import-state",
+      "tool": "verify-geometry.py",
+      "status": "PASS",
+      "output": "Summary: 1 file(s) checked, 0 finding(s).\n"
+    },
+    {
+      "figure": "import-state",
+      "tool": "export_svg.py",
+      "status": "PASS",
+      "output": "import-state.svg\n"
+    }
+  ]
+}

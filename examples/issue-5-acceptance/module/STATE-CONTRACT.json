@@ -1,0 +1,99 @@
+{
+  "schema_version": "padf.module-state/v1",
+  "system_baseline_ref": "examples/issue-5-acceptance/system/SYSTEM-BASELINE.md@f4dbf0d3fac707db1b57252c529618c38d26f0bc",
+  "states": [
+    "idle",
+    "parsing",
+    "review",
+    "committing",
+    "committed",
+    "recoverable",
+    "cancelled",
+    "unsupported"
+  ],
+  "transitions": [
+    [
+      "idle",
+      "parsing",
+      "selected file + namespace"
+    ],
+    [
+      "parsing",
+      "review",
+      "validated profile and rows"
+    ],
+    [
+      "parsing",
+      "unsupported",
+      "format or quota rejected"
+    ],
+    [
+      "parsing",
+      "cancelled",
+      "cancel acknowledged"
+    ],
+    [
+      "review",
+      "cancelled",
+      "cancel / expire / background"
+    ],
+    [
+      "review",
+      "committing",
+      "explicit confirm; all included row decisions valid"
+    ],
+    [
+      "committing",
+      "committed",
+      "durable save or receipt replay"
+    ],
+    [
+      "committing",
+      "recoverable",
+      "rollback: locked/full/stale"
+    ],
+    [
+      "recoverable",
+      "review",
+      "revalidate; new review revision"
+    ],
+    [
+      "review",
+      "parsing",
+      "reselect invalidated staging"
+    ],
+    [
+      "committing",
+      "committed",
+      "cancel races save: committed receipt wins"
+    ]
+  ],
+  "notes": [
+    "committing cancellation waits for outcome; process interruption resumes commandStatus; unknown -> checking outcome UI substate",
+    "parsing adapters may return permission/store errors to recoverable UI without canonical writes; state diagram shows primary lifecycle, these common failures noted outside main flow",
+    "unsupported/cancelled reselect starts fresh idle->parsing; committed is durable terminal for batch; cleanup failure does not alter it",
+    "review rows use included/invalid/duplicate/source_conflict/unresolved_refund substate; commit guard validates every included row",
+    "Every revision/epoch change invalidates plans; no automatic rebase"
+  ],
+  "errors": {
+    "INVALID_AMOUNT": "edit",
+    "UNSUPPORTED_CURRENCY": "edit",
+    "INVALID_TIMESTAMP": "edit",
+    "UNKNOWN_CATEGORY": "edit",
+    "DUPLICATE_CANDIDATE": "reviewAgain",
+    "REFUND_UNLINKED": "reviewAgain or retainUnresolved",
+    "SOURCE_CONFLICT": "exclude row or correct selected namespace; never overwrite identity",
+    "UNSUPPORTED_EXPORT": "reselectFile",
+    "FILE_TOO_LARGE": "reselectFile",
+    "PERMISSION_DENIED": "reselectFile or optionalLocation, according to operation",
+    "LOCATION_UNAVAILABLE": "optionalLocation",
+    "STORE_LOCKED": "retryAfterUnlock",
+    "STORE_FULL": "retryAfterFreeSpace",
+    "STORE_CORRUPT": "recoveryReadOnly",
+    "BACKUP_INVALID": "current store unchanged",
+    "STALE_REVIEW": "reviewAgain",
+    "REVIEW_EXPIRED": "reselectFile",
+    "NON_SETTLED_ROW": "explicit exclude",
+    "CLEANUP_PENDING": "success; retry staging cleanup only"
+  }
+}
