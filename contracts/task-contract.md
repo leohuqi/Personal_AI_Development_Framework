@@ -77,3 +77,7 @@ Include success, invalid, empty/loading/error, authorization and regression case
 - PR title: [Linear-ID] [Feature-ID] concise scope
 - Required result: Delivery Report, PR URL, commit/head SHA, test/QA/review evidence, pending message dispositions and durable Agent Handoff/Checkpoint refs if applicable.
 - Forbidden without separate owner approval: production deployment, destructive migration, credential changes, deleting live data, declaring owner acceptance.
+
+
+## V0.3 Master-orchestrated specialist acceptance fields
+For a real independent-specialist pilot (not ordinary chat drafting) record the [Dispatch Record](agent-dispatch.md): `dispatch_id`, `master_run_ref`, `target_role`, `target_skill_ref@SHA`, `execution_mode` (ROLE_SIMULATION/HUMAN_RELAY/RUNTIME_DISPATCH), expected artifacts, upstream `depends_on_dispatch_ids`, exact design and Owner approval refs, `dispatch_ref` and reason. Specialist execution must read this **before** starting and cite it in its receipt. A Task Contract or Agent Message **alone does not start an agent**.

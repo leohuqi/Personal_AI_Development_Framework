@@ -26,3 +26,10 @@
 - For UI changes the UI Designer loads the **project's own approved UI Profile** and cites its revision; concept/high-fi/interactive levels are chosen by complexity. Static images are not interactive source.
 - Design Handoff uses V0.2 contract; Master owns readiness/approval routing, Independent Reviewer audits DESIGN mode for L/XL and risk-triggered S/M, Owner approves material design changes and coding.
 - V0.3 is under review on a feature branch; immutable PADF v0.2.0 release remains unchanged. Never modify PQA PR #7 as a side effect.
+
+
+## V0.3 auditable orchestration and Owner Skill acceptance
+- Actual Master orchestration requires `Dispatch → independent Execution → Handoff → Master Dependency Reconciliation` records with exact permalinks, timestamps, Skill SHA, runtime/human initiation mode and source artifact SHA. Same-session role play = ROLE_SIMULATION.
+- No agent can claim RUNTIME_DISPATCH unless a real tool-issued task/run ID proves Master launched it. HUMAN_RELAY is Owner-started separate session, not automatic dispatch.
+- Master shall not impersonate recipient specialists or independent Reviewer to generate evidence. Owner separately rates Solution Architect, Module Architect and UI Designer outputs per contracts/skill-delivery-evaluation.md.
+- Before treating a new specialist task as unblocked, verify prior Handoff, baseline approvals and Master reconciliation. Missing evidence is BLOCKED/NOT RUN. Owner permissions/design review remain unchanged.

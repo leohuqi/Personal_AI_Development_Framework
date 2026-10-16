@@ -68,3 +68,7 @@ Producer marks completed only with actual evidence. Receiver checks required art
 
 
 Do not hand the Module Architect a not-yet-approved proposed system baseline and treat it as binding. In a combined SYSTEM/MODULE workflow, attach a verified approved system baseline SHA to the downstream MODULE handoff, then check it again before Coder starts.
+
+
+## V0.3 provenance extension for actual multi-session pilot
+When verifying Master orchestration, each HANDOFF must additionally cite `dispatch_id`, `execution_id`, actual source `skill_ref_used@SHA`, sender execution session/run evidence, `handoff_ref` and artifact source SHA; recipient Master records the live read/ACK or NEEDS_REFINEMENT. A Master-written Handoff claiming to be from a specialist is not independently sourced execution evidence. Owner relay/attestation is distinct from Master-launched runtime dispatch. See [Dispatch Chain](agent-dispatch.md).

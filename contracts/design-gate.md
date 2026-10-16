@@ -38,3 +38,8 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 
 ## Handoff fields (extension, not new protocol)
 Design Handoff adds `artifact_manifest_ref`, `spec_revision`, `architecture_revision`, `ui_profile_revision`, `prototype_level`, `diagram_dependency_version`, `self_checks`, `independent_review_ref` (if already reviewed), `stale_checks`, `next_role`, `decision_needed`. Every required field points to a persisted real artifact or is N/A with reason.
+
+
+## V0.3 real orchestration acceptance is a separate gate input
+For a Master-led *cross-session validation pilot*, require the complete [Agent Dispatch Chain](agent-dispatch.md) in addition to the existing design/dependency/Owner/Reviewer gates. Set `orchestration_validation_required: true` and supply `orchestration_chain`, `owner_live_evidence_review_ref` and actual role execution refs for every routed professional Skill. Missing chain, a ROLE_SIMULATION record or an unreviewed external runtime claim is BLOCKED; the read-only checker can validate **metadata only**.
+**Do not equate** `ORCHESTRATION_CHAIN_COMPLETE` with professional design quality. The Owner independently grades each Skill using [Quality Evaluation](skill-delivery-evaluation.md); a real L/XL still requires Independent DESIGN Review and approved system/UI baselines before DESIGN_READY. A missing approved baseline permits a **conditional module draft** but never formal module completion.

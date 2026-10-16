@@ -26,3 +26,13 @@ Record external plugin revision, actual artifact permalinks, screenshot/browser 
 
 ## Rollout policy
 V0.3 remains a Draft PR pending Owner approval and independent review. The v0.2.0 release/tag is immutable; PQA Draft PR #7 is untouched. Do not adopt V0.3 in PQA before an explicit separate authorization.
+
+
+## New V0.3 Master orchestration + Skill quality tests
+```bash
+node --check lib/orchestration-evidence.mjs
+node --check lib/skill-delivery-quality.mjs
+node tests/v0.3/run-orchestration-tests.mjs
+node tests/v0.3/run-skill-quality-tests.mjs
+```
+These are **synthetic metadata** fixture checks. They do not authenticate actual agent session identity, initiate Work/Codex, verify a real diagram/prototype or make an Owner decision. For a real test use [independent Master runbook](../../workflow/master-orchestration-validation.md), separate specialist sessions with only Master dispatch permalinks, and [Owner scoring sheets](../../contracts/skill-delivery-evaluation.md). Old [Issue #4](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4) stays ROLE_SIMULATION, not a pass for real orchestration.

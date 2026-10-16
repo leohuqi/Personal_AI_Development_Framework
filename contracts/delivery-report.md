@@ -75,3 +75,10 @@ Do not infer that a visual prototype, simulated stage evaluation or designer sel
 - Production release: NOT REQUESTED / SEPARATELY AUTHORIZED (evidence required)
 
 Never represent CI green as independent business acceptance; never imply a merged PR is deployed.
+
+
+## V0.3 separate Master orchestration / Skill delivery quality acceptance
+- Master dispatch chain: one row per role with dispatch/ref@SHA, start method (HUMAN_RELAY vs RUNTIME_DISPATCH), actual executor session/task evidence, Handoff link@SHA, time and prior Master dependency reconciliation ref.
+- Master orchestration outcome: ROLE_SIMULATION / METADATA_ELIGIBLE_HUMAN_RELAY / METADATA_ELIGIBLE_RUNTIME_DISPATCH / VERIFIED_HUMAN_RELAY / VERIFIED_RUNTIME_DISPATCH / BLOCKED, with **independent external evidence and its limitations**. Never promote metadata-only into verified.
+- Quality sheets: SA-Q1–5, MA-Q1–5, UI-Q1–5 from [Owner Evaluation](skill-delivery-evaluation.md), each tied to its Skill/dispatch/execution/artifact SHA, Owner score/evidence/decision.
+- Independent design review and Owner coding authorization remain separate. A successful orchestration process does **not** imply good Skill output.

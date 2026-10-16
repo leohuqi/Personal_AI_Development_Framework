@@ -64,3 +64,7 @@ stages:
 Set `architecture_scope: both`. Add a SYSTEM stage with Solution Architect artifacts `solution-architecture`, `technology-stack`, `application-code-structure`, `architecture-diagram`. After applicable Owner approval, MODULE has `depends_on: [SYSTEM]` and its `system_baseline_ref` exactly matches SYSTEM's `solution-architecture` ref. Do not produce these concurrently or claim that Owner approval is automatic.
 
 Placeholder values `<sha>` and `<approved-commit>` above are **not** valid immutable SHAs or authorizations. Real Gate evidence requires pinned versions and verified artifact/render links.
+
+
+## V0.3 proven execution vs declarative dependencies
+A stage marked `COMPLETED` on paper is not proof that a separate Agent actually executed it. For the **real Master-orchestration acceptance pilot**, attach the matching [Dispatch → Execution → Handoff → Reconciliation](agent-dispatch.md) record and verify the dependency's **earlier reconciliation ref** before the next dispatch. The [orchestration-evidence checker](../lib/orchestration-evidence.mjs) rejects a missing predecessor/dispatch, reverse chronology, mismatched execution IDs and in-session role simulation. These metadata checks do not authenticate external ChatGPT/Work sessions or approve the Owner's baseline.
