@@ -1,0 +1,1200 @@
+{
+  "executedAt": "2026-10-16T09:25:39.097Z",
+  "reviewer": "/root/design_reviewer",
+  "browser": "155.0.8059.80",
+  "checks": [
+    {
+      "check": "system/system-trust visible text bounds",
+      "status": "PASS",
+      "actual": {
+        "viewBox": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "nodeBoxes": [
+          {
+            "id": "user",
+            "x": 56,
+            "y": 160,
+            "width": 152,
+            "height": 80
+          },
+          {
+            "id": "file",
+            "x": 56,
+            "y": 400,
+            "width": 152,
+            "height": 80
+          },
+          {
+            "id": "presentation",
+            "x": 288,
+            "y": 160,
+            "width": 184,
+            "height": 80
+          },
+          {
+            "id": "application",
+            "x": 548,
+            "y": 160,
+            "width": 184,
+            "height": 80
+          },
+          {
+            "id": "persistence",
+            "x": 1020,
+            "y": 160,
+            "width": 184,
+            "height": 80
+          },
+          {
+            "id": "import_adapter",
+            "x": 288,
+            "y": 400,
+            "width": 184,
+            "height": 80
+          },
+          {
+            "id": "category_rules",
+            "x": 548,
+            "y": 400,
+            "width": 184,
+            "height": 80
+          },
+          {
+            "id": "location_adapter",
+            "x": 784,
+            "y": 400,
+            "width": 184,
+            "height": 80
+          },
+          {
+            "id": "backup_adapter",
+            "x": 1020,
+            "y": 400,
+            "width": 184,
+            "height": 80
+          }
+        ],
+        "textCount": 36,
+        "textsOutsideViewBox": []
+      }
+    },
+    {
+      "check": "system/technical-deployment visible text bounds",
+      "status": "PASS",
+      "actual": {
+        "viewBox": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "nodeBoxes": [
+          {
+            "id": "runtime",
+            "x": 108,
+            "y": 184,
+            "width": 296,
+            "height": 176
+          },
+          {
+            "id": "store",
+            "x": 528,
+            "y": 184,
+            "width": 352,
+            "height": 80
+          },
+          {
+            "id": "location",
+            "x": 108,
+            "y": 448,
+            "width": 296,
+            "height": 80
+          },
+          {
+            "id": "auth",
+            "x": 528,
+            "y": 448,
+            "width": 352,
+            "height": 80
+          },
+          {
+            "id": "provider",
+            "x": 1016,
+            "y": 344,
+            "width": 224,
+            "height": 112
+          }
+        ],
+        "textCount": 26,
+        "textsOutsideViewBox": []
+      }
+    },
+    {
+      "check": "system/package-core visible text bounds",
+      "status": "PASS",
+      "actual": {
+        "viewBox": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "nodeBoxes": [
+          {
+            "id": "App",
+            "x": 528,
+            "y": 80,
+            "width": 224,
+            "height": 80
+          },
+          {
+            "id": "LedgerPresentation",
+            "x": 264,
+            "y": 248,
+            "width": 232,
+            "height": 80
+          },
+          {
+            "id": "adapters",
+            "x": 824,
+            "y": 248,
+            "width": 360,
+            "height": 128
+          },
+          {
+            "id": "DesignSystem",
+            "x": 80,
+            "y": 440,
+            "width": 232,
+            "height": 80
+          },
+          {
+            "id": "LedgerApplication",
+            "x": 528,
+            "y": 440,
+            "width": 232,
+            "height": 80
+          },
+          {
+            "id": "LedgerDomain",
+            "x": 528,
+            "y": 568,
+            "width": 232,
+            "height": 72
+          }
+        ],
+        "textCount": 28,
+        "textsOutsideViewBox": []
+      }
+    },
+    {
+      "check": "system/package-adapters visible text bounds",
+      "status": "PASS",
+      "actual": {
+        "viewBox": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "nodeBoxes": [
+          {
+            "id": "LedgerPersistence",
+            "x": 80,
+            "y": 128,
+            "width": 192,
+            "height": 80
+          },
+          {
+            "id": "BillImport",
+            "x": 312,
+            "y": 128,
+            "width": 192,
+            "height": 80
+          },
+          {
+            "id": "CategoryRules",
+            "x": 544,
+            "y": 128,
+            "width": 192,
+            "height": 80
+          },
+          {
+            "id": "LocationAccess",
+            "x": 776,
+            "y": 128,
+            "width": 192,
+            "height": 80
+          },
+          {
+            "id": "BackupArchive",
+            "x": 1008,
+            "y": 128,
+            "width": 192,
+            "height": 80
+          },
+          {
+            "id": "LedgerApplication",
+            "x": 224,
+            "y": 424,
+            "width": 304,
+            "height": 88
+          },
+          {
+            "id": "LedgerDomain",
+            "x": 776,
+            "y": 552,
+            "width": 304,
+            "height": 88
+          }
+        ],
+        "textCount": 30,
+        "textsOutsideViewBox": []
+      }
+    },
+    {
+      "check": "system/import-workflow visible text bounds",
+      "status": "PASS",
+      "actual": {
+        "viewBox": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "nodeBoxes": [
+          {
+            "id": "select",
+            "x": 536,
+            "y": 48,
+            "width": 224,
+            "height": 72
+          },
+          {
+            "id": "validate",
+            "x": 536,
+            "y": 152,
+            "width": 224,
+            "height": 72
+          },
+          {
+            "id": "review",
+            "x": 536,
+            "y": 256,
+            "width": 224,
+            "height": 72
+          },
+          {
+            "id": "confirm",
+            "x": 548,
+            "y": 360,
+            "width": 200,
+            "height": 80
+          },
+          {
+            "id": "commit",
+            "x": 536,
+            "y": 464,
+            "width": 224,
+            "height": 72
+          },
+          {
+            "id": "success",
+            "x": 536,
+            "y": 568,
+            "width": 224,
+            "height": 72
+          },
+          {
+            "id": "unsupported",
+            "x": 112,
+            "y": 152,
+            "width": 296,
+            "height": 72
+          },
+          {
+            "id": "cancel",
+            "x": 920,
+            "y": 360,
+            "width": 288,
+            "height": 80
+          },
+          {
+            "id": "rollback",
+            "x": 920,
+            "y": 464,
+            "width": 288,
+            "height": 112
+          }
+        ],
+        "textCount": 31,
+        "textsOutsideViewBox": []
+      }
+    },
+    {
+      "check": "module/component-ports visible text bounds",
+      "status": "PASS",
+      "actual": {
+        "viewBox": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "nodeBoxes": [
+          {
+            "id": "presentation",
+            "x": 48,
+            "y": 256,
+            "width": 196,
+            "height": 112
+          },
+          {
+            "id": "usecases",
+            "x": 304,
+            "y": 256,
+            "width": 256,
+            "height": 128
+          },
+          {
+            "id": "domain",
+            "x": 672,
+            "y": 116,
+            "width": 240,
+            "height": 112
+          },
+          {
+            "id": "ports",
+            "x": 672,
+            "y": 436,
+            "width": 240,
+            "height": 160
+          },
+          {
+            "id": "adapters",
+            "x": 1000,
+            "y": 416,
+            "width": 232,
+            "height": 180
+          }
+        ],
+        "textCount": 26,
+        "textsOutsideViewBox": []
+      }
+    },
+    {
+      "check": "module/import-sequence visible text bounds",
+      "status": "PASS",
+      "actual": {
+        "viewBox": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "nodeBoxes": [
+          {
+            "id": "0",
+            "x": 28,
+            "y": 48,
+            "width": 224,
+            "height": 108
+          },
+          {
+            "id": "1",
+            "x": 348,
+            "y": 48,
+            "width": 224,
+            "height": 108
+          },
+          {
+            "id": "2",
+            "x": 668,
+            "y": 48,
+            "width": 224,
+            "height": 108
+          },
+          {
+            "id": "3",
+            "x": 988,
+            "y": 48,
+            "width": 224,
+            "height": 108
+          }
+        ],
+        "textCount": 23,
+        "textsOutsideViewBox": []
+      }
+    },
+    {
+      "check": "module/source-identity visible text bounds",
+      "status": "PASS",
+      "actual": {
+        "viewBox": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "nodeBoxes": [
+          {
+            "id": "namespace",
+            "x": 48,
+            "y": 92,
+            "width": 216,
+            "height": 160
+          },
+          {
+            "id": "identity",
+            "x": 480,
+            "y": 92,
+            "width": 216,
+            "height": 160
+          },
+          {
+            "id": "obs",
+            "x": 960,
+            "y": 92,
+            "width": 256,
+            "height": 160
+          },
+          {
+            "id": "command",
+            "x": 48,
+            "y": 436,
+            "width": 216,
+            "height": 160
+          },
+          {
+            "id": "batch",
+            "x": 480,
+            "y": 436,
+            "width": 216,
+            "height": 160
+          },
+          {
+            "id": "entry",
+            "x": 960,
+            "y": 436,
+            "width": 256,
+            "height": 160
+          }
+        ],
+        "textCount": 31,
+        "textsOutsideViewBox": []
+      }
+    },
+    {
+      "check": "module/ledger-model visible text bounds",
+      "status": "PASS",
+      "actual": {
+        "viewBox": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "nodeBoxes": [
+          {
+            "id": "category",
+            "x": 512,
+            "y": 48,
+            "width": 224,
+            "height": 132
+          },
+          {
+            "id": "entry",
+            "x": 512,
+            "y": 296,
+            "width": 224,
+            "height": 160
+          },
+          {
+            "id": "refund",
+            "x": 48,
+            "y": 296,
+            "width": 248,
+            "height": 160
+          },
+          {
+            "id": "location",
+            "x": 960,
+            "y": 296,
+            "width": 272,
+            "height": 160
+          },
+          {
+            "id": "override",
+            "x": 512,
+            "y": 536,
+            "width": 224,
+            "height": 104
+          }
+        ],
+        "textCount": 32,
+        "textsOutsideViewBox": []
+      }
+    },
+    {
+      "check": "module/import-state visible text bounds",
+      "status": "PASS",
+      "actual": {
+        "viewBox": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "nodeBoxes": [
+          {
+            "id": "parsing",
+            "x": 48,
+            "y": 132,
+            "width": 216,
+            "height": 128
+          },
+          {
+            "id": "review",
+            "x": 384,
+            "y": 132,
+            "width": 216,
+            "height": 128
+          },
+          {
+            "id": "committing",
+            "x": 720,
+            "y": 132,
+            "width": 216,
+            "height": 128
+          },
+          {
+            "id": "committed",
+            "x": 1056,
+            "y": 132,
+            "width": 184,
+            "height": 128
+          },
+          {
+            "id": "cancelled",
+            "x": 384,
+            "y": 468,
+            "width": 216,
+            "height": 128
+          },
+          {
+            "id": "recoverable",
+            "x": 720,
+            "y": 468,
+            "width": 216,
+            "height": 128
+          }
+        ],
+        "textCount": 36,
+        "textsOutsideViewBox": []
+      }
+    },
+    {
+      "check": "switch system-trust",
+      "status": "PASS",
+      "actual": {
+        "visibleSections": 1
+      }
+    },
+    {
+      "check": "system-trust node 0",
+      "status": "PASS",
+      "actual": {
+        "node": "user"
+      }
+    },
+    {
+      "check": "system-trust node 1",
+      "status": "PASS",
+      "actual": {
+        "node": "file"
+      }
+    },
+    {
+      "check": "system-trust node 2",
+      "status": "PASS",
+      "actual": {
+        "node": "presentation"
+      }
+    },
+    {
+      "check": "system-trust node 3",
+      "status": "PASS",
+      "actual": {
+        "node": "application"
+      }
+    },
+    {
+      "check": "system-trust node 4",
+      "status": "PASS",
+      "actual": {
+        "node": "persistence"
+      }
+    },
+    {
+      "check": "system-trust node 5",
+      "status": "PASS",
+      "actual": {
+        "node": "import_adapter"
+      }
+    },
+    {
+      "check": "system-trust node 6",
+      "status": "PASS",
+      "actual": {
+        "node": "category_rules"
+      }
+    },
+    {
+      "check": "system-trust node 7",
+      "status": "PASS",
+      "actual": {
+        "node": "location_adapter"
+      }
+    },
+    {
+      "check": "system-trust node 8",
+      "status": "PASS",
+      "actual": {
+        "node": "backup_adapter"
+      }
+    },
+    {
+      "check": "system-trust keyboard",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "check": "switch technical-deployment",
+      "status": "PASS",
+      "actual": {
+        "visibleSections": 1
+      }
+    },
+    {
+      "check": "technical-deployment node 0",
+      "status": "PASS",
+      "actual": {
+        "node": "runtime"
+      }
+    },
+    {
+      "check": "technical-deployment node 1",
+      "status": "PASS",
+      "actual": {
+        "node": "store"
+      }
+    },
+    {
+      "check": "technical-deployment node 2",
+      "status": "PASS",
+      "actual": {
+        "node": "location"
+      }
+    },
+    {
+      "check": "technical-deployment node 3",
+      "status": "PASS",
+      "actual": {
+        "node": "auth"
+      }
+    },
+    {
+      "check": "technical-deployment node 4",
+      "status": "PASS",
+      "actual": {
+        "node": "provider"
+      }
+    },
+    {
+      "check": "technical-deployment keyboard",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "check": "switch package-core",
+      "status": "PASS",
+      "actual": {
+        "visibleSections": 1
+      }
+    },
+    {
+      "check": "package-core node 0",
+      "status": "PASS",
+      "actual": {
+        "node": "App"
+      }
+    },
+    {
+      "check": "package-core node 1",
+      "status": "PASS",
+      "actual": {
+        "node": "LedgerPresentation"
+      }
+    },
+    {
+      "check": "package-core node 2",
+      "status": "PASS",
+      "actual": {
+        "node": "adapters"
+      }
+    },
+    {
+      "check": "package-core node 3",
+      "status": "PASS",
+      "actual": {
+        "node": "DesignSystem"
+      }
+    },
+    {
+      "check": "package-core node 4",
+      "status": "PASS",
+      "actual": {
+        "node": "LedgerApplication"
+      }
+    },
+    {
+      "check": "package-core node 5",
+      "status": "PASS",
+      "actual": {
+        "node": "LedgerDomain"
+      }
+    },
+    {
+      "check": "package-core keyboard",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "check": "switch package-adapters",
+      "status": "PASS",
+      "actual": {
+        "visibleSections": 1
+      }
+    },
+    {
+      "check": "package-adapters node 0",
+      "status": "PASS",
+      "actual": {
+        "node": "LedgerPersistence"
+      }
+    },
+    {
+      "check": "package-adapters node 1",
+      "status": "PASS",
+      "actual": {
+        "node": "BillImport"
+      }
+    },
+    {
+      "check": "package-adapters node 2",
+      "status": "PASS",
+      "actual": {
+        "node": "CategoryRules"
+      }
+    },
+    {
+      "check": "package-adapters node 3",
+      "status": "PASS",
+      "actual": {
+        "node": "LocationAccess"
+      }
+    },
+    {
+      "check": "package-adapters node 4",
+      "status": "PASS",
+      "actual": {
+        "node": "BackupArchive"
+      }
+    },
+    {
+      "check": "package-adapters node 5",
+      "status": "PASS",
+      "actual": {
+        "node": "LedgerApplication"
+      }
+    },
+    {
+      "check": "package-adapters node 6",
+      "status": "PASS",
+      "actual": {
+        "node": "LedgerDomain"
+      }
+    },
+    {
+      "check": "package-adapters keyboard",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "check": "switch import-workflow",
+      "status": "PASS",
+      "actual": {
+        "visibleSections": 1
+      }
+    },
+    {
+      "check": "import-workflow node 0",
+      "status": "PASS",
+      "actual": {
+        "node": "select"
+      }
+    },
+    {
+      "check": "import-workflow node 1",
+      "status": "PASS",
+      "actual": {
+        "node": "validate"
+      }
+    },
+    {
+      "check": "import-workflow node 2",
+      "status": "PASS",
+      "actual": {
+        "node": "review"
+      }
+    },
+    {
+      "check": "import-workflow node 3",
+      "status": "PASS",
+      "actual": {
+        "node": "confirm"
+      }
+    },
+    {
+      "check": "import-workflow node 4",
+      "status": "PASS",
+      "actual": {
+        "node": "commit"
+      }
+    },
+    {
+      "check": "import-workflow node 5",
+      "status": "PASS",
+      "actual": {
+        "node": "success"
+      }
+    },
+    {
+      "check": "import-workflow node 6",
+      "status": "PASS",
+      "actual": {
+        "node": "unsupported"
+      }
+    },
+    {
+      "check": "import-workflow node 7",
+      "status": "PASS",
+      "actual": {
+        "node": "cancel"
+      }
+    },
+    {
+      "check": "import-workflow node 8",
+      "status": "PASS",
+      "actual": {
+        "node": "rollback"
+      }
+    },
+    {
+      "check": "import-workflow keyboard",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "check": "zoom125",
+      "status": "PASS",
+      "actual": 1600
+    },
+    {
+      "check": "zoom lower bound",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "check": "zoom upper bound",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "check": "zoom reset",
+      "status": "PASS",
+      "actual": {}
+    },
+    {
+      "check": "SYSTEM scroll system-trust/390",
+      "status": "PASS",
+      "actual": {
+        "client": 358,
+        "scroll": 1280,
+        "left": 922,
+        "page": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "check": "SYSTEM scroll technical-deployment/390",
+      "status": "PASS",
+      "actual": {
+        "client": 358,
+        "scroll": 1280,
+        "left": 922,
+        "page": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "check": "SYSTEM scroll package-core/390",
+      "status": "PASS",
+      "actual": {
+        "client": 358,
+        "scroll": 1280,
+        "left": 922,
+        "page": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "check": "SYSTEM scroll package-adapters/390",
+      "status": "PASS",
+      "actual": {
+        "client": 358,
+        "scroll": 1280,
+        "left": 922,
+        "page": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "check": "SYSTEM scroll import-workflow/390",
+      "status": "PASS",
+      "actual": {
+        "client": 358,
+        "scroll": 1280,
+        "left": 922,
+        "page": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "check": "SYSTEM scroll system-trust/1280",
+      "status": "PASS",
+      "actual": {
+        "client": 1216,
+        "scroll": 1280,
+        "left": 64,
+        "page": 1280,
+        "viewport": 1280
+      }
+    },
+    {
+      "check": "SYSTEM scroll technical-deployment/1280",
+      "status": "PASS",
+      "actual": {
+        "client": 1216,
+        "scroll": 1280,
+        "left": 64,
+        "page": 1280,
+        "viewport": 1280
+      }
+    },
+    {
+      "check": "SYSTEM scroll package-core/1280",
+      "status": "PASS",
+      "actual": {
+        "client": 1216,
+        "scroll": 1280,
+        "left": 64,
+        "page": 1280,
+        "viewport": 1280
+      }
+    },
+    {
+      "check": "SYSTEM scroll package-adapters/1280",
+      "status": "PASS",
+      "actual": {
+        "client": 1216,
+        "scroll": 1280,
+        "left": 64,
+        "page": 1280,
+        "viewport": 1280
+      }
+    },
+    {
+      "check": "SYSTEM scroll import-workflow/1280",
+      "status": "PASS",
+      "actual": {
+        "client": 1216,
+        "scroll": 1280,
+        "left": 64,
+        "page": 1280,
+        "viewport": 1280
+      }
+    },
+    {
+      "check": "MODULE scroll 0/390",
+      "status": "PASS",
+      "actual": {
+        "client": 358,
+        "scroll": 1280,
+        "left": 922,
+        "page": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "check": "MODULE scroll 1/390",
+      "status": "PASS",
+      "actual": {
+        "client": 358,
+        "scroll": 1280,
+        "left": 922,
+        "page": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "check": "MODULE scroll 2/390",
+      "status": "PASS",
+      "actual": {
+        "client": 358,
+        "scroll": 1280,
+        "left": 922,
+        "page": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "check": "MODULE scroll 3/390",
+      "status": "PASS",
+      "actual": {
+        "client": 358,
+        "scroll": 1280,
+        "left": 922,
+        "page": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "check": "MODULE scroll 4/390",
+      "status": "PASS",
+      "actual": {
+        "client": 358,
+        "scroll": 1280,
+        "left": 922,
+        "page": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "check": "MODULE scroll 0/1280",
+      "status": "PASS",
+      "actual": {
+        "client": 1216,
+        "scroll": 1280,
+        "left": 64,
+        "page": 1280,
+        "viewport": 1280
+      }
+    },
+    {
+      "check": "MODULE scroll 1/1280",
+      "status": "PASS",
+      "actual": {
+        "client": 1216,
+        "scroll": 1280,
+        "left": 64,
+        "page": 1280,
+        "viewport": 1280
+      }
+    },
+    {
+      "check": "MODULE scroll 2/1280",
+      "status": "PASS",
+      "actual": {
+        "client": 1216,
+        "scroll": 1280,
+        "left": 64,
+        "page": 1280,
+        "viewport": 1280
+      }
+    },
+    {
+      "check": "MODULE scroll 3/1280",
+      "status": "PASS",
+      "actual": {
+        "client": 1216,
+        "scroll": 1280,
+        "left": 64,
+        "page": 1280,
+        "viewport": 1280
+      }
+    },
+    {
+      "check": "MODULE scroll 4/1280",
+      "status": "PASS",
+      "actual": {
+        "client": 1216,
+        "scroll": 1280,
+        "left": 64,
+        "page": 1280,
+        "viewport": 1280
+      }
+    },
+    {
+      "check": "MODULE print all figures",
+      "status": "PASS",
+      "actual": {
+        "figures": 5
+      }
+    },
+    {
+      "check": "system no-JS static figures",
+      "status": "PASS",
+      "actual": {
+        "figures": 5
+      }
+    },
+    {
+      "check": "module no-JS static figures",
+      "status": "PASS",
+      "actual": {
+        "figures": 5
+      }
+    },
+    {
+      "check": "network offline",
+      "status": "PASS",
+      "actual": []
+    },
+    {
+      "check": "no page errors",
+      "status": "PASS",
+      "actual": []
+    }
+  ],
+  "systemNodeCount": 36,
+  "screenshots": [
+    "system-system-trust-render.png",
+    "system-technical-deployment-render.png",
+    "system-package-core-render.png",
+    "system-package-adapters-render.png",
+    "system-import-workflow-render.png",
+    "module-component-ports-render.png",
+    "module-import-sequence-render.png",
+    "module-source-identity-render.png",
+    "module-ledger-model-render.png",
+    "module-import-state-render.png"
+  ],
+  "screenshotStatus": "LOCAL_ONLY",
+  "pass": 85,
+  "fail": 0
+}

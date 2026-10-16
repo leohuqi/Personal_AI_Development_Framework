@@ -1,0 +1,52 @@
+[
+  {
+    "file": "module-component-ports-render.png",
+    "sha256": "adc12a8a9f905fcdc2e10ccb7c16bc447fb7b11626268ac0337e5b4df744f0e8",
+    "status": "LOCAL_ONLY"
+  },
+  {
+    "file": "module-import-sequence-render.png",
+    "sha256": "a3f14260b3931e60103e38ee9958d844557044da1d6da30c3e0e42b3fa09b42b",
+    "status": "LOCAL_ONLY"
+  },
+  {
+    "file": "module-import-state-render.png",
+    "sha256": "b095c7efa97aef7b67731cefdac07402e173318076862919b8d463b4189927d1",
+    "status": "LOCAL_ONLY"
+  },
+  {
+    "file": "module-ledger-model-render.png",
+    "sha256": "71173f4a72756b53f271dc3dc451412481ed7c314d598832a6229d7fde825f3e",
+    "status": "LOCAL_ONLY"
+  },
+  {
+    "file": "module-source-identity-render.png",
+    "sha256": "bd49304e057f11374851e9a779f23d8d071b489d0918ce19f16a77c6a5f86d02",
+    "status": "LOCAL_ONLY"
+  },
+  {
+    "file": "system-import-workflow-render.png",
+    "sha256": "8af3e1f1bc88c90daafafbd14cd46d5372bf8b815555b56c19421fb6120fa00b",
+    "status": "LOCAL_ONLY"
+  },
+  {
+    "file": "system-package-adapters-render.png",
+    "sha256": "fa22b49f253fdddf849f9260d03922f381d4426c5f8bf81a59cddae49f71e032",
+    "status": "LOCAL_ONLY"
+  },
+  {
+    "file": "system-package-core-render.png",
+    "sha256": "1962d4a0a203a0fe7ae7ae64687abc9abcf32e8c240eb40a90ace902fe1f2795",
+    "status": "LOCAL_ONLY"
+  },
+  {
+    "file": "system-system-trust-render.png",
+    "sha256": "e0ddb92166ca17f29874b0cb8be31ff63a9f399a38f3af0bdac26e07bcb9dc50",
+    "status": "LOCAL_ONLY"
+  },
+  {
+    "file": "system-technical-deployment-render.png",
+    "sha256": "c3b9059603d93c8503e3896a1e94ba88731e950b76965e99e714e2793df375bd",
+    "status": "LOCAL_ONLY"
+  }
+]
