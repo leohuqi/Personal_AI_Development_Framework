@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "executedAt": "2026-10-16T09:25:48.227Z",
+  "executedAt": "2026-10-16T09:30:49.130Z",
   "checks": [
     {
       "test": "untrusted merchant rendered as literal text, never DOM markup",
