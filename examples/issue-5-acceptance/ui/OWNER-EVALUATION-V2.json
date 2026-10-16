@@ -1,0 +1,66 @@
+{
+  "schema_version": "padf.skill-delivery-evaluation/v1",
+  "evaluation_id": "I5-UI-OWNER-002",
+  "context_id": "PADF-ISSUE-5-EXPENSE-ACCEPTANCE",
+  "dispatch_id": "I5-UI-003",
+  "execution_id": "I5-UI-EXEC-003",
+  "skill_role": "ui-ux-designer",
+  "skill_ref": ".agents/skills/ui-ux-designer/SKILL.md@f1b6a6e4a90d547127bd95bceaa12880a7c39855",
+  "artifact_manifest_ref": "examples/issue-5-acceptance/ui/ARTIFACT-MANIFEST.json@86a71f24fa612403cb741d859251b2f715347f3d",
+  "ui_level": "L3",
+  "ui_profile_ref": "examples/issue-5-acceptance/ui/UI-PROFILE.md@d7e9c679a0a435310ef76d63432917d7e1656078",
+  "ui_profile_status": "PROPOSED",
+  "owner_identity": null,
+  "owner_decision": "PENDING",
+  "owner_evaluation_ref": null,
+  "criteria": [
+    {
+      "id": "UI-Q1",
+      "score": null,
+      "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/UI-DESIGN.md",
+      "owner_strength_or_problem": null
+    },
+    {
+      "id": "UI-Q2",
+      "score": null,
+      "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/UI-DESIGN.md",
+      "owner_strength_or_problem": null
+    },
+    {
+      "id": "UI-Q3",
+      "score": null,
+      "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/UI-DESIGN.md",
+      "owner_strength_or_problem": null
+    },
+    {
+      "id": "UI-Q4",
+      "score": null,
+      "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/prototype.html",
+      "owner_strength_or_problem": null
+    },
+    {
+      "id": "UI-Q5",
+      "score": null,
+      "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/UI-DESIGN.md",
+      "owner_strength_or_problem": null
+    }
+  ],
+  "interactive_prototype_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/prototype.html",
+  "interaction_test_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/interaction-test-report.json",
+  "supplementary_test_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/adversarial-test-report.json",
+  "local_entry": "outputs/issue-5/ui/prototype.html",
+  "actual_render_status": "PASS author browser rendering; six real local PNGs with source manifest hashes, no GitHub PNG publication claimed",
+  "score_scale": "Owner 0 missing / 1 inadequate / 2 acceptable / 3 strong, evidence + strength/problem, ACCEPT / CHANGES_REQUESTED / DEFER",
+  "boundary": "Unscored. Profile PROPOSED. New evaluation sheet points at corrected source without rewriting original manifest-hashed evaluation history. Independent technical review is separate from actual Owner UI Profile/quality acceptance.",
+  "upstream_execution_id": "I5-UI-EXEC-001",
+  "package_lineage": "Original independent UI execution plus two bounded same-producer corrections; no extra fresh-context execution claimed.",
+  "corrective_test_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/rework-test-report.json",
+  "handoff_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/bbfd96a59fab7ad0323449a82c9284c73f25bf40/examples/issue-5-acceptance/ui/HANDOFF-V3.md",
+  "upstream_execution_ids": [
+    "I5-UI-EXEC-001",
+    "I5-UI-EXEC-002"
+  ],
+  "second_corrective_test_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/rework-r2-test-report.json",
+  "independent_review_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/4b9f926d9fec647b25d17dfac4ce9913070f8ccf/examples/issue-5-acceptance/review/REPORT-V3.md",
+  "independent_review_verdict": "APPROVE WITH CONDITIONS; 52 own browser assertions PASS/0 FAIL, technical scope only"
+}
