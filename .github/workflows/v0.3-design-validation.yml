@@ -34,7 +34,15 @@ jobs:
         run: |
           node --check lib/design-gate.mjs
           node --check tests/v0.3/run-tests.mjs
+          node --check lib/orchestration-evidence.mjs
+          node --check lib/skill-delivery-quality.mjs
+          node --check tests/v0.3/run-orchestration-tests.mjs
+          node --check tests/v0.3/run-skill-quality-tests.mjs
       - name: Specialized agent routing and dependency tests
         run: node tests/v0.3/run-tests.mjs
+      - name: Master orchestration dispatch provenance fixture tests
+        run: node tests/v0.3/run-orchestration-tests.mjs
+      - name: Independent Owner quality sheet metadata tests
+        run: node tests/v0.3/run-skill-quality-tests.mjs
       - name: Master-led expense pilot dependency and artifact checks
         run: node tests/v0.3/verify-expense-pilot.mjs

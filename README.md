@@ -44,6 +44,19 @@ Master performs [capability-based routing](workflow/agent-routing.md), checks [a
 
 **Status: V0.3 is proposed for Owner review and testing, not merged/released.** Projects remain on immutable [PADF v0.2.0](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.2.0) until separately approved.
 
+
+## Real Master orchestration and independent Skill acceptance (V0.3)
+To **prove coordination**, follow the [real Master orchestration runbook](workflow/master-orchestration-validation.md): Owner provides only the Expense Ledger business goal to Master, and Master creates an auditable [Dispatch Record](contracts/agent-dispatch.md) **before** specialist sessions execute. Execution receipt, real Handoff and Master live dependency reconciliation are all required. Distinguish **ROLE_SIMULATION**, **HUMAN_RELAY** (Owner starts each separate session) and **RUNTIME_DISPATCH** (Master tool launches and receives a task ID). Skills do not create an automatic agent scheduler.
+
+To **evaluate Skill quality**, Owner independently scores [Solution Architect, Module Architect and UI Designer artifacts](contracts/skill-delivery-evaluation.md), tied to actual session ID and immutable artifact/Skill SHA. A working interactive prototype is not equivalent to a screenshot, and a diagram does not prove actual external diagram-design invocation.
+
+Read-only verification scripts:
+```bash
+node tests/v0.3/run-orchestration-tests.mjs
+node tests/v0.3/run-skill-quality-tests.mjs
+```
+These check **synthetic evidence metadata only**. Live cross-session invocation, proof of actual external tool usage, independent DESIGN review and Owner scoring remain **NOT RUN** until a separate authorized trial. The previous [Issue #4](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4) demonstrates role simulation, *not* independent Master Orchestration.
+
 ## Core Skills
 
 | Skill | Responsibility |

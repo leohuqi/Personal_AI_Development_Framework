@@ -47,3 +47,10 @@ node --check tests/v0.3/run-tests.mjs
 node tests/v0.3/run-tests.mjs
 ```
 See [manual pilot steps](README.md) and PR #3 for current exact head/CI.
+
+## New orchestration / Skill-quality acceptance scope — PENDING latest CI
+- [Agent Dispatch Contract](../../contracts/agent-dispatch.md) defines DISPATCH -> EXECUTION -> HANDOFF -> RECONCILIATION with real provenance and honest HUMAN_RELAY vs RUNTIME_DISPATCH.
+- [Master Orchestration Runbook](../../workflow/master-orchestration-validation.md) requires **fresh independent specialist sessions** and offers Owner quality assessment of 3 roles separately.
+- [Quality Evaluation Contract](../../contracts/skill-delivery-evaluation.md) scores Solution Architect, Module Architect and UI Designer against actual professional artifacts. A polished design cannot substitute for actual session provenance, nor vice versa.
+- New suites `tests/v0.3/run-orchestration-tests.mjs` and `tests/v0.3/run-skill-quality-tests.mjs` provide synthetic positive/negative tests only. **Results must be confirmed on the updated PR HEAD before calling PASS.**
+- Prior Issue #4 remains a ROLE_SIMULATION; actual external Master-run Dispatch/E2E and Owner Quality evaluations NOT RUN as of this edit.

@@ -239,6 +239,13 @@ check('MODULE-design diagram must be rendered by pinned external skill',()=>{
  const x=moduleOnly();x.stages[0].artifacts[1].render_status='NOT_RUN';
  assert(evaluateDesignGate(x).reasons.includes('UNSATISFIED_STAGE:MOD'));
 });
+check('Optional real orchestration acceptance refuses missing Dispatch chain',()=>{
+ const x=baseline();x.orchestration_validation_required=true;
+ const out=evaluateDesignGate(x);
+ assert(out.reasons.includes('ORCHESTRATION_CHAIN_INCOMPLETE'));
+ assert(out.reasons.includes('ORCHESTRATION_LIVE_EVIDENCE_NOT_REVIEWED'));
+ assert(out.reasons.includes('MISSING_SPECIALIST_EXECUTION:solution-architect'));
+});
 check('Invalid task class and unsupported status rejected',()=>{
  assert.equal(routeAgents({task_class:'unknown'}).valid,false);
  const x=baseline();x.stages[0].status='MAGIC';
