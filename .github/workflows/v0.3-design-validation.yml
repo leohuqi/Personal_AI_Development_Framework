@@ -36,3 +36,5 @@ jobs:
           node --check tests/v0.3/run-tests.mjs
       - name: Specialized agent routing and dependency tests
         run: node tests/v0.3/run-tests.mjs
+      - name: Master-led expense pilot dependency and artifact checks
+        run: node tests/v0.3/verify-expense-pilot.mjs

@@ -34,7 +34,7 @@ Scope: entire new consumer expense-recording APP, not individual parser implemen
 - [APP-CODE-STRUCTURE.md](APP-CODE-STRUCTURE.md) — entire-APP package/module skeleton, boundaries and layering rules.
 - [ADR-001-modular-monolith.md](ADR-001-modular-monolith.md) — architecture decision proposal, not approved.
 - [technical-architecture.svg](technical-architecture.svg) and [app-code-architecture.svg](app-code-architecture.svg) — **human-authored illustrative SVGs**, not external diagram-design runtime results.
-- Previous [source pilot schema SQL](../../../../../examples) is **not** imported into this repository; new module design must explicitly state DB invariants and production migrations remain unapproved.
+- The current design package contains **no approved production DDL**; the Module Architect must identify necessary DB invariants and keep migrations pending review.
 
 ## 5. NFR and operational constraints
 - Money: integer minor units, currency code and direction; no floating-point CNY totals; refunds/transfers not ordinary expenses.
