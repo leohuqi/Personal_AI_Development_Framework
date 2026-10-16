@@ -21,7 +21,7 @@ function make(role='solution-architect',prev=null,index=0,mode='HUMAN_RELAY'){
    system_baseline_status:'APPROVED',system_baseline_owner_approval_ref:link('issues/6#approved-system')}:{}),
   ...(role==='ui-ux-designer'?{ui_profile_ref:pin('docs/ui-profile.md')}:{}),
  };
- const execution={execution_id:'RUN-'+index,dispatch_id:id,executor_role:role,
+ const execution={execution_id:'EXECUTION-'+index,dispatch_id:id,executor_role:role,
   executor_session_ref:'session:specialist-'+index,started_at:moment(3),
   dispatch_ref_read:dispatch.dispatch_ref,skill_ref_used:dispatch.skill_ref,
   evidence_method:mode==='RUNTIME_DISPATCH'?'RUNTIME_ISSUED':'OWNER_ATTESTED',
