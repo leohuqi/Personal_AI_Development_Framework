@@ -1,0 +1,55 @@
+{
+  "schema_version": "padf.skill-delivery-evaluation/v1",
+  "evaluation_id": "I5-UI-OWNER-001",
+  "context_id": "PADF-ISSUE-5-EXPENSE-ACCEPTANCE",
+  "dispatch_id": "I5-UI-001",
+  "execution_id": "I5-UI-EXEC-001",
+  "skill_role": "ui-ux-designer",
+  "skill_ref": ".agents/skills/ui-ux-designer/SKILL.md@f1b6a6e4a90d547127bd95bceaa12880a7c39855",
+  "artifact_manifest_ref": "examples/issue-5-acceptance/ui/ARTIFACT-MANIFEST.json@367bdd2dfc46a868290750f8088da9cdb53575a9",
+  "ui_level": "L3",
+  "ui_profile_ref": "examples/issue-5-acceptance/ui/UI-PROFILE.md@d7e9c679a0a435310ef76d63432917d7e1656078",
+  "ui_profile_status": "PROPOSED",
+  "owner_identity": null,
+  "owner_decision": "PENDING",
+  "owner_evaluation_ref": null,
+  "criteria": [
+    {
+      "id": "UI-Q1",
+      "score": null,
+      "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/367bdd2dfc46a868290750f8088da9cdb53575a9/examples/issue-5-acceptance/ui/UI-DESIGN.md",
+      "owner_strength_or_problem": null
+    },
+    {
+      "id": "UI-Q2",
+      "score": null,
+      "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/367bdd2dfc46a868290750f8088da9cdb53575a9/examples/issue-5-acceptance/ui/UI-DESIGN.md",
+      "owner_strength_or_problem": null
+    },
+    {
+      "id": "UI-Q3",
+      "score": null,
+      "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/367bdd2dfc46a868290750f8088da9cdb53575a9/examples/issue-5-acceptance/ui/UI-DESIGN.md",
+      "owner_strength_or_problem": null
+    },
+    {
+      "id": "UI-Q4",
+      "score": null,
+      "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/367bdd2dfc46a868290750f8088da9cdb53575a9/examples/issue-5-acceptance/ui/prototype.html",
+      "owner_strength_or_problem": null
+    },
+    {
+      "id": "UI-Q5",
+      "score": null,
+      "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/367bdd2dfc46a868290750f8088da9cdb53575a9/examples/issue-5-acceptance/ui/UI-DESIGN.md",
+      "owner_strength_or_problem": null
+    }
+  ],
+  "interactive_prototype_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/367bdd2dfc46a868290750f8088da9cdb53575a9/examples/issue-5-acceptance/ui/prototype.html",
+  "interaction_test_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/367bdd2dfc46a868290750f8088da9cdb53575a9/examples/issue-5-acceptance/ui/interaction-test-report.json",
+  "supplementary_test_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/367bdd2dfc46a868290750f8088da9cdb53575a9/examples/issue-5-acceptance/ui/adversarial-test-report.json",
+  "local_entry": "outputs/issue-5/ui/prototype.html",
+  "actual_render_status": "PASS, local PNGs with source manifest hashes; no GitHub PNG publication claimed",
+  "score_scale": "Owner 0 missing / 1 inadequate / 2 acceptable / 3 strong, evidence + strength/problem, ACCEPT / CHANGES_REQUESTED / DEFER",
+  "boundary": "Unscored. Profile authoring/demo authorized within original pilot; actual material UI baseline approval and quality verdict remain pending. Master supplies evidence locators, not scores."
+}
