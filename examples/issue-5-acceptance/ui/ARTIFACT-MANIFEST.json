@@ -17,6 +17,13 @@
   "level": "L3",
   "artifacts": [
     {
+      "path": "EXECUTION-RECEIPT-V2.md",
+      "sha256": "10ed485f56a84efac91f7e3ddd64bb5c506ba78e062e0060cd99917ddbaa8bb9",
+      "bytes": 2678,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
       "path": "EXECUTION-RECEIPT.md",
       "sha256": "5c3a687e0fb92b3774bef319843ff10e056dc355d36f20e9c0f811bc8443c037",
       "bytes": 2728,
@@ -24,16 +31,23 @@
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
     },
     {
+      "path": "OWNER-EVALUATION.json",
+      "sha256": "02018218f2321e5ca70255d96a7e3472b56480a0cdb0d010cac0d9308feeb282",
+      "bytes": 3192,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
       "path": "README.md",
-      "sha256": "394f7aff144e276f813f964598ef00a7d7687fe4c11d80ca44a9bcf4b8a7026e",
-      "bytes": 1764,
+      "sha256": "4ac0df578f674491c60cdb90453ff4bed87b4de353c718fdcd3ddb16aed4e6a8",
+      "bytes": 2164,
       "kind": "source/evidence",
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
     },
     {
       "path": "UI-DESIGN.md",
-      "sha256": "b2feeb2e28a98813615ee0c016e16e03fd4fb1dc5bb19188f6b6385987d84330",
-      "bytes": 10359,
+      "sha256": "f602832c55f07ea2d7221621af31f9892690c28486a9f3cff47bcf284007e283",
+      "bytes": 14327,
       "kind": "source/evidence",
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
     },
@@ -46,22 +60,22 @@
     },
     {
       "path": "adversarial-test-report.json",
-      "sha256": "189c95240fb5eb7efdeb7a20a77bf921361dee5d769425eaae4203f57dae8ad2",
+      "sha256": "b33456bc1a61db90b9a0647ca2795e58cb17df68fc8a9c81de47094ae64febe6",
       "bytes": 901,
       "kind": "source/evidence",
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
     },
     {
       "path": "import-mobile.png",
-      "sha256": "e0a837e7ddc10e9a156889185c97abe494578855d4c21488187359ad74d687af",
-      "bytes": 147246,
+      "sha256": "44d8d840ff54ef0629e64b5520b521c5f625b9b8a617f342b51ea5c5d8537cc3",
+      "bytes": 149758,
       "kind": "render",
       "remote_publication": "LOCAL_ONLY",
       "local_path": "/Users/leohu/Documents/Codex/2026-10-16/referenced-chatgpt-conversation-this-is-an/outputs/issue-5/ui/import-mobile.png"
     },
     {
       "path": "interaction-test-report.json",
-      "sha256": "c16309140aae0c379c4984757560436a6e8e1a3a4049e1c39e5f83ade99f93d9",
+      "sha256": "cc00632da23d4622f0cadab327771113afd2629ad710ee88b4a4da3fda801ab3",
       "bytes": 2277,
       "kind": "source/evidence",
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
@@ -92,18 +106,25 @@
     },
     {
       "path": "prototype.html",
-      "sha256": "6ef04cbfbaf1082a484ced1688532a95ca063d0ddf87dc82267c90e601e5ce22",
-      "bytes": 33456,
+      "sha256": "132bc8f6d9b185c0b52ef695ec029154a131856946b83851b1922dfe1bdea17c",
+      "bytes": 42218,
       "kind": "source/evidence",
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
     },
     {
       "path": "review-conflict-mobile.png",
-      "sha256": "721f4075ca252fcf96cd39358c1ade01e46f7155a5fac5fbadae0adb49348d02",
-      "bytes": 156099,
+      "sha256": "0fe9e639ddcee0641ea9ac3bdc0b5f035e772bd4a2200d7b30b613f10a493b10",
+      "bytes": 157187,
       "kind": "render",
       "remote_publication": "LOCAL_ONLY",
       "local_path": "/Users/leohu/Documents/Codex/2026-10-16/referenced-chatgpt-conversation-this-is-an/outputs/issue-5/ui/review-conflict-mobile.png"
+    },
+    {
+      "path": "rework-test-report.json",
+      "sha256": "f66f6774fc4306407f4634016b8b992b466c72cd701867f3d97afd5627626f92",
+      "bytes": 4918,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
     },
     {
       "path": "synthetic-alipay-v1.csv",
@@ -139,8 +160,28 @@
       "bytes": 10341,
       "kind": "source/evidence",
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "verify-rework.cjs",
+      "sha256": "9bd804c46f4db612138fa163eaad11f0193699a5c4c0b55476450454af821eba",
+      "bytes": 9690,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
     }
   ],
   "source_revision_note": "Exact source commit is published by later HANDOFF.md; manifest deliberately does not self-hash.",
-  "screenshot_upload_status": "NOT_PUBLISHED: first blob request interrupted while unknown; no branch update from binary attempt"
+  "screenshot_upload_status": "NOT_PUBLISHED: first blob request interrupted while unknown; no branch update from binary attempt",
+  "dispatch_id": "I5-UI-002",
+  "review_findings_corrected_by_author": [
+    "F01",
+    "F02",
+    "F03"
+  ],
+  "independent_rereview": "PENDING",
+  "verification_groups": {
+    "main": 14,
+    "supplementary": 6,
+    "rework": 18,
+    "timestamp_vectors_within_rework": 22
+  }
 }

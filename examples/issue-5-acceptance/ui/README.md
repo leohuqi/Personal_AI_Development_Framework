@@ -14,3 +14,5 @@ Profile: `UI-PROFILE.md@d7e9c679a0a435310ef76d63432917d7e1656078`，PROPOSED，�
 阅读顺序：UI-PROFILE.md → UI-DESIGN.md → prototype.html → JSON 测试报告 → HANDOFF.md。Owner 独立评分和新会话 DESIGN Review 尚待完成。
 
 Screenshot publication boundary: PNG files are actual local rendered/inspected evidence in `/Users/leohu/Documents/Codex/2026-10-16/referenced-chatgpt-conversation-this-is-an/outputs/issue-5/ui/`. Binary upload was stopped while outcome was unknown; no PNG GitHub publication is claimed. Source/test code can regenerate them; SHA-256s are in manifest. Only textual sources/reports/manifest are in this source commit.
+
+本次返工：I5-UI-002，修正独立评审 F01–F03（完整原始来源比较、最终重复关联目标检查、严格日期校验）。原先绿灯测试没有覆盖这些反例。新增 `verify-rework.cjs` 与 `rework-test-report.json`，18 组修正回归实际通过，包含22个日期边界；原14+6组也已重新执行通过。原评审 REQUEST CHANGES 保留，等待独立复评。

@@ -1,0 +1,151 @@
+{
+  "status": "PASS",
+  "executedAt": "2026-10-16T09:25:53.935Z",
+  "dispatch": "I5-UI-002",
+  "findings": [
+    "F01",
+    "F02",
+    "F03"
+  ],
+  "reviewSource": "review/REPORT.md@abde0ed93a1e24139b3f97dfd67184a2f3c7716d",
+  "browser": "155.0.8059.80",
+  "checks": [
+    {
+      "id": "changed-merchant-and-instant",
+      "finding": "F01",
+      "expectation": "Same strong identity with changed immutable source economics is blocked conflict",
+      "status": "PASS"
+    },
+    {
+      "id": "changed-merchant-only",
+      "finding": "F01",
+      "expectation": "Same strong identity with changed immutable source economics is blocked conflict",
+      "status": "PASS"
+    },
+    {
+      "id": "changed-instant-only",
+      "finding": "F01",
+      "expectation": "Same strong identity with changed immutable source economics is blocked conflict",
+      "status": "PASS"
+    },
+    {
+      "id": "changed-original-offset",
+      "finding": "F01",
+      "expectation": "Same strong identity with changed immutable source economics is blocked conflict",
+      "status": "PASS"
+    },
+    {
+      "id": "same-batch-conflicting-amount",
+      "finding": "F01",
+      "expectation": "Conflicting same-batch identity cannot be linked; explicit exclusion preserves valid first row",
+      "status": "PASS"
+    },
+    {
+      "id": "repeated-id-pending",
+      "finding": "F01",
+      "expectation": "Eligibility blocker survives known source ID classification",
+      "status": "PASS"
+    },
+    {
+      "id": "repeated-id-cancelled",
+      "finding": "F01",
+      "expectation": "Eligibility blocker survives known source ID classification",
+      "status": "PASS"
+    },
+    {
+      "id": "repeated-id-invalid",
+      "finding": "F01",
+      "expectation": "Invalid data is never overwritten by duplicate classification",
+      "status": "PASS"
+    },
+    {
+      "id": "immutable-source-survives-display-edits",
+      "finding": "F01",
+      "expectation": "Original source remains exact duplicate after display/category/location edits; edited name cannot masquerade as original source",
+      "status": "PASS"
+    },
+    {
+      "id": "refund-original-reference",
+      "finding": "F01",
+      "expectation": "Original provider refund reference participates in immutable economics",
+      "status": "PASS"
+    },
+    {
+      "id": "normalized-source-merchant",
+      "finding": "F01",
+      "expectation": "NFC/Unicode whitespace/case-fold normalization without changing editable merchant",
+      "status": "PASS"
+    },
+    {
+      "id": "excluded-target-duplicate",
+      "finding": "F02",
+      "expectation": "Included duplicate cannot disappear when its only batch target is excluded; final included plan resolves one actual new entry",
+      "status": "PASS"
+    },
+    {
+      "id": "explicit-chain-target",
+      "finding": "F02",
+      "expectation": "Selected row token resolves recursively to a final retained row, never a raw same-ID skip",
+      "status": "PASS"
+    },
+    {
+      "id": "invalid-target-not-candidate",
+      "finding": "F02",
+      "expectation": "Invalid earlier raw same-ID row is not a duplicate target; later valid row creates an entry",
+      "status": "PASS"
+    },
+    {
+      "id": "actual-stored-target",
+      "finding": "F02",
+      "expectation": "Zero-new duplicate processing succeeds only with an actual eligible stored entry",
+      "status": "PASS"
+    },
+    {
+      "id": "strict-rfc3339-invalid-components",
+      "finding": "F03",
+      "expectation": "17 invalid calendar/time/offset/precision cases require exclusion, including exact February 30 reproduction",
+      "status": "PASS"
+    },
+    {
+      "id": "strict-rfc3339-valid-boundaries",
+      "finding": "F03",
+      "expectation": "5 valid leap/century/offset/low-year component cases produce exact instants",
+      "status": "PASS"
+    },
+    {
+      "id": "no-network-or-page-errors",
+      "finding": "F01-F03",
+      "expectation": "Actual rework browser interactions remain fully offline and error free",
+      "status": "PASS"
+    }
+  ],
+  "invalidTimestampCases": [
+    "2026-02-30T10:00:00+08:00",
+    "2026-02-29T10:00:00+08:00",
+    "1900-02-29T10:00:00Z",
+    "2026-04-31T10:00:00Z",
+    "2026-00-01T10:00:00Z",
+    "2026-13-01T10:00:00Z",
+    "2026-01-00T10:00:00Z",
+    "2026-01-32T10:00:00Z",
+    "2026-01-01T24:00:00Z",
+    "2026-01-01T10:60:00Z",
+    "2026-01-01T10:00:60Z",
+    "2026-01-01T10:00:00+24:00",
+    "2026-01-01T10:00:00+08:60",
+    "2026-01-01T10:00:00-00:00",
+    "0000-01-01T10:00:00Z",
+    "2026-01-01T10:00:00",
+    "2026-01-01T10:00:00.123Z"
+  ],
+  "validTimestampCases": [
+    "2024-02-29T10:00:00+08:00",
+    "2000-02-29T10:00:00Z",
+    "2026-02-28T23:59:59-23:59",
+    "2026-01-01T00:00:00+00:00",
+    "0099-01-01T00:00:00Z"
+  ],
+  "networkRequests": [],
+  "pageErrors": [],
+  "scope": "Author corrective verification only; fresh independent re-review still pending"
+}
