@@ -1,0 +1,224 @@
+{
+  "executedAt": "2026-10-16T09:39:27.006Z",
+  "reviewer": "/root/design_reviewer",
+  "reviewedSource": "bd96d6c5b4ac4fa241e92f609f08be42f0ccb53b",
+  "browser": "155.0.8059.80",
+  "checks": [
+    {
+      "id": "F01-original-changed-economics",
+      "expectation": "SOURCE_CONFLICT blocks changed merchant/instant with same ID",
+      "status": "PASS",
+      "actual": "第1笔 · Completely Different Merchant\n支出 −¥10.00\n2026-10-05 · 微信\n\n来源冲突：同一交易的原始信息不同\n\n本笔处理\n待复核\n记入账本\n排除此笔\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。"
+    },
+    {
+      "id": "F01-original-intra-batch",
+      "expectation": "Same ID changed money in batch blocks conflict",
+      "status": "PASS",
+      "actual": "第1笔 · Shop A\n支出 −¥1.00\n2026-10-05 · 微信\n本笔处理\n待复核\n记入账本\n排除此笔\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。\n第2笔 · Shop B\n支出 −¥2.00\n2026-10-06 · 微信\n\n来源冲突：同一交易的原始信息不同\n\n本笔处理\n待复核\n记入账本\n排除此笔\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。"
+    },
+    {
+      "id": "F02-original-excluded-target",
+      "expectation": "Excluded only target blocks duplicate confirmation",
+      "status": "PASS",
+      "actual": "第1笔 · Shop\n支出 −¥1.00\n2026-10-05 · 微信\n本笔处理\n待复核\n记入账本\n排除此笔\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。\n第2笔 · Shop\n支出 −¥1.00\n2026-10-05 · 微信\n\n与已有记录重复\n\n本笔处理\n待复核\n记入账本\n排除此笔\n重复记录处理\n请选择\n关联第1笔，不新增\n关联目标未记入或不可用。请纳入目标并复核，或重选账单。\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。"
+    },
+    {
+      "id": "F02-target-restored",
+      "expectation": "Valid retained target permits confirmation",
+      "status": "PASS",
+      "actual": true
+    },
+    {
+      "id": "F02-single-retained-entry",
+      "expectation": "Two same-ID observations create one actual transaction",
+      "status": "PASS",
+      "actual": "4"
+    },
+    {
+      "id": "F01-original-pending",
+      "expectation": "Nonsettled blocker cannot be replaced by duplicate",
+      "status": "PASS",
+      "actual": "第1笔 · 街角咖啡\n支出 −¥10.00\n2026-10-01 · 微信\n\n尚未完成付款，不可记入\n\n本笔处理\n待复核\n记入账本\n排除此笔\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。"
+    },
+    {
+      "id": "F03-original-Feb30",
+      "expectation": "Impossible calendar day requires exclusion",
+      "status": "PASS",
+      "actual": "第1笔 · Shop\n支出 −¥1.00\n2026-02-30 · 微信\n\n数据无效，不可记入：消费时间的日期、时间或时区无效。\n\n本笔处理\n待复核\n记入账本\n排除此笔\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。"
+    },
+    {
+      "id": "F03-invalid-century",
+      "expectation": "Strict Gregorian/clock/offset behavior",
+      "status": "PASS",
+      "actual": {
+        "time": "1900-02-29T10:00:00Z",
+        "enabled": false
+      }
+    },
+    {
+      "id": "F03-valid-century",
+      "expectation": "Strict Gregorian/clock/offset behavior",
+      "status": "PASS",
+      "actual": {
+        "time": "2000-02-29T10:00:00Z",
+        "enabled": true
+      }
+    },
+    {
+      "id": "F03-invalid-hour",
+      "expectation": "Strict Gregorian/clock/offset behavior",
+      "status": "PASS",
+      "actual": {
+        "time": "2026-01-01T24:00:00Z",
+        "enabled": false
+      }
+    },
+    {
+      "id": "F03-invalid-offset-minute",
+      "expectation": "Strict Gregorian/clock/offset behavior",
+      "status": "PASS",
+      "actual": {
+        "time": "2026-01-01T10:00:00+08:60",
+        "enabled": false
+      }
+    },
+    {
+      "id": "F03-valid-leap",
+      "expectation": "Strict Gregorian/clock/offset behavior",
+      "status": "PASS",
+      "actual": {
+        "time": "2024-02-29T23:59:59+08:00",
+        "enabled": true
+      }
+    },
+    {
+      "id": "F01-preserve-source-edits",
+      "expectation": "Original source still exact duplicate while display/category edits retained",
+      "status": "PASS",
+      "actual": {
+        "review": "第1笔 · Original Shop\n支出 −¥2.00\n2026-10-05 · 微信\n\n与已有记录重复\n\n本笔处理\n待复核\n记入账本\n排除此笔\n重复记录处理\n请选择\n关联已有记录「Edited Display」，不新增\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。",
+        "ledger": "餐\n日常面包店\n10月14日 · 餐饮\n你填写的历史地点：社区店\n−28.00\n购\n生活杂货\n10月12日 · 购物\n未记录\n−68.00\n交\nEdited Display\n10月05日 · 交通\n你填写的历史地点：My history\n−2.00\n餐\n街角咖啡\n10月01日 · 餐饮\n上海 · 静安（账单提供）\n−10.00"
+      }
+    },
+    {
+      "id": "F01-refund-reference",
+      "expectation": "Changed original-refund reference is conflict",
+      "status": "PASS",
+      "actual": "第1笔 · Refund\n退款 +¥1.00\n2026-10-05 · 微信\n\n来源冲突：同一交易的原始信息不同\n\n本笔处理\n待复核\n记入账本\n排除此笔\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。"
+    },
+    {
+      "id": "identity-outer-whitespace",
+      "expectation": "Provider ID with outer whitespace resolves existing canonical X",
+      "status": "FAIL",
+      "actual": {
+        "review": "第1笔 · Example Cafe\n支出 −¥10.00\n2026-10-01 · 微信\n本笔处理\n待复核\n记入账本\n排除此笔\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。",
+        "confirmEnabled": true
+      }
+    },
+    {
+      "id": "identity-canonical-no-duplicate-entry",
+      "expectation": "Canonical ID reimport adds zero entries",
+      "status": "FAIL",
+      "actual": {
+        "count": "4",
+        "toast": "已完成 · 新增 1 笔，账本已更新"
+      }
+    },
+    {
+      "id": "no-ID-refund-keep-separate",
+      "expectation": "Two unlinked refunds remain separately unresolved and excluded from settled net",
+      "status": "FAIL",
+      "actual": {
+        "before": "¥106.00",
+        "after": "¥105.00",
+        "count": "5",
+        "unresolved": "1 笔待关联退款，暂不计入净支出",
+        "ledger": "餐\n日常面包店\n10月14日 · 餐饮\n你填写的历史地点：社区店\n−28.00\n购\n生活杂货\n10月12日 · 购物\n未记录\n−68.00\n退\nNo-ID Refund\n10月05日 · 其他 · 退款待关联\n未记录\n+1.00\n退\nNo-ID Refund\n10月05日 · 其他\n未记录\n+1.00\n餐\n街角咖啡\n10月01日 · 餐饮\n上海 · 静安（账单提供）\n−10.00",
+        "review": "第1笔 · No-ID Refund\n退款 +¥1.00\n2026-10-05 · 微信\n\n退款：请选择原支出或保留待关联\n\n本笔处理\n待复核\n记入账本\n排除此笔\n退款关联\n请选择\n保留待关联（暂不计净支出）\n街角咖啡 · 可退 ¥10.00\n日常面包店 · 可退 ¥28.00\n生活杂货 · 可退 ¥68.00\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。\n第2笔 · No-ID Refund\n退款 +¥1.00\n2026-10-05 · 微信\n\n可能重复，请确认\n\n本笔处理\n待复核\n记入账本\n排除此笔\n重复记录处理\n请选择\n关联第1笔，不新增\n确认是另一笔支出\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。"
+      }
+    },
+    {
+      "id": "no-ID-spend-separate",
+      "expectation": "Identical no-ID spends can remain separate",
+      "status": "PASS",
+      "actual": "5"
+    },
+    {
+      "id": "category-regression",
+      "expectation": "User category remains after merchant suggestion changes",
+      "status": "PASS",
+      "actual": "交通"
+    },
+    {
+      "id": "location-optional-regression",
+      "expectation": "Manual entry without current observation saves",
+      "status": "PASS",
+      "actual": "4"
+    },
+    {
+      "id": "storage-failure-regression",
+      "expectation": "Failed batch leaves ledger unchanged",
+      "status": "PASS",
+      "actual": "3"
+    },
+    {
+      "id": "retry-regression",
+      "expectation": "Retry requires renewed explicit decisions",
+      "status": "PASS",
+      "actual": true
+    },
+    {
+      "id": "retry-one-result",
+      "expectation": "Successful retry adds one entry",
+      "status": "PASS",
+      "actual": "4"
+    },
+    {
+      "id": "layout-320",
+      "expectation": "No horizontal overflow",
+      "status": "PASS",
+      "actual": 320
+    },
+    {
+      "id": "focus-320",
+      "expectation": "Focus returns to opening action",
+      "status": "PASS",
+      "actual": "openManual"
+    },
+    {
+      "id": "layout-390",
+      "expectation": "No horizontal overflow",
+      "status": "PASS",
+      "actual": 390
+    },
+    {
+      "id": "focus-390",
+      "expectation": "Focus returns to opening action",
+      "status": "PASS",
+      "actual": "openManual"
+    },
+    {
+      "id": "layout-1280",
+      "expectation": "No horizontal overflow",
+      "status": "PASS",
+      "actual": 1280
+    },
+    {
+      "id": "focus-1280",
+      "expectation": "Focus returns to opening action",
+      "status": "PASS",
+      "actual": "openManual"
+    },
+    {
+      "id": "offline",
+      "expectation": "No HTTP requests/page errors",
+      "status": "PASS",
+      "actual": {
+        "network": [],
+        "errors": []
+      }
+    }
+  ],
+  "pass": 27,
+  "fail": 3
+}
