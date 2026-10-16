@@ -1,0 +1,134 @@
+[
+  {
+    "path": "examples/issue-5-acceptance/ui/UI-DESIGN.md",
+    "match": true,
+    "actual": "2b6c324f9c31d9ed81cbf1160bc6531910c89c90",
+    "expected": "2b6c324f9c31d9ed81cbf1160bc6531910c89c90"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/UI-PROFILE.md",
+    "match": true,
+    "actual": "cfd35d12465c7b7821ee2f4c3cdcb7248362fa83",
+    "expected": "cfd35d12465c7b7821ee2f4c3cdcb7248362fa83"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/prototype.html",
+    "match": true,
+    "actual": "340af093a06d72470c79ed89ce7b5486b9338f9f",
+    "expected": "340af093a06d72470c79ed89ce7b5486b9338f9f"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/EXECUTION-RECEIPT.md",
+    "match": true,
+    "actual": "64509f5eaec33ba95cc3e48ef709c944b90dfff0",
+    "expected": "64509f5eaec33ba95cc3e48ef709c944b90dfff0"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/verify-rework.cjs",
+    "match": true,
+    "actual": "9c5f9b44cce8072ab92e45666899864235a50956",
+    "expected": "9c5f9b44cce8072ab92e45666899864235a50956"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/verify-rework-r2.cjs",
+    "match": true,
+    "actual": "6428a0ec1b5e46ca6ffe53815f21436a6429cc1c",
+    "expected": "6428a0ec1b5e46ca6ffe53815f21436a6429cc1c"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/EXECUTION-RECEIPT-V2.md",
+    "match": true,
+    "actual": "7575ad71c47bc96069ec36cbb885ddb3a1ca45d8",
+    "expected": "7575ad71c47bc96069ec36cbb885ddb3a1ca45d8"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/EXECUTION-RECEIPT-V3.md",
+    "match": true,
+    "actual": "63d35a0841d8095282f65d72813a283c585aabb0",
+    "expected": "63d35a0841d8095282f65d72813a283c585aabb0"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/verify-interactions.cjs",
+    "match": true,
+    "actual": "f182ca22daddcc5e85ff562218accebbf6bcd3d0",
+    "expected": "f182ca22daddcc5e85ff562218accebbf6bcd3d0"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/tokens.css",
+    "match": true,
+    "actual": "d8b96ad4c217a728b4017de6fdf6f173cbac0a97",
+    "expected": "d8b96ad4c217a728b4017de6fdf6f173cbac0a97"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/OWNER-EVALUATION.json",
+    "match": true,
+    "actual": "7a5689373995bd2842fd0c045722e548512acd4a",
+    "expected": "7a5689373995bd2842fd0c045722e548512acd4a"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/rework-r2-test-report.json",
+    "match": true,
+    "actual": "c5cfb78276b3f4bdd2affc05e95ebb5074daa6b9",
+    "expected": "c5cfb78276b3f4bdd2affc05e95ebb5074daa6b9"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/README.md",
+    "match": true,
+    "actual": "481efccdfa030b2b5fe8b6ca1e62445615e1088c",
+    "expected": "481efccdfa030b2b5fe8b6ca1e62445615e1088c"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/synthetic-wechat-v1.csv",
+    "match": true,
+    "actual": "5861fa8cfb50f8a2ee41ef6eca4ac48d3adc4aaf",
+    "expected": "5861fa8cfb50f8a2ee41ef6eca4ac48d3adc4aaf"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/ARTIFACT-MANIFEST.json",
+    "match": true,
+    "actual": "4c5df2cc7ed3e184493f5c01c220473db18d69e9",
+    "expected": "4c5df2cc7ed3e184493f5c01c220473db18d69e9"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/synthetic-alipay-v1.csv",
+    "match": true,
+    "actual": "f4aa38edae4768f0f85cbd91f05c4dc0b24f90c6",
+    "expected": "f4aa38edae4768f0f85cbd91f05c4dc0b24f90c6"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/adversarial-test-report.json",
+    "match": true,
+    "actual": "42e9c6a23ecf070a465cec825b3380e2d3d9a6a8",
+    "expected": "42e9c6a23ecf070a465cec825b3380e2d3d9a6a8"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/interaction-test-report.json",
+    "match": true,
+    "actual": "12c090195c6409269f8e994e4346532ec9ac2c2d",
+    "expected": "12c090195c6409269f8e994e4346532ec9ac2c2d"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/rework-test-report.json",
+    "match": true,
+    "actual": "d7801a1ec4b7383ee1dbb9284ea9f4cdda8167e6",
+    "expected": "d7801a1ec4b7383ee1dbb9284ea9f4cdda8167e6"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/verify-adversarial.cjs",
+    "match": true,
+    "actual": "2fc67226a563b93ffce58c9f14a5703cbbde4bba",
+    "expected": "2fc67226a563b93ffce58c9f14a5703cbbde4bba"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/HANDOFF-V2.md",
+    "match": true,
+    "actual": "2cc59f4a5c93629989699ae60d6503806e44d6dd",
+    "expected": "2cc59f4a5c93629989699ae60d6503806e44d6dd"
+  },
+  {
+    "path": "examples/issue-5-acceptance/ui/HANDOFF.md",
+    "match": true,
+    "actual": "fc0e449180b11fec07ce09f69832fec30cb0c4e6",
+    "expected": "fc0e449180b11fec07ce09f69832fec30cb0c4e6"
+  }
+]

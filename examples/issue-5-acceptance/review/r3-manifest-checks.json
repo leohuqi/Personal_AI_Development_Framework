@@ -1,0 +1,127 @@
+[
+  {
+    "file": "EXECUTION-RECEIPT-V2.md",
+    "sha256": "988bc825c2a01700e5235bc5dea8e0fafebdd61b5d30c84e37ca897f2ef615b5",
+    "match": true
+  },
+  {
+    "file": "EXECUTION-RECEIPT-V3.md",
+    "sha256": "c328f9d5ac4c40250aa6ee654e44fd744c9af544dac6784ccbf88e351a175c20",
+    "match": true
+  },
+  {
+    "file": "EXECUTION-RECEIPT.md",
+    "sha256": "5c3a687e0fb92b3774bef319843ff10e056dc355d36f20e9c0f811bc8443c037",
+    "match": true
+  },
+  {
+    "file": "OWNER-EVALUATION.json",
+    "sha256": "02018218f2321e5ca70255d96a7e3472b56480a0cdb0d010cac0d9308feeb282",
+    "match": true
+  },
+  {
+    "file": "README.md",
+    "sha256": "73f1f608f811d82b1714426d557498e0bf4fb648bc280531cc1f1e0f263d50f4",
+    "match": true
+  },
+  {
+    "file": "UI-DESIGN.md",
+    "sha256": "b44d1e4cbc43d651105329b3ce98945c41ab62c797880cd5d56c968ff7fb81cb",
+    "match": true
+  },
+  {
+    "file": "UI-PROFILE.md",
+    "sha256": "e744e27dd61ebd05a6ae862b6af91f827a10c4f7992dc270ac548235c04533e7",
+    "match": true
+  },
+  {
+    "file": "adversarial-test-report.json",
+    "sha256": "089f46b28a91177a2c5795ddb704ee57d3b4d462c2911923f2270ed48df77deb",
+    "match": true
+  },
+  {
+    "file": "import-mobile.png",
+    "sha256": "44d8d840ff54ef0629e64b5520b521c5f625b9b8a617f342b51ea5c5d8537cc3",
+    "match": true
+  },
+  {
+    "file": "interaction-test-report.json",
+    "sha256": "f91a217ac801c362f89e36b0554fc9fc12eb8dd7035b786731332c94103559bb",
+    "match": true
+  },
+  {
+    "file": "ledger-mobile.png",
+    "sha256": "d27bbd806cdc04db33666b383665c464cc0f499da36e3614b4fd456806601fa7",
+    "match": true
+  },
+  {
+    "file": "ledger-wide.png",
+    "sha256": "716189b46e37d1524d30e694dabb25e28e19b96dd7c22b0ba2da83f8ed911319",
+    "match": true
+  },
+  {
+    "file": "manual-mobile.png",
+    "sha256": "b09b2e247ff14cd06189c8a971b396c0fa02282e0196e433288ba7d200b4f531",
+    "match": true
+  },
+  {
+    "file": "prototype.html",
+    "sha256": "b5969a1dea4f50b1fe7b335b9334ac574383147b3c4e85cfad654669ec9e70ff",
+    "match": true
+  },
+  {
+    "file": "refund-candidate-mobile.png",
+    "sha256": "45ae595790de843e5afedcc825d3fc233cc3ee3a7accc64022e587c551a4df37",
+    "match": true
+  },
+  {
+    "file": "review-conflict-mobile.png",
+    "sha256": "0fe9e639ddcee0641ea9ac3bdc0b5f035e772bd4a2200d7b30b613f10a493b10",
+    "match": true
+  },
+  {
+    "file": "rework-r2-test-report.json",
+    "sha256": "7e4bc374e043ecc04af441c8070e6518d599f8370bdfe6f5817a0214071ea510",
+    "match": true
+  },
+  {
+    "file": "rework-test-report.json",
+    "sha256": "917ae243372fdda6a1fc9fc49667be4565ab77dc400c1104dcf0a7ad1892e6d7",
+    "match": true
+  },
+  {
+    "file": "synthetic-alipay-v1.csv",
+    "sha256": "f93af506407fd69d62613d06705fe02d227041b99ed363431ee0e35e3690c0ac",
+    "match": true
+  },
+  {
+    "file": "synthetic-wechat-v1.csv",
+    "sha256": "6c2688bb66b6fbee0c3e8d744e87d06059bdba645736c2127237163929775bb1",
+    "match": true
+  },
+  {
+    "file": "tokens.css",
+    "sha256": "9c503a01e020f8ba6576dfa82602e2d641c7610ca1e0a73cecdb259dbf489f93",
+    "match": true
+  },
+  {
+    "file": "verify-adversarial.cjs",
+    "sha256": "efba35cca61a6758d3eb144bc1ce377a86c910a33ab4595479ba0e4d471d5eaf",
+    "match": true
+  },
+  {
+    "file": "verify-interactions.cjs",
+    "sha256": "058c0ba80448c840408098e0a4a92206410447e07a9aa3a3aec87a72f73f5b16",
+    "match": true
+  },
+  {
+    "file": "verify-rework-r2.cjs",
+    "sha256": "b254c9029a65d82d2a36f537db7904f671eeb9ee4165c57aeca71de642df91a3",
+    "match": true
+  },
+  {
+    "file": "verify-rework.cjs",
+    "sha256": "54fdd9323a8a8c723915b75bb16b49ef2e5a235bffecf13b510d7e37ac0fae7e",
+    "match": true
+  }
+]
