@@ -6,7 +6,7 @@ function sheet(role='solution-architect',level='L3'){
  const p=role==='solution-architect'?'SA':role==='module-architect'?'MA':'UI';
  const criteria=Array.from({length:5},(_,i)=>({id:p+'-Q'+(i+1),score:2,evidence_ref:link}));
  return {schema_version:'padf.skill-delivery-evaluation/v1',
-   context_id:'PILOT-EXPENSE',dispatch_id:'DISPATCH-01',execution_id:'RUN-01',
+   context_id:'PILOT-EXPENSE',dispatch_id:'DISPATCH-01',execution_id:'EXECUTION-01',
    skill_role:role,skill_ref:'.agents/skills/'+role+'/SKILL.md@'+A,
    artifact_manifest_ref:'docs/design-manifest.md@'+A,owner_decision:'ACCEPT',
    owner_evaluation_ref:link,unresolved_p0_p1:false,
