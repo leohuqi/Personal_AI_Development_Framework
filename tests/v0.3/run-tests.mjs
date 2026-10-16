@@ -8,24 +8,56 @@ const artifact=(p,type,rev=A)=>({type,ref:ref(p,rev),source_revision:rev,current
  ...(type.endsWith('-diagram')?{generator:'diagram-design',generator_sha:C,render_status:'PASS'}:{}),
  ...(type==='interactive-prototype'?{interaction_test_status:'PASS',editable_source:true}:{})
 });
+const SYSTEM_BASELINE=ref('docs/SYSTEM.md');
 const stage=(id,agent,deps=[],revision=A)=>{
- const arch=agent==='solution-architect';
+ const sys=agent==='solution-architect',mod=agent==='module-architect';
+ const artifacts=sys?
+   [artifact('docs/'+id+'.md','solution-architecture',revision),
+    artifact('docs/'+id+'-diagram.html','architecture-diagram',revision),
+    artifact('docs/'+id+'-stack.md','technology-stack',revision),
+    artifact('docs/'+id+'-app-code.md','application-code-structure',revision)]:
+   mod?
+   [artifact('docs/'+id+'.md','module-design',revision),
+    artifact('docs/'+id+'-diagram.html','module-component-diagram',revision),
+    artifact('docs/'+id+'-packages.md','module-code-structure',revision),
+    artifact('docs/'+id+'-interfaces.md','module-interface-contract',revision)]:
+   [artifact('docs/'+id+'.md','ui-design',revision),
+    artifact('docs/'+id+'-concept.html','ui-concept',revision)];
  return {id,agent,required:true,depends_on:deps,status:'COMPLETED',
-   ...(arch?{}:{profile_ref:ref('docs/ui-profile.md')}),
-   artifacts:arch?[artifact('docs/'+id+'.md','architecture-design',revision),
-     artifact('docs/'+id+'-diagram.html','architecture-diagram',revision)]:
-     [artifact('docs/'+id+'.md','ui-design',revision),
-       artifact('docs/'+id+'-concept.html','ui-concept',revision)]};
+   ...(mod?{system_baseline_ref:SYSTEM_BASELINE}:{}),
+   ...(!sys&&!mod?{profile_ref:ref('docs/ui-profile.md')}:{}),
+   artifacts};
 };
-const baseline=()=>({
- context_id:'TEST-001',task_class:'L',feature_spec_ref:ref('docs/feature.md'),ui_profile_ref:ref('docs/ui-profile.md'),ui_level:'L1',
- impacts:['architecture','ui'],risk_flags:[],diagram_skill_sha:C,
- stages:[stage('ARCH','solution-architect'),stage('UX','ui-ux-designer',['ARCH'])],
+const reviewed=stages=>stages.flatMap(s=>s.artifacts.map(a=>a.ref));
+const baseline=()=>{
+ const stages=[stage('ARCH','solution-architect'),stage('UX','ui-ux-designer',['ARCH'])];
+ return {
+ context_id:'TEST-001',task_class:'L',architecture_scope:'system',routing_rationale:'New APP',
+ feature_spec_ref:ref('docs/feature.md'),ui_profile_ref:ref('docs/ui-profile.md'),ui_level:'L1',
+ impacts:['architecture','ui'],risk_flags:[],diagram_skill_sha:C,stages,
  consistency_checks:[{scope:'api-ui',status:'PASS',evidence_ref:'https://github.com/example/repo/issues/1#comment'}],
  design_review:{independent:true,mode:'DESIGN',decision:'APPROVE',evidence_ref:'https://github.com/example/repo/pull/4#review',
-   reviewed_refs:[ref('docs/ARCH.md'),ref('docs/ARCH-diagram.html'),ref('docs/UX.md'),ref('docs/UX-concept.html')],findings:[]},
+   reviewed_refs:reviewed(stages),findings:[]},
  coding_authorization:{owner_approval_ref:'https://github.com/example/repo/issues/1#owner',task_contract_ref:'https://github.com/example/repo/issues/1#contract',scope_confirmed:true}
-});
+ };
+};
+const moduleOnly=()=>{
+ const x=baseline();
+ x.architecture_scope='module';x.routing_rationale='Existing approved system baseline';
+ x.impacts=['api'];x.stages=[stage('MOD','module-architect')];
+ x.system_baseline_ref=SYSTEM_BASELINE;x.system_baseline_status='APPROVED';
+ x.system_baseline_approval_ref='https://github.com/example/repo/issues/1#system-baseline-owner';
+ x.design_review.reviewed_refs=reviewed(x.stages);return x;
+};
+const bothScopes=()=>{
+ const x=baseline();
+ x.architecture_scope='both';x.impacts=['architecture','api'];
+ x.stages=[stage('SYSTEM','solution-architect'),stage('MODULE','module-architect',['SYSTEM'])];
+ x.system_baseline_ref=ref('docs/SYSTEM.md');
+ x.system_baseline_status='APPROVED';
+ x.system_baseline_approval_ref='https://github.com/example/repo/issues/1#system-baseline-owner';
+ x.design_review.reviewed_refs=reviewed(x.stages);return x;
+};
 const tests=[];
 function check(name,fn){fn();tests.push({name,status:'PASS'});}
 check('L task requires architect+UI and independent design review',()=>{
@@ -49,13 +81,13 @@ check('Risk-triggered S/M cannot skip review even if rationale is recorded',()=>
 });
 check('UI-only M can skip independent review with explicit reason and profile evidence',()=>{
  const x=baseline();x.task_class='M';x.impacts=['ui'];x.stages=[stage('UX','ui-ux-designer')];
- x.review_skip_rationale='No shared UI pattern, auth, API or schema changes';
+ x.architecture_scope='none';x.review_skip_rationale='No shared UI pattern, auth, API or schema changes';
  delete x.design_review;const r=evaluateDesignGate(x);
  assert.equal(r.status,'DESIGN_READY');assert.equal(r.routing.architect_required,false);
 });
 check('Missing Architect stage blocks applicable design',()=>{
  const x=baseline();x.stages=[stage('UX','ui-ux-designer')];const r=evaluateDesignGate(x);
- assert(r.reasons.includes('MISSING_ARCHITECT_STAGE'));
+ assert(r.reasons.includes('MISSING_SOLUTION_ARCHITECT_STAGE'));
 });
 check('Dependencies reject cycle and orphan',()=>{
  const x=baseline();x.stages[0].depends_on=['UX'];assert(evaluateStageDependencies(x).errors.some(e=>e.reason==='CYCLE'));
@@ -142,9 +174,74 @@ check('Interactive prototype must have passing interaction check and editable so
  x.stages[1].artifacts.at(-1).interaction_test_status='NOT_RUN';
  assert(evaluateDesignGate(x).reasons.includes('UNSATISFIED_STAGE:UX'));
 });
+check('Whole-app architectural scope is routed only to Solution Architect',()=>{
+ const r=routeAgents({task_class:'XL',architecture_scope:'system',impacts:['technology-stack','deployment']});
+ assert.equal(r.valid,true);assert.equal(r.solution_architect_required,true);
+ assert.equal(r.module_architect_required,false);assert.equal(r.independent_review_required,true);
+});
+check('A module-only feature selects Module Architect, not Solution Architect',()=>{
+ const r=routeAgents({task_class:'L',architecture_scope:'module',impacts:['api','database']});
+ assert.equal(r.module_architect_required,true);assert.equal(r.solution_architect_required,false);
+ assert.deepEqual(r.stages.filter(x=>x.endsWith('-architect')),['module-architect']);
+ const x=moduleOnly();assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+});
+check('A module cannot proceed without pinned and approved system baseline',()=>{
+ const x=moduleOnly();delete x.system_baseline_ref;
+ assert(evaluateDesignGate(x).reasons.includes('MISSING_APPROVED_SYSTEM_BASELINE'));
+ const y=moduleOnly();y.system_baseline_status='PROPOSED';
+ assert(evaluateDesignGate(y).reasons.includes('SYSTEM_BASELINE_NOT_APPROVED'));
+});
+check('Module baseline SHA must match the approved system baseline',()=>{
+ const x=moduleOnly();x.stages[0].system_baseline_ref=ref('docs/SYSTEM.md',B);
+ assert(evaluateDesignGate(x).reasons.includes('MODULE_SYSTEM_BASELINE_MISMATCH'));
+});
+check('Module contract must contain concrete package and interface design',()=>{
+ const x=moduleOnly();x.stages[0].artifacts=x.stages[0].artifacts.filter(a=>a.type!=='module-code-structure');
+ assert(evaluateDesignGate(x).reasons.includes('MISSING_MODULE_ARTIFACT:module-code-structure'));
+ const y=moduleOnly();y.stages[0].artifacts=y.stages[0].artifacts.filter(a=>a.type!=='module-interface-contract');
+ assert(evaluateDesignGate(y).reasons.includes('MISSING_MODULE_ARTIFACT:module-interface-contract'));
+});
+check('Solution Architect must deliver concrete technology stack and APP code structure',()=>{
+ const x=baseline();x.stages[0].artifacts=x.stages[0].artifacts.filter(a=>a.type!=='technology-stack');
+ assert(evaluateDesignGate(x).reasons.includes('MISSING_SYSTEM_ARTIFACT:technology-stack'));
+ const y=baseline();y.stages[0].artifacts=y.stages[0].artifacts.filter(a=>a.type!=='application-code-structure');
+ assert(evaluateDesignGate(y).reasons.includes('MISSING_SYSTEM_ARTIFACT:application-code-structure'));
+});
+check('Combined scope requires ordered SYSTEM to MODULE handoff',()=>{
+ const x=bothScopes();assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+ x.stages[1].depends_on=[];
+ assert(evaluateDesignGate(x).reasons.includes('MISSING_SYSTEM_TO_MODULE_DEPENDENCY'));
+});
+check('Combined scope requires module to cite the new approved system architecture revision',()=>{
+ const x=bothScopes();x.system_baseline_ref=ref('docs/OTHER.md');
+ x.stages[1].system_baseline_ref=x.system_baseline_ref;
+ assert(evaluateDesignGate(x).reasons.includes('NEW_SYSTEM_BASELINE_REF_MISMATCH'));
+});
+check('System-wide changes cannot be silently delegated as module-only',()=>{
+ const r=routeAgents({task_class:'M',architecture_scope:'module',impacts:['technology-stack','api']});
+ assert.equal(r.valid,false);assert(r.errors.includes('SYSTEM_ARCHITECTURE_IMPACT_REQUIRES_SOLUTION_ARCHITECT'));
+});
+check('Master must record architecture scope before dispatch',()=>{
+ const x=baseline();delete x.architecture_scope;
+ assert(evaluateDesignGate(x).reasons.includes('MISSING_MASTER_ARCHITECTURE_SCOPE_DECISION'));
+});
+check('UI-only feature needs no Architect and skips with justified risk check',()=>{
+ const x=baseline();x.architecture_scope='none';x.impacts=['ui'];x.task_class='M';
+ x.stages=[stage('UX','ui-ux-designer')];delete x.design_review;
+ x.review_skip_rationale='UI-only feature, no shared-component or security impact';
+ assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+});
+check('MODULE-only L/XL still triggers independent DESIGN review',()=>{
+ const x=moduleOnly();delete x.design_review;
+ assert(evaluateDesignGate(x).reasons.includes('MANDATORY_DESIGN_REVIEW'));
+});
+check('MODULE-design diagram must be rendered by pinned external skill',()=>{
+ const x=moduleOnly();x.stages[0].artifacts[1].render_status='NOT_RUN';
+ assert(evaluateDesignGate(x).reasons.includes('UNSATISFIED_STAGE:MOD'));
+});
 check('Invalid task class and unsupported status rejected',()=>{
  assert.equal(routeAgents({task_class:'unknown'}).valid,false);
  const x=baseline();x.stages[0].status='MAGIC';
  assert(evaluateStageDependencies(x).errors.some(e=>e.reason==='INVALID_STAGE_STATUS'));
 });
-console.log(JSON.stringify({suite:'PADF V0.3 role routing/design dependency gate simulation',status:'PASS',count:tests.length,tests},null,2));
+console.log(JSON.stringify({suite:'PADF V0.3 system/module architecture routing, design dependency and gate simulation',status:'PASS',count:tests.length,tests},null,2));
