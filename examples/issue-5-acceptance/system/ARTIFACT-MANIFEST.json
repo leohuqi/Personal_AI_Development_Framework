@@ -1,0 +1,257 @@
+{
+  "schema_version": "padf.diagram-artifact-manifest/v1",
+  "dispatch_id": "I5-SYSTEM-002",
+  "execution_id": "I5-SYSTEM-EXEC-002",
+  "runtime_task_reference": "/root/system_visuals",
+  "approved_source_sha": "f4dbf0d3fac707db1b57252c529618c38d26f0bc",
+  "source_blobs": {
+    "SYSTEM-BASELINE.md": "2c404e302213cc0968d71ffd8d986473cce2c8f0",
+    "SYSTEM-MODEL.json": "25d3617848dcd2d8f97f36efa0043922dacafead"
+  },
+  "generator": "diagram-design",
+  "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+  "installed_skill_path": "/Users/leohu/.codex/plugins/cache/diagram-design/diagram-design/2.6.98/skills/diagram-design/SKILL.md",
+  "installed_skill_blob_sha": "359a32025f0e43192b2be1fdfb1a62601d4f3564",
+  "installed_checkout_status": "clean at verification",
+  "project_style_profile_ref": "DEFAULT-STYLE.md",
+  "render_test_status": "PASS",
+  "diagram_generation": "Actually authored HTML/SVG using loaded pinned Skill/template/type references; exported SVG via pinned export_svg.py and PNG through bundled Node Playwright with installed Chrome. Python Playwright/default bundled Chromium absent; no runtime installed. Headless Chrome required allowed host launch outside the filesystem sandbox.",
+  "renderer": "Playwright 1.62.1",
+  "browser": "155.0.8059.80",
+  "authoring_script_sha256": "7abc40dc78bead494f448c3b0499b23ccebc2eca7dd4a5bbf7982f21ea48035e",
+  "browser_verification_script_sha256": "ff7245c03bf7ddc38a61b16948314dedafdb39a4a538594483ecad237a07b1f3",
+  "source_script_paths": [
+    "work/system-visuals/generate.py",
+    "work/system-visuals/verify.cjs"
+  ],
+  "content_review": "Author compared approved sources and visually inspected real screenshots, no independent review claimed",
+  "figures": [
+    {
+      "diagram_type": "Architecture",
+      "purpose": "Local ledger, explicit boundaries",
+      "authoritative_source_ref": "SYSTEM-MODEL.json + SYSTEM-BASELINE.md@f4dbf0d3fac707db1b57252c529618c38d26f0bc",
+      "html_path": "system-trust.html",
+      "svg_path": "system-trust.svg",
+      "png_path": "system-trust.png",
+      "generator": "diagram-design",
+      "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+      "project_style_profile_ref": "DEFAULT-STYLE.md",
+      "render_test_status": "PASS",
+      "nodes": 9,
+      "edges": 8
+    },
+    {
+      "diagram_type": "Deployment",
+      "purpose": "One iPhone. One native process.",
+      "authoritative_source_ref": "SYSTEM-MODEL.json + SYSTEM-BASELINE.md@f4dbf0d3fac707db1b57252c529618c38d26f0bc",
+      "html_path": "technical-deployment.html",
+      "svg_path": "technical-deployment.svg",
+      "png_path": "technical-deployment.png",
+      "generator": "diagram-design",
+      "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+      "project_style_profile_ref": "DEFAULT-STYLE.md",
+      "render_test_status": "PASS",
+      "nodes": 5,
+      "edges": 4
+    },
+    {
+      "diagram_type": "Dependency graph",
+      "purpose": "Packages point inward",
+      "authoritative_source_ref": "SYSTEM-MODEL.json + SYSTEM-BASELINE.md@f4dbf0d3fac707db1b57252c529618c38d26f0bc",
+      "html_path": "package-core.html",
+      "svg_path": "package-core.svg",
+      "png_path": "package-core.png",
+      "generator": "diagram-design",
+      "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+      "project_style_profile_ref": "DEFAULT-STYLE.md",
+      "render_test_status": "PASS",
+      "nodes": 6,
+      "edges": 7
+    },
+    {
+      "diagram_type": "Dependency graph",
+      "purpose": "Five adapters, two shared contracts",
+      "authoritative_source_ref": "SYSTEM-MODEL.json + SYSTEM-BASELINE.md@f4dbf0d3fac707db1b57252c529618c38d26f0bc",
+      "html_path": "package-adapters.html",
+      "svg_path": "package-adapters.svg",
+      "png_path": "package-adapters.png",
+      "generator": "diagram-design",
+      "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+      "project_style_profile_ref": "DEFAULT-STYLE.md",
+      "render_test_status": "PASS",
+      "nodes": 7,
+      "edges": 10
+    },
+    {
+      "diagram_type": "Flowchart",
+      "purpose": "Review first. Commit atomically.",
+      "authoritative_source_ref": "SYSTEM-BASELINE.md ADR-003@f4dbf0d3fac707db1b57252c529618c38d26f0bc",
+      "html_path": "import-workflow.html",
+      "svg_path": "import-workflow.svg",
+      "png_path": "import-workflow.png",
+      "generator": "diagram-design",
+      "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+      "project_style_profile_ref": "DEFAULT-STYLE.md",
+      "render_test_status": "PASS",
+      "nodes": 9,
+      "edges": 8
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "DEFAULT-STYLE.md",
+      "bytes": 1216,
+      "sha256": "0b133eac472316f12edbd451c4cb0f8cb0ea769b756132fcb22346feba8ac6f4"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4184,
+      "sha256": "c2707edffa3c68a6be4b942a79990846566dfa876e7e84f2893f4b5290a98261"
+    },
+    {
+      "path": "architecture-viewer.html",
+      "bytes": 55374,
+      "sha256": "2cd01e686025215053c5859866f5ca9ace7981081ab7ebd1594012d0c0c9610b"
+    },
+    {
+      "path": "browser-test-report.json",
+      "bytes": 2523,
+      "sha256": "a3e57fbffec040fe683122de630aa2d364829342dc525da7b74a87dc54575ac8"
+    },
+    {
+      "path": "diagram-metadata.json",
+      "bytes": 3754,
+      "sha256": "a248998a02023fe2fcb2eacfe638690b2d799e60679a0f372021ba4c31eae425"
+    },
+    {
+      "path": "import-workflow.html",
+      "bytes": 15185,
+      "sha256": "e7cbe2231549365d60f7c8a3cebc9381233561ca2de590f4b5b86ac95b24b59c"
+    },
+    {
+      "path": "import-workflow.png",
+      "bytes": 135588,
+      "sha256": "b5a5f066500b0ca396f96d7a6ba6dc0c097a814704fb5b2903998303146df771",
+      "pixel_dimensions": [
+        2560,
+        1440
+      ],
+      "provenance": "Actual browser screenshot, Playwright / Chrome; file:// source; deviceScaleFactor=2; svg PNGs clipped to original HTML diagram at 1280\u00d7720 CSS pixels. Viewer screenshots are full-page desktop/mobile captures."
+    },
+    {
+      "path": "import-workflow.svg",
+      "bytes": 12720,
+      "sha256": "f8555f393de3987db64db98f2771650c27e91fd3a7b8af0d89b30bd4798e8315"
+    },
+    {
+      "path": "package-adapters.html",
+      "bytes": 16042,
+      "sha256": "bc7a00ca3caa31fc93bd16076e83b3736fe4cb7fae58eafc4ce3b7dec72ea60d"
+    },
+    {
+      "path": "package-adapters.png",
+      "bytes": 88134,
+      "sha256": "e62d92fa397dde82d2c434d815e6e8758c9ec43abd8a2b109a4d3c360b0da24d",
+      "pixel_dimensions": [
+        2560,
+        1440
+      ],
+      "provenance": "Actual browser screenshot, Playwright / Chrome; file:// source; deviceScaleFactor=2; svg PNGs clipped to original HTML diagram at 1280\u00d7720 CSS pixels. Viewer screenshots are full-page desktop/mobile captures."
+    },
+    {
+      "path": "package-adapters.svg",
+      "bytes": 14627,
+      "sha256": "d07dc1f617a0f08785c6049b26dcdfeed1f570505c8bcb0dc515f12b5abb02da"
+    },
+    {
+      "path": "package-core.html",
+      "bytes": 12251,
+      "sha256": "6f9502abfd6a0ba94826d31ddfa27139c10c0251bdc9d9aae7fd808d12cf7466"
+    },
+    {
+      "path": "package-core.png",
+      "bytes": 105992,
+      "sha256": "6b218e7940421863bda90842ed8749656b34154c05838a6eb35c46924117c87e",
+      "pixel_dimensions": [
+        2560,
+        1440
+      ],
+      "provenance": "Actual browser screenshot, Playwright / Chrome; file:// source; deviceScaleFactor=2; svg PNGs clipped to original HTML diagram at 1280\u00d7720 CSS pixels. Viewer screenshots are full-page desktop/mobile captures."
+    },
+    {
+      "path": "package-core.svg",
+      "bytes": 10620,
+      "sha256": "e6b2a7918b98d74ed67d11495a0d6bcd050bff18b54b1e6610a049eae7938909"
+    },
+    {
+      "path": "skill-check-report.json",
+      "bytes": 2678,
+      "sha256": "b1c99fbd413d20ec09519bbf9d5a074ebb433d136bb6bec260fb9f54f5dd9d8a"
+    },
+    {
+      "path": "source-consistency-report.json",
+      "bytes": 816,
+      "sha256": "06d4dfa87a40f51951b3c0205c41a21ec838665b27c461971877eeb2d3b6b93e"
+    },
+    {
+      "path": "system-trust.html",
+      "bytes": 14806,
+      "sha256": "b92d4cfc58a75ae7c948804e8ab5743e45b90a21638f0892b460a5129570d86f"
+    },
+    {
+      "path": "system-trust.png",
+      "bytes": 138195,
+      "sha256": "16f5d278eb0f25e50c6d64998df139469691cb712af3cb77fc86d4ec090a83b6",
+      "pixel_dimensions": [
+        2560,
+        1440
+      ],
+      "provenance": "Actual browser screenshot, Playwright / Chrome; file:// source; deviceScaleFactor=2; svg PNGs clipped to original HTML diagram at 1280\u00d7720 CSS pixels. Viewer screenshots are full-page desktop/mobile captures."
+    },
+    {
+      "path": "system-trust.svg",
+      "bytes": 12771,
+      "sha256": "b66e9b0215f2c440cc57735de4baa577e0a76fd18ec770f6b711392a72fca498"
+    },
+    {
+      "path": "technical-deployment.html",
+      "bytes": 12393,
+      "sha256": "6c7a26069adafc227904e9c076d3d597ed2c5bc4fc9deefbff57f11867d14937"
+    },
+    {
+      "path": "technical-deployment.png",
+      "bytes": 133523,
+      "sha256": "349e70f9cd416e1cfedafa33183d45c0f875558a085d8426ba1405a623014d14",
+      "pixel_dimensions": [
+        2560,
+        1440
+      ],
+      "provenance": "Actual browser screenshot, Playwright / Chrome; file:// source; deviceScaleFactor=2; svg PNGs clipped to original HTML diagram at 1280\u00d7720 CSS pixels. Viewer screenshots are full-page desktop/mobile captures."
+    },
+    {
+      "path": "technical-deployment.svg",
+      "bytes": 10933,
+      "sha256": "0e50f6ad4cc23c7b2b517fa68d76d930aa747c9138891344d636ff42c4efb9a6"
+    },
+    {
+      "path": "viewer-desktop.png",
+      "bytes": 326280,
+      "sha256": "49d0ee9e1fe8f3fdd3493825e738bf94c22ac25180d2b5ba1ed9f7ca04f4b5e0",
+      "pixel_dimensions": [
+        2880,
+        2612
+      ],
+      "provenance": "Actual browser screenshot, Playwright / Chrome; file:// source; deviceScaleFactor=2; svg PNGs clipped to original HTML diagram at 1280\u00d7720 CSS pixels. Viewer screenshots are full-page desktop/mobile captures."
+    },
+    {
+      "path": "viewer-mobile.png",
+      "bytes": 264944,
+      "sha256": "0879a331bd34843c105826aa2fd3d19255684099e0004d2b8ec65765dd5fadf0",
+      "pixel_dimensions": [
+        780,
+        3436
+      ],
+      "provenance": "Actual browser screenshot, Playwright / Chrome; file:// source; deviceScaleFactor=2; svg PNGs clipped to original HTML diagram at 1280\u00d7720 CSS pixels. Viewer screenshots are full-page desktop/mobile captures."
+    }
+  ]
+}

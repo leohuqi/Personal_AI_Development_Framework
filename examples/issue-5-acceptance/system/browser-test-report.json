@@ -1,0 +1,99 @@
+{
+  "status": "PASS",
+  "browser": "155.0.8059.80",
+  "renderer": "Playwright 1.62.1",
+  "viewport": {
+    "width": 1440,
+    "height": 1080
+  },
+  "deviceScaleFactor": 2,
+  "checks": [
+    {
+      "test": "switch, every node click, Enter/Space, accessible name index",
+      "view": "system-trust",
+      "status": "PASS",
+      "nodes": 9
+    },
+    {
+      "test": "switch, every node click, Enter/Space, accessible name index",
+      "view": "technical-deployment",
+      "status": "PASS",
+      "nodes": 5
+    },
+    {
+      "test": "switch, every node click, Enter/Space, accessible name index",
+      "view": "package-core",
+      "status": "PASS",
+      "nodes": 6
+    },
+    {
+      "test": "switch, every node click, Enter/Space, accessible name index",
+      "view": "package-adapters",
+      "status": "PASS",
+      "nodes": 7
+    },
+    {
+      "test": "switch, every node click, Enter/Space, accessible name index",
+      "view": "import-workflow",
+      "status": "PASS",
+      "nodes": 9
+    },
+    {
+      "test": "zoom in/out, 50–200% limits and reset",
+      "status": "PASS"
+    },
+    {
+      "test": "390px page does not overflow; local diagram scroll reaches right edge",
+      "status": "PASS"
+    },
+    {
+      "test": "print includes every diagram and releases SVG min-width",
+      "status": "PASS"
+    },
+    {
+      "test": "static SVG rendered; text fits nodes and canvas",
+      "view": "system-trust",
+      "status": "PASS"
+    },
+    {
+      "test": "static SVG rendered; text fits nodes and canvas",
+      "view": "technical-deployment",
+      "status": "PASS"
+    },
+    {
+      "test": "static SVG rendered; text fits nodes and canvas",
+      "view": "package-core",
+      "status": "PASS"
+    },
+    {
+      "test": "static SVG rendered; text fits nodes and canvas",
+      "view": "package-adapters",
+      "status": "PASS"
+    },
+    {
+      "test": "static SVG rendered; text fits nodes and canvas",
+      "view": "import-workflow",
+      "status": "PASS"
+    },
+    {
+      "test": "no-JavaScript viewer exposes all five complete static figures",
+      "status": "PASS"
+    },
+    {
+      "test": "zero external network requests and page errors",
+      "status": "PASS"
+    }
+  ],
+  "screenshots": [
+    "viewer-desktop.png",
+    "viewer-mobile.png",
+    "system-trust.png",
+    "technical-deployment.png",
+    "package-core.png",
+    "package-adapters.png",
+    "import-workflow.png"
+  ],
+  "fonts": "Geist, system-ui, sans-serif",
+  "networkRequests": [],
+  "pageErrors": []
+}

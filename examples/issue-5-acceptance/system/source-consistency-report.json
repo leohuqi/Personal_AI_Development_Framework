@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "approved_model_sha": "f4dbf0d3fac707db1b57252c529618c38d26f0bc",
+  "package_edges_expected": 19,
+  "package_edges_visualized_after_expansion": 19,
+  "missing_edges": [],
+  "extra_edges": [],
+  "model_invariants": [
+    "current GPS never implies historical purchase location",
+    "user override outranks category suggestion",
+    "provider evidence preserved alongside edits",
+    "ambiguous duplicate requires review",
+    "import commits all-or-nothing",
+    "no provider login or network API"
+  ],
+  "content_review": "Author source compatibility review, not independent DESIGN review. All 10 model flows are represented in system or deployment abstraction; import branches use baseline ADR-003. Deployment adds only baseline ADR-005 OS-auth detail. No baseline or technology change."
+}

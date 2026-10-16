@@ -1,0 +1,92 @@
+[
+  {
+    "file": "technical-deployment.html",
+    "tool": "skills/diagram-design/scripts/self_check.py",
+    "exit_code": 0,
+    "output": "OK outputs/issue-5/system/technical-deployment.html"
+  },
+  {
+    "file": "technical-deployment.html",
+    "tool": "scripts/verify-geometry.py",
+    "exit_code": 0,
+    "output": "Summary: 1 file(s) checked, 0 finding(s)."
+  },
+  {
+    "file": "technical-deployment.html",
+    "tool": "skills/diagram-design/scripts/export_svg.py",
+    "exit_code": 0,
+    "output": "outputs/issue-5/system/technical-deployment.svg"
+  },
+  {
+    "file": "package-adapters.html",
+    "tool": "skills/diagram-design/scripts/self_check.py",
+    "exit_code": 0,
+    "output": "OK outputs/issue-5/system/package-adapters.html"
+  },
+  {
+    "file": "package-adapters.html",
+    "tool": "scripts/verify-geometry.py",
+    "exit_code": 0,
+    "output": "Summary: 1 file(s) checked, 0 finding(s)."
+  },
+  {
+    "file": "package-adapters.html",
+    "tool": "skills/diagram-design/scripts/export_svg.py",
+    "exit_code": 0,
+    "output": "outputs/issue-5/system/package-adapters.svg"
+  },
+  {
+    "file": "import-workflow.html",
+    "tool": "skills/diagram-design/scripts/self_check.py",
+    "exit_code": 0,
+    "output": "OK outputs/issue-5/system/import-workflow.html"
+  },
+  {
+    "file": "import-workflow.html",
+    "tool": "scripts/verify-geometry.py",
+    "exit_code": 0,
+    "output": "Summary: 1 file(s) checked, 0 finding(s)."
+  },
+  {
+    "file": "import-workflow.html",
+    "tool": "skills/diagram-design/scripts/export_svg.py",
+    "exit_code": 0,
+    "output": "outputs/issue-5/system/import-workflow.svg"
+  },
+  {
+    "file": "system-trust.html",
+    "tool": "skills/diagram-design/scripts/self_check.py",
+    "exit_code": 0,
+    "output": "OK outputs/issue-5/system/system-trust.html"
+  },
+  {
+    "file": "system-trust.html",
+    "tool": "scripts/verify-geometry.py",
+    "exit_code": 0,
+    "output": "Summary: 1 file(s) checked, 0 finding(s)."
+  },
+  {
+    "file": "system-trust.html",
+    "tool": "skills/diagram-design/scripts/export_svg.py",
+    "exit_code": 0,
+    "output": "outputs/issue-5/system/system-trust.svg"
+  },
+  {
+    "file": "package-core.html",
+    "tool": "skills/diagram-design/scripts/self_check.py",
+    "exit_code": 0,
+    "output": "OK outputs/issue-5/system/package-core.html"
+  },
+  {
+    "file": "package-core.html",
+    "tool": "scripts/verify-geometry.py",
+    "exit_code": 0,
+    "output": "Summary: 1 file(s) checked, 0 finding(s)."
+  },
+  {
+    "file": "package-core.html",
+    "tool": "skills/diagram-design/scripts/export_svg.py",
+    "exit_code": 0,
+    "output": "outputs/issue-5/system/package-core.svg"
+  }
+]
