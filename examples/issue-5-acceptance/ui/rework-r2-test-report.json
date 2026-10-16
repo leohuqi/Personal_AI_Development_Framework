@@ -1,0 +1,142 @@
+{
+  "status": "PASS",
+  "executedAt": "2026-10-16T09:50:52.960Z",
+  "dispatch": "I5-UI-003",
+  "findings": [
+    "F04",
+    "F05"
+  ],
+  "reviewRef": "review/REPORT-V2.md@6dbe1a2e963d3697231d2c823107901a978c034e",
+  "browser": "155.0.8059.80",
+  "checks": [
+    {
+      "id": "exact-reviewer-canonical-stored-X",
+      "finding": "F04",
+      "expectation": "Outer-space X resolves actual stored X; explicit duplicate link adds no Entry",
+      "status": "PASS"
+    },
+    {
+      "id": "canonical-same-batch-unicode-outer-trim",
+      "finding": "F04",
+      "expectation": "Unicode outer whitespace trims without creating a second strong identity",
+      "status": "PASS"
+    },
+    {
+      "id": "stored-NFC-ID",
+      "finding": "F04",
+      "expectation": "Composed/decomposed provider ID resolves same stored source",
+      "status": "PASS"
+    },
+    {
+      "id": "same-batch-NFC-ID",
+      "finding": "F04",
+      "expectation": "Same-batch identity uses the same canonicalization as store lookup",
+      "status": "PASS"
+    },
+    {
+      "id": "canonical-empty-is-no-ID",
+      "finding": "F04",
+      "expectation": "Whitespace-only ID is no strong identity; no-ID explicit keepSeparate/link semantics remain",
+      "status": "PASS"
+    },
+    {
+      "id": "case-and-internal-content-preserved",
+      "finding": "F04",
+      "expectation": "ID case and internal whitespace are not folded or collapsed",
+      "status": "PASS"
+    },
+    {
+      "id": "stored-canonical-original-reference",
+      "finding": "F04",
+      "expectation": "Canonical refund own ID and original reference resolve stored source without new refund or conflict",
+      "status": "PASS"
+    },
+    {
+      "id": "same-batch-canonical-original-reference",
+      "finding": "F04",
+      "expectation": "Canonical original hint identifies a final retained same-batch spend",
+      "status": "PASS"
+    },
+    {
+      "id": "reference-case-is-preserved",
+      "finding": "F04",
+      "expectation": "Original reference case remains economically distinct after canonical outer trim",
+      "status": "PASS"
+    },
+    {
+      "id": "exact-reviewer-two-no-ID-refunds",
+      "finding": "F05",
+      "expectation": "keepSeparate independently requires resolution; two explicitly unresolved refunds preserve settled net106 and both unresolved flags",
+      "status": "PASS"
+    },
+    {
+      "id": "batch-candidate-separate-link",
+      "finding": "F05",
+      "expectation": "New separate candidate can explicitly link an eligible original; only that refund settles",
+      "status": "PASS"
+    },
+    {
+      "id": "stored-candidate-separate-unresolved",
+      "finding": "F05",
+      "expectation": "Stored candidate kept separate still needs independent unresolved choice",
+      "status": "PASS"
+    },
+    {
+      "id": "stored-candidate-link-and-separate",
+      "finding": "F05",
+      "expectation": "keepSeparate plus original creates one new settled refund; linkExisting retains concrete existing state and adds no refund",
+      "status": "PASS"
+    },
+    {
+      "id": "strong-refund-duplicate-link",
+      "finding": "F05",
+      "expectation": "Duplicate refund observations retain one actual unresolved refund, not a new settled entry",
+      "status": "PASS"
+    },
+    {
+      "id": "refund-duplicate-excluded-target",
+      "finding": "F05/F02",
+      "expectation": "Refund linkExisting also resolves final included target; excluding the only root blocks, restoring retains one",
+      "status": "PASS"
+    },
+    {
+      "id": "stored-original-aggregate-cap",
+      "finding": "F05",
+      "expectation": "Aggregate retained new refunds share original capacity; unresolved alternative excluded from settled net",
+      "status": "PASS"
+    },
+    {
+      "id": "same-batch-original-cap-and-exclusion",
+      "finding": "F05",
+      "expectation": "Final retained new original is required and aggregate cap counts separate refunds once each",
+      "status": "PASS"
+    },
+    {
+      "id": "duplicate-link-does-not-reserve-cap-twice",
+      "finding": "F05",
+      "expectation": "Existing settled full refund link adds neither new negative entry nor second cap reservation",
+      "status": "PASS"
+    },
+    {
+      "id": "refund-original-duplicate-alias",
+      "finding": "F04/F05",
+      "expectation": "Original row token resolves through canonical duplicate to one retained new spend",
+      "status": "PASS"
+    },
+    {
+      "id": "immediate-pre-save-refund-revalidation",
+      "finding": "F05",
+      "expectation": "Scripted state change during inert save tests final guard; invalid new-refund choice rolls back whole batch",
+      "status": "PASS"
+    },
+    {
+      "id": "offline-and-render-errors",
+      "finding": "F04/F05",
+      "expectation": "Actual browser checks use zero HTTP requests/page errors",
+      "status": "PASS"
+    }
+  ],
+  "networkRequests": [],
+  "pageErrors": [],
+  "scope": "Actual local author browser verification; independent affected-source re-review pending"
+}

@@ -24,6 +24,13 @@
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
     },
     {
+      "path": "EXECUTION-RECEIPT-V3.md",
+      "sha256": "c328f9d5ac4c40250aa6ee654e44fd744c9af544dac6784ccbf88e351a175c20",
+      "bytes": 2920,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
       "path": "EXECUTION-RECEIPT.md",
       "sha256": "5c3a687e0fb92b3774bef319843ff10e056dc355d36f20e9c0f811bc8443c037",
       "bytes": 2728,
@@ -39,15 +46,15 @@
     },
     {
       "path": "README.md",
-      "sha256": "4ac0df578f674491c60cdb90453ff4bed87b4de353c718fdcd3ddb16aed4e6a8",
-      "bytes": 2164,
+      "sha256": "73f1f608f811d82b1714426d557498e0bf4fb648bc280531cc1f1e0f263d50f4",
+      "bytes": 2574,
       "kind": "source/evidence",
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
     },
     {
       "path": "UI-DESIGN.md",
-      "sha256": "f602832c55f07ea2d7221621af31f9892690c28486a9f3cff47bcf284007e283",
-      "bytes": 14327,
+      "sha256": "b44d1e4cbc43d651105329b3ce98945c41ab62c797880cd5d56c968ff7fb81cb",
+      "bytes": 18039,
       "kind": "source/evidence",
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
     },
@@ -60,7 +67,7 @@
     },
     {
       "path": "adversarial-test-report.json",
-      "sha256": "4c8bb65f5d415ad9ecdd20e2cd6b57a44e02a01c1570b7a1ef589abee345158f",
+      "sha256": "089f46b28a91177a2c5795ddb704ee57d3b4d462c2911923f2270ed48df77deb",
       "bytes": 901,
       "kind": "source/evidence",
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
@@ -75,7 +82,7 @@
     },
     {
       "path": "interaction-test-report.json",
-      "sha256": "e910aeab6c4e42fa822413950e7a4fdb84c58fce4952e99fa4919fd0ccfc1489",
+      "sha256": "f91a217ac801c362f89e36b0554fc9fc12eb8dd7035b786731332c94103559bb",
       "bytes": 2277,
       "kind": "source/evidence",
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
@@ -106,10 +113,18 @@
     },
     {
       "path": "prototype.html",
-      "sha256": "650e921fd3beff2f48f143c19b8ba10208f712e81e9ce839205889bd5770a27f",
-      "bytes": 42231,
+      "sha256": "b5969a1dea4f50b1fe7b335b9334ac574383147b3c4e85cfad654669ec9e70ff",
+      "bytes": 45531,
       "kind": "source/evidence",
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "refund-candidate-mobile.png",
+      "sha256": "45ae595790de843e5afedcc825d3fc233cc3ee3a7accc64022e587c551a4df37",
+      "bytes": 148461,
+      "kind": "render",
+      "remote_publication": "LOCAL_ONLY",
+      "local_path": "/Users/leohu/Documents/Codex/2026-10-16/referenced-chatgpt-conversation-this-is-an/outputs/issue-5/ui/refund-candidate-mobile.png"
     },
     {
       "path": "review-conflict-mobile.png",
@@ -120,8 +135,15 @@
       "local_path": "/Users/leohu/Documents/Codex/2026-10-16/referenced-chatgpt-conversation-this-is-an/outputs/issue-5/ui/review-conflict-mobile.png"
     },
     {
+      "path": "rework-r2-test-report.json",
+      "sha256": "7e4bc374e043ecc04af441c8070e6518d599f8370bdfe6f5817a0214071ea510",
+      "bytes": 5013,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
       "path": "rework-test-report.json",
-      "sha256": "4299e1092be0f30ed367bb649856a6ae6f64565bd9746cdef5665e48abc34de4",
+      "sha256": "917ae243372fdda6a1fc9fc49667be4565ab77dc400c1104dcf0a7ad1892e6d7",
       "bytes": 4918,
       "kind": "source/evidence",
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
@@ -162,6 +184,13 @@
       "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
     },
     {
+      "path": "verify-rework-r2.cjs",
+      "sha256": "b254c9029a65d82d2a36f537db7904f671eeb9ee4165c57aeca71de642df91a3",
+      "bytes": 11072,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
       "path": "verify-rework.cjs",
       "sha256": "54fdd9323a8a8c723915b75bb16b49ef2e5a235bffecf13b510d7e37ac0fae7e",
       "bytes": 9701,
@@ -170,18 +199,25 @@
     }
   ],
   "source_revision_note": "Exact source commit is published by later HANDOFF.md; manifest deliberately does not self-hash.",
-  "screenshot_upload_status": "NOT_PUBLISHED: first blob request interrupted while unknown; no branch update from binary attempt",
-  "dispatch_id": "I5-UI-002",
+  "screenshot_upload_status": "LOCAL_ONLY: six actual rendered PNGs, no remote binary upload claimed",
+  "dispatch_id": "I5-UI-003",
   "review_findings_corrected_by_author": [
     "F01",
     "F02",
-    "F03"
+    "F03",
+    "F04",
+    "F05"
   ],
   "independent_rereview": "PENDING",
   "verification_groups": {
     "main": 14,
     "supplementary": 6,
-    "rework": 18,
-    "timestamp_vectors_within_rework": 22
-  }
+    "first_rework": 18,
+    "second_rework": 21,
+    "total": 59,
+    "timestamp_vectors_within_first_rework": 22
+  },
+  "local_extras_excluded": [
+    "OWNER-EVALUATION-V2.json"
+  ]
 }

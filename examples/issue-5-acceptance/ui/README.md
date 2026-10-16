@@ -16,3 +16,5 @@ Profile: `UI-PROFILE.md@d7e9c679a0a435310ef76d63432917d7e1656078`，PROPOSED，�
 Screenshot publication boundary: PNG files are actual local rendered/inspected evidence in `/Users/leohu/Documents/Codex/2026-10-16/referenced-chatgpt-conversation-this-is-an/outputs/issue-5/ui/`. Binary upload was stopped while outcome was unknown; no PNG GitHub publication is claimed. Source/test code can regenerate them; SHA-256s are in manifest. Only textual sources/reports/manifest are in this source commit.
 
 本次返工：I5-UI-002，修正独立评审 F01–F03（完整原始来源比较、最终重复关联目标检查、严格日期校验）。原先绿灯测试没有覆盖这些反例。新增 `verify-rework.cjs` 与 `rework-test-report.json`，18 组修正回归实际通过，包含22个日期边界；原14+6组也已重新执行通过。原评审 REQUEST CHANGES 保留，等待独立复评。
+
+第二次返工 I5-UI-003：编号统一 NFC/外部空白处理；退款的重复处理与原支出关联分为两个选择。每笔新退款必须明确关联或保留待关联，重复关联不新增退款。同批原支出与退款总额在确认前整体复核。新增 `verify-rework-r2.cjs` 的21组检查通过；原38组重新通过，共59组。原独立评审仍保留，等待本轮独立复评。
