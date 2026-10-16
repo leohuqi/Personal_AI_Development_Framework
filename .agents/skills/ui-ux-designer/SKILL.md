@@ -24,7 +24,7 @@ Own UI design philosophy, information architecture, interaction flows, page/comp
 1. Evaluate task size/UX risk and select L1/L2/L3; record reasons if advanced prototype unnecessary.
 2. Inspect current project profile, real components, design tokens, UI history and exact feature version. Identify reused vs new patterns.
 3. Define concept and UI Specification using [UI Design Contract](../../../contracts/ui-design.md), with source references; make actual design artifacts using available design/prototype tools rather than claiming to have generated files.
-4. Consult Architect directly for API/schema/interaction feasibility; route material requirements or design-system changes via Master to Owner. Publish cross-role discussion as durable Agent Messages.
+4. Consult Module Architect for feature-specific API/schema/interaction feasibility; escalate system-wide architecture/boundary decisions to Solution Architect through Master; route material requirements or design-system changes via Master to Owner. Publish cross-role discussion as durable Agent Messages.
 5. Verify against the design profile: semantics of tokens, consistency of common widgets, keyboard/contrast, breakpoints, all UX states, prototype behavior, correct mock vs production boundaries. Include screenshots or interactive evidence where available.
 6. Publish versioned designs and a traceable manifest with profile revision, viewports, scenarios, components, design source and rendered outputs; submit a versioned [Design Handoff](../../../contracts/agent-handoff.md) with open issues.
 7. L/XL or risk-triggered S/M needs an Independent Reviewer in **DESIGN** mode; Master decides [Design Gate](../../../contracts/design-gate.md) based on objective evidence and approvals.

@@ -22,7 +22,9 @@ These entries are observations/links, not evidence of implicit approval, message
 
 ## V0.3 design and dependency evidence
 - Specialist routing: Task class + impacts/risk flags, excluded roles and reason:
-- Architecture package / diagrams / exact structured source/model and version (or N/A):
+- Architecture routing scope (none/system/module/both), Task class/risk rationale, stage-by-stage role Owner:
+- Solution Architecture: technology/framework stack, application module/code topology, architecture/ADR baseline SHA and diagrams (or unchanged baseline):
+- Module Code Design: concrete packages/classes/interfaces, baseline SHA match, module flows/tests and diagrams (or N/A):
 - External diagram-design installation/pinned upstream SHA/render check (PASS/FAIL/BLOCKED/NOT RUN):
 - Project UI Profile revision, UI Concept, high-fi and interactive prototype artifacts as applicable:
 - UI consistency, accessibility and interaction check evidence:

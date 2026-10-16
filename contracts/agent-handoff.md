@@ -60,8 +60,9 @@ A HANDOFF event records a transfer request; it does not automatically run the re
 For Architect/UI Producer -> downstream Agent, include `handoff_kind: DESIGN` and cite [Architecture Package](architecture-design.md) or [UI Package](ui-design.md), immutable versions and Owner-approved Feature Spec. Use the **same V0.2 envelope**, message IDs and ACK rules; do not introduce a parallel handoff transport.
 
 Optional-as-applicable fields:
-- `architecture_design_ref`, `schema/api/workflow_contract_refs`, `diagram_manifest_ref`, `diagram_generator_lock_ref`, `diagram_render_status`.
+- `architecture_scope`, `solution_architecture_ref` and `technology_stack_ref` (system-level), `module_design_ref` and `system_baseline_ref` (module-level), `module_interface_contract_ref`, `code_structure_ref`, `schema/api/workflow_contract_refs`, `diagram_manifest_ref`, `diagram_generator_lock_ref`, `diagram_render_status`.
 - `project_ui_profile_ref`, `ui_design_ref`, `prototype_level`, `concept/high-fi/interactive_artifact_refs`, interaction test status.
 - `dependency_manifest_ref`, `design_review_ref` (only if actually completed), `design_gate_ref`, `stale_checks`, and `unresolved_design_conflicts`.
 
 Producer marks completed only with actual evidence. Receiver checks required artifacts/source revisions and ACKs or responds NEEDS_REFINEMENT/BLOCKED. **Master** owns Design Gate and next-role routing; **Independent Reviewer** owns risk-required design quality opinion, never the Gate. Completed Handoff does not start Coder automatically.
+\nDo not hand the Module Architect a not-yet-approved proposed system baseline and treat it as binding. In a combined SYSTEM/MODULE workflow, attach a verified approved system baseline SHA to the downstream MODULE handoff, then check it again before Coder starts.\n

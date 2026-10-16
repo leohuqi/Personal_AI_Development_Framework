@@ -28,8 +28,11 @@ A Task Contract grants no authorization without applicable Owner approval. Messa
 ## V0.3 design stage and dependency inputs (when applicable)
 - Task class (S/M/L/XL) and risk flags / risk assessment rationale:
 - Impact domains: architecture / api / database / workflow / integration / ui / shared-component / security / etc.:
-- Required specialist stages and `padf.agent-dependency/v1` manifest permalink:
-- Architecture package + diagram/design source revisions, or N/A with reason:
+- Master-selected `architecture_scope` (none/system/module/both), routing rationale and affected system/module boundaries:
+- Applicable approved `system_baseline_ref` for module design; current architecture Owner approval and matching baseline revision:
+- Required specialist stages (Solution Architect, Module Architect, UI Designer as applicable) and `padf.agent-dependency/v1` manifest permalink:
+- System Solution Architecture Package: tech stack/framework, app-level code structure + diagrams; or unchanged approved baseline/N/A reason:
+- Module Code Design Package: package/class/interface layout, implementation guidance + module diagrams; or N/A reason:
 - UI package level L1/L2/L3 + approved project UI Profile revision, or N/A with reason:
 - Design Handoff links and receiving agent ACK / NEEDS_REFINEMENT:
 - Independent DESIGN Review decision/evidence (mandatory L/XL or risk-triggered S/M), otherwise Master skip rationale:

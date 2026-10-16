@@ -1,28 +1,23 @@
 # Architecture Design Package — PADF V0.3
 
-Schema: `padf.architecture-design/v1`. A **versioned technical design artifact and manifest** for one approved feature, not a new source of requirements.
+Schema: `padf.architecture-design/v1`. Umbrella **versioned design manifest**; ownership and required artifacts depend on architecture scope chosen by Master. It does **not** replace [Solution Architecture](solution-architecture.md) or [Module Code Design](module-design.md).
 
-## Header (required)
-- `context_id`, Linear Issue, immutable original Feature ID(s), author/role, source Feature Spec path and approved commit, base architecture/ADR revision, date/status PROPOSED|COMPLETED|APPROVED.
-- Owner approval refs, scope, out-of-scope, inputs, assumptions, dependencies, unresolved decisions, downstream affected roles.
-- Design choices, alternatives and tradeoffs, current vs target architecture, contracts, security/permissions, data lineage, NFRs, failure/retry, rollout/rollback and validation plan.
+## Routing scope
+| `architecture_scope` | Role | Required artifact types | Intent |
+| --- | --- | --- | --- |
+| `system` | `solution-architect` | `solution-architecture`, `technology-stack`, `application-code-structure`, `architecture-diagram` | Create/change the APP-wide platform/technical baseline |
+| `module` | `module-architect` | `module-design`, `module-code-structure`, `module-interface-contract`, `module-component-diagram` plus pinned `system_baseline_ref` | Detail one module within the approved system baseline |
+| `both` | system then module | Both package sets with explicit SYSTEM -> MODULE dependency and SHA alignment | A new app/major system change with selected module implementation design |
+| `none` | no Architect | N/A reason for no architecture work | Simple bug/UI-only changes where existing contracts suffice |
 
-## Impact -> deliverable matrix
-| Impact | Required authoritative model/spec | Visual evidence using diagram-design when material |
-| --- | --- | --- |
-| System/module topology | Architecture section, interface boundaries | Architecture or delta diagram |
-| Database/schema | Entities, SQL DDL/migration plan, types/FKs/indexes | DB schema / ER diagram |
-| API/integration | OpenAPI or exact request/error contract | Sequence/integration/data-flow diagram if multi-component |
-| Business workflow | Steps, guards, failure/compensation semantics | Flowchart/swimlane when nontrivial |
-| State transitions | State/event/transition/guard table | State machine |
-| Deployment | Zone/network/identity/runtime manifest | Deployment/trust-boundary diagram |
+## Common identity and acceptance
+- `context_id`, Linear Issue, immutable original Feature ID(s), approved Feature Spec@SHA, Master selected scope/rationale, task size/risk and revision.
+- Owner approval refs, current-versus-target, affected interfaces/modules, security/performance/reliability, constraints, tradeoffs, rollout/rollback, tests, open design decisions.
+- **System** package records technology/framework selection, approved system architecture revisions and top-level code/module structure, not each module's file/method-level implementation.
+- **Module** package records exact approved `system_baseline_ref`, affected directory/package structure, classes/interfaces/contracts, dependency directions, key flows/data transactions and test seams, not a new technology stack.
+- Each actually relevant data/API/workflow/deployment impact adds authoritative source (SQL DDL, OpenAPI, state rules, deployment manifest) **and** a checked diagram if material. Unaffected categories may reference unchanged models with N/A justification, avoiding gratuitous graphics.
+- Manifest: `artifact_id | type | path/permalink@SHA | source@SHA | generator + pinned Skill SHA (if visual) | render/consistency check | open issues`.
+- Diagram HTML/SVG is visualization, never authoritative DDL/API/program behavior; matching technical source defines behavior. Missing real renderer/Skill = BLOCKED/NOT RUN, not fabricated PASS.
 
-Record **required/optional/N/A + justification** per category: avoid gratuitous diagrams on unaffected areas. Existing unchanged diagrams may be referenced with valid source revision; don't re-render without reason.
-
-## Manifest table (per artifact)
-`artifact_id | kind | path/permalink | SHA/revision | linked source specification@SHA | generator+locked SHA (if diagram) | render/consistency check | issues`
-
-- Each diagram must faithfully match the authoritative model: SQL types/FKs/cardinality, API method/error semantics, edge directions, state transitions and trust boundaries. HTML/SVG alone never establishes Schema correctness.
-- If no environment to generate required visual, mark BLOCKED and hand back to Master. No false PASS for unchecked browser rendering.
-- Material architectural decisions/changes require Owner approval and ADR/source update. Completion by Architect is **not independent Design Review**.
-- [Agent Handoff](agent-handoff.md) points to this package and artifact manifest. [Design Gate](design-gate.md) checks it.
+## Responsibility and approval
+Designers produce and self-check versioned packages and existing V0.2 Handoff; recipients ACK. Independent Reviewer checks DESIGN quality when L/XL or high-risk S/M. Master checks exact dependencies, `system_baseline_ref`, Review status and Design Gate. Material changes require Owner approval; DESIGN_READY is **not** coding authorization.

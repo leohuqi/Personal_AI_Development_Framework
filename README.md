@@ -34,11 +34,11 @@ Cross-session ChatGPT/Work/Codex continuity and multi-agent collaboration use a 
 
 ## V0.3 — Specialized Design Agents (development candidate)
 
-The V0.3 extension adds a [Solution Architect](.agents/skills/solution-architect/SKILL.md) that can call the **pinned external** [diagram-design](integrations/diagram-design.md) skill to produce architecture, workflow and database schema visualizations with versioned authoritative source models. A [UI/UX Designer](.agents/skills/ui-ux-designer/SKILL.md) outputs design philosophy, UI concept, high-fidelity and risk-appropriate interactive prototypes, all traced to each project's [UI Profile](contracts/project-ui-profile.md).
+The V0.3 extension distinguishes a [Solution Architect](.agents/skills/solution-architect/SKILL.md) for whole-app stack and baseline decisions from a [Module Architect](.agents/skills/module-architect/SKILL.md) for detailed module code/package/interface design under the approved system architecture. The Solution Architect can call the **pinned external** [diagram-design](integrations/diagram-design.md) skill to produce architecture, workflow and database schema visualizations with versioned authoritative source models. A [UI/UX Designer](.agents/skills/ui-ux-designer/SKILL.md) outputs design philosophy, UI concept, high-fidelity and risk-appropriate interactive prototypes, all traced to each project's [UI Profile](contracts/project-ui-profile.md).
 
 Master performs [capability-based routing](workflow/agent-routing.md), checks [agent-stage dependencies](contracts/agent-dependency.md) and operates a [Design Gate](contracts/design-gate.md). **Governance model C**: L/XL and risk-triggered S/M require independent DESIGN review; Master controls process/readiness, Reviewer assesses design quality and Owner approves material decisions and coding. Designers produce [existing V0.2 handoffs](contracts/agent-handoff.md); recipients ACK/NEEDS_REFINEMENT. No parallel Coder scheduler or agent daemon.
 
-- [Sequential design workflow](workflow/design-collaboration.md) · [Architect package](contracts/architecture-design.md) · [UI package](contracts/ui-design.md)
+- [Sequential design workflow](workflow/design-collaboration.md) · [System architecture baseline](contracts/solution-architecture.md) · [Module design](contracts/module-design.md) · [Architecture package selector](contracts/architecture-design.md) · [UI package](contracts/ui-design.md)
 - [Pinned diagram-design integration](integrations/diagram-design.md) · [Dependency/gate evaluator](lib/design-gate.mjs)
 - Validation: `node tests/v0.3/run-tests.mjs` (fixture checks, not real diagram/prototype generation).
 
@@ -50,7 +50,8 @@ Master performs [capability-based routing](workflow/agent-routing.md), checks [a
 | --- | --- |
 | [master-orchestrator](.agents/skills/master-orchestrator/SKILL.md) | Scope, design coordination, task readiness, conflict routing and acceptance |
 | [context-coordinator](.agents/skills/context-coordinator/SKILL.md) | Minimal shared context, durable messages, checkpoint/resume and cross-agent handoff |
-| [solution-architect](.agents/skills/solution-architect/SKILL.md) | Structured architecture, API, schema, workflow and aligned diagrams |
+| [solution-architect](.agents/skills/solution-architect/SKILL.md) | APP-wide technology stack, solution architecture, high-level application module layout, ADR and diagrams |
+| [module-architect](.agents/skills/module-architect/SKILL.md) | Approved-baseline-conformant module code/package design, interfaces, internal flows and tests |
 | [ui-ux-designer](.agents/skills/ui-ux-designer/SKILL.md) | Project-specific consistent UI concepts, prototypes and interaction contracts |
 | [feature-coder](.agents/skills/feature-coder/SKILL.md) | Authorized implementation and PR handoff |
 | [qa-tester](.agents/skills/qa-tester/SKILL.md) | Test design, integration/E2E verification, evidence |

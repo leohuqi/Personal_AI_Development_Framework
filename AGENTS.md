@@ -20,7 +20,9 @@
 
 ## V0.3 specialized design rules (candidate)
 - Master routes only relevant Architect/UI Designer Skills and documents S/M/L/XL risk and skipped roles; must not auto-run agents.
-- For material architecture/schema/API/workflow changes the Solution Architect supplies structured contracts **and justified diagrams** using the pinned external diagram-design Skill; renderer absence is BLOCKED/NOT RUN, never fabricated.
+- Whole-app/new-platform tech stack, APP-wide code structure or cross-system boundaries require the **Solution Architect** and a versioned Solution Architecture Baseline. An existing approved system is reused, not redesigned for each feature.
+- Module-specific API/schema/workflow/class/package design inside the approved baseline uses the **Module Architect**, with matching baseline SHA and technical/visual contracts. Master chooses system/module/both/none; no automatic double invocation.
+- Both roles provide structured contracts **and justified diagrams** using pinned diagram-design where required; renderer absence is BLOCKED/NOT RUN, never fabricated.
 - For UI changes the UI Designer loads the **project's own approved UI Profile** and cites its revision; concept/high-fi/interactive levels are chosen by complexity. Static images are not interactive source.
 - Design Handoff uses V0.2 contract; Master owns readiness/approval routing, Independent Reviewer audits DESIGN mode for L/XL and risk-triggered S/M, Owner approves material design changes and coding.
 - V0.3 is under review on a feature branch; immutable PADF v0.2.0 release remains unchanged. Never modify PQA PR #7 as a side effect.

@@ -29,6 +29,8 @@ Require an owner-authorized task, Linear ID + original Feature ID, approved scop
 See contracts/agent-message.md, contracts/context-checkpoint.md, contracts/agent-handoff.md and workflow/context-communication.md.
 
 ## V0.3 design input gate
+- On a task routed via Architect/UI, distinguish **APP-wide Solution Architecture Baseline** (technology stack/layers and permitted module dependencies) from **Module Code Design** (specific files/packages/classes/interfaces/test seams). Consume only required role outputs and their exact revisions. Never infer module code structure from the system-level diagram alone.
+- For module implementation, check `module_design.system_baseline_ref` matches the current approved system baseline; mismatch/absence -> BLOCKED, route via Master. Module Architect cannot authorize replacement of project stack.
 - On a task routed via Architect/UI, read the Master [Design Gate](../../../contracts/design-gate.md) decision and [Stage Dependency](../../../contracts/agent-dependency.md) at verified revisions. Require actual approved Feature Spec + structured architecture/API/schema/workflow artifacts and/or UI Package and per-project profile, as applicable. Design package COMPLETED alone is not approval.
 - For L/XL or high-risk S/M, require independent DESIGN review evidence at the exact artifact revisions. Missing/mismatched review, stale profile/schema or unresolved BLOCKER -> stop.
 - Separate Owner coding authorization still required even with DESIGN_READY. Never invoke diagram-design or prototype tools merely to paper over missing design; ask specialist via Agent Message.
