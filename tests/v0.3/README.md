@@ -36,3 +36,6 @@ node tests/v0.3/run-orchestration-tests.mjs
 node tests/v0.3/run-skill-quality-tests.mjs
 ```
 These are **synthetic metadata** fixture checks. They do not authenticate actual agent session identity, initiate Work/Codex, verify a real diagram/prototype or make an Owner decision. For a real test use [independent Master runbook](../../workflow/master-orchestration-validation.md), separate specialist sessions with only Master dispatch permalinks, and [Owner scoring sheets](../../contracts/skill-delivery-evaluation.md). Old [Issue #4](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4) stays ROLE_SIMULATION, not a pass for real orchestration.
+
+## Open real acceptance issue
+Follow **[PADF Issue #5](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/5)** in fresh, distinct Master/Solution/Module/UI/Reviewer sessions, with only Master-written durable Dispatch URL passed to each specialist and separate Owner grading sheets. **Do not reuse Issue #4** as evidence of independent invocation; it is a role-simulation negative control.

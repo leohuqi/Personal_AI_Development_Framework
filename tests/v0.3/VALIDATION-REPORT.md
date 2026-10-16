@@ -54,3 +54,19 @@ See [manual pilot steps](README.md) and PR #3 for current exact head/CI.
 - [Quality Evaluation Contract](../../contracts/skill-delivery-evaluation.md) scores Solution Architect, Module Architect and UI Designer against actual professional artifacts. A polished design cannot substitute for actual session provenance, nor vice versa.
 - New suites `tests/v0.3/run-orchestration-tests.mjs` and `tests/v0.3/run-skill-quality-tests.mjs` provide synthetic positive/negative tests only. **Results must be confirmed on the updated PR HEAD before calling PASS.**
 - Prior Issue #4 remains a ROLE_SIMULATION; actual external Master-run Dispatch/E2E and Owner Quality evaluations NOT RUN as of this edit.
+
+## Master Orchestration evidence-chain validation — observed PASS at code SHA
+**Code HEAD tested:** `0cf20531420351d4810295266db325fb8c35cf9a`.
+
+| Automated validation | GitHub evidence | Scope |
+| --- | --- | --- |
+| Existing V0.2 CACF protocol regression | [Actions #38856493503](https://github.com/leohuqi/Personal_AI_Development_Framework/actions/runs/38856493503) — **SUCCESS** | Existing context/message/checkpoint/response protocol |
+| V0.3 Design Gate / role routing | [Actions #38856493598](https://github.com/leohuqi/Personal_AI_Development_Framework/actions/runs/38856493598) — **SUCCESS** | 39 deterministic tests: routing, architecture scope, approved baselines, UI/diagram gates, opt-in orchestration required |
+| Dispatch → Execution → Handoff → Reconciliation metadata | Same V0.3 Actions — **SUCCESS** | 19 synthetic cases including self-role-play, same-session, fake skill/run refs, unauthorized Module baseline, reversed dependency |
+| Owner specialist quality evaluation metadata | Same V0.3 Actions — **SUCCESS** | 14 synthetic cases: distinct SA/MA/UI rubric, evidence, score/risk/Owner decision checks |
+| Earlier expense pilot Issue #4 | [Issue #4](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4) | **ROLE_SIMULATION**, not real multi-Agent E2E |
+| Real independent Master+3 specialist sessions + fresh DESIGN Reviewer | [Acceptance Issue #5](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/5) | **NOT RUN**, Owner follow-up |
+| Real diagram-design and working UI prototype generated in separate specialist sessions | Acceptance Issue #5 | **NOT RUN** |
+| Owner SA/MA/UI output grades and decision | Acceptance Issue #5 | **PENDING** |
+
+The pure validators may say METADATA_ELIGIBLE on synthetic fixtures; this is **not** a runtime attestation or proof that a skilled Agent produced correct designs. Owner must inspect actual distinct-session and artifact/tool evidence. After this documentation-only commit, re-check exact latest PR-head CI before asserting new-head PASS.

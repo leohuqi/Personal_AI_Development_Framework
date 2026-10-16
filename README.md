@@ -50,6 +50,8 @@ To **prove coordination**, follow the [real Master orchestration runbook](workfl
 
 To **evaluate Skill quality**, Owner independently scores [Solution Architect, Module Architect and UI Designer artifacts](contracts/skill-delivery-evaluation.md), tied to actual session ID and immutable artifact/Skill SHA. A working interactive prototype is not equivalent to a screenshot, and a diagram does not prove actual external diagram-design invocation.
 
+Acceptance tracking: **[Issue #5 — real Master Orchestration and 3 specialist Skills](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/5)** (OPEN / NOT RUN). Previous Issue #4 is a role simulation.
+
 Read-only verification scripts:
 ```bash
 node tests/v0.3/run-orchestration-tests.mjs
