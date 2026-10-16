@@ -39,3 +39,8 @@ Independent review section of contracts/delivery-report.md: PR/base/head, eviden
 
 ## Boundary
 Do not edit and merge the PR under review by default, auto-mark Linear Done, treat UI mockups as proof of integration, or authorize live migrations/deployments.
+
+
+## V0.3 orchestration acceptance and independent design review
+Distinguish (1) actual Master dispatch/receipts/cross-session provenance and (2) quality of each specialist's output. Review the real [Dispatch Chain](../../../contracts/agent-dispatch.md) at durable refs; **role names, commits by the same GitHub account, or Master-authored handoffs are not proof of independent agent sessions**. Verify prior Master reconciliation happened before next dependent dispatch, and inspect the actual provided approval/version links. Mark missing tool/session provenance NOT VERIFIED, not PASS.
+Review the Solution Architect package against SA-Q1–5, Module Architect against MA-Q1–5, and UI Designer against UI-Q1–5 of [Owner Evaluation](../../../contracts/skill-delivery-evaluation.md), with independent technical/UI findings at pinned artifact SHA. Reviewer does not impersonate Owner scores or claim designer tool execution without verified evidence. L/XL mandatory DESIGN review remains binding; no automatic Gate authorization.

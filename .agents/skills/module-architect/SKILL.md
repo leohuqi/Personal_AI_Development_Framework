@@ -25,3 +25,8 @@ Own **module-level design**, not app-wide platform decisions. The approved [Solu
 
 ## Done versus reviewed
 A COMPLETED module design includes `system_baseline_ref`, code structure, public interface contract, scope and tests plus aligned required diagrams and actual evidence. A module design **cannot** declare a missing baseline APPROVED, approve new frameworks or grant coding permission. L/XL and risk-triggered S/M require **fresh independent DESIGN Review** at exact source revisions even when Solution Architect is not routed. Then Master checks dependencies/Gate and obtains **separate bounded Owner coding authorization**.
+
+
+## V0.3 separate-session acceptance protocol
+For the live Master orchestration pilot, accept only a **prior persisted Master Dispatch** containing bounded module scope, approved `system_baseline_ref` and upstream reconciliation ref. The initial message in your specialist session should be **only** that dispatch URL; read your Module Architect Skill@SHA from the versioned repo. Validate system baseline Owner approval and matching SHA yourself; on a mere PROPOSED baseline return BLOCKED/conditional draft, **not** COMPLETED or ready for coding.
+Record actual execution receipt/session evidence, then produce concrete versioned packages/interfaces/contracts and real diagram evidence with status. Publish a separate Module Architect Handoff referencing the dispatch ID, execution ID and upstream baseline. Master must retrieve/reconcile this Handoff before dispatching another dependent role. Owner independently grades MA-Q1–MA-Q5 in the [Skill Evaluation](../../../contracts/skill-delivery-evaluation.md); do not self-score the quality as independently accepted.

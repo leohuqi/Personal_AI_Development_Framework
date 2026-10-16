@@ -51,3 +51,7 @@ Concise context_id, authoritative refs/revisions, observed task/head state, pend
 
 ## Safety
 No background orchestration, automatic agent wake-up, auto dispatch, new storage server or A2A runtime in V0.2. No authorization escalation, deployment, destructive operations or merge by inference. Follow workflow/context-communication.md and governance/approval-policy.md.
+
+
+## V0.3 orchestrated dispatch evidence
+Manage durable `dispatch_id`, `execution_id`, Handoff and Master reconciliation refs using [Agent Dispatch Contract](../../../contracts/agent-dispatch.md). Store execution mode and provenance without manufacturing runtime IDs or claiming posted TASK_REQUEST auto-woke recipients. A Master decision/comment authored in the same session as all designer outputs remains ROLE_SIMULATION. On resume verify prior Handoff, current approval and artifact SHA **before** treating a downstream dispatch as allowed. Relay only minimal context and exact Skill@SHA; do not copy another agent's private transcript into the specialist session.

@@ -31,3 +31,8 @@ Own UI design philosophy, information architecture, interaction flows, page/comp
 
 ## Prohibitions
 No silent unapproved redesign, inconsistent per-page tokens, unverifiable 'clickable prototype', invented Figma links, changing production data, or automatic transition from design complete to coding authorized.
+
+
+## V0.3 separate-session acceptance protocol
+For the Master-led pilot, execute from the **Master's durable UI Dispatch URL only**, independently resolving Feature Spec, actual approved Project UI Profile@SHA or recorded Owner authorization to establish one, requested L1/L2/L3 level and accepted API/system baseline. Record execution receipt with real session provenance and the exact Skill revision used. Do not infer Owner approval from a design handoff.
+Deliver **project-specific** philosophy, token/component consistency, original concept and high-fi/interaction states. For selected L3, create a genuinely runnable/clickable prototype with editable source and test its category dropdown, merchant automatic recommendation/override, location consent, import error/empty states; report any NOT RUN honestly. Publish source@SHA Handoff referring to dispatch and execution IDs. Master checks dependencies; Owner grades UI-Q1–UI-Q5 in [Skill Evaluation](../../../contracts/skill-delivery-evaluation.md), with actual clickable prototype evidence rather than screenshots alone.
