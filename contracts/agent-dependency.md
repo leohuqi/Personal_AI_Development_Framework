@@ -33,16 +33,34 @@ Each stage has unique `id`, `agent`, `required` (bool), `depends_on[]` (existing
 ## Runnable evaluator
 `lib/design-gate.mjs` exports `evaluateStageDependencies` and `evaluateDesignGate`. It is **pure read-only validation**, not dispatch, auto approvals or writes to Linear/GitHub. See `tests/v0.3/run-tests.mjs`.
 
-## Minimal illustrative example (replace placeholder refs with real evidence)
-```json
-{
-  "schema_version":"padf.agent-dependency/v1",
-  "context_id":"EXAMPLE-001","feature_id":"EXAMPLE-F01",
-  "task_class":"L","risk_flags":["cross-module"],
-  "stages":[
-    {"id":"ARCH","agent":"solution-architect","required":true,"depends_on":[],"status":"COMPLETED","artifacts":[{"type":"architecture-design","ref":"docs/arch.md@<sha>","verified":true}]},
-    {"id":"UX","agent":"ui-ux-designer","required":true,"depends_on":["ARCH"],"status":"COMPLETED","artifacts":[{"type":"ui-design","ref":"docs/ui.md@<sha>","verified":true}]}
-  ]
-}
+## Minimal illustrative stages (illustration only)
+
+### Existing approved APP — Module Architect only
+```yaml
+schema_version: padf.agent-dependency/v1
+context_id: EXPENSE-EXAMPLE
+feature_id: EXP-REC-001
+task_class: M
+architecture_scope: module
+routing_rationale: Existing approved APP; only expense-import module changes
+system_baseline_ref: docs/architecture/system.md@<approved-commit>
+system_baseline_status: APPROVED
+system_baseline_approval_ref: <real-owner-decision-link>
+stages:
+  - id: MODULE
+    agent: module-architect
+    depends_on: []
+    required: true
+    status: COMPLETED
+    system_baseline_ref: docs/architecture/system.md@<approved-commit>
+    artifacts:
+      - {type: module-design, ref: "docs/module-expenses.md@<sha>", verified: true, evidence_ref: "<actual-artifact-evidence>"}
+      - {type: module-code-structure, ref: "docs/code-expenses.md@<sha>", verified: true, evidence_ref: "<actual-artifact-evidence>"}
+      - {type: module-interface-contract, ref: "docs/expense-api.yaml@<sha>", verified: true, evidence_ref: "<actual-artifact-evidence>"}
+      - {type: module-component-diagram, ref: "docs/expense-components.html@<sha>", verified: true, evidence_ref: "<actual-render-evidence>", generator: diagram-design, generator_sha: "<locked-sha>", render_status: PASS}
 ```
-```<sha>``` denotes placeholder; it cannot satisfy strict validation.
+
+### New APP + first module — ordered SYSTEM -> MODULE
+Set `architecture_scope: both`. Add a SYSTEM stage with Solution Architect artifacts `solution-architecture`, `technology-stack`, `application-code-structure`, `architecture-diagram`. After applicable Owner approval, MODULE has `depends_on: [SYSTEM]` and its `system_baseline_ref` exactly matches SYSTEM's `solution-architecture` ref. Do not produce these concurrently or claim that Owner approval is automatic.
+
+Placeholder values `<sha>` and `<approved-commit>` above are **not** valid immutable SHAs or authorizations. Real Gate evidence requires pinned versions and verified artifact/render links.

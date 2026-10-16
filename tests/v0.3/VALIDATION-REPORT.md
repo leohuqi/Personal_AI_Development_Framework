@@ -9,10 +9,10 @@ Baseline: `main` at `82e7888a142dfaf7c0dfbf1d67f8957873d851a0`, with immutable `
 
 | Scope | Result | Evidence |
 | --- | --- | --- |
-| Existing V0.2 CACF compatibility regression | **PASS** | [Actions 38508680467](https://github.com/leohuqi/Personal_AI_Development_Framework/actions/runs/38508680467) |
-| V0.3 structural/contracts/link checks | **PASS** | [Actions 38508680627](https://github.com/leohuqi/Personal_AI_Development_Framework/actions/runs/38508680627) |
+| Existing V0.2 CACF compatibility regression | **PASS** | [Actions 38854079747](https://github.com/leohuqi/Personal_AI_Development_Framework/actions/runs/38854079747) |
+| V0.3 structural/contracts/link checks | **PASS** | [Actions 38854079767](https://github.com/leohuqi/Personal_AI_Development_Framework/actions/runs/38854079767) |
 | V0.3 JavaScript syntax and pure evaluator | **PASS** | Same Actions run |
-| V0.3 role-routing, artifacts and Design Gate fixture | **PREVIOUS PASS — 25 cases; updated 38-case suite PENDING fresh CI** | Same Actions run; `tests/v0.3/run-tests.mjs` |
+| V0.3 role-routing, artifacts and Design Gate fixture | **PASS — 38 cases (system/module architecture split included)** | Same Actions run; `tests/v0.3/run-tests.mjs` |
 | Real Architect invocation of locked diagram-design | **NOT RUN** | Requires installation and a bounded live Agent session |
 | Actual rendered architecture/DDL/sequence/workflow diagrams | **NOT RUN** | No real generated diagram artifacts are claimed in this framework PR |
 | Actual UI high-fi/interactive design tool prototype | **NOT RUN** | Requires a selected consumer project UI Profile and supported tool |
@@ -30,14 +30,14 @@ Baseline: `main` at `82e7888a142dfaf7c0dfbf1d67f8957873d851a0`, with immutable `
 ## V0.3 scope-split change — verification pending new head
 - Master records `architecture_scope: none/system/module/both`. L/XL requires independent review but **does not automatically require both Architect roles**.
 - Module scope requires immutable currently Owner-approved system baseline, separate module-code architecture deliverables and aligned diagram. BOTH requires explicit SYSTEM -> MODULE dependency and matching approved baseline revision.
-- 38 fixture tests now include scope selection, package/interface completeness, stage dependency, absent/unapproved/stale baseline and forbidden technology re-selection. **These changed tests are NOT YET VERIFIED until the new PR HEAD CI completes.**
-- [Module Design contract](../../contracts/module-design.md), [Solution Architecture Baseline](../../contracts/solution-architecture.md), [Module Architect Skill](../../.agents/skills/module-architect/SKILL.md) and [architecture routing](../../workflow/agent-routing.md) are in scope. Previous CI pertains to older head and cannot approve this revision.
+- 38 fixture tests now include scope selection, package/interface completeness, stage dependency, absent/unapproved/stale baseline and forbidden technology re-selection. **The updated tests passed GitHub Actions at commit `9790c6c48fafe85adc397ea2e35ac9fe6be6512e`.**
+- [Module Design contract](../../contracts/module-design.md), [Solution Architecture Baseline](../../contracts/solution-architecture.md), [Module Architect Skill](../../.agents/skills/module-architect/SKILL.md) and [architecture routing](../../workflow/agent-routing.md) are in scope. CI and independent review must be checked again for the **actual final PR HEAD** after this report-only commit.
 
 ## Release risks
 - Evidence fields in local fixture are **claims** until checked against actual linked artifacts and environment: only independent review/pilot can validate real rendering/interaction.
 - Manual profile onboarding/diagram dependency installation must be verified before application tasks claim completion.
 - V0.2 live Linear message transport, full multi-Agent runtime and automatic wake-up remain outside V0.3 scope.
-- No framework PR is self-approved and no actual PQA implementation is provided here.
+- No further independent REVIEW has been performed on the new system/module split; no framework PR is self-approved and no actual PQA implementation is provided here.
 
 ## Reproduce
 ```bash

@@ -1,6 +1,6 @@
 # Personal AI Development Framework (PADF / AI-SDF)
 
-**V0.3 development candidate (Draft PR, not yet released)** — specialized solution architecture and UI/UX Skills with task-dependent Design Gate; retains the stable V0.2 context/communication foundation.
+**V0.3 development candidate (Draft PR, not yet released)** — separate system-wide Solution Architect and module-level Module Architect, plus UI/UX Skills with task-dependent Design Gate; retains the stable V0.2 context/communication foundation.
 
 PADF defines owner-governed, agent-executed incremental software development. Each application maintains its **own PRD, Architecture, UX baseline, Feature Catalog, source code, AGENTS.md and CI**. PADF is shared across all projects, not a PQA feature branch.
 
@@ -34,7 +34,7 @@ Cross-session ChatGPT/Work/Codex continuity and multi-agent collaboration use a 
 
 ## V0.3 — Specialized Design Agents (development candidate)
 
-The V0.3 extension distinguishes a [Solution Architect](.agents/skills/solution-architect/SKILL.md) for whole-app stack and baseline decisions from a [Module Architect](.agents/skills/module-architect/SKILL.md) for detailed module code/package/interface design under the approved system architecture. The Solution Architect can call the **pinned external** [diagram-design](integrations/diagram-design.md) skill to produce architecture, workflow and database schema visualizations with versioned authoritative source models. A [UI/UX Designer](.agents/skills/ui-ux-designer/SKILL.md) outputs design philosophy, UI concept, high-fidelity and risk-appropriate interactive prototypes, all traced to each project's [UI Profile](contracts/project-ui-profile.md).
+The V0.3 extension distinguishes a [Solution Architect](.agents/skills/solution-architect/SKILL.md) for whole-app stack and baseline decisions from a [Module Architect](.agents/skills/module-architect/SKILL.md) for detailed module code/package/interface design under the approved system architecture. Both specialist Architects use the **pinned external** [diagram-design](integrations/diagram-design.md) skill to produce architecture, workflow and database schema visualizations with versioned authoritative source models. A [UI/UX Designer](.agents/skills/ui-ux-designer/SKILL.md) outputs design philosophy, UI concept, high-fidelity and risk-appropriate interactive prototypes, all traced to each project's [UI Profile](contracts/project-ui-profile.md).
 
 Master performs [capability-based routing](workflow/agent-routing.md), checks [agent-stage dependencies](contracts/agent-dependency.md) and operates a [Design Gate](contracts/design-gate.md). **Governance model C**: L/XL and risk-triggered S/M require independent DESIGN review; Master controls process/readiness, Reviewer assesses design quality and Owner approves material decisions and coding. Designers produce [existing V0.2 handoffs](contracts/agent-handoff.md); recipients ACK/NEEDS_REFINEMENT. No parallel Coder scheduler or agent daemon.
 
