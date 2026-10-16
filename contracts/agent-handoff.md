@@ -65,4 +65,4 @@ Optional-as-applicable fields:
 - `dependency_manifest_ref`, `design_review_ref` (only if actually completed), `design_gate_ref`, `stale_checks`, and `unresolved_design_conflicts`.
 
 Producer marks completed only with actual evidence. Receiver checks required artifacts/source revisions and ACKs or responds NEEDS_REFINEMENT/BLOCKED. **Master** owns Design Gate and next-role routing; **Independent Reviewer** owns risk-required design quality opinion, never the Gate. Completed Handoff does not start Coder automatically.
-\nDo not hand the Module Architect a not-yet-approved proposed system baseline and treat it as binding. In a combined SYSTEM/MODULE workflow, attach a verified approved system baseline SHA to the downstream MODULE handoff, then check it again before Coder starts.\n
+\n\nDo not hand the Module Architect a not-yet-approved proposed system baseline and treat it as binding. In a combined SYSTEM/MODULE workflow, attach a verified approved system baseline SHA to the downstream MODULE handoff, then check it again before Coder starts.\n
