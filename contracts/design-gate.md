@@ -5,7 +5,8 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 ## Mandatory decision inputs
 - context_id + immutable original Feature ID, real Issue/Task Contract, source/architecture/API/UI Profile revisions.
 - Task size S/M/L/XL + risk classification and rationale from Master.
-- Required Architect/UX stage deliverables with immutable paths/SHAs and completeness/diagram/prototype evidence, or justified N/A.
+- Master-selected architecture_scope (none/system/module/both) with routing rationale. MODULE consumes pinned Owner-approved system_baseline_ref; BOTH enforces SYSTEM -> MODULE and matching baseline.
+- Required Solution Architect/Module Architect/UX stage deliverables with immutable paths/SHAs and completeness/diagram/prototype evidence, or justified N/A.
 - Design consistency: Feature Spec ↔ Architecture ↔ API/Schema/Workflow ↔ UI Profile/UX + diagram/source accuracy.
 - Fresh independent DESIGN review evidence and reviewed design artifact revisions **when required**.
 - Approval/waiver records, unresolved issues, changed upstream refs, version freshness and blockers.
@@ -15,6 +16,12 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 - **L/XL**: independent Design Review is **mandatory** even when the design looks low-risk.
 - **S/M**: Master classifies. Must trigger independent Design Review when authentication/permissions/privacy, risky or destructive schema migration, breaking API, critical financial/business rules/workflow, shared component/design-system baseline, serious integration/security/concurrency or cross-module behavior is touched.
 - Other S/M tasks can use Designer self-check + Master artifact completeness/version check. Master must **record rationale** for review skipped. No self-approval represented as independent review.
+
+## Two architecture responsibilities
+- Solution Architect: whole-app technical stack, system boundaries, high-level application code skeleton, deployment and matching diagrams; [Solution Architecture](solution-architecture.md).
+- Module Architect: module code/package/interface design and code-level diagrams **within** an approved system baseline; [Module Design](module-design.md).
+- Master selects by impact, not task size alone. Module-only features do not repeat system-level decisions. In BOTH, module starts only after system baseline approval and records its exact revision.
+- A change to system architecture invalidates affected Module Design and downstream review until reevaluated.
 
 ## Separation of duties
 - **Designing agent**: technical/UI evidence and own validation; may send Handoff, never independently approve own work.
