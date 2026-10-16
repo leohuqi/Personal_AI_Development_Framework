@@ -53,3 +53,10 @@ A Shared Task Context (STC) is the **task-centered index of authoritative refere
     next_authorized_action: "<bounded-action>"
 
 Do not use placeholder references as authorization or test evidence. Source files and issue identifiers in the example are illustrative only.
+
+## V0.3 two-architect context (only when routed)
+- `architecture_scope` selected by Master: none/system/module/both, with task impact/rationale.
+- `solution_architecture_ref` and `system_baseline_ref` must point to the approved system architecture revision and Owner approval when Module Architect is required.
+- For Module Architect, resolve only the affected module's approved interfaces/code and the **relevant** system baseline constraints; do not load all app documents or choose a new framework.
+- Record `module_design_ref` with exact SHA, applicable diagram/source model refs, baseline compatibility checks and pending architecture CHANGE_REQUESTs.
+- For scope both, record SYSTEM handoff/Owner approval and MODULE dependency explicitly. A proposal or merely COMPLETED baseline is not APPROVED.

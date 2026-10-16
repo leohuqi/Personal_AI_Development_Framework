@@ -6,7 +6,7 @@ description: Resolve minimal task-centered shared context, persist traceable age
 # Context Coordinator (PADF V0.2)
 
 ## Purpose
-This is a reusable **procedural Skill**, not an agent daemon, tool API, messaging service or automatic dispatcher. It supports cross-session continuity and asynchronous communication among Master, Architect, UI Designer, Coder, QA and Reviewer by referencing authoritative GitHub/Linear records.
+This is a reusable **procedural Skill**, not an agent daemon, tool API, messaging service or automatic dispatcher. It supports cross-session continuity and asynchronous communication among Master, Solution Architect, Module Architect, UI Designer, Coder, QA and Reviewer by referencing authoritative GitHub/Linear records.
 
 ## Inputs
 Project/repository, task/Linear issue URL or ID, original immutable Feature ID, task objective, agent role, existing Owner approval/Task Contract if executing a coding task, and any existing shared-context/checkpoint/handoff/message links.
@@ -42,8 +42,8 @@ Project/repository, task/Linear issue URL or ID, original immutable Feature ID, 
 - Fresh-context Reviewer only consumes approved requirements, exact PR diff and verifiable evidence; do not preload Coder's reasoning or accept self-review.
 
 ## V0.3 specialist artifacts and dependencies
-- Link versioned Architecture/UI Design Packages, actual diagram/prototype assets, project UI Profile and Stage Dependency manifest in Shared Task Context by references only.
-- Before design Handoff/resume compare source Feature Spec/API/schema/UI Profile SHA to the package and DESIGN review evidence; on drift mark STALE/BLOCKED and route to Master.
+- Link versioned APP-wide Solution Architecture Baseline, Module Code Design Package and UI Design Package, exact system_baseline_ref, actual diagrams/prototype assets, project UI Profile and Stage Dependency manifest in Shared Task Context by references only.
+- Before design Handoff/resume compare approved SYSTEM baseline SHA, affected module design source Feature Spec/API/schema/UI Profile SHA to the package and DESIGN review evidence; on drift mark STALE/BLOCKED and route to Master.
 - Do not create a second Handoff/message protocol, auto-activate specialist agents or reclassify a proposal as approved.
 
 ## Output

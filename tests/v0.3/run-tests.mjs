@@ -138,7 +138,7 @@ check('UI profile version mismatch blocks design readiness',()=>{
 });
 check('Missing diagram blocks Architect design',()=>{
  const x=baseline();x.stages[0].artifacts=x.stages[0].artifacts.filter(a=>a.type!=='architecture-diagram');
- assert(evaluateDesignGate(x).reasons.includes('MISSING_ARCHITECT_DIAGRAM'));
+ assert(evaluateDesignGate(x).reasons.includes('MISSING_SYSTEM_ARTIFACT:architecture-diagram'));
 });
 check('Database needs authoritative schema and matching diagram',()=>{
  const x=baseline();x.impacts=['database','ui'];

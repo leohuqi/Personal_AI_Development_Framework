@@ -17,7 +17,8 @@ GitHub versioned documentation and code are authoritative for technical scope; L
 - Publish only task-relevant links and concise status; never store credentials, raw customer data or full transcripts in shared messages/snapshots. See [Context Governance](context-governance.md).
 
 ## V0.3 specialized design context
-- Architect profile: affected Feature Spec, current architecture/API/DDL/ADR/workflow, diagram-design pinned integration references and task-specific approved style profile; do not preload unrelated diagrams or all schema tables.
+- Solution Architect profile: current system architecture/ADRs and affected product constraints/stack alternatives, application module topology, system NFR/deployment and pinned diagram-design; use only when whole-app architecture is in scope.
+- Module Architect profile: approved `system_baseline_ref` and relevant technology/code conventions, actual impacted module files, contracts/Feature Spec and dependencies. Do not preload unrelated whole-app history or reselect the technology stack.
 - UI Designer profile: approved project UI Profile, current component library/tokens, affected screens and task interactions, relevant Architect API contracts, not another project's visual tokens.
 - Master/Reviewer: lightweight dependency manifest, exact Architect/UI artifact versions, review/gate decisions and Owner approvals. Reviewer in DESIGN mode reads source artifacts and requirements independently; do not import designer's private reasoning as proof.
 - New versions of approved API, design/profile or schema require targeted dependent stage and Design Gate freshness re-evaluation.
