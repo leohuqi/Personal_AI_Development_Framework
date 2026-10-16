@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "executedAt": "2026-10-16T08:58:37.825Z",
+  "checks": [
+    {
+      "test": "untrusted merchant rendered as literal text, never DOM markup",
+      "status": "PASS"
+    },
+    {
+      "test": "cancel during parsing invalidates pending preview",
+      "status": "PASS"
+    },
+    {
+      "test": "real file malformed CSV, invalid UTF-8 and exponent amount rejected/guarded",
+      "status": "PASS"
+    },
+    {
+      "test": "labelled native controls, keyboard traversal and modal focus restored to invoking action",
+      "status": "PASS"
+    },
+    {
+      "test": "200 percent root text size reflow without page overflow",
+      "status": "PASS"
+    },
+    {
+      "test": "canonical body, secondary, action, warning, danger and summary support contrast >=4.5:1",
+      "status": "PASS"
+    }
+  ],
+  "scope": "Browser prototype checks, no production security certification"
+}

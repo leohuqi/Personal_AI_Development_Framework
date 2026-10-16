@@ -1,0 +1,146 @@
+{
+  "schema_version": "padf.ui-manifest/v1",
+  "profile_ref": "UI-PROFILE.md@d7e9c679a0a435310ef76d63432917d7e1656078",
+  "profile_status": "PROPOSED",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 2
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "deviceScaleFactor": 2
+    }
+  ],
+  "level": "L3",
+  "artifacts": [
+    {
+      "path": "EXECUTION-RECEIPT.md",
+      "sha256": "5c3a687e0fb92b3774bef319843ff10e056dc355d36f20e9c0f811bc8443c037",
+      "bytes": 2728,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "README.md",
+      "sha256": "394f7aff144e276f813f964598ef00a7d7687fe4c11d80ca44a9bcf4b8a7026e",
+      "bytes": 1764,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "UI-DESIGN.md",
+      "sha256": "b2feeb2e28a98813615ee0c016e16e03fd4fb1dc5bb19188f6b6385987d84330",
+      "bytes": 10359,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "UI-PROFILE.md",
+      "sha256": "e744e27dd61ebd05a6ae862b6af91f827a10c4f7992dc270ac548235c04533e7",
+      "bytes": 6222,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "adversarial-test-report.json",
+      "sha256": "189c95240fb5eb7efdeb7a20a77bf921361dee5d769425eaae4203f57dae8ad2",
+      "bytes": 901,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "import-mobile.png",
+      "sha256": "e0a837e7ddc10e9a156889185c97abe494578855d4c21488187359ad74d687af",
+      "bytes": 147246,
+      "kind": "render",
+      "remote_publication": "LOCAL_ONLY",
+      "local_path": "/Users/leohu/Documents/Codex/2026-10-16/referenced-chatgpt-conversation-this-is-an/outputs/issue-5/ui/import-mobile.png"
+    },
+    {
+      "path": "interaction-test-report.json",
+      "sha256": "c16309140aae0c379c4984757560436a6e8e1a3a4049e1c39e5f83ade99f93d9",
+      "bytes": 2277,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "ledger-mobile.png",
+      "sha256": "d27bbd806cdc04db33666b383665c464cc0f499da36e3614b4fd456806601fa7",
+      "bytes": 122945,
+      "kind": "render",
+      "remote_publication": "LOCAL_ONLY",
+      "local_path": "/Users/leohu/Documents/Codex/2026-10-16/referenced-chatgpt-conversation-this-is-an/outputs/issue-5/ui/ledger-mobile.png"
+    },
+    {
+      "path": "ledger-wide.png",
+      "sha256": "716189b46e37d1524d30e694dabb25e28e19b96dd7c22b0ba2da83f8ed911319",
+      "bytes": 175482,
+      "kind": "render",
+      "remote_publication": "LOCAL_ONLY",
+      "local_path": "/Users/leohu/Documents/Codex/2026-10-16/referenced-chatgpt-conversation-this-is-an/outputs/issue-5/ui/ledger-wide.png"
+    },
+    {
+      "path": "manual-mobile.png",
+      "sha256": "b09b2e247ff14cd06189c8a971b396c0fa02282e0196e433288ba7d200b4f531",
+      "bytes": 110439,
+      "kind": "render",
+      "remote_publication": "LOCAL_ONLY",
+      "local_path": "/Users/leohu/Documents/Codex/2026-10-16/referenced-chatgpt-conversation-this-is-an/outputs/issue-5/ui/manual-mobile.png"
+    },
+    {
+      "path": "prototype.html",
+      "sha256": "6ef04cbfbaf1082a484ced1688532a95ca063d0ddf87dc82267c90e601e5ce22",
+      "bytes": 33456,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "review-conflict-mobile.png",
+      "sha256": "721f4075ca252fcf96cd39358c1ade01e46f7155a5fac5fbadae0adb49348d02",
+      "bytes": 156099,
+      "kind": "render",
+      "remote_publication": "LOCAL_ONLY",
+      "local_path": "/Users/leohu/Documents/Codex/2026-10-16/referenced-chatgpt-conversation-this-is-an/outputs/issue-5/ui/review-conflict-mobile.png"
+    },
+    {
+      "path": "synthetic-alipay-v1.csv",
+      "sha256": "f93af506407fd69d62613d06705fe02d227041b99ed363431ee0e35e3690c0ac",
+      "bytes": 213,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "synthetic-wechat-v1.csv",
+      "sha256": "6c2688bb66b6fbee0c3e8d744e87d06059bdba645736c2127237163929775bb1",
+      "bytes": 333,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "tokens.css",
+      "sha256": "9c503a01e020f8ba6576dfa82602e2d641c7610ca1e0a73cecdb259dbf489f93",
+      "bytes": 501,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "verify-adversarial.cjs",
+      "sha256": "efba35cca61a6758d3eb144bc1ce377a86c910a33ab4595479ba0e4d471d5eaf",
+      "bytes": 4005,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    },
+    {
+      "path": "verify-interactions.cjs",
+      "sha256": "058c0ba80448c840408098e0a4a92206410447e07a9aa3a3aec87a72f73f5b16",
+      "bytes": 10341,
+      "kind": "source/evidence",
+      "remote_publication": "PUBLISHED_IN_SOURCE_COMMIT"
+    }
+  ],
+  "source_revision_note": "Exact source commit is published by later HANDOFF.md; manifest deliberately does not self-hash.",
+  "screenshot_upload_status": "NOT_PUBLISHED: first blob request interrupted while unknown; no branch update from binary attempt"
+}
