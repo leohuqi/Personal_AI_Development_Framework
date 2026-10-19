@@ -10,39 +10,39 @@
   "ui_level": "L3",
   "ui_profile_ref": "examples/issue-5-acceptance/ui/UI-PROFILE.md@d7e9c679a0a435310ef76d63432917d7e1656078",
   "ui_profile_status": "PROPOSED",
-  "owner_identity": null,
-  "owner_decision": "PENDING",
-  "owner_evaluation_ref": null,
+  "owner_identity": "leohuqi (GitHub repository owner; current Codex chat)",
+  "owner_decision": "ACCEPT",
+  "owner_evaluation_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/4274bf9005aab18911b48e0843abb457d299906d/examples/issue-5-acceptance/OWNER-V0.3-ACCEPTANCE.md",
   "criteria": [
     {
       "id": "UI-Q1",
-      "score": null,
+      "score": 3,
       "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/UI-DESIGN.md",
-      "owner_strength_or_problem": null
+      "owner_strength_or_problem": "Personal-ledger journeys and information hierarchy are project-specific."
     },
     {
       "id": "UI-Q2",
-      "score": null,
+      "score": 3,
       "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/UI-DESIGN.md",
-      "owner_strength_or_problem": null
+      "owner_strength_or_problem": "Approved Profile/tokens and component rules are coherent across the prototype."
     },
     {
       "id": "UI-Q3",
-      "score": null,
+      "score": 3,
       "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/UI-DESIGN.md",
-      "owner_strength_or_problem": null
+      "owner_strength_or_problem": "Responsive high-fidelity editable source covers representative product states."
     },
     {
       "id": "UI-Q4",
-      "score": null,
+      "score": 3,
       "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/prototype.html",
-      "owner_strength_or_problem": null
+      "owner_strength_or_problem": "Interactive L3 prototype and final independent review verify duplicate/refund/date workflows."
     },
     {
       "id": "UI-Q5",
-      "score": null,
+      "score": 3,
       "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/UI-DESIGN.md",
-      "owner_strength_or_problem": null
+      "owner_strength_or_problem": "Keyboard/focus/contrast, consent/provenance and error behavior are demonstrated within this pilot."
     }
   ],
   "interactive_prototype_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/prototype.html",
@@ -62,5 +62,9 @@
   ],
   "second_corrective_test_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/86a71f24fa612403cb741d859251b2f715347f3d/examples/issue-5-acceptance/ui/rework-r2-test-report.json",
   "independent_review_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/4b9f926d9fec647b25d17dfac4ce9913070f8ccf/examples/issue-5-acceptance/review/REPORT-V3.md",
-  "independent_review_verdict": "APPROVE WITH CONDITIONS; 52 own browser assertions PASS/0 FAIL, technical scope only"
+  "independent_review_verdict": "APPROVE WITH CONDITIONS; 52 own browser assertions PASS/0 FAIL, technical scope only",
+  "owner_decision_recorded_at": "2026-10-19",
+  "owner_decision_scope": "Bounded Issue #5 UI L3 design package; Profile accepted for this pilot by Owner V0.3 acceptance record",
+  "pilot_delivery_status": "PILOT_DELIVERY_ACCEPTED",
+  "global_skill_validation": "NOT_CLAIMED"
 }
