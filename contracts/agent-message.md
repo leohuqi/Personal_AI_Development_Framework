@@ -45,20 +45,20 @@ Acknowledgement is a **status transition** (ACKNOWLEDGED), not a new authorizati
 ## Example — proposed API clarification (illustrative only)
 
     schema_version: padf.agent-message/v1
-    message_id: MSG-PQA-LEO-134-0001
-    thread_id: THREAD-PQA-LEO-134-01
+    message_id: MSG-DEMO-123-0001
+    thread_id: THREAD-DEMO-123-01
     in_reply_to: null
-    context_id: PQA-LEO-134
-    project: PQA
-    repository: leohuqi/Personal_Quant_Analyst
+    context_id: DEMO-123
+    project: ExampleProject
+    repository: example-org/example-project
     linear_issue: "<canonical-linear-link>"
     original_feature_ids: ["<original-id>"]
     sender: feature-coder
     receiver: solution-architect
     type: CLARIFICATION_REQUEST
     priority: NORMAL
-    subject: "Batch Preview partial-failure response"
-    body: "The approved API contract does not specify per-strategy error isolation."
+    subject: "Batch import partial-failure response"
+    body: "The approved API contract does not specify per-item error isolation."
     requested_action: "Clarify result status and error isolation without expanding scope."
     source_refs:
       - "docs/api-spec.md#<section>@<approved-sha>"

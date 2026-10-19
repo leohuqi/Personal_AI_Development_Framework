@@ -4,7 +4,7 @@ A Shared Task Context (STC) is the **task-centered index of authoritative refere
 
 ## Required identity and anchors
 - schema_version: padf.shared-task-context/v1
-- context_id: stable identifier scoped to the project and task (example: PQA-LEO-134)
+- context_id: stable identifier scoped to the project and task (example: DEMO-123)
 - project/repository and Linear issue URL/ID
 - original immutable Feature ID(s), distinct from Linear IDs
 - owner authorization reference, authorized environment and bounds
@@ -30,18 +30,18 @@ A Shared Task Context (STC) is the **task-centered index of authoritative refere
 5. On disagreement with GitHub or Linear, stop relying on the stale snapshot and reconcile the sources; do not last-write-wins over a signed-off spec.
 6. A receiving agent must validate its authorization and pending messages before any work.
 
-## Minimal illustrative index (not a live PQA record)
+## Minimal illustrative index (not a live project record)
 
     schema_version: padf.shared-task-context/v1
-    context_id: PQA-LEO-134
-    project: PQA
-    repository: leohuqi/Personal_Quant_Analyst
-    linear_issue: https://linear.app/example/issue/LEO-134
-    original_feature_ids: [PORT-015]
+    context_id: DEMO-123
+    project: ExampleProject
+    repository: example-org/example-project
+    linear_issue: https://linear.app/example/issue/DEMO-123
+    original_feature_ids: [DEMO-001]
     task_contract_ref: "<permalink-and-revision>"
     owner_approval_ref: "<approval-reference>"
     source_baseline:
-      feature_spec: "docs/features/portfolio.md@<approved-sha>"
+      feature_spec: "docs/features/batch-import.md@<approved-sha>"
       base_sha: "<sha>"
       observed_head_sha: "<sha>"
     agents: [master-orchestrator, feature-coder, qa-tester, independent-reviewer]

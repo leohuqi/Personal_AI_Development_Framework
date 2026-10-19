@@ -35,9 +35,9 @@ Checkpoint contents should normally be short and link to durable primary sources
 ## Example (illustrative, not a live run)
 
     schema_version: padf.context-checkpoint/v1
-    checkpoint_id: CP-PQA-LEO-134-001
-    context_id: PQA-LEO-134
-    repository: leohuqi/Personal_Quant_Analyst
+    checkpoint_id: CP-DEMO-123-001
+    context_id: DEMO-123
+    repository: example-org/example-project
     linear_issue: "<canonical-linear-link>"
     original_feature_ids: ["<original-id>"]
     role: feature-coder
@@ -48,12 +48,12 @@ Checkpoint contents should normally be short and link to durable primary sources
       branch: "<working-branch>"
       base_sha: "<sha>"
       observed_head_sha: "<sha>"
-      approved_feature_spec: "docs/features/strategy.md@<sha>"
+      approved_feature_spec: "docs/features/batch-import.md@<sha>"
     task_status_observed: "In Progress"
     completed_with_evidence: ["<commit-or-test-url>"]
     remaining_work: ["Run authorized integration tests"]
     blockers: []
-    pending_message_ids: ["MSG-PQA-LEO-134-0001"]
+    pending_message_ids: ["MSG-DEMO-123-0001"]
     next_role: feature-coder
     next_authorized_action: "Reconcile current HEAD and continue bounded tests"
     supersedes_id: null
