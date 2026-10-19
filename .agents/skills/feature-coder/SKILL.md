@@ -3,7 +3,26 @@ name: feature-coder
 description: Implement one authorized Linear issue or bounded bug using its approved Feature Spec, relevant architecture and UI constraints, tests, and a reviewable GitHub PR.
 ---
 
-# Feature Coder (AI-SDF V0.1)
+# Feature Coder (PADF V0.3)
+
+## Minimum durable Agent Message envelope
+
+Before sending a cross-role message, copy this skeleton and complete the [canonical contract](../../../contracts/agent-message.md). Do not omit fields that are required for the message type.
+
+```yaml
+schema_version: padf.agent-message/v1
+message_id: MSG-<task>-<sequence>
+thread_id: THREAD-<task>-<topic>
+in_reply_to: null
+context_id: <project-task>
+sender: <role>
+receiver: <accountable-role>
+type: <MESSAGE_TYPE>
+priority: NORMAL
+source_refs: ["<immutable-url-or-path@SHA>"]
+requested_action: "<bounded action>"
+status: OPEN
+```
 
 ## Input gate
 Require an owner-authorized task, Linear ID + original Feature ID, approved scope, acceptance criteria, dependencies, relevant source/spec references, and an explicit target environment. Use contracts/task-contract.md. If incomplete, stop and return NEEDS REFINEMENT; do not invent product behavior.
@@ -26,7 +45,7 @@ Require an owner-authorized task, Linear ID + original Feature ID, approved scop
 - On PR ready: publish Agent Handoff to QA/Reviewer with exact head SHA, AC coverage, PASS/FAIL/BLOCKED/NOT RUN as observed and known risks. This does not trigger an automatic receiving agent.
 - Continue only from a checked live state; keep distinct worktree/branch for parallel tasks. Reviewer/QA independently verify rather than inheriting Coder conclusions.
 
-See contracts/agent-message.md, contracts/context-checkpoint.md, contracts/agent-handoff.md and workflow/context-communication.md.
+See [Agent Message Contract](../../../contracts/agent-message.md), [Context Checkpoint](../../../contracts/context-checkpoint.md), [Agent Handoff](../../../contracts/agent-handoff.md) and [context communication](../../../workflow/context-communication.md).
 
 ## V0.3 design input gate
 - On a task routed via Architect/UI, distinguish **APP-wide Solution Architecture Baseline** (technology stack/layers and permitted module dependencies) from **Module Code Design** (specific files/packages/classes/interfaces/test seams). Consume only required role outputs and their exact revisions. Never infer module code structure from the system-level diagram alone.

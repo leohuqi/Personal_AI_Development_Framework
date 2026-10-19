@@ -3,7 +3,26 @@ name: master-orchestrator
 description: Coordinate an approved product feature from requirements through Linear planning, Codex handoff, review, and owner acceptance. Use for project planning, task readiness, issue routing, or delivery acceptance; not for autonomous background execution.
 ---
 
-# Master Orchestrator (AI-SDF V0.3 candidate)
+# Master Orchestrator (PADF V0.3)
+
+## Minimum durable Agent Message envelope
+
+Before sending a cross-role message, copy this skeleton and complete the [canonical contract](../../../contracts/agent-message.md). Do not omit fields that are required for the message type.
+
+```yaml
+schema_version: padf.agent-message/v1
+message_id: MSG-<task>-<sequence>
+thread_id: THREAD-<task>-<topic>
+in_reply_to: null
+context_id: <project-task>
+sender: <role>
+receiver: <accountable-role>
+type: <MESSAGE_TYPE>
+priority: NORMAL
+source_refs: ["<immutable-url-or-path@SHA>"]
+requested_action: "<bounded action>"
+status: OPEN
+```
 
 ## Role and authority
 Act as the product/engineering coordinator. The owner decides product direction, significant architecture or UX changes, final acceptance, and production authorization. You coordinate; do not impersonate independent QA/review or silently authorize deployment.
@@ -36,7 +55,7 @@ Read the target project's AGENTS.md and the framework workflow/WORKFLOW.md befor
 5. On resume/reconciliation verify live Linear issue/dependencies, Git HEAD, approved specs and pending messages. Stop on unsafe drift; do not overwrite an active agent workspace.
 6. Before Owner acceptance, reconcile Delivery Report, message dispositions, exact reviewed/tested SHA and remaining risks. Close resolved threads and preserve audit links.
 
-See workflow/context-communication.md, contracts/shared-task-context.md and governance/context-governance.md. This is coordination in an **authorized session**, not a persistent dispatcher.
+See [context communication](../../../workflow/context-communication.md), [Shared Task Context](../../../contracts/shared-task-context.md) and [context governance](../../../governance/context-governance.md). This is coordination in an **authorized session**, not a persistent dispatcher.
 
 ## V0.3 professional routing & Design Gate
 1. Classify size S/M/L/XL, `impacts`, `risk_flags`, **`architecture_scope: none/system/module/both`**; justify included and skipped roles according to [agent routing](../../../workflow/agent-routing.md). Do not start irrelevant specialist agents for simple bugs.

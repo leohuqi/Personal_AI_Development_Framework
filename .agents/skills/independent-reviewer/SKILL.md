@@ -1,9 +1,28 @@
 ---
 name: independent-reviewer
-description: Conduct fresh-context, evidence-based GitHub PR or cross-module integration review, especially for auth, finance, data lineage, migrations, strategy, concurrency, and releases.
+description: Conduct fresh-context, evidence-based GitHub PR or cross-module integration review, especially for authentication and authorization, domain-critical calculations, external data lineage, migrations, concurrency, security, and releases.
 ---
 
-# Independent Reviewer (AI-SDF V0.3 candidate)
+# Independent Reviewer (PADF V0.3)
+
+## Minimum durable Agent Message envelope
+
+Before sending a cross-role message, copy this skeleton and complete the [canonical contract](../../../contracts/agent-message.md). Do not omit fields that are required for the message type.
+
+```yaml
+schema_version: padf.agent-message/v1
+message_id: MSG-<task>-<sequence>
+thread_id: THREAD-<task>-<topic>
+in_reply_to: null
+context_id: <project-task>
+sender: <role>
+receiver: <accountable-role>
+type: <MESSAGE_TYPE>
+priority: NORMAL
+source_refs: ["<immutable-url-or-path@SHA>"]
+requested_action: "<bounded action>"
+status: OPEN
+```
 
 ## Independence gate
 Reviewer must not be the implementer or reuse the implementer's self-approval context for important/high-risk changes. Review the **actual base-to-head diff** at the exact SHA and relevant surrounding code/specs. Read only relevant material from AGENTS.md, Task Contract, Feature Spec and architecture/contracts.
@@ -11,7 +30,7 @@ Reviewer must not be the implementer or reuse the implementer's self-approval co
 ## Procedure
 1. Establish PR URL, base/head SHA, Linear ID, original Feature ID and approved acceptance criteria.
 2. Examine changed files, call chains and tests independently. Identify unexpected changes, secrets, contract drift and migrations.
-3. Evaluate requirements, correctness, error handling, boundary dates, owner isolation, money/positions, raw market data/provider lineage, immutable history, versioning, idempotency, race/lease, performance/security and rollback **as applicable**.
+3. Evaluate requirements, correctness, error handling, boundary dates, owner isolation, domain-critical calculations, state invariants, external data lineage, financial/transactional integrity where applicable, immutable history, versioning, idempotency, race/lease, performance/security and rollback **as applicable**.
 4. Validate claimed test evidence; do not treat a green CI run, a coder self-review or mocked database as sufficient for high-risk invariants.
 5. Report each issue with severity, file/line, reproduction scenario, impact, suggested fix and corresponding acceptance criterion.
 6. Apply the target project's independent review policy from AGENTS.md (with the framework defaults in workflow/WORKFLOW.md): P0/P1 block merge/acceptance; P2 requires correction or explicit owner-approved conditional disposition; P3 may be separately tracked.
@@ -27,7 +46,7 @@ Reviewer must not be the implementer or reuse the implementer's self-approval co
 - If session ends, checkpoint only source revisions, independently verified evidence, open findings and next action, never Coder self-review or private reasoning.
 - Durable messages do not automatically wake Coder or authorize merge/acceptance.
 
-See workflow/context-communication.md and governance/context-governance.md.
+See [Agent Message Contract](../../../contracts/agent-message.md), [Context Checkpoint](../../../contracts/context-checkpoint.md), [context communication](../../../workflow/context-communication.md) and [context governance](../../../governance/context-governance.md).
 
 ## V0.3 dual review modes
 **DESIGN (before coding)**: Mandatory for L/XL and risk-triggered S/M. Read approved Feature Spec, the **Solution Architecture Baseline** and/or **Module Code Design Package** actually required, corresponding tech stack/app skeleton or module package/interfaces/DDL/workflow and diagram HTML/SVG and UI Design Package/Profile revision as applicable. Independently verify that a Module Architect did not silently diverge from the approved system stack/module boundary; for system scope review concrete framework/technology tradeoffs and app-level code topology; for module scope review package ownership, interfaces, algorithms/transactions/tests and diagram ↔ schema/API/workflow consistency; UI concept/prototype ↔ actual project tokens/components/interaction; loading/error/permissions/accessibility and deployment/security/risk. Missing generator/render proof is NOT RUN or BLOCKED, not PASS. Produce P0-P3 findings and `APPROVE`, `APPROVE WITH CONDITIONS` or `REQUEST CHANGES` with exact artifact refs/SHA. P2 may be Owner-accepted only with explicit conditions. A later design revision invalidates impacted review.

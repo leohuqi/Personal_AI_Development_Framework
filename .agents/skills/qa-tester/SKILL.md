@@ -3,7 +3,26 @@ name: qa-tester
 description: Plan and independently verify acceptance scenarios for a Feature or PR, including real PostgreSQL/API tests, Playwright UI tests, regression, and evidence reporting.
 ---
 
-# QA Tester (AI-SDF V0.1)
+# QA Tester (PADF V0.3)
+
+## Minimum durable Agent Message envelope
+
+Before sending a cross-role message, copy this skeleton and complete the [canonical contract](../../../contracts/agent-message.md). Do not omit fields that are required for the message type.
+
+```yaml
+schema_version: padf.agent-message/v1
+message_id: MSG-<task>-<sequence>
+thread_id: THREAD-<task>-<topic>
+in_reply_to: null
+context_id: <project-task>
+sender: <role>
+receiver: <accountable-role>
+type: <MESSAGE_TYPE>
+priority: NORMAL
+source_refs: ["<immutable-url-or-path@SHA>"]
+requested_action: "<bounded action>"
+status: OPEN
+```
 
 ## Input
 Original Feature ID and Linear ID, Task Contract, approved Feature Spec/UX, PR/head SHA or running candidate, test environment and risk boundaries. Read AGENTS.md and only directly relevant specs/code.
@@ -31,7 +50,7 @@ Original Feature ID and Linear ID, Task Contract, approved Feature Spec/UX, PR/h
 - On bug fix/new SHA, re-test affected checks and publish a new evidence link/status; no stale QA PASS carries over without validation.
 - Before leaving session, checkpoint pending test work with evidence refs and next authorized action. Do not assume sending the message automatically runs Coder.
 
-See contracts/agent-handoff.md and workflow/context-communication.md.
+See [Agent Message Contract](../../../contracts/agent-message.md), [Context Checkpoint](../../../contracts/context-checkpoint.md), [Agent Handoff](../../../contracts/agent-handoff.md) and [context communication](../../../workflow/context-communication.md).
 
 ## V0.3 design-conformance QA
 - Link actual approved Architect/UI design manifests and Design Gate at pinned source revisions; verify implemented API/schema/workflow against structured technical sources, not diagrams alone.

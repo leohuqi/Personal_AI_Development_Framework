@@ -3,7 +3,26 @@ name: context-coordinator
 description: Resolve minimal task-centered shared context, persist traceable agent messages, create checkpoints/handoffs and safely resume work across ChatGPT, Work or Codex sessions. Invoke within authorized PADF tasks; not a persistent agent service.
 ---
 
-# Context Coordinator (PADF V0.2)
+# Context Coordinator (PADF V0.3)
+
+## Minimum durable Agent Message envelope
+
+Before sending a cross-role message, copy this skeleton and complete the [canonical contract](../../../contracts/agent-message.md). Do not omit fields that are required for the message type.
+
+```yaml
+schema_version: padf.agent-message/v1
+message_id: MSG-<task>-<sequence>
+thread_id: THREAD-<task>-<topic>
+in_reply_to: null
+context_id: <project-task>
+sender: <role>
+receiver: <accountable-role>
+type: <MESSAGE_TYPE>
+priority: NORMAL
+source_refs: ["<immutable-url-or-path@SHA>"]
+requested_action: "<bounded action>"
+status: OPEN
+```
 
 ## Purpose
 This is a reusable **procedural Skill**, not an agent daemon, tool API, messaging service or automatic dispatcher. It supports cross-session continuity and asynchronous communication among Master, Solution Architect, Module Architect, UI Designer, Coder, QA and Reviewer by referencing authoritative GitHub/Linear records.
