@@ -7,22 +7,20 @@ description: Conduct fresh-context, evidence-based GitHub PR or cross-module int
 
 ## Minimum durable Agent Message envelope
 
-Before sending a cross-role message, copy this skeleton and complete the [canonical contract](../../../contracts/agent-message.md). Do not omit fields that are required for the message type.
+Use this eight-line YAML mapping for messages; replace placeholders with live, verified task facts. Skill titles track PADF V0.3; the existing V0.2 contracts and `padf.*/v1` schema identifiers remain compatible.
 
 ```yaml
-schema_version: padf.agent-message/v1
-message_id: MSG-<task>-<sequence>
-thread_id: THREAD-<task>-<topic>
-in_reply_to: null
-context_id: <project-task>
-sender: <role>
-receiver: <accountable-role>
-type: <MESSAGE_TYPE>
-priority: NORMAL
-source_refs: ["<immutable-url-or-path@SHA>"]
-requested_action: "<bounded action>"
-status: OPEN
+{schema_version: padf.agent-message/v1, message_id: "<unique-message-id>",
+ thread_id: "<thread-id>", in_reply_to: null, context_id: "<project-task>",
+ project: "<project>", repository: "<owner/repo>", linear_issue: "<canonical-issue-url>", original_feature_ids: ["<feature-id>"],
+ sender: independent-reviewer, receiver: "<accountable-role>", created_at: "<ISO-8601-with-offset>",
+ type: CLARIFICATION_REQUEST, priority: NORMAL, subject: "<subject>",
+ body: "<question-or-finding>", source_refs: ["<immutable-url-or-path@SHA>"],
+ requested_action: "<bounded-action>", requires_response: true,
+ status: OPEN, resolution_ref: null, owner_approval_ref: null}
 ```
+
+Select the actual message type, priority and response requirement. Replies reuse `thread_id` and set `in_reply_to`; retries retain the original immutable payload and `message_id`. Set `owner_approval_ref` whenever relying on authorization; TASK_REQUEST also links the approved Task Contract in `source_refs`. HANDOFF links a completed [Agent Handoff](../../../contracts/agent-handoff.md); this message envelope does not replace a handoff or [Context Checkpoint](../../../contracts/context-checkpoint.md). Before writing either record, read its required fields. Validate against the [Agent Message Contract](../../../contracts/agent-message.md), persist to an authorized task/PR and verify its permalink. If required sources or persistence are unavailable, report BLOCKED/NOT_PERSISTED; do not invent values or claim delivery.
 
 ## Independence gate
 Reviewer must not be the implementer or reuse the implementer's self-approval context for important/high-risk changes. Review the **actual base-to-head diff** at the exact SHA and relevant surrounding code/specs. Read only relevant material from AGENTS.md, Task Contract, Feature Spec and architecture/contracts.
@@ -54,7 +52,7 @@ See [Agent Message Contract](../../../contracts/agent-message.md), [Context Chec
 The Reviewer is **not** Master or Owner: cannot mark the Design Gate DESIGN_READY, authorize coding, approve its own design, merge or deploy. Master coordinates/decides readiness using review evidence; Owner retains material design and coding authority. See [Design Gate](../../../contracts/design-gate.md) and [design workflow](../../../workflow/design-collaboration.md).
 
 ## Output
-Independent review section of contracts/delivery-report.md: PR/base/head, evidence, findings table P0–P3, checks passed/failed/not run, blockers, conclusion, and next action.
+Independent review section of [contracts/delivery-report.md](../../../contracts/delivery-report.md): PR/base/head, evidence, findings table P0–P3, checks passed/failed/not run, blockers, conclusion, and next action.
 
 ## Boundary
 Do not edit and merge the PR under review by default, auto-mark Linear Done, treat UI mockups as proof of integration, or authorize live migrations/deployments.

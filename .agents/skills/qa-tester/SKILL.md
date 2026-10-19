@@ -7,22 +7,20 @@ description: Plan and independently verify acceptance scenarios for a Feature or
 
 ## Minimum durable Agent Message envelope
 
-Before sending a cross-role message, copy this skeleton and complete the [canonical contract](../../../contracts/agent-message.md). Do not omit fields that are required for the message type.
+Use this eight-line YAML mapping for messages; replace placeholders with live, verified task facts. Skill titles track PADF V0.3; the existing V0.2 contracts and `padf.*/v1` schema identifiers remain compatible.
 
 ```yaml
-schema_version: padf.agent-message/v1
-message_id: MSG-<task>-<sequence>
-thread_id: THREAD-<task>-<topic>
-in_reply_to: null
-context_id: <project-task>
-sender: <role>
-receiver: <accountable-role>
-type: <MESSAGE_TYPE>
-priority: NORMAL
-source_refs: ["<immutable-url-or-path@SHA>"]
-requested_action: "<bounded action>"
-status: OPEN
+{schema_version: padf.agent-message/v1, message_id: "<unique-message-id>",
+ thread_id: "<thread-id>", in_reply_to: null, context_id: "<project-task>",
+ project: "<project>", repository: "<owner/repo>", linear_issue: "<canonical-issue-url>", original_feature_ids: ["<feature-id>"],
+ sender: qa-tester, receiver: "<accountable-role>", created_at: "<ISO-8601-with-offset>",
+ type: CLARIFICATION_REQUEST, priority: NORMAL, subject: "<subject>",
+ body: "<question-or-finding>", source_refs: ["<immutable-url-or-path@SHA>"],
+ requested_action: "<bounded-action>", requires_response: true,
+ status: OPEN, resolution_ref: null, owner_approval_ref: null}
 ```
+
+Select the actual message type, priority and response requirement. Replies reuse `thread_id` and set `in_reply_to`; retries retain the original immutable payload and `message_id`. Set `owner_approval_ref` whenever relying on authorization; TASK_REQUEST also links the approved Task Contract in `source_refs`. HANDOFF links a completed [Agent Handoff](../../../contracts/agent-handoff.md); this message envelope does not replace a handoff or [Context Checkpoint](../../../contracts/context-checkpoint.md). Before writing either record, read its required fields. Validate against the [Agent Message Contract](../../../contracts/agent-message.md), persist to an authorized task/PR and verify its permalink. If required sources or persistence are unavailable, report BLOCKED/NOT_PERSISTED; do not invent values or claim delivery.
 
 ## Input
 Original Feature ID and Linear ID, Task Contract, approved Feature Spec/UX, PR/head SHA or running candidate, test environment and risk boundaries. Read AGENTS.md and only directly relevant specs/code.
@@ -41,7 +39,7 @@ Original Feature ID and Linear ID, Task Contract, approved Feature Spec/UX, PR/h
 4. For UI compare approved prototype and spec, relevant mobile/desktop breakpoints, keyboard interaction, load/empty/error states; run Playwright if relevant.
 5. Read GitHub Actions results, but distinguish external CI evidence from tests personally reproduced.
 6. Log reproducible defects with expected/actual, steps and risk; request rework, never silently waive failing acceptance cases.
-7. Fill the testing section of contracts/delivery-report.md.
+7. Fill the testing section of [contracts/delivery-report.md](../../../contracts/delivery-report.md).
 
 ## V0.2 inbound/outbound communication
 - On start or resume: resolve current Shared Task Context and Coder Handoff, verify owner-authorized task, approved ACs and exact PR head SHA against live Git/Linear; consume assigned pending messages.

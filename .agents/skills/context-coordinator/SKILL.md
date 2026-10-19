@@ -7,22 +7,20 @@ description: Resolve minimal task-centered shared context, persist traceable age
 
 ## Minimum durable Agent Message envelope
 
-Before sending a cross-role message, copy this skeleton and complete the [canonical contract](../../../contracts/agent-message.md). Do not omit fields that are required for the message type.
+Use this eight-line YAML mapping for messages; replace placeholders with live, verified task facts. Skill titles track PADF V0.3; the existing V0.2 contracts and `padf.*/v1` schema identifiers remain compatible.
 
 ```yaml
-schema_version: padf.agent-message/v1
-message_id: MSG-<task>-<sequence>
-thread_id: THREAD-<task>-<topic>
-in_reply_to: null
-context_id: <project-task>
-sender: <role>
-receiver: <accountable-role>
-type: <MESSAGE_TYPE>
-priority: NORMAL
-source_refs: ["<immutable-url-or-path@SHA>"]
-requested_action: "<bounded action>"
-status: OPEN
+{schema_version: padf.agent-message/v1, message_id: "<unique-message-id>",
+ thread_id: "<thread-id>", in_reply_to: null, context_id: "<project-task>",
+ project: "<project>", repository: "<owner/repo>", linear_issue: "<canonical-issue-url>", original_feature_ids: ["<feature-id>"],
+ sender: context-coordinator, receiver: "<accountable-role>", created_at: "<ISO-8601-with-offset>",
+ type: CLARIFICATION_REQUEST, priority: NORMAL, subject: "<subject>",
+ body: "<question-or-finding>", source_refs: ["<immutable-url-or-path@SHA>"],
+ requested_action: "<bounded-action>", requires_response: true,
+ status: OPEN, resolution_ref: null, owner_approval_ref: null}
 ```
+
+Select the actual message type, priority and response requirement. Replies reuse `thread_id` and set `in_reply_to`; retries retain the original immutable payload and `message_id`. Set `owner_approval_ref` whenever relying on authorization; TASK_REQUEST also links the approved Task Contract in `source_refs`. HANDOFF links a completed [Agent Handoff](../../../contracts/agent-handoff.md); this message envelope does not replace a handoff or [Context Checkpoint](../../../contracts/context-checkpoint.md). Before writing either record, read its required fields. Validate against the [Agent Message Contract](../../../contracts/agent-message.md), persist to an authorized task/PR and verify its permalink. If required sources or persistence are unavailable, report BLOCKED/NOT_PERSISTED; do not invent values or claim delivery.
 
 ## Purpose
 This is a reusable **procedural Skill**, not an agent daemon, tool API, messaging service or automatic dispatcher. It supports cross-session continuity and asynchronous communication among Master, Solution Architect, Module Architect, UI Designer, Coder, QA and Reviewer by referencing authoritative GitHub/Linear records.
@@ -69,7 +67,7 @@ Project/repository, task/Linear issue URL or ID, original immutable Feature ID, 
 Concise context_id, authoritative refs/revisions, observed task/head state, pending message refs, verified checkpoint/handoff permalinks, risk/blocker status and next responsible role. Distinguish CREATED/PERSISTED from DRAFT/NOT_PERSISTED.
 
 ## Safety
-No background orchestration, automatic agent wake-up, auto dispatch, new storage server or A2A runtime in V0.2. No authorization escalation, deployment, destructive operations or merge by inference. Follow workflow/context-communication.md and governance/approval-policy.md.
+No background orchestration, automatic agent wake-up, auto dispatch, new storage server or A2A runtime in V0.2. No authorization escalation, deployment, destructive operations or merge by inference. Follow [workflow/context-communication.md](../../../workflow/context-communication.md) and [governance/approval-policy.md](../../../governance/approval-policy.md).
 
 
 ## V0.3 orchestrated dispatch evidence

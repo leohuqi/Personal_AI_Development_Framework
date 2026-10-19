@@ -7,25 +7,23 @@ description: Implement one authorized Linear issue or bounded bug using its appr
 
 ## Minimum durable Agent Message envelope
 
-Before sending a cross-role message, copy this skeleton and complete the [canonical contract](../../../contracts/agent-message.md). Do not omit fields that are required for the message type.
+Use this eight-line YAML mapping for messages; replace placeholders with live, verified task facts. Skill titles track PADF V0.3; the existing V0.2 contracts and `padf.*/v1` schema identifiers remain compatible.
 
 ```yaml
-schema_version: padf.agent-message/v1
-message_id: MSG-<task>-<sequence>
-thread_id: THREAD-<task>-<topic>
-in_reply_to: null
-context_id: <project-task>
-sender: <role>
-receiver: <accountable-role>
-type: <MESSAGE_TYPE>
-priority: NORMAL
-source_refs: ["<immutable-url-or-path@SHA>"]
-requested_action: "<bounded action>"
-status: OPEN
+{schema_version: padf.agent-message/v1, message_id: "<unique-message-id>",
+ thread_id: "<thread-id>", in_reply_to: null, context_id: "<project-task>",
+ project: "<project>", repository: "<owner/repo>", linear_issue: "<canonical-issue-url>", original_feature_ids: ["<feature-id>"],
+ sender: feature-coder, receiver: "<accountable-role>", created_at: "<ISO-8601-with-offset>",
+ type: CLARIFICATION_REQUEST, priority: NORMAL, subject: "<subject>",
+ body: "<question-or-finding>", source_refs: ["<immutable-url-or-path@SHA>"],
+ requested_action: "<bounded-action>", requires_response: true,
+ status: OPEN, resolution_ref: null, owner_approval_ref: null}
 ```
 
+Select the actual message type, priority and response requirement. Replies reuse `thread_id` and set `in_reply_to`; retries retain the original immutable payload and `message_id`. Set `owner_approval_ref` whenever relying on authorization; TASK_REQUEST also links the approved Task Contract in `source_refs`. HANDOFF links a completed [Agent Handoff](../../../contracts/agent-handoff.md); this message envelope does not replace a handoff or [Context Checkpoint](../../../contracts/context-checkpoint.md). Before writing either record, read its required fields. Validate against the [Agent Message Contract](../../../contracts/agent-message.md), persist to an authorized task/PR and verify its permalink. If required sources or persistence are unavailable, report BLOCKED/NOT_PERSISTED; do not invent values or claim delivery.
+
 ## Input gate
-Require an owner-authorized task, Linear ID + original Feature ID, approved scope, acceptance criteria, dependencies, relevant source/spec references, and an explicit target environment. Use contracts/task-contract.md. If incomplete, stop and return NEEDS REFINEMENT; do not invent product behavior.
+Require an owner-authorized task, Linear ID + original Feature ID, approved scope, acceptance criteria, dependencies, relevant source/spec references, and an explicit target environment. Use [contracts/task-contract.md](../../../contracts/task-contract.md). If incomplete, stop and return NEEDS REFINEMENT; do not invent product behavior.
 
 ## Steps
 1. Read project AGENTS.md, then the referenced relevant Feature Spec; read only affected API/DB/UI/architecture portions per the context-loading policy. **Do not read unrelated project documents by default.**
@@ -36,7 +34,7 @@ Require an owner-authorized task, Linear ID + original Feature ID, approved scop
 6. Run focused checks while working; at handoff run the target project's documented test commands and applicable integration/browser tests, or disclose exactly why a check was NOT RUN.
 7. Inspect diff for secrets, unrelated edits, generated artifacts, contract drift and backward compatibility. Update only affected specs, contracts and brief development log as required by AGENTS.md.
 8. Commit and open a reviewable PR. Reference **both** Linear ID and original Feature ID in PR description; include scope, tests, screenshots (when UI), migration/rollback concerns, and known risks.
-9. Hand over contracts/delivery-report.md evidence. Leave review and owner acceptance to independent agents/owner.
+9. Hand over [contracts/delivery-report.md](../../../contracts/delivery-report.md) evidence. Leave review and owner acceptance to independent agents/owner.
 
 ## V0.2 cross-agent continuity
 - On start/resume: resolve context_id and current Task Contract/approval, compare checkpoint with real branch HEAD/approved spec revisions, and pull pending addressed Agent Messages. Stop on material drift or unsupported permission.

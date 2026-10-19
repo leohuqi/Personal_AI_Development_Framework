@@ -31,8 +31,8 @@ A handoff transfers **task responsibility and verifiable artifacts**, not an age
 ## Example — Coder to QA (illustrative only)
 
     schema_version: padf.agent-handoff/v1
-    handoff_id: HO-PQA-LEO-134-001
-    context_id: PQA-LEO-134
+    handoff_id: HO-DEMO-123-001
+    context_id: DEMO-123
     linear_issue: "<canonical-linear-link>"
     original_feature_ids: ["<original-id>"]
     sender: feature-coder
@@ -45,7 +45,7 @@ A handoff transfers **task responsibility and verifiable artifacts**, not an age
       pr_url: "<pull-request-url>"
       base_sha: "<sha>"
       head_sha: "<sha>"
-      approved_spec: "docs/features/strategy.md@<sha>"
+      approved_spec: "docs/features/batch-import.md@<sha>"
     completed_with_evidence: ["<code-or-test-ref>"]
     not_completed: ["<explicitly-skipped-check>"]
     test_status: NOT_RUN

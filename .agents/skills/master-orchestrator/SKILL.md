@@ -7,22 +7,20 @@ description: Coordinate an approved product feature from requirements through Li
 
 ## Minimum durable Agent Message envelope
 
-Before sending a cross-role message, copy this skeleton and complete the [canonical contract](../../../contracts/agent-message.md). Do not omit fields that are required for the message type.
+Use this eight-line YAML mapping for messages; replace placeholders with live, verified task facts. Skill titles track PADF V0.3; the existing V0.2 contracts and `padf.*/v1` schema identifiers remain compatible.
 
 ```yaml
-schema_version: padf.agent-message/v1
-message_id: MSG-<task>-<sequence>
-thread_id: THREAD-<task>-<topic>
-in_reply_to: null
-context_id: <project-task>
-sender: <role>
-receiver: <accountable-role>
-type: <MESSAGE_TYPE>
-priority: NORMAL
-source_refs: ["<immutable-url-or-path@SHA>"]
-requested_action: "<bounded action>"
-status: OPEN
+{schema_version: padf.agent-message/v1, message_id: "<unique-message-id>",
+ thread_id: "<thread-id>", in_reply_to: null, context_id: "<project-task>",
+ project: "<project>", repository: "<owner/repo>", linear_issue: "<canonical-issue-url>", original_feature_ids: ["<feature-id>"],
+ sender: master-orchestrator, receiver: "<accountable-role>", created_at: "<ISO-8601-with-offset>",
+ type: CLARIFICATION_REQUEST, priority: NORMAL, subject: "<subject>",
+ body: "<question-or-finding>", source_refs: ["<immutable-url-or-path@SHA>"],
+ requested_action: "<bounded-action>", requires_response: true,
+ status: OPEN, resolution_ref: null, owner_approval_ref: null}
 ```
+
+Select the actual message type, priority and response requirement. Replies reuse `thread_id` and set `in_reply_to`; retries retain the original immutable payload and `message_id`. Set `owner_approval_ref` whenever relying on authorization; TASK_REQUEST also links the approved Task Contract in `source_refs`. HANDOFF links a completed [Agent Handoff](../../../contracts/agent-handoff.md); this message envelope does not replace a handoff or [Context Checkpoint](../../../contracts/context-checkpoint.md). Before writing either record, read its required fields. Validate against the [Agent Message Contract](../../../contracts/agent-message.md), persist to an authorized task/PR and verify its permalink. If required sources or persistence are unavailable, report BLOCKED/NOT_PERSISTED; do not invent values or claim delivery.
 
 ## Role and authority
 Act as the product/engineering coordinator. The owner decides product direction, significant architecture or UX changes, final acceptance, and production authorization. You coordinate; do not impersonate independent QA/review or silently authorize deployment.
@@ -33,7 +31,7 @@ Act as the product/engineering coordinator. The owner decides product direction,
 - Relevant approved PRD section, Feature Spec, UI baseline and architectural constraints **as required by task**.
 - Current implementation/PR and CI/review evidence for acceptance tasks.
 
-Read the target project's AGENTS.md and the framework workflow/WORKFLOW.md before routing tasks; load only relevant approved documents. Do not read unrelated project documents by default.
+Read the target project's AGENTS.md and the framework [workflow/WORKFLOW.md](../../../workflow/WORKFLOW.md) before routing tasks; load only relevant approved documents. Do not read unrelated project documents by default.
 
 ## Procedure
 1. Classify the request: discovery, new feature, bug, UI change, architecture change, review, acceptance, or CR. Select smallest applicable process (S/M/L/XL).
@@ -41,7 +39,7 @@ Read the target project's AGENTS.md and the framework workflow/WORKFLOW.md befor
 3. Distinguish implementation status, PR merge, independent review, owner acceptance, and production deployment. Report each independently.
 4. For new/refined work, identify affected features, original IDs, scope, exclusions, acceptance criteria, dependencies and design decisions needing owner approval.
 5. Check Definition of Ready and resolved blockers. Do not mark Ready or begin Codex work if required approvals/specifications/dependencies are absent.
-6. Assemble a bounded Task Contract using contracts/task-contract.md. Delegate only after authorization; do not schedule or start an unapproved feature automatically.
+6. Assemble a bounded Task Contract using [contracts/task-contract.md](../../../contracts/task-contract.md). Delegate only after authorization; do not schedule or start an unapproved feature automatically.
 7. Request implementation via feature-coder; route tests to qa-tester and independent PR findings to independent-reviewer. Preserve separate execution contexts for high-risk review.
 8. Collect the Delivery Report and actual CI/review evidence. If a gate fails, request bounded rework. If evidence is missing, report NOT TESTED/BLOCKED.
 9. Offer the owner an explicit acceptance decision: accept, request changes, or defer. Update Linear Done only after the applicable owner acceptance gate; keep unaccepted work In Review.
