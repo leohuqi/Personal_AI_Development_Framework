@@ -1,0 +1,72 @@
+# PADF V0.3 — Specialized Design Agents Verification Report
+
+Version: **V0.3 development candidate**, not released.  
+Repository: `leohuqi/Personal_AI_Development_Framework`  
+Branch: `feat/padf-v0.3-specialized-agents` · Draft PR #3  
+Baseline: `main` at `82e7888a142dfaf7c0dfbf1d67f8957873d851a0`, with immutable `v0.2.0` retained.
+
+## Automated checks — observed on implementation head
+
+| Scope | Result | Evidence |
+| --- | --- | --- |
+| Existing V0.2 CACF compatibility regression | **PASS** | [Actions 38854079747](https://github.com/leohuqi/Personal_AI_Development_Framework/actions/runs/38854079747) |
+| V0.3 structural/contracts/link checks | **PASS** | [Actions 38854079767](https://github.com/leohuqi/Personal_AI_Development_Framework/actions/runs/38854079767) |
+| V0.3 JavaScript syntax and pure evaluator | **PASS** | Same Actions run |
+| V0.3 role-routing, artifacts and Design Gate fixture | **PASS — 38 cases (system/module architecture split included)** | Same Actions run; `tests/v0.3/run-tests.mjs` |
+| Real Architect invocation of locked diagram-design | **NOT RUN** | Requires installation and a bounded live Agent session |
+| Actual rendered architecture/DDL/sequence/workflow diagrams | **NOT RUN** | No real generated diagram artifacts are claimed in this framework PR |
+| Actual UI high-fi/interactive design tool prototype | **NOT RUN** | Requires a selected consumer project UI Profile and supported tool |
+| Fresh-context Independent DESIGN Review | **PENDING** | Must review exact PR head and affected design contracts |
+| Owner acceptance/merge/release | **PENDING** | Draft PR only |
+| PQA adoption | **NOT RUN / NOT AUTHORIZED** | PQA PR #7 unchanged |
+
+## What is actually implemented
+- Solution Architect and **new Module Architect** Skills now have distinct scopes: the former selects the concrete technology stack/system-level code topology, the latter produces packages/interfaces/internal flows under an existing approved system baseline. UI Designer remains separate.
+- External diagram-design capability is pinned by `integrations/diagram-design.lock.json` to upstream commit `11b08eade8049c441ed3df1895e3b527c26c0fbe`. Pinning **does not install or invoke it**.
+- Project UI Profile and UI concept/high-fi/interactive level contracts enforce per-project consistency.
+- Lightweight `lib/design-gate.mjs` is read-only: it does not schedule agents, write to Linear or approve changes. It tests missing/proposed artifacts, stale versions, risk review, Owner authorization, diagram render status, generator pin and interactive prototype proof flags.
+- Master owns gate/routing; independent Reviewer owns DESIGN quality judgment for L/XL or risk-triggered S/M; Owner authorizes material design and bounded coding.
+
+## V0.3 scope-split change — verification pending new head
+- Master records `architecture_scope: none/system/module/both`. L/XL requires independent review but **does not automatically require both Architect roles**.
+- Module scope requires immutable currently Owner-approved system baseline, separate module-code architecture deliverables and aligned diagram. BOTH requires explicit SYSTEM -> MODULE dependency and matching approved baseline revision.
+- 38 fixture tests now include scope selection, package/interface completeness, stage dependency, absent/unapproved/stale baseline and forbidden technology re-selection. **The updated tests passed GitHub Actions at commit `9790c6c48fafe85adc397ea2e35ac9fe6be6512e`.**
+- [Module Design contract](../../contracts/module-design.md), [Solution Architecture Baseline](../../contracts/solution-architecture.md), [Module Architect Skill](../../.agents/skills/module-architect/SKILL.md) and [architecture routing](../../workflow/agent-routing.md) are in scope. CI and independent review must be checked again for the **actual final PR HEAD** after this report-only commit.
+
+## Release risks
+- Evidence fields in local fixture are **claims** until checked against actual linked artifacts and environment: only independent review/pilot can validate real rendering/interaction.
+- Manual profile onboarding/diagram dependency installation must be verified before application tasks claim completion.
+- V0.2 live Linear message transport, full multi-Agent runtime and automatic wake-up remain outside V0.3 scope.
+- No further independent REVIEW has been performed on the new system/module split; no framework PR is self-approved and no actual PQA implementation is provided here.
+
+## Reproduce
+```bash
+node scripts/validate-cacf.mjs
+node --check lib/design-gate.mjs
+node --check tests/v0.3/run-tests.mjs
+node tests/v0.3/run-tests.mjs
+```
+See [manual pilot steps](README.md) and PR #3 for current exact head/CI.
+
+## New orchestration / Skill-quality acceptance scope — PENDING latest CI
+- [Agent Dispatch Contract](../../contracts/agent-dispatch.md) defines DISPATCH -> EXECUTION -> HANDOFF -> RECONCILIATION with real provenance and honest HUMAN_RELAY vs RUNTIME_DISPATCH.
+- [Master Orchestration Runbook](../../workflow/master-orchestration-validation.md) requires **fresh independent specialist sessions** and offers Owner quality assessment of 3 roles separately.
+- [Quality Evaluation Contract](../../contracts/skill-delivery-evaluation.md) scores Solution Architect, Module Architect and UI Designer against actual professional artifacts. A polished design cannot substitute for actual session provenance, nor vice versa.
+- New suites `tests/v0.3/run-orchestration-tests.mjs` and `tests/v0.3/run-skill-quality-tests.mjs` provide synthetic positive/negative tests only. **Results must be confirmed on the updated PR HEAD before calling PASS.**
+- Prior Issue #4 remains a ROLE_SIMULATION; actual external Master-run Dispatch/E2E and Owner Quality evaluations NOT RUN as of this edit.
+
+## Master Orchestration evidence-chain validation — observed PASS at code SHA
+**Code HEAD tested:** `0cf20531420351d4810295266db325fb8c35cf9a`.
+
+| Automated validation | GitHub evidence | Scope |
+| --- | --- | --- |
+| Existing V0.2 CACF protocol regression | [Actions #38856493503](https://github.com/leohuqi/Personal_AI_Development_Framework/actions/runs/38856493503) — **SUCCESS** | Existing context/message/checkpoint/response protocol |
+| V0.3 Design Gate / role routing | [Actions #38856493598](https://github.com/leohuqi/Personal_AI_Development_Framework/actions/runs/38856493598) — **SUCCESS** | 39 deterministic tests: routing, architecture scope, approved baselines, UI/diagram gates, opt-in orchestration required |
+| Dispatch → Execution → Handoff → Reconciliation metadata | Same V0.3 Actions — **SUCCESS** | 19 synthetic cases including self-role-play, same-session, fake skill/run refs, unauthorized Module baseline, reversed dependency |
+| Owner specialist quality evaluation metadata | Same V0.3 Actions — **SUCCESS** | 14 synthetic cases: distinct SA/MA/UI rubric, evidence, score/risk/Owner decision checks |
+| Earlier expense pilot Issue #4 | [Issue #4](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4) | **ROLE_SIMULATION**, not real multi-Agent E2E |
+| Real independent Master+3 specialist sessions + fresh DESIGN Reviewer | [Acceptance Issue #5](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/5) | **NOT RUN**, Owner follow-up |
+| Real diagram-design and working UI prototype generated in separate specialist sessions | Acceptance Issue #5 | **NOT RUN** |
+| Owner SA/MA/UI output grades and decision | Acceptance Issue #5 | **PENDING** |
+
+The pure validators may say METADATA_ELIGIBLE on synthetic fixtures; this is **not** a runtime attestation or proof that a skilled Agent produced correct designs. Owner must inspect actual distinct-session and artifact/tool evidence. After this documentation-only commit, re-check exact latest PR-head CI before asserting new-head PASS.

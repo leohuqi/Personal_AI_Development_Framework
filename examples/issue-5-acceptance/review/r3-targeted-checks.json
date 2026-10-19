@@ -1,0 +1,159 @@
+{
+  "executedAt": "2026-10-16T09:58:04.310Z",
+  "reviewer": "/root/design_reviewer",
+  "source": "86a71f24fa612403cb741d859251b2f715347f3d",
+  "browser": "155.0.8059.80",
+  "checks": [
+    {
+      "id": "F04-unicode-trim",
+      "expected": "Unicode outer whitespace matches X",
+      "status": "PASS",
+      "actual": "第1笔 · Example Cafe\n支出 −¥10.00\n2026-10-01 · 微信\n\n与已有记录重复\n\n本笔处理\n待复核\n记入账本\n排除此笔\n重复记录处理\n请选择\n关联已有记录「街角咖啡」，不新增\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。"
+    },
+    {
+      "id": "F04-unicode-no-new",
+      "expected": "No duplicate entry",
+      "status": "PASS",
+      "actual": "3"
+    },
+    {
+      "id": "F04-NFC-same-batch",
+      "expected": "NFC equivalent IDs retain one entry",
+      "status": "PASS",
+      "actual": "4"
+    },
+    {
+      "id": "F04-case-internal-preserved",
+      "expected": "Case and internal whitespace remain distinct",
+      "status": "PASS",
+      "actual": "6"
+    },
+    {
+      "id": "F04-empty-candidate",
+      "expected": "Whitespace-only ID becomes no ID and explicit candidate",
+      "status": "PASS",
+      "actual": "第1笔 · Shop\n支出 −¥1.00\n2026-10-05 · 微信\n本笔处理\n待复核\n记入账本\n排除此笔\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。\n第2笔 · Shop\n支出 −¥1.00\n2026-10-05 · 微信\n\n可能重复，请确认\n\n本笔处理\n待复核\n记入账本\n排除此笔\n重复记录处理\n请选择\n关联第1笔，不新增\n确认是另一笔支出\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。"
+    },
+    {
+      "id": "F04-empty-no-strong-key",
+      "expected": "Two no-ID distinct records retained",
+      "status": "PASS",
+      "actual": "5"
+    },
+    {
+      "id": "F04-canonical-original-ref",
+      "expected": "Canonical refund ID and reference reimport match",
+      "status": "PASS",
+      "actual": "第1笔 · Shop\n退款 +¥1.00\n2026-10-05 · 微信\n\n与已有记录重复\n\n本笔处理\n待复核\n记入账本\n排除此笔\n重复记录处理\n请选择\n关联已有记录「Shop」，不新增\n新退款如何处理\n请选择\n保留待关联（暂不计净支出）\n街角咖啡 · 上限 ¥10.00\n保留为新退款时，需单独确认关联；待关联不计入净支出。\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。"
+    },
+    {
+      "id": "F04-ref-no-new",
+      "expected": "Canonical original-ref comparison does not duplicate refund",
+      "status": "PASS",
+      "actual": "4"
+    },
+    {
+      "id": "F05-link-keeps-state",
+      "expected": "Duplicate refund link needs no new refund resolution",
+      "status": "PASS",
+      "actual": true
+    },
+    {
+      "id": "F05-link-no-new",
+      "expected": "Duplicate refund link preserves unresolved and total",
+      "status": "PASS",
+      "actual": {
+        "count": "4",
+        "total": "¥106.00"
+      }
+    },
+    {
+      "id": "F05-stored-candidate-blocks",
+      "expected": "keepSeparate refund requires new resolution",
+      "status": "PASS",
+      "actual": true
+    },
+    {
+      "id": "F05-separate-valid-link",
+      "expected": "New separately kept refund links positive original",
+      "status": "PASS",
+      "actual": {
+        "count": "5",
+        "total": "¥105.00",
+        "unresolved": "1 笔待关联退款，暂不计入净支出"
+      }
+    },
+    {
+      "id": "F05-same-batch-link-once",
+      "expected": "Alias refund inserts/reserves once",
+      "status": "PASS",
+      "actual": {
+        "count": "4",
+        "total": "¥105.00"
+      }
+    },
+    {
+      "id": "F05-shared-existing-cap",
+      "expected": "Aggregate 12 against original10 blocks",
+      "status": "PASS",
+      "actual": "同批退款合计超过原支出，请改为待关联或排除部分退款。"
+    },
+    {
+      "id": "F05-cap-resolution",
+      "expected": "One unresolved restores valid cap and net",
+      "status": "PASS",
+      "actual": {
+        "count": "5",
+        "total": "¥100.00"
+      }
+    },
+    {
+      "id": "F05-new-original-cap",
+      "expected": "Same-batch original aggregate6 exceeds5",
+      "status": "PASS",
+      "actual": "同批退款合计超过原支出，请改为待关联或排除部分退款。"
+    },
+    {
+      "id": "F05-excluded-original",
+      "expected": "Excluded new original invalidates refund target",
+      "status": "PASS",
+      "actual": "退款原支出未记入或不可用，请重新选择或保留待关联。"
+    },
+    {
+      "id": "F05-new-original-valid",
+      "expected": "Retained new original+linked3+unresolved3 produces correct108",
+      "status": "PASS",
+      "actual": {
+        "count": "6",
+        "total": "¥108.00"
+      }
+    },
+    {
+      "id": "F05-alias-shared-cap",
+      "expected": "Stored root via row alias shares cap with direct root",
+      "status": "PASS",
+      "actual": "同批退款合计超过原支出，请改为待关联或排除部分退款。"
+    },
+    {
+      "id": "F05-before-save-injection",
+      "expected": "Scripted test-only final-plan change fails without any write",
+      "status": "PASS",
+      "actual": {
+        "count": "3",
+        "total": "¥106.00",
+        "error": "退款原支出未记入或不可用，请重新选择或保留待关联。"
+      }
+    },
+    {
+      "id": "offline",
+      "expected": "No HTTP or page errors",
+      "status": "PASS",
+      "actual": {
+        "network": [],
+        "errors": []
+      }
+    }
+  ],
+  "pass": 21,
+  "fail": 0
+}

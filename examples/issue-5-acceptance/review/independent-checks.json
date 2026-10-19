@@ -1,0 +1,131 @@
+{
+  "executedAt": "2026-10-16T09:16:40.723Z",
+  "reviewer": "/root/design_reviewer",
+  "browser": "155.0.8059.80",
+  "checks": [
+    {
+      "id": "category-override",
+      "expectation": "User category survives merchant update",
+      "actual": "交通",
+      "status": "PASS"
+    },
+    {
+      "id": "optional-location-save",
+      "expectation": "Save without attaching GPS",
+      "actual": "4",
+      "status": "PASS"
+    },
+    {
+      "id": "strong-id-economic-conflict",
+      "expectation": "Same provider ID with changed timestamp/merchant must be SOURCE_CONFLICT and blocked, not duplicate",
+      "actual": {
+        "reviewText": "第1笔 · Completely Different Merchant\n支出 −¥10.00\n2026-10-05 · 微信\n\n与已有记录重复\n\n本笔处理\n待复核\n记入账本\n排除此笔\n重复记录处理\n请选择\n关联已有记录，不新增\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。",
+        "countBefore": "3",
+        "countAfter": "3"
+      },
+      "status": "FAIL"
+    },
+    {
+      "id": "intra-batch-conflict",
+      "expectation": "Repeated strong ID with different money is SOURCE_CONFLICT",
+      "actual": "第1笔 · Shop A\n支出 −¥1.00\n2026-10-05 · 微信\n本笔处理\n待复核\n记入账本\n排除此笔\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。\n第2笔 · Shop B\n支出 −¥2.00\n2026-10-06 · 微信\n\n与已有记录重复\n\n本笔处理\n待复核\n记入账本\n排除此笔\n重复记录处理\n请选择\n关联已有记录，不新增\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。",
+      "status": "FAIL"
+    },
+    {
+      "id": "excluded-target-duplicate",
+      "expectation": "Cannot link to nonexistent record when first same-batch row excluded",
+      "actual": {
+        "guardEnabled": true,
+        "countAfter": "3",
+        "toast": "已完成 · 新增 0 笔，账本已更新"
+      },
+      "status": "FAIL"
+    },
+    {
+      "id": "nonsettled-source-guard",
+      "expectation": "Pending existing ID cannot be included",
+      "actual": {
+        "reviewText": "第1笔 · 街角咖啡\n支出 −¥10.00\n2026-10-01 · 微信\n\n与已有记录重复\n\n本笔处理\n待复核\n记入账本\n排除此笔\n重复记录处理\n请选择\n关联已有记录，不新增\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。",
+        "enabled": true
+      },
+      "status": "FAIL"
+    },
+    {
+      "id": "calendar-date",
+      "expectation": "Impossible calendar date must be invalid",
+      "actual": {
+        "reviewText": "第1笔 · Shop\n支出 −¥1.00\n2026-02-30 · 微信\n本笔处理\n待复核\n记入账本\n排除此笔\n商户显示名\n分类\n餐饮\n购物\n交通\n生活\n其他\n账单原始金额与消费时间保留，若有错误请排除后手动记账。\n历史消费地点\n未记录历史地点；导入不会获取此刻位置。",
+        "enabled": true
+      },
+      "status": "FAIL"
+    },
+    {
+      "id": "atomic-error",
+      "expectation": "Storage failure leaves ledger unchanged",
+      "actual": "3",
+      "status": "PASS"
+    },
+    {
+      "id": "retry-review",
+      "expectation": "Retry demands explicit renewed choice",
+      "actual": true,
+      "status": "PASS"
+    },
+    {
+      "id": "layout-320",
+      "expectation": "No horizontal page overflow",
+      "actual": {
+        "width": 320,
+        "scroll": 320
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "layout-390",
+      "expectation": "No horizontal page overflow",
+      "actual": {
+        "width": 390,
+        "scroll": 390
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "layout-768",
+      "expectation": "No horizontal page overflow",
+      "actual": {
+        "width": 768,
+        "scroll": 768
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "layout-1280",
+      "expectation": "No horizontal page overflow",
+      "actual": {
+        "width": 1280,
+        "scroll": 1280
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "keyboard-focus",
+      "expectation": "Escape returns focus to New Entry",
+      "actual": "openManual",
+      "status": "PASS"
+    },
+    {
+      "id": "system-viewer-render",
+      "expectation": "System viewer has five switchable diagrams",
+      "actual": 0,
+      "status": "PASS"
+    },
+    {
+      "id": "module-viewer-render",
+      "expectation": "Module viewer has SVG",
+      "actual": 5,
+      "status": "PASS"
+    }
+  ],
+  "network": [],
+  "errors": []
+}

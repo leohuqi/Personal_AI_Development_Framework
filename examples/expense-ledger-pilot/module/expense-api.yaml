@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+  title: Expense Ledger Sample API — proposed
+  version: 0.0.1-proposed
+  description: Illustrative module API. Not deployed. Auth is server-side and requires Owner-approved system identity baseline.
+paths:
+  /api/v1/imports/preview:
+    post:
+      summary: Preview a user-exported personal bill; no transaction persistence
+      security: [{oidc: []}]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [provider, file]
+              properties:
+                provider: {type: string, enum: [WECHAT, ALIPAY]}
+                file: {type: string, format: binary}
+      responses:
+        '200':
+          description: Preview data and row-level issues
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [draft_token, transactions, errors]
+                properties:
+                  draft_token: {type: string}
+                  transactions: {type: array, items: {$ref: '#/components/schemas/ExpenseDraft'}}
+                  errors: {type: array, items: {type: string}}
+        '400': {description: Unsupported bill format}
+        '401': {description: Authentication required}
+        '413': {description: Upload too large}
+        '422': {description: Invalid contents}
+  /api/v1/expenses/confirm:
+    post:
+      summary: Confirm reviewed import draft or manual expense
+      security: [{oidc: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [category_id]
+              properties:
+                draft_token: {type: string, nullable: true}
+                manual: {$ref: '#/components/schemas/ExpenseDraft'}
+                category_id: {type: string, format: uuid}
+                manual_place: {type: string, nullable: true}
+                remember_merchant: {type: boolean, default: false}
+      responses:
+        '201': {description: Newly confirmed transaction}
+        '200': {description: Existing identical confirmed transaction; id returned}
+        '401': {description: Authentication required}
+        '403': {description: Cross-tenant reference denied}
+        '409': {description: Ambiguous or conflicting idempotency key}
+        '422': {description: Validation error}
+  /api/v1/categories:
+    get:
+      summary: Current user's category options
+      security: [{oidc: []}]
+      responses:
+        '200': {description: Category option list}
+components:
+  securitySchemes:
+    oidc:
+      type: openIdConnect
+      openIdConnectUrl: https://example.invalid/.well-known/openid-configuration
+  schemas:
+    ExpenseDraft:
+      type: object
+      required: [source, occurred_at, amount_minor, currency, direction, merchant_raw]
+      properties:
+        source: {type: string, enum: [WECHAT, ALIPAY, MANUAL]}
+        source_txn_id: {type: string, nullable: true}
+        occurred_at: {type: string, format: date-time}
+        amount_minor: {type: integer, format: int64, minimum: 1}
+        currency: {type: string, minLength: 3, maxLength: 3}
+        direction: {type: string, enum: [EXPENSE, REFUND, INCOME, TRANSFER]}
+        merchant_raw: {type: string}
+        bill_location: {type: string, nullable: true}

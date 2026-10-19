@@ -1,4 +1,4 @@
-# AI-SDF V0.2 Core Development Workflow
+# AI-SDF V0.3 Development Candidate — Core Workflow (includes V0.2)
 
 **Specification, not an engine.** This workflow is human-initiated with hosted GitHub Actions and separately configured Codex review; it does not run continuously.
 
@@ -44,3 +44,21 @@ This section is binding in addition to all existing DoR, Owner authorization, re
 7. **Finalize**: Master links final Delivery Report, ensures approved decisions are reflected in canonical docs, closes resolved messages, tracks deferred work and requests Owner acceptance.
 
 V0.2 does **not** implement a long-running orchestrator, automatic notifications, background agents, self-triggered tasks, Redis, a new database, or an A2A server. Human/authorized runtime invocation remains required.
+
+## V0.3 specialized design stages (candidate)
+1. Master classifies S/M/L/XL, impacted capabilities/risk and **architecture_scope (none/system/module/both)**. Route system-level Solution Architect for new APP/major baseline changes, Module Architect for a detailed module under approved baseline, and UI Designer as needed. See [design collaboration](design-collaboration.md).
+2. Solution Architect defines technology stack and APP-wide module/code architecture when SYSTEM required; Module Architect designs module packages, interfaces and code structure linked to the approved system baseline when MODULE required. Both scopes require ordered SYSTEM -> MODULE and version matching. Each produces required checked structured designs/diagrams; UI Designer builds concepts/prototypes under a pinned project UI Profile. Each producer independently validates **its own** work, then sends a V0.2 Handoff.
+3. Master verifies [stage and artifact dependencies](../contracts/agent-dependency.md) including source revision, exact link, stale status and N/A/waiver rationale.
+4. **Mandatory independent DESIGN review** for L/XL or high-risk S/M (security, permissions, risky schema/migration, breaking API, critical rules/workflow, shared UI/component etc.). Ordinary S/M gets a documented risk-based review decision.
+5. Master operates the [Design Gate](../contracts/design-gate.md). Independent Reviewer judges quality and versioned evidence, not approvals or job dispatch. Design READY does not grant coding authorization.
+6. Owner records material design decisions and separately authorizes bounded coding. Coder/QA/Implementation Reviewer follow unchanged V0.2 quality gates and immutable PR SHA.
+7. This is **declarative sequential coordination** with a pure optional evaluator, not a new runtime or parallel Coder orchestrator.
+
+
+## V0.3 real Master Orchestration validation sequence (non-runtime)
+For the bounded cross-session pilot, use [Master Orchestration Runbook](master-orchestration-validation.md):
+1. Master derives routing **without Owner specifying specialist micro-tasks**, persists each actual [Dispatch](../contracts/agent-dispatch.md) before execution.
+2. Owner manually launches a **fresh** receiving Agent with only dispatch URL (`HUMAN_RELAY`), or Master invokes a supported *real* runtime tool (`RUNTIME_DISPATCH`) and records tool task ID. Issue comment alone is NOT an agent launch.
+3. Receiving Agent records real execution receipt and publishes its own artifact/Handoff. Master fetches Handoff and independently reconciles live dependency versions and approvals **before** next dispatch; blocked/unapproved baseline means stop or clearly conditional draft.
+4. After Solution Architect, Module Architect, UI Designer, Owner scores each package separately per [Quality Evaluation](../contracts/skill-delivery-evaluation.md); independent DESIGN Reviewer remains mandatory for L/XL.
+5. Existing [design gate](../contracts/design-gate.md) and Owner coding authorization are separate. **One-session role play never passes actual Master Orchestration.** No background automation added.

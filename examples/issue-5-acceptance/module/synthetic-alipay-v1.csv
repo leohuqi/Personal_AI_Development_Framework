@@ -1,0 +1,3 @@
+PADF-SYNTHETIC-BILL,1,ALIPAY
+transaction_id,original_transaction_id,kind,status,amount,currency,occurred_at,merchant,location_text
+Z,,spend,settled,8.00,CNY,2026-10-03T10:00:00+08:00,Example Shop,source text only

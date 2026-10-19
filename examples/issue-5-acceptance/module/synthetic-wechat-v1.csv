@@ -1,0 +1,5 @@
+PADF-SYNTHETIC-BILL,1,WECHAT
+transaction_id,original_transaction_id,kind,status,amount,currency,occurred_at,merchant,location_text
+X,,spend,settled,10.00,CNY,2026-10-01T10:00:00+08:00,Example Cafe,
+R,X,refund,settled,-3.00,CNY,2026-10-02T10:00:00+08:00,Example Cafe,
+,,spend,settled,10.00,CNY,2026-10-01T10:00:00+08:00,Example Cafe,

@@ -1,0 +1,72 @@
+{
+  "status": "PASS",
+  "executedAt": "2026-10-16T09:46:17.296Z",
+  "profile": "d7e9c679a0a435310ef76d63432917d7e1656078",
+  "browser": "155.0.8059.80",
+  "renderer": "Playwright 1.62.1",
+  "checks": [
+    {
+      "test": "390px ledger net in CNY and real initial render",
+      "status": "PASS"
+    },
+    {
+      "test": "keyboard open and invalid/zero/excess precision/overflow amount guards",
+      "status": "PASS"
+    },
+    {
+      "test": "deterministic suggestion, dropdown override survives merchant edit, explicit suggestion reuse",
+      "status": "PASS"
+    },
+    {
+      "test": "location consent cancellation/denial/unavailable preserve optional saving",
+      "status": "PASS"
+    },
+    {
+      "test": "reduced accuracy requires explicit acceptance; current observation separate from historical text",
+      "status": "PASS"
+    },
+    {
+      "test": "manual save failure leaves ledger unchanged; retry one save, detail preserves location provenance",
+      "status": "PASS"
+    },
+    {
+      "test": "duplicate link, candidate explicit choice, linked refund; all-or-nothing locked failure and re-review retry",
+      "status": "PASS"
+    },
+    {
+      "test": "source conflict/nonsettled inclusion blocked; explicit exclude; unresolved refund excluded from net and later linked",
+      "status": "PASS"
+    },
+    {
+      "test": "actual local file input unsupported and empty states",
+      "status": "PASS"
+    },
+    {
+      "test": "bundled Alipay actual file review; cancellation unchanged; demo confirmation succeeds",
+      "status": "PASS"
+    },
+    {
+      "test": "repeat imported source creates no duplicate entry",
+      "status": "PASS"
+    },
+    {
+      "test": "empty ledger recovery and wide-screen actual render",
+      "status": "PASS"
+    },
+    {
+      "test": "320/390/768/1280 no horizontal page overflow; Escape closes manual sheet",
+      "status": "PASS"
+    },
+    {
+      "test": "zero HTTP requests and page errors",
+      "status": "PASS"
+    }
+  ],
+  "networkRequests": [],
+  "pageErrors": [],
+  "limitations": [
+    "Synthetic in-memory design prototype only",
+    "No actual OS permission, GPS, SwiftUI, Core Data, device/VoiceOver performance tests",
+    "Independent DESIGN review and Owner UI approval pending"
+  ]
+}

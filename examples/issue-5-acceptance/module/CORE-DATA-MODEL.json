@@ -1,0 +1,815 @@
+{
+  "schema_version": "padf.core-data-logical-model/v1",
+  "model": "LedgerModel_v1",
+  "system_baseline_ref": "examples/issue-5-acceptance/system/SYSTEM-BASELINE.md@f4dbf0d3fac707db1b57252c529618c38d26f0bc",
+  "entities": {
+    "StoreMetadata": {
+      "attributes": {
+        "id": {
+          "type": "String",
+          "optional": false,
+          "fixed": "ledger"
+        },
+        "storeEpoch": {
+          "type": "UUID",
+          "optional": false
+        },
+        "ledgerRevision": {
+          "type": "Integer64",
+          "optional": false,
+          "minimum": 0
+        },
+        "modelVersion": {
+          "type": "String",
+          "optional": false,
+          "fixed": "LedgerModel_v1"
+        },
+        "identityKeyRef": {
+          "type": "String",
+          "optional": false
+        },
+        "currencyRegistryVersion": {
+          "type": "String",
+          "optional": false,
+          "fixed": "1"
+        }
+      },
+      "unique": [
+        [
+          "id"
+        ]
+      ],
+      "indexes": []
+    },
+    "AccountNamespace": {
+      "attributes": {
+        "id": {
+          "type": "UUID",
+          "optional": false
+        },
+        "provider": {
+          "type": "String",
+          "optional": false,
+          "enum": [
+            "wechat",
+            "alipay"
+          ]
+        },
+        "displayAlias": {
+          "type": "String",
+          "optional": false,
+          "maxBytes": 128
+        },
+        "createdAtUTC": {
+          "type": "Date",
+          "optional": false
+        }
+      },
+      "unique": [
+        [
+          "id"
+        ]
+      ],
+      "indexes": [
+        [
+          "provider"
+        ]
+      ]
+    },
+    "Entry": {
+      "attributes": {
+        "id": {
+          "type": "UUID",
+          "optional": false
+        },
+        "kind": {
+          "type": "String",
+          "optional": false,
+          "enum": [
+            "spend",
+            "refund"
+          ]
+        },
+        "minorUnits": {
+          "type": "Integer64",
+          "optional": false
+        },
+        "currency": {
+          "type": "String",
+          "optional": false,
+          "maxBytes": 3
+        },
+        "occurredAtUTC": {
+          "type": "Date",
+          "optional": false
+        },
+        "offsetSeconds": {
+          "type": "Integer32",
+          "optional": false
+        },
+        "zoneID": {
+          "type": "String",
+          "optional": true
+        },
+        "precision": {
+          "type": "String",
+          "optional": false,
+          "fixed": "second"
+        },
+        "merchant": {
+          "type": "String",
+          "optional": false,
+          "maxBytes": 1024
+        },
+        "categoryID": {
+          "type": "UUID",
+          "optional": false
+        },
+        "suggestionCategoryID": {
+          "type": "UUID",
+          "optional": true
+        },
+        "suggestionRuleVersion": {
+          "type": "String",
+          "optional": true
+        },
+        "suggestionReason": {
+          "type": "String",
+          "optional": true
+        },
+        "suggestionConfidence": {
+          "type": "String",
+          "optional": true
+        },
+        "refundResolution": {
+          "type": "String",
+          "optional": false,
+          "enum": [
+            "not_refund",
+            "unresolved",
+            "linked"
+          ]
+        },
+        "originalStrongKeyHint": {
+          "type": "BinaryData",
+          "optional": true,
+          "length": 32
+        },
+        "createdAtUTC": {
+          "type": "Date",
+          "optional": false
+        },
+        "updatedRevision": {
+          "type": "Integer64",
+          "optional": false
+        }
+      },
+      "unique": [
+        [
+          "id"
+        ]
+      ],
+      "indexes": [
+        [
+          "currency",
+          "occurredAtUTC",
+          "id"
+        ],
+        [
+          "refundResolution",
+          "originalStrongKeyHint"
+        ]
+      ]
+    },
+    "SourceIdentity": {
+      "attributes": {
+        "id": {
+          "type": "UUID",
+          "optional": false
+        },
+        "strongKey": {
+          "type": "BinaryData",
+          "optional": false,
+          "length": 32
+        },
+        "provider": {
+          "type": "String",
+          "optional": false
+        },
+        "namespaceID": {
+          "type": "UUID",
+          "optional": false
+        },
+        "economicDigest": {
+          "type": "BinaryData",
+          "optional": false,
+          "length": 32
+        },
+        "normalizationVersion": {
+          "type": "String",
+          "optional": false,
+          "fixed": "1"
+        }
+      },
+      "unique": [
+        [
+          "id"
+        ],
+        [
+          "strongKey"
+        ]
+      ],
+      "indexes": [
+        [
+          "namespaceID"
+        ]
+      ]
+    },
+    "SourceObservation": {
+      "attributes": {
+        "id": {
+          "type": "UUID",
+          "optional": false
+        },
+        "rowOrdinal": {
+          "type": "Integer32",
+          "optional": false,
+          "minimum": 1
+        },
+        "profileID": {
+          "type": "String",
+          "optional": false
+        },
+        "profileVersion": {
+          "type": "String",
+          "optional": false,
+          "fixed": "1"
+        },
+        "normalizationVersion": {
+          "type": "String",
+          "optional": false,
+          "fixed": "1"
+        },
+        "namespaceID": {
+          "type": "UUID",
+          "optional": false
+        },
+        "kind": {
+          "type": "String",
+          "optional": false
+        },
+        "minorUnits": {
+          "type": "Integer64",
+          "optional": false
+        },
+        "currency": {
+          "type": "String",
+          "optional": false
+        },
+        "occurredAtUTC": {
+          "type": "Date",
+          "optional": false
+        },
+        "offsetSeconds": {
+          "type": "Integer32",
+          "optional": false
+        },
+        "precision": {
+          "type": "String",
+          "optional": false
+        },
+        "sourceMerchant": {
+          "type": "String",
+          "optional": false,
+          "maxBytes": 1024
+        },
+        "sourceLocationText": {
+          "type": "String",
+          "optional": true,
+          "maxBytes": 4096
+        },
+        "economicDigest": {
+          "type": "BinaryData",
+          "optional": false,
+          "length": 32
+        },
+        "fingerprint": {
+          "type": "BinaryData",
+          "optional": false,
+          "length": 32
+        },
+        "originalStrongKeyHint": {
+          "type": "BinaryData",
+          "optional": true,
+          "length": 32
+        },
+        "decision": {
+          "type": "String",
+          "optional": false,
+          "enum": [
+            "new",
+            "link_existing",
+            "keep_separate",
+            "confirmed_duplicate"
+          ]
+        },
+        "batchID": {
+          "type": "UUID",
+          "optional": false
+        },
+        "status": {
+          "type": "String",
+          "optional": false,
+          "fixed": "settled"
+        }
+      },
+      "unique": [
+        [
+          "id"
+        ],
+        [
+          "batchID",
+          "rowOrdinal"
+        ]
+      ],
+      "indexes": [
+        [
+          "fingerprint"
+        ],
+        [
+          "namespaceID",
+          "occurredAtUTC"
+        ]
+      ]
+    },
+    "BatchReceipt": {
+      "attributes": {
+        "id": {
+          "type": "UUID",
+          "optional": false
+        },
+        "fileDigest": {
+          "type": "BinaryData",
+          "optional": false,
+          "length": 32
+        },
+        "namespaceID": {
+          "type": "UUID",
+          "optional": false
+        },
+        "profileID": {
+          "type": "String",
+          "optional": false
+        },
+        "profileVersion": {
+          "type": "String",
+          "optional": false
+        },
+        "committedAtUTC": {
+          "type": "Date",
+          "optional": false
+        },
+        "insertedCount": {
+          "type": "Integer32",
+          "optional": false
+        },
+        "duplicateCount": {
+          "type": "Integer32",
+          "optional": false
+        },
+        "skippedCount": {
+          "type": "Integer32",
+          "optional": false
+        },
+        "unresolvedCount": {
+          "type": "Integer32",
+          "optional": false
+        },
+        "resultEntryIDs": {
+          "type": "BinaryData",
+          "optional": false,
+          "encoding": "allowlisted UUID array"
+        },
+        "ledgerRevision": {
+          "type": "Integer64",
+          "optional": false
+        }
+      },
+      "unique": [
+        [
+          "id"
+        ],
+        [
+          "fileDigest"
+        ]
+      ],
+      "indexes": [
+        [
+          "committedAtUTC"
+        ]
+      ]
+    },
+    "CommandReceipt": {
+      "attributes": {
+        "id": {
+          "type": "UUID",
+          "optional": false
+        },
+        "requestDigest": {
+          "type": "BinaryData",
+          "optional": false,
+          "length": 32
+        },
+        "commandKind": {
+          "type": "String",
+          "optional": false
+        },
+        "committedAtUTC": {
+          "type": "Date",
+          "optional": false
+        },
+        "resultEntryIDs": {
+          "type": "BinaryData",
+          "optional": false,
+          "encoding": "allowlisted UUID array"
+        },
+        "ledgerRevision": {
+          "type": "Integer64",
+          "optional": false
+        },
+        "storeEpoch": {
+          "type": "UUID",
+          "optional": false
+        },
+        "batchID": {
+          "type": "UUID",
+          "optional": true
+        }
+      },
+      "unique": [
+        [
+          "id"
+        ]
+      ],
+      "indexes": [
+        [
+          "committedAtUTC"
+        ]
+      ]
+    },
+    "RefundLink": {
+      "attributes": {
+        "id": {
+          "type": "UUID",
+          "optional": false
+        },
+        "refundID": {
+          "type": "UUID",
+          "optional": false
+        },
+        "originalID": {
+          "type": "UUID",
+          "optional": false
+        },
+        "linkedAtUTC": {
+          "type": "Date",
+          "optional": false
+        },
+        "revision": {
+          "type": "Integer64",
+          "optional": false
+        }
+      },
+      "unique": [
+        [
+          "id"
+        ],
+        [
+          "refundID"
+        ]
+      ],
+      "indexes": [
+        [
+          "originalID"
+        ]
+      ]
+    },
+    "Category": {
+      "attributes": {
+        "id": {
+          "type": "UUID",
+          "optional": false
+        },
+        "name": {
+          "type": "String",
+          "optional": false,
+          "maxBytes": 128
+        },
+        "retired": {
+          "type": "Boolean",
+          "optional": false
+        },
+        "catalogVersion": {
+          "type": "String",
+          "optional": false
+        }
+      },
+      "unique": [
+        [
+          "id"
+        ]
+      ],
+      "indexes": [
+        [
+          "retired"
+        ]
+      ]
+    },
+    "CategoryOverride": {
+      "attributes": {
+        "id": {
+          "type": "UUID",
+          "optional": false
+        },
+        "entryID": {
+          "type": "UUID",
+          "optional": false
+        },
+        "categoryID": {
+          "type": "UUID",
+          "optional": false
+        },
+        "createdAtUTC": {
+          "type": "Date",
+          "optional": false
+        },
+        "revision": {
+          "type": "Integer64",
+          "optional": false
+        }
+      },
+      "unique": [
+        [
+          "id"
+        ]
+      ],
+      "indexes": [
+        [
+          "entryID",
+          "revision"
+        ]
+      ]
+    },
+    "MerchantMapping": {
+      "attributes": {
+        "id": {
+          "type": "UUID",
+          "optional": false
+        },
+        "merchantKey": {
+          "type": "String",
+          "optional": false,
+          "maxBytes": 1024
+        },
+        "categoryID": {
+          "type": "UUID",
+          "optional": false
+        },
+        "revision": {
+          "type": "Integer64",
+          "optional": false
+        }
+      },
+      "unique": [
+        [
+          "id"
+        ],
+        [
+          "merchantKey"
+        ]
+      ],
+      "indexes": []
+    },
+    "LocationEvidence": {
+      "attributes": {
+        "id": {
+          "type": "UUID",
+          "optional": false
+        },
+        "entryID": {
+          "type": "UUID",
+          "optional": false
+        },
+        "kind": {
+          "type": "String",
+          "optional": false,
+          "enum": [
+            "source_provided_historical",
+            "user_entered_historical",
+            "device_current"
+          ]
+        },
+        "text": {
+          "type": "String",
+          "optional": true,
+          "maxBytes": 4096
+        },
+        "latitude": {
+          "type": "Double",
+          "optional": true
+        },
+        "longitude": {
+          "type": "Double",
+          "optional": true
+        },
+        "collectedAtUTC": {
+          "type": "Date",
+          "optional": true
+        },
+        "accuracyMeters": {
+          "type": "Double",
+          "optional": true
+        },
+        "consentPurpose": {
+          "type": "String",
+          "optional": true
+        },
+        "consentAtUTC": {
+          "type": "Date",
+          "optional": true
+        },
+        "authorizationSnapshot": {
+          "type": "String",
+          "optional": true
+        }
+      },
+      "unique": [
+        [
+          "id"
+        ]
+      ],
+      "indexes": [
+        [
+          "entryID"
+        ]
+      ]
+    }
+  },
+  "relationships": [
+    [
+      "AccountNamespace",
+      "sources",
+      "SourceIdentity",
+      "namespace",
+      "1",
+      "0..N"
+    ],
+    [
+      "AccountNamespace",
+      "observations",
+      "SourceObservation",
+      "namespace",
+      "1",
+      "0..N"
+    ],
+    [
+      "AccountNamespace",
+      "batches",
+      "BatchReceipt",
+      "namespace",
+      "1",
+      "0..N"
+    ],
+    [
+      "Entry",
+      "identity",
+      "SourceIdentity",
+      "entry",
+      "1",
+      "0..1"
+    ],
+    [
+      "Entry",
+      "observations",
+      "SourceObservation",
+      "entry",
+      "1",
+      "0..N"
+    ],
+    [
+      "BatchReceipt",
+      "observations",
+      "SourceObservation",
+      "batch",
+      "1",
+      "0..N"
+    ],
+    [
+      "SourceIdentity",
+      "observations",
+      "SourceObservation",
+      "identity",
+      "0..1",
+      "1..N"
+    ],
+    [
+      "Entry",
+      "refundLinks",
+      "RefundLink",
+      "original",
+      "1",
+      "0..N"
+    ],
+    [
+      "Entry",
+      "asRefundLink",
+      "RefundLink",
+      "refund",
+      "1",
+      "0..1"
+    ],
+    [
+      "Category",
+      "entries",
+      "Entry",
+      "category",
+      "1",
+      "0..N"
+    ],
+    [
+      "Entry",
+      "overrides",
+      "CategoryOverride",
+      "entry",
+      "1",
+      "0..N"
+    ],
+    [
+      "Category",
+      "overrides",
+      "CategoryOverride",
+      "category",
+      "1",
+      "0..N"
+    ],
+    [
+      "Category",
+      "mappings",
+      "MerchantMapping",
+      "category",
+      "1",
+      "0..N"
+    ],
+    [
+      "Entry",
+      "locations",
+      "LocationEvidence",
+      "entry",
+      "1",
+      "0..N"
+    ],
+    [
+      "Entry",
+      "selectedLocation",
+      "LocationEvidence",
+      "selectedByEntry",
+      "0..1",
+      "0..1"
+    ],
+    [
+      "Entry",
+      "effectiveOverride",
+      "CategoryOverride",
+      "effectiveForEntry",
+      "0..1",
+      "0..1"
+    ],
+    [
+      "BatchReceipt",
+      "commands",
+      "CommandReceipt",
+      "batch",
+      "0..1",
+      "1..N"
+    ]
+  ],
+  "relationship_notation": "[leftEntity,leftProperty,rightEntity,inverseProperty,leftMultiplicityPerRight,rightMultiplicityPerLeft]",
+  "delete_rules": "Deny for all to-many ownership/referenced edges; Nullify only optional selectedLocation/effectiveOverride pointers. No hard-delete command in module v1. Explicit store replacement only under maintenance. All inverses explicit.",
+  "invariants": [
+    "Scalar UUID FKs agree with relationship destination; validate on writer and restore",
+    "Every SourceIdentity has one Entry and >=1 SourceObservation; manual Entry has none",
+    "SourceObservation always has one BatchReceipt, AccountNamespace and Entry; identity optional for no-ID",
+    "RefundLink.original/refund are different Entry instances with spend/refund kinds and same currency; refund amount negative, original positive; aggregate cap enforced in writer",
+    "Every Entry has one Category, selectedLocation/effectiveOverride must belong to same Entry",
+    "No managed-object validation can replace aggregate transaction checks",
+    "StoreMetadata singleton and key presence required before reads/writes"
+  ],
+  "storage_rules": [
+    "No transformable or insecure unarchive; binary arrays decoded data-only with quotas",
+    "No raw provider ID/account credentials/raw file/filename/path persisted",
+    "HMAC bytes and file hashes are sensitive protected evidence; no logs",
+    "Core Data uniqueness/index descriptions are logical design; generated xcdatamodel and migration/build NOT_RUN",
+    "BinaryData hashes fixed 32 bytes validated by writer; Integer64 revision checked <=Int64.max",
+    "All non-optional fields required unless explicitly optional; defaults supplied by writer, not guessed by migration"
+  ]
+}

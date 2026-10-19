@@ -1,0 +1,48 @@
+name: PADF V0.3 specialist design validation
+
+on:
+  pull_request:
+    paths:
+      - 'AGENTS.md'
+      - 'README.md'
+      - '.agents/**'
+      - 'contracts/**'
+      - 'workflow/**'
+      - 'governance/**'
+      - 'integrations/**'
+      - 'lib/**'
+      - 'tests/v0.3/**'
+      - 'scripts/**'
+      - 'examples/**'
+      - '.github/workflows/v0.3-design-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  specialist-design:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Structural references and contract markers
+        run: node scripts/validate-cacf.mjs
+      - name: Design gate and tests syntax
+        run: |
+          node --check lib/design-gate.mjs
+          node --check tests/v0.3/run-tests.mjs
+          node --check lib/orchestration-evidence.mjs
+          node --check lib/skill-delivery-quality.mjs
+          node --check tests/v0.3/run-orchestration-tests.mjs
+          node --check tests/v0.3/run-skill-quality-tests.mjs
+      - name: Specialized agent routing and dependency tests
+        run: node tests/v0.3/run-tests.mjs
+      - name: Master orchestration dispatch provenance fixture tests
+        run: node tests/v0.3/run-orchestration-tests.mjs
+      - name: Independent Owner quality sheet metadata tests
+        run: node tests/v0.3/run-skill-quality-tests.mjs
+      - name: Master-led expense pilot dependency and artifact checks
+        run: node tests/v0.3/verify-expense-pilot.mjs

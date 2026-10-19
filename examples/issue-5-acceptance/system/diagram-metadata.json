@@ -1,0 +1,201 @@
+{
+  "source_sha": "f4dbf0d3fac707db1b57252c529618c38d26f0bc",
+  "generator": "diagram-design",
+  "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+  "font_source": "system",
+  "figures": [
+    {
+      "slug": "system-trust",
+      "title": "Local ledger, explicit boundaries",
+      "type": "Architecture",
+      "nodes": 9,
+      "edges": 8,
+      "relationships": [
+        [
+          "user",
+          "presentation"
+        ],
+        [
+          "presentation",
+          "application"
+        ],
+        [
+          "application",
+          "persistence"
+        ],
+        [
+          "file",
+          "import_adapter"
+        ],
+        [
+          "application",
+          "import_adapter"
+        ],
+        [
+          "application",
+          "category_rules"
+        ],
+        [
+          "application",
+          "location_adapter"
+        ],
+        [
+          "application",
+          "backup_adapter"
+        ]
+      ]
+    },
+    {
+      "slug": "technical-deployment",
+      "title": "One iPhone. One native process.",
+      "type": "Deployment",
+      "nodes": 5,
+      "edges": 4,
+      "relationships": [
+        [
+          "runtime",
+          "store"
+        ],
+        [
+          "runtime",
+          "location"
+        ],
+        [
+          "runtime",
+          "auth"
+        ],
+        [
+          "runtime",
+          "provider"
+        ]
+      ]
+    },
+    {
+      "slug": "package-core",
+      "title": "Packages point inward",
+      "type": "Dependency graph",
+      "nodes": 6,
+      "edges": 7,
+      "relationships": [
+        [
+          "App",
+          "LedgerPresentation"
+        ],
+        [
+          "App",
+          "adapters"
+        ],
+        [
+          "LedgerPresentation",
+          "DesignSystem"
+        ],
+        [
+          "LedgerPresentation",
+          "LedgerApplication"
+        ],
+        [
+          "adapters",
+          "LedgerApplication"
+        ],
+        [
+          "LedgerApplication",
+          "LedgerDomain"
+        ],
+        [
+          "adapters",
+          "LedgerDomain"
+        ]
+      ]
+    },
+    {
+      "slug": "package-adapters",
+      "title": "Five adapters, two shared contracts",
+      "type": "Dependency graph",
+      "nodes": 7,
+      "edges": 10,
+      "relationships": [
+        [
+          "LedgerPersistence",
+          "LedgerApplication"
+        ],
+        [
+          "LedgerPersistence",
+          "LedgerDomain"
+        ],
+        [
+          "BillImport",
+          "LedgerApplication"
+        ],
+        [
+          "BillImport",
+          "LedgerDomain"
+        ],
+        [
+          "CategoryRules",
+          "LedgerApplication"
+        ],
+        [
+          "CategoryRules",
+          "LedgerDomain"
+        ],
+        [
+          "LocationAccess",
+          "LedgerApplication"
+        ],
+        [
+          "LocationAccess",
+          "LedgerDomain"
+        ],
+        [
+          "BackupArchive",
+          "LedgerApplication"
+        ],
+        [
+          "BackupArchive",
+          "LedgerDomain"
+        ]
+      ]
+    },
+    {
+      "slug": "import-workflow",
+      "title": "Review first. Commit atomically.",
+      "type": "Flowchart",
+      "nodes": 9,
+      "edges": 8,
+      "relationships": [
+        [
+          "select",
+          "validate"
+        ],
+        [
+          "validate",
+          "review"
+        ],
+        [
+          "validate",
+          "unsupported"
+        ],
+        [
+          "review",
+          "confirm"
+        ],
+        [
+          "confirm",
+          "commit"
+        ],
+        [
+          "confirm",
+          "cancel"
+        ],
+        [
+          "commit",
+          "success"
+        ],
+        [
+          "commit",
+          "rollback"
+        ]
+      ]
+    }
+  ]
+}

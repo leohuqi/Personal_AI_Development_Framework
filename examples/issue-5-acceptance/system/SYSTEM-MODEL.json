@@ -1,0 +1,162 @@
+{
+  "schema_version": "padf.system-model/v1",
+  "version": "0.1",
+  "status": "PROPOSED",
+  "context_id": "PADF-ISSUE-5-EXPENSE-ACCEPTANCE",
+  "authoritative_spec": "SYSTEM-BASELINE.md",
+  "zones": {
+    "external": [
+      "user",
+      "exported_file",
+      "os_file_provider"
+    ],
+    "device_sandbox": [
+      "presentation",
+      "application",
+      "import_adapter",
+      "category_rules",
+      "location_adapter",
+      "persistence",
+      "backup_adapter"
+    ],
+    "os_trusted": [
+      "core_location",
+      "protected_files",
+      "device_auth"
+    ]
+  },
+  "components": {
+    "presentation": {
+      "technology": "SwiftUI",
+      "owns": "screen state"
+    },
+    "application": {
+      "technology": "Swift 6.2",
+      "owns": "use-case coordination"
+    },
+    "import_adapter": {
+      "technology": "Foundation",
+      "owns": "profile registry and validation"
+    },
+    "category_rules": {
+      "technology": "Swift",
+      "owns": "local suggestions"
+    },
+    "location_adapter": {
+      "technology": "Core Location",
+      "owns": "foreground sample adapter"
+    },
+    "persistence": {
+      "technology": "Core Data SQLite store",
+      "owns": "canonical ledger"
+    },
+    "backup_adapter": {
+      "technology": "CryptoKit + CommonCrypto",
+      "owns": "versioned encrypted archive"
+    }
+  },
+  "flows": [
+    [
+      "user",
+      "presentation",
+      "manual entry / review / explicit consent"
+    ],
+    [
+      "exported_file",
+      "import_adapter",
+      "untrusted selected copy"
+    ],
+    [
+      "presentation",
+      "application",
+      "versioned commands/results"
+    ],
+    [
+      "application",
+      "import_adapter",
+      "preview"
+    ],
+    [
+      "application",
+      "category_rules",
+      "suggestion request"
+    ],
+    [
+      "application",
+      "location_adapter",
+      "only explicit current-location request"
+    ],
+    [
+      "location_adapter",
+      "core_location",
+      "when-in-use OS permission"
+    ],
+    [
+      "application",
+      "persistence",
+      "atomic ledger transaction"
+    ],
+    [
+      "application",
+      "backup_adapter",
+      "explicit backup or restore"
+    ],
+    [
+      "backup_adapter",
+      "os_file_provider",
+      "encrypted archive only"
+    ]
+  ],
+  "invariants": [
+    "current GPS never implies historical purchase location",
+    "user override outranks category suggestion",
+    "provider evidence preserved alongside edits",
+    "ambiguous duplicate requires review",
+    "import commits all-or-nothing",
+    "no provider login or network API"
+  ],
+  "deployment": {
+    "host": "single iPhone",
+    "processes": 1,
+    "network_endpoints": [],
+    "runtime": "iOS 17+",
+    "build": "Xcode 26.0 / Swift 6.2 / iOS 26 SDK"
+  },
+  "package_dependencies": {
+    "LedgerPresentation": [
+      "LedgerApplication",
+      "DesignSystem"
+    ],
+    "LedgerApplication": [
+      "LedgerDomain"
+    ],
+    "LedgerPersistence": [
+      "LedgerApplication",
+      "LedgerDomain"
+    ],
+    "BillImport": [
+      "LedgerApplication",
+      "LedgerDomain"
+    ],
+    "CategoryRules": [
+      "LedgerApplication",
+      "LedgerDomain"
+    ],
+    "LocationAccess": [
+      "LedgerApplication",
+      "LedgerDomain"
+    ],
+    "BackupArchive": [
+      "LedgerApplication",
+      "LedgerDomain"
+    ],
+    "App": [
+      "LedgerPresentation",
+      "LedgerPersistence",
+      "BillImport",
+      "CategoryRules",
+      "LocationAccess",
+      "BackupArchive"
+    ]
+  }
+}

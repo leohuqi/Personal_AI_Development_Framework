@@ -6,7 +6,7 @@ description: Resolve minimal task-centered shared context, persist traceable age
 # Context Coordinator (PADF V0.2)
 
 ## Purpose
-This is a reusable **procedural Skill**, not an agent daemon, tool API, messaging service or automatic dispatcher. It supports cross-session continuity and asynchronous communication among Master, Architect, UI Designer, Coder, QA and Reviewer by referencing authoritative GitHub/Linear records.
+This is a reusable **procedural Skill**, not an agent daemon, tool API, messaging service or automatic dispatcher. It supports cross-session continuity and asynchronous communication among Master, Solution Architect, Module Architect, UI Designer, Coder, QA and Reviewer by referencing authoritative GitHub/Linear records.
 
 ## Inputs
 Project/repository, task/Linear issue URL or ID, original immutable Feature ID, task objective, agent role, existing Owner approval/Task Contract if executing a coding task, and any existing shared-context/checkpoint/handoff/message links.
@@ -41,8 +41,17 @@ Project/repository, task/Linear issue URL or ID, original immutable Feature ID, 
 - On new session, re-fetch **live** sources; never assume resumed execution is safe simply because checkpoint says In Progress.
 - Fresh-context Reviewer only consumes approved requirements, exact PR diff and verifiable evidence; do not preload Coder's reasoning or accept self-review.
 
+## V0.3 specialist artifacts and dependencies
+- Link versioned APP-wide Solution Architecture Baseline, Module Code Design Package and UI Design Package, exact system_baseline_ref, actual diagrams/prototype assets, project UI Profile and Stage Dependency manifest in Shared Task Context by references only.
+- Before design Handoff/resume compare approved SYSTEM baseline SHA, affected module design source Feature Spec/API/schema/UI Profile SHA to the package and DESIGN review evidence; on drift mark STALE/BLOCKED and route to Master.
+- Do not create a second Handoff/message protocol, auto-activate specialist agents or reclassify a proposal as approved.
+
 ## Output
 Concise context_id, authoritative refs/revisions, observed task/head state, pending message refs, verified checkpoint/handoff permalinks, risk/blocker status and next responsible role. Distinguish CREATED/PERSISTED from DRAFT/NOT_PERSISTED.
 
 ## Safety
 No background orchestration, automatic agent wake-up, auto dispatch, new storage server or A2A runtime in V0.2. No authorization escalation, deployment, destructive operations or merge by inference. Follow workflow/context-communication.md and governance/approval-policy.md.
+
+
+## V0.3 orchestrated dispatch evidence
+Manage durable `dispatch_id`, `execution_id`, Handoff and Master reconciliation refs using [Agent Dispatch Contract](../../../contracts/agent-dispatch.md). Store execution mode and provenance without manufacturing runtime IDs or claiming posted TASK_REQUEST auto-woke recipients. A Master decision/comment authored in the same session as all designer outputs remains ROLE_SIMULATION. On resume verify prior Handoff, current approval and artifact SHA **before** treating a downstream dispatch as allowed. Relay only minimal context and exact Skill@SHA; do not copy another agent's private transcript into the specialist session.

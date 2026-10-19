@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * PADF V0.2 CACF structural validator. No external dependencies.
+ * PADF V0.2 CACF + V0.3 specialized agent structural validator. No external dependencies.
  * Verifies required framework artifacts, local Markdown links, required
  * schema markers, and role integration. Does not run agent runtime/CI/Linear.
  */
@@ -31,6 +31,29 @@ const required = [
   ".agents/skills/independent-reviewer/SKILL.md",
   "examples/pqa/ADOPTION.md",
   "examples/pqa/CONTEXT-COLLABORATION.md",
+  "workflow/design-collaboration.md",
+  "workflow/master-orchestration-validation.md",
+  "contracts/agent-dependency.md",
+  "contracts/architecture-design.md",
+  "contracts/solution-architecture.md",
+  "contracts/module-design.md",
+  "contracts/agent-dispatch.md",
+  "contracts/skill-delivery-evaluation.md",
+  "contracts/ui-design.md",
+  "contracts/project-ui-profile.md",
+  "contracts/design-gate.md",
+  "integrations/diagram-design.md",
+  "integrations/diagram-design.lock.json",
+  ".agents/skills/solution-architect/SKILL.md",
+  ".agents/skills/module-architect/SKILL.md",
+  ".agents/skills/ui-ux-designer/SKILL.md",
+  "lib/design-gate.mjs",
+  "lib/orchestration-evidence.mjs",
+  "lib/skill-delivery-quality.mjs",
+  "templates/agent-dispatch.md",
+  "tests/v0.3/run-orchestration-tests.mjs",
+  "tests/v0.3/run-skill-quality-tests.mjs",
+  "tests/v0.3/run-tests.mjs",
 ];
 
 const schemaChecks = new Map([
@@ -38,6 +61,15 @@ const schemaChecks = new Map([
   ["contracts/agent-message.md", "padf.agent-message/v1"],
   ["contracts/context-checkpoint.md", "padf.context-checkpoint/v1"],
   ["contracts/agent-handoff.md", "padf.agent-handoff/v1"],
+  ["contracts/agent-dependency.md", "padf.agent-dependency/v1"],
+  ["contracts/design-gate.md", "padf.design-gate/v1"],
+  ["contracts/architecture-design.md", "padf.architecture-design/v1"],
+  ["contracts/solution-architecture.md", "padf.solution-architecture/v1"],
+  ["contracts/module-design.md", "padf.module-design/v1"],
+  ["contracts/agent-dispatch.md", "padf.agent-dispatch/v1"],
+  ["contracts/skill-delivery-evaluation.md", "padf.skill-delivery-evaluation/v1"],
+  ["contracts/ui-design.md", "padf.ui-design/v1"],
+  ["contracts/project-ui-profile.md", "padf.ui-profile/v1"],
 ]);
 
 const errors = [];
@@ -65,6 +97,18 @@ for (const rel of required) {
 }
 for (const [rel, needle] of [
   ["README.md", "context-coordinator"],
+  ["README.md", "solution-architect"],
+  ["README.md", "module-architect"],
+  ["README.md", "master-orchestration-validation"],
+  [".agents/skills/master-orchestrator/SKILL.md", "DISPATCH"],
+  ["workflow/master-orchestration-validation.md", "HUMAN_RELAY"],
+  ["workflow/agent-routing.md", "architecture_scope"],
+  ["contracts/task-contract.md", "system_baseline_ref"],
+  [".agents/skills/module-architect/SKILL.md", "system_baseline_ref"],
+  ["workflow/design-collaboration.md", "Independent Reviewer"],
+  [".agents/skills/master-orchestrator/SKILL.md", "Design Gate"],
+  [".agents/skills/ui-ux-designer/SKILL.md", "UI Design Profile"],
+  [".agents/skills/solution-architect/SKILL.md", "diagram-design"],
   ["workflow/WORKFLOW.md", "Context Readiness"],
   ["contracts/task-contract.md", "context_id"],
   ["contracts/delivery-report.md", "context_id"],
@@ -84,5 +128,5 @@ if (errors.length) {
   console.error(errors.length + " CACF validation problem(s)");
   process.exitCode = 1;
 } else {
-  console.log("PASS PADF V0.2 CACF structural validation (" + required.length + " framework files and local links)");
+  console.log("PASS PADF CACF V0.2 + V0.3 design structural validation (" + required.length + " framework files and local links)");
 }

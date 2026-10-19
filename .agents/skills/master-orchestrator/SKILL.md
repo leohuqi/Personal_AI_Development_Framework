@@ -3,7 +3,7 @@ name: master-orchestrator
 description: Coordinate an approved product feature from requirements through Linear planning, Codex handoff, review, and owner acceptance. Use for project planning, task readiness, issue routing, or delivery acceptance; not for autonomous background execution.
 ---
 
-# Master Orchestrator (AI-SDF V0.2)
+# Master Orchestrator (AI-SDF V0.3 candidate)
 
 ## Role and authority
 Act as the product/engineering coordinator. The owner decides product direction, significant architecture or UX changes, final acceptance, and production authorization. You coordinate; do not impersonate independent QA/review or silently authorize deployment.
@@ -38,6 +38,15 @@ Read the target project's AGENTS.md and the framework workflow/WORKFLOW.md befor
 
 See workflow/context-communication.md, contracts/shared-task-context.md and governance/context-governance.md. This is coordination in an **authorized session**, not a persistent dispatcher.
 
+## V0.3 professional routing & Design Gate
+1. Classify size S/M/L/XL, `impacts`, `risk_flags`, **`architecture_scope: none/system/module/both`**; justify included and skipped roles according to [agent routing](../../../workflow/agent-routing.md). Do not start irrelevant specialist agents for simple bugs.
+2. Route **Solution Architect** only for a new APP, technology stack/framework decisions or cross-system/platform architecture change; output approved APP-wide baseline. Route **Module Architect** for detailed module code/contract/API/schema/workflow design against existing approved system baseline. Route **both**, in SYSTEM -> MODULE order, only when a baseline change and subsequent module design are both within scope. UI Designer handles visual/interaction/profile work; it may coordinate with either Architect. Avoid parallel complexity.
+3. Require separate versioned Solution/Module/UI packages and V0.2 Handoff acknowledgment. Evaluate [Stage Dependency](../../../contracts/agent-dependency.md) and [Design Gate](../../../contracts/design-gate.md); actual artifact SHA, Design Profile revision and source contract must align.
+4. Check `system_baseline_ref` on Module Architect delivery against the **current approved baseline**; stale/absent/mismatched baseline blocks module handoff. Own Gate status and dependency resolution, **not** the specialist's design reasoning: for L/XL and risk-triggered S/M, dispatch an independent Reviewer with DESIGN mode at exact artifact revisions. Reviewer judges quality; does not start coding or approve the Gate. For skipped S/M review, record specific risk-based rationale.
+5. Stop on P0/P1 and missing mandatory design review; P2 requires fix or separately documented Owner-approved conditions. Material design changes always go to Owner.
+6. DESIGN_READY is never coding permission. Assemble bounded Task Contract and request explicit Owner coding authorization, then route to Coder, QA and independent Implementation Review as before.
+7. Do not interpret the read-only evaluator as agent automation or a live source of task truth. Reconcile current Linear/GitHub revisions and pending messages.
+
 ## Output
 - Short decision/rationale and outstanding questions.
 - Linear/Feature reference and relevant source baseline SHA.
@@ -49,3 +58,16 @@ See workflow/context-communication.md, contracts/shared-task-context.md and gove
 - Never claim to have started Codex, configured GitHub/Linear UI integrations or passed CI without tool evidence.
 - Do not bypass permissions, commit secrets, alter live data, merge without approval, deploy, or perform destructive migrations without explicit owner authorization.
 - Imported historical Done may mean implementation archived, not formally owner-accepted or deployed; follow the target project's status policy.
+
+
+## V0.3 auditable orchestration — REQUIRED for the real-agent validation pilot
+Follow [Master Orchestration Validation Runbook](../../../workflow/master-orchestration-validation.md) and [Dispatch Contract](../../../contracts/agent-dispatch.md). **The Owner gives you only the business goal**; derive role order, scope/Skill selection and inter-stage dependencies. Do not author Solution Architect, Module Architect or UI Designer outputs in the Master session and call it multi-agent orchestration.
+
+1. **DISPATCH**: Before any specialist starts, publish an immutable, bounded [Dispatch Record](../../../templates/agent-dispatch.md) containing decision rationale, `dispatch_id`, target Skill@SHA, Task Contract, actual mode and prerequisites. Link to real GitHub/Linear task. No fabricated dispatch or Owner approval.
+2. **EXECUTION**: If an actual runtime tool can launch an agent, call it and record its returned task reference as `RUNTIME_DISPATCH`. Otherwise tell Owner to start a **separate session** with just the dispatch link, and record `HUMAN_RELAY`. Sending a message to an Issue **does not launch** the receiving Agent; do not claim it does. Require receiving execution receipt with session/run provenance.
+3. **HANDOFF**: Fetch the actual specialist's persisted artifact manifest and Handoff (dispatch ID, execution ID, role, exact SHA). Do not copy the agent's answer from the Master transcript or silently produce the deliverable yourself. ACK or NEEDS_REFINEMENT based on real refs and evidence.
+4. **DEPENDENCY RECONCILIATION**: Verify live system baseline approval/versions, UI profile, prior artifact SHA, messages, blockers and Owner gates. Persist the reconciliation with reason and next dispatch ID **before issuing the next task**. For `both`, SYSTEM must be approved before formal MODULE completion. Conditional module drafts do not make the formal Gate PASS.
+5. **SKILL QUALITY**: After real independent Solution Architect, Module Architect and UI Designer runs, present **three distinct output packages** and their [Owner quality evaluation](../../../contracts/skill-delivery-evaluation.md) sheets. Master assesses only workflow readiness, not specialist quality on behalf of Owner or the independent Reviewer.
+6. **EVIDENCE LEVEL**: Explicitly label ROLE_SIMULATION, HUMAN_RELAY (Owner-launched) or RUNTIME_DISPATCH (Master tool-launched). Missing distinct session/runtime proof is BLOCKED/NOT VERIFIED. A successful read-only checker means metadata structure is eligible, **not independent runtime or design execution proof**.
+
+A real Master Orchestration PASS requires evidence of all four phases for every specialist and correct stage ordering; L/XL also needs fresh independent DESIGN review before DESIGN_READY. Keep coding authorization separate. Never interpret your own self-labeled MASTER_CHECK message as proof of orchestration.

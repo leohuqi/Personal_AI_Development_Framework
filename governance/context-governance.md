@@ -11,7 +11,9 @@
 ## Ownership / edit rights
 - Owner: final product/UX/architecture exceptions, coding authorization, acceptance and dangerous production actions as specified in approval-policy.md.
 - Master: assembles/reconciles STC, routes questions, triages conflicts and proposes decisions; cannot invent Owner approval.
-- Architect/UI Designer/Product Analyst: propose relevant contracts and record approved revisions only under the existing design governance.
+- Solution Architect: proposes/revises APP-wide technical stack, boundaries and high-level code architecture baseline; Owner approves major decisions.
+- Module Architect: proposes detailed code/package/interface design only under the exact approved system baseline; cannot override technology or boundary decisions.
+- UI Designer/Product Analyst: propose relevant contracts and record approved revisions only under the existing design governance.
 - Coder: implement authorized scope, publish artifact refs and handoff, no owner Done, no unauthorized deployments.
 - QA/Reviewer: independent findings and evidence; cannot silently edit product baseline or declare owner acceptance.
 
@@ -45,3 +47,16 @@
 
 ## Acceptance boundaries
 The following are **distinct evidence states**: implementation completed; CI green; QA PASS; independent review approved; PR merged; Owner accepted; deployed. Do not infer one from another. A missing artifact/test is NOT RUN/UNKNOWN, not PASS. See approval-policy.md and WORKFLOW.md.
+
+## V0.3 design source-of-truth additions
+- Database: authoritative schema/DDL/migration and approved model at exact revision; HTML/SVG ER/schema drawing is a traceable visualization **not** the authoritative schema.
+- API: exact approved OpenAPI/API contract; sequence/integration diagram must match endpoint and failure semantics.
+- UI: each product owns its own approved [Project UI Profile](../contracts/project-ui-profile.md); Feature UI designs pin profile/real component versions. Site-specific exceptions need written approval, not a global PADF style override.
+- Diagram-design is third-party external skill, not bundled; lock version and verify installation/use before saying diagram was generated.
+- Design Gate is separate from specialist COMPLETED and Owner coding authorization; exact upstream revisions invalidate affected downstream design/review gates.
+
+## V0.3 system/module source precedence
+- [Solution Architecture Baseline](../contracts/solution-architecture.md) is authoritative for approved APP-wide technology/framework, logical boundaries, top-level modules and architecture rules; it is not per-module code implementation guidance.
+- [Module Design Package](../contracts/module-design.md) is subordinate to the exact approved system baseline and defines module package/interface/flow and test design. Contradiction -> BLOCKED + Master routes system-level decision, not silent overwriting.
+- A baseline revision makes dependent module artifacts and affected independent DESIGN review STALE until revalidated. For combined system/module scope, approved SYSTEM precedes MODULE; check version match.
+- Master routes based on actual impact, not automatic invocation of both Architects on L/XL. Existing V0.2 communication and Owner approval boundaries remain unchanged.

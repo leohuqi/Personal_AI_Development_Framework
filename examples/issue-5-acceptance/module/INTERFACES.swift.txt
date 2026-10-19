@@ -1,0 +1,81 @@
+// Precise typed DESIGN PSEUDOCODE, Swift 6.2 intent. Not a compiled app/API claim.
+// Envelope schema v1. All DTOs Sendable; no NSManagedObject or file URL in UI DTOs.
+struct Money: Sendable { let minorUnits: Int64; let currency: CurrencyCode }
+struct Revision: Sendable, Equatable { let storeEpoch: UUID; let ledger: UInt64 }
+struct RowToken: Sendable, Hashable { let batchID: UUID; let ordinal: Int }
+struct Receipt: Sendable { let commandID: UUID; let batchID: UUID?; let entryIDs: [UUID]; let revision: Revision; let inserted: Int; let duplicates: Int; let unresolvedRefunds: Int; let cleanupPending: Bool }
+struct Failure: Sendable { let code: ErrorCode; let recovery: Recovery; let safeMessageKey: String; let rowOrdinal: Int? }
+enum Recovery: Sendable { case edit, reselectFile, reviewAgain, retryAfterUnlock, retryAfterFreeSpace, optionalLocation, recoveryReadOnly, none }
+enum ResultV1<T: Sendable>: Sendable { case success(commandID: UUID, value: T); case failure(commandID: UUID, error: Failure) }
+enum EntryKind: Sendable { case spend, refund }
+enum CategoryChoice: Sendable { case suggested(categoryID: UUID, ruleVersion: String, reason: String), user(categoryID: UUID) }
+enum DuplicateDecision: Sendable { case new, linkExisting(UUID), keepSeparate, skip }
+enum RefundDecision: Sendable { case notRefund, link(originalID: UUID), retainUnresolved, skip }
+struct ManualDraft: Sendable { let amount: Money; let kind: EntryKind; let merchant: String; let occurredAtUTC: Date; let originalOffsetSeconds: Int32; let zoneID: String?; let fold: UInt8?; let category: CategoryChoice; let historicalLocation: HistoricalInput?; let currentObservation: CurrentObservation?; let originalForRefund: UUID? }
+struct SaveManual: Sendable { let schemaVersion: Int /*1*/; let commandID: UUID; let expected: Revision; let draft: ManualDraft }
+struct PreviewImport: Sendable { let commandID: UUID; let selection: SelectedFileHandle; let namespaceID: UUID; let provider: Provider }
+// SelectedFileHandle is opaque app/file-picker token. Adapter bounded-copies via security-scoped access; closes access on all outcomes.
+struct Preview: Sendable { let batchID: UUID; let reviewRevision: UInt64; let basedOn: Revision; let profile: ProfileVersion; let rows: [ReviewRow]; let expiresAt: Date; let counts: ReviewCounts }
+struct ReviewRow: Sendable { let token: RowToken; let source: ReadonlySourceSummary; let suggestion: Suggestion?; let duplicateCandidates: [UUID]; let refundCandidates: [UUID]; let issues: [ErrorCode]; let defaultIncluded: Bool }
+struct RowDecision: Sendable { let token: RowToken; let included: Bool; let editedDraft: EditableFields; let category: CategoryChoice; let duplicate: DuplicateDecision; let refund: RefundDecision }
+struct CommitImport: Sendable { let schemaVersion: Int /*1*/; let commandID: UUID; let batchID: UUID; let reviewRevision: UInt64; let basedOn: Revision; let decisions: [RowDecision] }
+struct OverrideCategory: Sendable { let commandID: UUID; let expected: Revision; let entryID: UUID; let categoryID: UUID; let alsoRememberMerchant: Bool }
+struct LinkRefund: Sendable { let commandID: UUID; let expected: Revision; let refundID: UUID; let originalID: UUID }
+struct LedgerQuery: Sendable { let currency: CurrencyCode; let cursor: LedgerCursor?; let limit: Int /*1...100*/ }
+struct LedgerPage: Sendable { let entries: [ExpenseRecordDTO]; let next: LedgerCursor?; let revision: Revision; let currencyTotals: CheckedTotals }
+// Cursor binds storeEpoch + ledgerRevision + occurredAtUTC + entryUUID. Stale cursor -> STALE_REVIEW/restart; deterministic keyset order.
+protocol ExpenseCommands: Sendable {
+ func saveManual(_ request: SaveManual) async -> ResultV1<Receipt>
+ func previewImport(_ request: PreviewImport) async -> ResultV1<Preview>
+ func reviseReview(batchID: UUID, expectedReview: UInt64, decisions: [RowDecision]) async -> ResultV1<Preview>
+ func commitImport(_ request: CommitImport) async -> ResultV1<Receipt>
+ func cancelReview(batchID: UUID) async -> ResultV1<CancelOutcome>
+ func overrideCategory(_ request: OverrideCategory) async -> ResultV1<Receipt>
+ func linkRefund(_ request: LinkRefund) async -> ResultV1<Receipt>
+ func entries(_ query: LedgerQuery) async -> ResultV1<LedgerPage>
+ func commandStatus(commandID: UUID) async -> ResultV1<CommandStatus> // unknown | committed(receipt)
+ func batchStatus(batchID: UUID) async -> ResultV1<BatchStatus> // transient | expired | committed(receipt)
+ func sampleCurrent(_ request: ExplicitConsentRequest) async -> ResultV1<CurrentObservation>
+}
+// Every query also receives/creates a correlation command ID; pseudocode omits IDs only in convenience argument lists.
+protocol ImportPort: Sendable { func parse(_ handle: ProtectedStagingHandle, expectedProfile: ProfileVersion?, cancel: CancellationProbe) async -> ResultV1<NormalizedRows> }
+protocol CategoryPort: Sendable { func suggest(merchantKey: String, mappings: [UserMapping], catalog: CategoryCatalog, ruleVersion: String) async -> Suggestion? }
+protocol IdentityPort: Sendable { func derive(_ components: CanonicalIdentityComponents) async -> IdentityDigest }
+protocol LocationPort: Sendable { func oneForegroundSample(consent: ExplicitConsentRequest, timeoutSeconds: UInt8 /*10*/) async -> ResultV1<CurrentObservation> }
+protocol LedgerStorePort: Sendable {
+ func snapshot() async -> ResultV1<LedgerSnapshot>
+ func transact(_ plan: ValidatedMutationPlan, expected: Revision, requestDigest: IdentityDigest) async -> ResultV1<Receipt>
+ func commandStatus(_ id: UUID) async -> CommandStatus
+ func batchStatus(_ id: UUID) async -> BatchStatus
+}
+protocol MaintenancePort: Sendable {
+ func acquireExclusive() async -> ResultV1<MaintenanceLease>
+ func exportSnapshot(lease: MaintenanceLease) async -> ResultV1<PortableLedgerV1>
+ func validateCandidate(_ archive: PortableLedgerV1, lease: MaintenanceLease) async -> ResultV1<CandidateStoreHandle>
+ func swapValidated(_ candidate: CandidateStoreHandle, lease: MaintenanceLease) async -> ResultV1<Revision>
+}
+// No external HTTP routes/authorization tokens. Local OS user, protected store, app lifecycle lock.
+// Failure code mapping in STATE-CONTRACT.json. Cancellation is explicit outcome, never a thrown generic error after commit.
+
+// Referenced value shapes (all fields required unless ?):
+struct ProfileVersion: Sendable { let id: String; let version: UInt16; let normalizationVersion: UInt16 }
+struct ReadonlySourceSummary: Sendable { let ordinal: Int; let kind: EntryKind; let amount: Money; let merchant: String; let occurredAtUTC: Date; let originalOffsetSeconds: Int32; let historicalText: String?; let hasProviderIdentity: Bool }
+struct EditableFields: Sendable { let merchant: String; let historicalLocation: HistoricalInput? }
+// Import review does not silently edit source financial economics. Correct amount/time via exclude + separate manual entry; source remains immutable.
+struct Suggestion: Sendable { let categoryID: UUID; let ruleVersion: String; let reason: String; let confidence: Confidence }
+enum Confidence: String, Sendable { case exactUserMapping, exactRule, heuristic }
+struct ReviewCounts: Sendable { let rows: Int; let included: Int; let invalid: Int; let duplicates: Int; let sourceConflicts: Int; let unresolvedRefunds: Int }
+struct HistoricalInput: Sendable { let text: String?; let latitude: Double?; let longitude: Double? }
+// latitude/longitude both present or both absent; finite -90...90/-180...180. User-entered provenance only.
+struct ExplicitConsentRequest: Sendable { let commandID: UUID; let token: UUID; let targetDraftID: UUID; let purpose: String; let explicitlyConfirmedAtUTC: Date; let acceptReducedAccuracy: Bool }
+struct CurrentObservation: Sendable { let targetDraftID: UUID; let token: UUID; let latitude: Double; let longitude: Double; let collectedAtUTC: Date; let accuracyMeters: Double; let consentAtUTC: Date; let purpose: String; let authorizationSnapshot: String }
+enum CancelOutcome: Sendable { case discarded, alreadyCommitted(Receipt), checkingOutcome(commandID: UUID) }
+enum CommandStatus: Sendable { case unknown, committed(Receipt) }
+enum BatchStatus: Sendable { case transient, expired, committed(Receipt) }
+// Opaque types SelectedFileHandle/ProtectedStagingHandle/CandidateStoreHandle/MaintenanceLease carry random UUID capabilities, not user-supplied paths; cannot be constructed by cells or UI text.
+// LedgerSnapshot = Revision + immutable entry/source/category/mapping DTO collections used for matching; bounded 10k-row query pages, no managed objects.
+// ValidatedMutationPlan = commandID + batch metadata? + entry/source/link/override/location inserts + matched identity expectations + result IDs. Writer always revalidates; caller cannot bypass validation with this name.
+// PortableLedgerV1 is exactly the allowlisted entities/relationships/identity material described in CORE-DATA-MODEL.json and SYSTEM ADR-007; version/count/checksum rules mandatory.
+// ExpenseRecordDTO includes UUID, signed Money, kind, display merchant, occurredAtUTC/offset, category+override/suggestion, refund resolution/original UUID?, selected/available location provenance DTOs, updatedRevision.
+// CheckedTotals contains one ISO currency, checked settledNet Int64, unresolvedRefunds Int64; never cross-currency.
+// LedgerCursor is opaque typed key {storeEpoch,ledgerRevision,occurredAtUTC,entryUUID} with descending time then UUID order.

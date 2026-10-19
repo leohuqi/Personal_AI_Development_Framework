@@ -1,0 +1,12 @@
+[
+  {
+    "file": "r3-conflict-mobile.png",
+    "sha256": "16eca34002d353a6249c18b5be57260bf91fab52baefaefd6b44854b020c6df4",
+    "status": "LOCAL_ONLY"
+  },
+  {
+    "file": "r3-refund-candidate.png",
+    "sha256": "74407edfa73029138886aa5cd2f24feea2d780bf629fffe576e70f671b7adfa4",
+    "status": "LOCAL_ONLY"
+  }
+]

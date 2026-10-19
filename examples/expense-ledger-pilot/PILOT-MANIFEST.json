@@ -1,0 +1,135 @@
+{
+  "schema_version": "padf.agent-dependency/v1",
+  "pilot_mode": "SINGLE_SESSION_ROLE_SCOPED; independent runtime session identity NOT_RUN",
+  "context_id": "PADF-EXPENSE-ARCH-PILOT-001",
+  "feature_id": "EXPENSE-RECORD-001",
+  "task_class": "L",
+  "architecture_scope": "both",
+  "routing_rationale": "New APP needs APP-wide technical stack and one detailed expense-import module",
+  "feature_spec_ref": "examples/expense-ledger-pilot/MASTER-PLAN.md@5a907d75973296239e5e5c81d91548f3f945897d",
+  "impacts": [
+    "architecture",
+    "api",
+    "database",
+    "workflow"
+  ],
+  "risk_flags": [
+    "financial-data",
+    "privacy"
+  ],
+  "diagram_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+  "system_baseline_ref": "examples/expense-ledger-pilot/system/SOLUTION-ARCHITECTURE.md@5a907d75973296239e5e5c81d91548f3f945897d",
+  "system_baseline_status": "PROPOSED",
+  "system_baseline_approval_ref": null,
+  "stages": [
+    {
+      "id": "SYSTEM",
+      "agent": "solution-architect",
+      "required": true,
+      "depends_on": [],
+      "status": "COMPLETED",
+      "artifacts": [
+        {
+          "type": "solution-architecture",
+          "ref": "examples/expense-ledger-pilot/system/SOLUTION-ARCHITECTURE.md@5a907d75973296239e5e5c81d91548f3f945897d",
+          "required": true,
+          "verified": true,
+          "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4#issuecomment-6208616793"
+        },
+        {
+          "type": "technology-stack",
+          "ref": "examples/expense-ledger-pilot/system/TECH-STACK.md@5a907d75973296239e5e5c81d91548f3f945897d",
+          "required": true,
+          "verified": true,
+          "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4#issuecomment-6208616793"
+        },
+        {
+          "type": "application-code-structure",
+          "ref": "examples/expense-ledger-pilot/system/APP-CODE-STRUCTURE.md@5a907d75973296239e5e5c81d91548f3f945897d",
+          "required": true,
+          "verified": true,
+          "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4#issuecomment-6208616793"
+        },
+        {
+          "type": "architecture-diagram",
+          "ref": "examples/expense-ledger-pilot/system/technical-architecture.svg@5a907d75973296239e5e5c81d91548f3f945897d",
+          "required": true,
+          "verified": false,
+          "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4#issuecomment-6208616793",
+          "generator": "manual-svg-reference-layout",
+          "render_status": "NOT_RUN",
+          "generator_sha": null
+        }
+      ]
+    },
+    {
+      "id": "MODULE",
+      "agent": "module-architect",
+      "required": true,
+      "depends_on": [
+        "SYSTEM"
+      ],
+      "status": "IN_PROGRESS",
+      "system_baseline_ref": "examples/expense-ledger-pilot/system/SOLUTION-ARCHITECTURE.md@5a907d75973296239e5e5c81d91548f3f945897d",
+      "artifacts": [
+        {
+          "type": "module-design",
+          "ref": "examples/expense-ledger-pilot/module/MODULE-DESIGN.md@c5bdd65853621cc5d52dddd5d0176814c7641ea1",
+          "required": true,
+          "verified": true,
+          "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4#issuecomment-6208647865"
+        },
+        {
+          "type": "module-code-structure",
+          "ref": "examples/expense-ledger-pilot/module/MODULE-CODE-STRUCTURE.md@c5bdd65853621cc5d52dddd5d0176814c7641ea1",
+          "required": true,
+          "verified": true,
+          "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4#issuecomment-6208647865"
+        },
+        {
+          "type": "module-interface-contract",
+          "ref": "examples/expense-ledger-pilot/module/INTERFACES.md@c5bdd65853621cc5d52dddd5d0176814c7641ea1",
+          "required": true,
+          "verified": true,
+          "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4#issuecomment-6208647865"
+        },
+        {
+          "type": "module-component-diagram",
+          "ref": "examples/expense-ledger-pilot/module/module-components.svg@c5bdd65853621cc5d52dddd5d0176814c7641ea1",
+          "required": true,
+          "verified": false,
+          "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4#issuecomment-6208647865",
+          "generator": "manual-svg-reference-layout",
+          "render_status": "NOT_RUN",
+          "generator_sha": null
+        },
+        {
+          "type": "workflow-diagram",
+          "ref": "examples/expense-ledger-pilot/module/module-sequence.svg@c5bdd65853621cc5d52dddd5d0176814c7641ea1",
+          "required": true,
+          "verified": false,
+          "evidence_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4#issuecomment-6208647865",
+          "generator": "manual-svg-reference-layout",
+          "render_status": "NOT_RUN",
+          "generator_sha": null
+        }
+      ]
+    }
+  ],
+  "consistency_checks": [
+    {
+      "scope": "APP-to-Module version and package policy",
+      "status": "NOT_RUN",
+      "evidence_ref": null
+    }
+  ],
+  "design_review": {
+    "independent": false,
+    "mode": "DESIGN",
+    "decision": "NOT_RUN"
+  },
+  "coding_authorization": null,
+  "owner_acceptance": "PENDING",
+  "live_external_diagram_skill": "NOT_RUN",
+  "ui_designer": "OUT_OF_SCOPE_FOR_THIS_TWO_ARCHITECT_PILOT"
+}

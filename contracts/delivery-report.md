@@ -20,6 +20,21 @@
 
 These entries are observations/links, not evidence of implicit approval, message delivery or agent wake-up.
 
+## V0.3 design and dependency evidence
+- Specialist routing: Task class + impacts/risk flags, excluded roles and reason:
+- Architecture routing scope (none/system/module/both), Task class/risk rationale, stage-by-stage role Owner:
+- Solution Architecture: technology/framework stack, application module/code topology, architecture/ADR baseline SHA and diagrams (or unchanged baseline):
+- Module Code Design: concrete packages/classes/interfaces, baseline SHA match, module flows/tests and diagrams (or N/A):
+- External diagram-design installation/pinned upstream SHA/render check (PASS/FAIL/BLOCKED/NOT RUN):
+- Project UI Profile revision, UI Concept, high-fi and interactive prototype artifacts as applicable:
+- UI consistency, accessibility and interaction check evidence:
+- Dependency manifest, revision freshness, downstream statuses and blockers:
+- Design Handoff links and receiver acknowledgement:
+- Independent DESIGN review decision, reviewed artifact SHA and P0–P3 findings (or Master risk-based skip reason):
+- Master Design Gate result and Owner material design decision, distinct from bounded coding authorization:
+
+Do not infer that a visual prototype, simulated stage evaluation or designer self-check proves actual implementation.
+
 ## Implementation (Coder)
 - Approved scope delivered / not delivered:
 - Changed paths and affected API/schema/design contracts:
@@ -60,3 +75,10 @@ These entries are observations/links, not evidence of implicit approval, message
 - Production release: NOT REQUESTED / SEPARATELY AUTHORIZED (evidence required)
 
 Never represent CI green as independent business acceptance; never imply a merged PR is deployed.
+
+
+## V0.3 separate Master orchestration / Skill delivery quality acceptance
+- Master dispatch chain: one row per role with dispatch/ref@SHA, start method (HUMAN_RELAY vs RUNTIME_DISPATCH), actual executor session/task evidence, Handoff link@SHA, time and prior Master dependency reconciliation ref.
+- Master orchestration outcome: ROLE_SIMULATION / METADATA_ELIGIBLE_HUMAN_RELAY / METADATA_ELIGIBLE_RUNTIME_DISPATCH / VERIFIED_HUMAN_RELAY / VERIFIED_RUNTIME_DISPATCH / BLOCKED, with **independent external evidence and its limitations**. Never promote metadata-only into verified.
+- Quality sheets: SA-Q1–5, MA-Q1–5, UI-Q1–5 from [Owner Evaluation](skill-delivery-evaluation.md), each tied to its Skill/dispatch/execution/artifact SHA, Owner score/evidence/decision.
+- Independent design review and Owner coding authorization remain separate. A successful orchestration process does **not** imply good Skill output.

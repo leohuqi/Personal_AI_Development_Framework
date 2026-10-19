@@ -1,0 +1,12 @@
+{
+  "schema_version": "padf.external-skill-pin/v1",
+  "name": "diagram-design",
+  "repo": "cathrynlavery/diagram-design",
+  "url": "https://github.com/cathrynlavery/diagram-design",
+  "ref": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+  "skill_entry": "skills/diagram-design/SKILL.md",
+  "integration": "external-install-required",
+  "license": "MIT",
+  "verified_date": "2026-10-14",
+  "note": "Pin is declarative and does not mean any agent runtime has installed the skill."
+}

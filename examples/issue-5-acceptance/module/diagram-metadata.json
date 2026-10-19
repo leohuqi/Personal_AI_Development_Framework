@@ -1,0 +1,48 @@
+{
+  "generator": "diagram-design",
+  "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+  "size": "doc-wide 1280x720",
+  "style": "Owner approved default / offline system fonts",
+  "figures": [
+    {
+      "slug": "component-ports",
+      "title": "Module components and ports",
+      "type": "architecture",
+      "nodes": 5,
+      "edges": 4,
+      "source": "CODE-STRUCTURE.md + INTERFACES.swift.txt"
+    },
+    {
+      "slug": "import-sequence",
+      "title": "Preview then one atomic commit",
+      "type": "sequence",
+      "nodes": 4,
+      "edges": 9,
+      "source": "MODULE-DESIGN.md transaction + INTERFACES.swift.txt"
+    },
+    {
+      "slug": "source-identity",
+      "title": "Immutable source identity and receipts",
+      "type": "ER / data model",
+      "nodes": 6,
+      "edges": 5,
+      "source": "CORE-DATA-MODEL.json + identity algorithm in MODULE-DESIGN.md"
+    },
+    {
+      "slug": "ledger-model",
+      "title": "Ledger, refunds and location provenance",
+      "type": "ER / data model",
+      "nodes": 5,
+      "edges": 5,
+      "source": "CORE-DATA-MODEL.json + MODULE-DESIGN.md invariants"
+    },
+    {
+      "slug": "import-state",
+      "title": "Import transaction and recovery states",
+      "type": "state machine",
+      "nodes": 6,
+      "edges": 6,
+      "source": "STATE-CONTRACT.json + MODULE-DESIGN.md"
+    }
+  ]
+}
