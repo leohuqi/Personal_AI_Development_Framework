@@ -1,105 +1,124 @@
-# Personal AI Development Framework (PADF / AI-SDF)
+# 个人 AI 开发框架（PADF）
 
-**V0.3 development candidate (Draft PR, not yet released)** — separate system-wide Solution Architect and module-level Module Architect, plus UI/UX Skills with task-dependent Design Gate; retains the stable V0.2 context/communication foundation.
+**当前主分支：V0.3。** 系统级 Solution Architect、模块级 Module Architect 与 UI/UX Designer 分工协作，按任务风险进入 Design Gate；继续沿用 V0.2 的共享上下文与通信契约。V0.3 已通过 [PR #6](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/6) 合并，主分支状态与正式 Release 分开管理。
 
-PADF defines owner-governed, agent-executed incremental software development. Each application maintains its **own PRD, Architecture, UX baseline, Feature Catalog, source code, AGENTS.md and CI**. PADF is shared across all projects, not a PQA feature branch.
+PADF 定义由 Owner 决策、Agent 执行的增量软件开发流程。每个应用维护自己的 PRD、架构、UX 基线、功能目录、源码、AGENTS.md 与 CI；框架可供不同项目复用。
 
-## Core workflow
+## 文档语言
+
+核心入口与全部 8 个 Skill 以中文说明为主，便于需求确认、审查与日常维护。Skill 名称、角色英文术语、文件路径、命令、YAML/JSON 字段、schema 标识及状态枚举保留英文，以保持工具兼容和协议可验证性。后续更新沿用同一份正文，不默认维护重复的中英文版本；技术契约中的既有标识与历史证据不因翻译而改版。
+
+## 核心流程
 
 ```text
-Product Owner ↔ ChatGPT/Work Master Agent
-   ↓ approved PRD / Feature Spec / UI & architecture
-Linear Free: Roadmap, issue, priority, blockers, Cycle
-   ↓ explicit owner-authorized Codex task (no autonomous loop)
-Feature Coder → GitHub PR → GitHub Actions + QA Tester
-                                    ↘ Independent Code Reviewer
-                                    ↘ rework if failed
-   ↓ evidence + applicable owner acceptance
-Linear Done / next manually authorized Feature
+Owner ↔ ChatGPT/Work 主协调者（Master）
+   ↓ 已批准的 PRD / Feature Spec / UI 与架构
+Linear Free：路线图、任务、优先级、阻塞、Cycle
+   ↓ Owner 明确授权的 Codex 任务
+功能开发者 → GitHub PR → GitHub Actions + QA 验证
+                          ↘ 独立审查
+                          ↘ 失败则返工
+   ↓ 可核验证据 + 适用的 Owner 验收
+Linear Done / 下一项人工授权的功能
 ```
 
-## V0.2 — Context & Agent Communication (CACF)
+## V0.2：上下文与 Agent 通信（CACF）
 
-Cross-session ChatGPT/Work/Codex continuity and multi-agent collaboration use a **Shared Task Context**, typed durable **Agent Messages**, **Context Checkpoints**, and verifiable **Agent Handoffs**. GitHub remains authoritative for code/approved specs/ADRs, Linear for live task state and dependencies, and Owner approval for protected decisions. A message/checkpoint does not grant authorization, wake another agent, or certify test results.
+跨 ChatGPT、Work 和 Codex 会话的连续性通过共享任务上下文（Shared Task Context）、类型化持久消息（Agent Message）、检查点（Context Checkpoint）及可核验交接（Agent Handoff）实现。GitHub 管理代码、批准规格和 ADR，Linear 管理实时任务与依赖，Owner 批准受保护的决定。消息或检查点本身不授予权限、不唤醒 Agent，也不证明测试通过。
 
-- [Context & communication workflow](workflow/context-communication.md)
-- [Shared Task Context contract](contracts/shared-task-context.md)
-- [Agent Message contract](contracts/agent-message.md)
-- [Context Checkpoint & Resume contract](contracts/context-checkpoint.md)
-- [Agent Handoff contract](contracts/agent-handoff.md)
-- [Context governance](governance/context-governance.md)
-- [PQA example walkthrough](examples/pqa/CONTEXT-COLLABORATION.md)
+- [上下文通信流程](workflow/context-communication.md)
+- [共享任务上下文](contracts/shared-task-context.md)
+- [Agent Message 契约](contracts/agent-message.md)
+- [检查点与恢复契约](contracts/context-checkpoint.md)
+- [Agent Handoff 契约](contracts/agent-handoff.md)
+- [上下文治理](governance/context-governance.md)
+- [PQA 接入示例](examples/pqa/CONTEXT-COLLABORATION.md)
 
-**Scope boundary:** V0.2 supplies Skills, message contracts, and human/runtime-initiated workflows—not an A2A server, message broker, continuous scheduler, new database, automated agent dispatch or live notification service. Integration and actual agent delivery still depend on the connected tools and approved task execution.
+**能力边界：** V0.2 提供 Skill、消息契约及由人工或实际运行时启动的流程；不随仓库启用 A2A 服务、消息代理、常驻调度器、新数据库、自动分派或实时通知。真实集成与送达依赖已连接工具及获授权任务。
 
-## V0.3 — Specialized Design Agents (development candidate)
+## V0.3：专业设计角色与设计门禁
 
-The V0.3 extension distinguishes a [Solution Architect](.agents/skills/solution-architect/SKILL.md) for whole-app stack and baseline decisions from a [Module Architect](.agents/skills/module-architect/SKILL.md) for detailed module code/package/interface design under the approved system architecture. Both specialist Architects use the **pinned external** [diagram-design](integrations/diagram-design.md) skill to produce architecture, workflow and database schema visualizations with versioned authoritative source models. A [UI/UX Designer](.agents/skills/ui-ux-designer/SKILL.md) outputs design philosophy, UI concept, high-fidelity and risk-appropriate interactive prototypes, all traced to each project's [UI Profile](contracts/project-ui-profile.md).
+[Solution Architect](.agents/skills/solution-architect/SKILL.md)负责应用整体技术栈和架构基线；[Module Architect](.agents/skills/module-architect/SKILL.md)在批准系统基线下负责模块代码、包与接口详细设计。两者按要求使用固定版本的外部 [diagram-design](integrations/diagram-design.md)，提交与权威源模型一致的架构、流程和数据结构图。
 
-Master performs [capability-based routing](workflow/agent-routing.md), checks [agent-stage dependencies](contracts/agent-dependency.md) and operates a [Design Gate](contracts/design-gate.md). **Governance model C**: L/XL and risk-triggered S/M require independent DESIGN review; Master controls process/readiness, Reviewer assesses design quality and Owner approves material decisions and coding. Designers produce [existing V0.2 handoffs](contracts/agent-handoff.md); recipients ACK/NEEDS_REFINEMENT. No parallel Coder scheduler or agent daemon.
+[UI/UX Designer](.agents/skills/ui-ux-designer/SKILL.md)根据各项目的 [UI Profile](contracts/project-ui-profile.md)，产出设计理念、概念、高保真画面，以及风险所需的交互原型；不会为所有项目强制统一视觉风格。
 
-- [Sequential design workflow](workflow/design-collaboration.md) · [System architecture baseline](contracts/solution-architecture.md) · [Module design](contracts/module-design.md) · [Architecture package selector](contracts/architecture-design.md) · [UI package](contracts/ui-design.md)
-- [Pinned diagram-design integration](integrations/diagram-design.md) · [Dependency/gate evaluator](lib/design-gate.mjs)
-- Validation: `node tests/v0.3/run-tests.mjs` (fixture checks, not real diagram/prototype generation).
+Master 负责[能力路由](workflow/agent-routing.md)、[阶段依赖](contracts/agent-dependency.md)与 [Design Gate](contracts/design-gate.md)。采用治理模型 C：L/XL 和风险触发的 S/M 需要独立 DESIGN 审查；Master 管流程就绪，Reviewer 判专业质量，Owner 批准重大决定与编码。设计者沿用 [V0.2 Handoff](contracts/agent-handoff.md)，接收方 ACK 或 NEEDS_REFINEMENT，不新增编码调度器或 Agent 守护进程。
 
-**Status: V0.3 is proposed for Owner review and testing, not merged/released.** Projects remain on immutable [PADF v0.2.0](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.2.0) until separately approved.
+- [设计协作流程](workflow/design-collaboration.md)
+- [系统架构基线](contracts/solution-architecture.md)、[模块设计](contracts/module-design.md)、[架构包选择](contracts/architecture-design.md)、[UI 设计包](contracts/ui-design.md)
+- [固定版本图表工具集成](integrations/diagram-design.md)、[依赖与门禁评估器](lib/design-gate.mjs)
 
+[PADF v0.2.0](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.2.0) 仍是不可变历史发布。项目采用 V0.3 时须另行批准并固定精确 commit/tag，不能仅凭框架 PR 合并推定接入完成。
 
-## Real Master orchestration and independent Skill acceptance (V0.3)
-To **prove coordination**, follow the [real Master orchestration runbook](workflow/master-orchestration-validation.md): Owner provides only the Expense Ledger business goal to Master, and Master creates an auditable [Dispatch Record](contracts/agent-dispatch.md) **before** specialist sessions execute. Execution receipt, real Handoff and Master live dependency reconciliation are all required. Distinguish **ROLE_SIMULATION**, **HUMAN_RELAY** (Owner starts each separate session) and **RUNTIME_DISPATCH** (Master tool launches and receives a task ID). Skills do not create an automatic agent scheduler.
+## 真实编排与专家质量验收
 
-To **evaluate Skill quality**, Owner independently scores [Solution Architect, Module Architect and UI Designer artifacts](contracts/skill-delivery-evaluation.md), tied to actual session ID and immutable artifact/Skill SHA. A working interactive prototype is not equivalent to a screenshot, and a diagram does not prove actual external diagram-design invocation.
+按[真实 Master 编排手册](workflow/master-orchestration-validation.md)执行时，Owner 仅提供业务目标，Master 在专家开始前发布[Dispatch Record](contracts/agent-dispatch.md)。随后须有真实执行回执、专家 Handoff 和 Master 实时依赖协调，明确区分：
 
-Acceptance tracking: **[Issue #5 — real Master Orchestration and 3 specialist Skills](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/5)** (OPEN / NOT RUN). Previous Issue #4 is a role simulation.
+- ROLE_SIMULATION：同会话角色模拟。
+- HUMAN_RELAY：Owner 依据分派链接启动独立会话。
+- RUNTIME_DISPATCH：Master 通过实际工具启动并获得真实任务 ID。
 
-Read-only verification scripts:
+Owner 按[专家质量评价契约](contracts/skill-delivery-evaluation.md)分别评价三位设计专家，关联真实会话、不可变产物与 Skill SHA。截图不等于可运行原型；有图不等于实际调用过外部图表 Skill。
+
+[Issue #5](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/5) 已完成；有边界的 V0.3 Expense Ledger 设计试点已记录 [Owner 验收](examples/issue-5-acceptance/OWNER-V0.3-ACCEPTANCE.md)与[Master 验收协调](examples/issue-5-acceptance/MASTER-OWNER-ACCEPTANCE-RECONCILIATION.md)。交付包与架构交互图入口见[试点目录](examples/issue-5-acceptance/README.md)。验收保留证据记录中的限制，不代表原生应用、设备、持久化、GPS、真实服务商或生产行为已验证。[Issue #4](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4) 保留为历史角色模拟示例。
+
+只读脚本仍然只检查合成证据元数据：
+
 ```bash
 node tests/v0.3/run-orchestration-tests.mjs
 node tests/v0.3/run-skill-quality-tests.mjs
 ```
-These check **synthetic evidence metadata only**. Live cross-session invocation, proof of actual external tool usage, independent DESIGN review and Owner scoring remain **NOT RUN** until a separate authorized trial. The previous [Issue #4](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4) demonstrates role simulation, *not* independent Master Orchestration.
 
-## Core Skills
+这些脚本通过不等于实际跨会话执行、外部工具调用、独立 DESIGN 审查或 Owner 评分；真实结果以精确证据和批准记录为准。
 
-| Skill | Responsibility |
+## 全部 8 个核心 Skill
+
+| Skill | 主要职责 |
 | --- | --- |
-| [master-orchestrator](.agents/skills/master-orchestrator/SKILL.md) | Scope, design coordination, task readiness, conflict routing and acceptance |
-| [context-coordinator](.agents/skills/context-coordinator/SKILL.md) | Minimal shared context, durable messages, checkpoint/resume and cross-agent handoff |
-| [solution-architect](.agents/skills/solution-architect/SKILL.md) | APP-wide technology stack, solution architecture, high-level application module layout, ADR and diagrams |
-| [module-architect](.agents/skills/module-architect/SKILL.md) | Approved-baseline-conformant module code/package design, interfaces, internal flows and tests |
-| [ui-ux-designer](.agents/skills/ui-ux-designer/SKILL.md) | Project-specific consistent UI concepts, prototypes and interaction contracts |
-| [feature-coder](.agents/skills/feature-coder/SKILL.md) | Authorized implementation and PR handoff |
-| [qa-tester](.agents/skills/qa-tester/SKILL.md) | Test design, integration/E2E verification, evidence |
-| [independent-reviewer](.agents/skills/independent-reviewer/SKILL.md) | Fresh-context review of exact PR diff and risks |
+| [master-orchestrator](.agents/skills/master-orchestrator/SKILL.md) | 范围、设计协调、任务就绪、冲突路由与验收组织 |
+| [context-coordinator](.agents/skills/context-coordinator/SKILL.md) | 最小共享上下文、持久消息、检查点、恢复与交接 |
+| [solution-architect](.agents/skills/solution-architect/SKILL.md) | 应用级技术栈、系统架构、代码骨架、ADR 与图表 |
+| [module-architect](.agents/skills/module-architect/SKILL.md) | 已批准系统基线内的模块包、接口、流程与测试设计 |
+| [ui-ux-designer](.agents/skills/ui-ux-designer/SKILL.md) | 项目一致的设计理念、UI 概念、原型及交互契约 |
+| [feature-coder](.agents/skills/feature-coder/SKILL.md) | 获授权的实现、测试与 PR 交付 |
+| [qa-tester](.agents/skills/qa-tester/SKILL.md) | 验收用例、集成/E2E 验证与测试证据 |
+| [independent-reviewer](.agents/skills/independent-reviewer/SKILL.md) | 独立新上下文、精确 PR diff 与风险审查 |
 
-- [Workflow and quality gates](workflow/WORKFLOW.md)
-- [Task Contract](contracts/task-contract.md) and [Delivery Report](contracts/delivery-report.md)
-- [Authorization policy](governance/approval-policy.md) and [context loading](governance/context-loading.md)
-- [Agent routing](workflow/agent-routing.md)
-- [Pull request template](templates/pull_request_template.md)
-- [PQA adoption example](examples/pqa/ADOPTION.md)
+八个 Skill 均含最小 Agent Message YAML 模板，字段沿用 `padf.agent-message/v1`。
 
-## Validation
+- [开发工作流与质量门禁](workflow/WORKFLOW.md)
+- [Task Contract](contracts/task-contract.md)与[Delivery Report](contracts/delivery-report.md)
+- [审批策略](governance/approval-policy.md)与[上下文加载策略](governance/context-loading.md)
+- [角色路由](workflow/agent-routing.md)
+- [PR 模板](templates/pull_request_template.md)
+- [PQA 接入示例](examples/pqa/ADOPTION.md)
 
-Run the dependency-free CACF structural checker after cloning PADF:
+## 验证
 
-    node scripts/validate-cacf.mjs
-    node tests/v0.3/run-tests.mjs
+克隆仓库后可运行无需第三方依赖的结构和回归检查：
 
-It verifies required files, local Markdown links, schema markers and role integration. It does **not** exercise live Linear/GitHub message delivery, automatic agent dispatch, external integrations or actual multi-session recovery; validate those manually in an authorized pilot.
+```bash
+node scripts/validate-cacf.mjs
+node tests/cacf/run-validation.mjs
+node tests/cacf/run-regressions.mjs
+node tests/v0.3/run-tests.mjs
+node tests/v0.3/run-orchestration-tests.mjs
+node tests/v0.3/run-skill-quality-tests.mjs
+node tests/v0.3/verify-expense-pilot.mjs
+```
 
-## Project adoption
+结构检查覆盖必需文件、本地 Markdown 链接、schema 标识和角色集成；其余脚本验证受限测试夹具与元数据，不证明线上 Linear/GitHub 消息送达、自动分派、外部工具集成或真实多会话恢复。
 
-1. Review and approve an exact PADF commit/tag.
-2. Copy or pin the approved `.agents/skills/` Skill files into the consuming repository, or make them accessible to the supported agent environment.
-3. Keep `AGENTS.md` small and project-specific. Read only relevant Feature Specs and technical contract sections.
-4. Configure Linear/GitHub integration, GitHub Actions and Codex Automatic Review **separately**. Committing Skills does not enable those products.
-5. Use a Task Contract on every approved development task, a Shared Task Context for source/message references, and a Delivery Report for QA/review evidence and owner acceptance.
-6. Record meaningful cross-agent questions/results as typed messages with permalinks; checkpoint before session/agent boundaries and verify live sources when resuming.
-7. Skills are not a Loop Engine: Linear Free does not continuously dispatch Codex jobs. No self-hosted server is required for this workflow.
+## 项目接入
 
-## Review before integration
+1. 审阅并批准精确 PADF commit/tag。
+2. 将批准的 `.agents/skills/` 与所引用契约、工作流、治理和集成文件一并复制或固定到接入仓库，保持相对目录结构；也可由支持的环境访问完整固定版本。只复制单个 SKILL.md 会丢失契约链接。
+3. 接入项目维护精简且项目专属的 AGENTS.md，仅加载相关功能规格和技术契约。
+4. 分别配置 Linear/GitHub 集成、GitHub Actions 和 Codex Automatic Review；提交 Skill 文件不会启用这些产品。
+5. 每个授权开发任务使用 Task Contract，以 STC 索引来源和消息，以 Delivery Report 提供 QA、审查证据及 Owner 验收。
+6. 重要跨角色沟通保留类型化消息与永久链接，跨会话/角色前建立检查点，恢复时核对实时来源。
+7. Skill 不提供循环调度服务，Linear Free 不会持续分派 Codex 任务；此流程无需自建常驻服务。
 
-This repository is the framework review target. [PQA Draft PR #7](https://github.com/leohuqi/Personal_Quant_Analyst/pull/7) stays **open, unchanged and unmerged** until PADF has been reviewed and explicitly approved. PADF commits do not modify PQA or its production environment.
+框架维护不自动修改其他项目。PQA 的领域规则与既有 PR 边界位于 [PQA 专属规则](examples/pqa/AGENTS.md)，接入或更改须另获授权。
 
-**Future specialized Skills (not included in V0.3):** Product Analyst, Feature Planner/Designer, Iteration Manager and any parallel execution runtime.
+**不在 V0.3 范围内：** Product Analyst、Feature Planner/Designer、Iteration Manager 专属 Skill，以及任何并行执行运行时。

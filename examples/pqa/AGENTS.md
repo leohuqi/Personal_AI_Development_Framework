@@ -1,11 +1,13 @@
-# PQA adoption rules
+# PQA 接入示例规则
 
-These project-specific rules apply only to this PQA example and to a separately authorized PQA adoption. Load the consuming project's current AGENTS.md and approved requirements before applying the checks.
+本文件只约束 PQA 示例及另行获授权的 PQA 接入。应用检查前，先读取实际项目当前 AGENTS.md 与已批准需求。
 
-## Domain-specific review
-- For affected financial calculations, check money precision, currency/rounding rules and position invariants against the approved Feature Spec.
-- For affected market-data or strategy workflows, check raw market data/provider lineage, timestamps, versioning and immutable audit history against the project's data contracts.
-- Use the project's documented test commands and real datastore requirements; generic PADF Skills do not prescribe PQA-only commands.
+## 专属领域审查
 
-## Repository boundary
-Do not modify, close or merge Personal Quant Analyst Draft PR #7 as a side effect of PADF maintenance. PQA adoption or changes to that PR require separate explicit Owner direction. See [adoption guidance](ADOPTION.md).
+- 财务计算受影响时，按批准 Feature Spec 检查金额精度、币种/舍入规则与持仓不变量。
+- 行情或策略流程受影响时，按项目数据契约检查原始行情、服务商数据血缘、时间戳、版本与不可变审计历史。
+- 使用项目规定的测试命令和真实数据存储要求；通用 PADF Skill 不规定 PQA 专属测试命令。
+
+## 仓库边界
+
+不得因维护 PADF 而修改、关闭或合并 Personal Quant Analyst Draft PR #7。PQA 接入或该 PR 变更需要 Owner 另行明确授权。参见[接入说明](ADOPTION.md)。

@@ -1,33 +1,36 @@
-# PADF repository rules
+# PADF 仓库规则
 
-- PADF is a generic Skills/framework repository, not an application runtime.
-- Keep project-specific domain rules in a consuming project or in `examples/<project>/`; generic Skills and contracts must use neutral terminology.
-- Never load unrelated project documents by default. Read the assigned issue/Feature Spec and only affected architecture/API/UI/contracts.
-- Preserve explicit role inputs, outputs, handoff contracts, review independence, acceptance and approval boundaries.
-- Owner approves significant product/UX/architecture changes, bounded coding dispatch, production operations, destructive actions and final acceptance.
-- CI green, PR merged, independent review passed, Owner accepted and production deployed are separate facts.
-- Do not introduce Linear Loops, self-hosted orchestration or automatic issue dispatch without new authorization.
+- PADF 是通用 Skill 与开发框架仓库，不是应用运行时。
+- 项目专属领域规则放在接入项目或 `examples/<project>/`；通用 Skill 与契约使用中性术语。
+- 核心说明以中文维护；Skill 名称、文件路径、命令、协议字段、schema 标识和状态枚举保留英文。优先更新同一份文档，避免两套正文发生漂移。
+- 不默认加载无关项目文档。只读取已分配的任务、Feature Spec，以及受影响的架构、API、UI 和契约。
+- 保留清晰的角色输入、输出、交接契约、审查独立性、验收及授权边界。
+- 重大产品、UX 或架构变更、有边界的编码分派、生产操作、破坏性操作和最终验收由 Owner 批准。
+- CI 通过、PR 合并、独立审查通过、Owner 验收和生产部署是不同事实，分别核验与报告。
+- 未经新增授权，不引入 Linear Loops、自托管编排或自动任务分派。
 
-## CACF V0.2 — shared context and communication
-- Use the assigned Linear task and original immutable Feature ID to derive stable context_id; keep both IDs distinct.
-- Resolve minimal task context using contracts/shared-task-context.md and governance/context-loading.md. GitHub code/approved specs/ADRs, Linear live task state and recorded Owner approvals outrank cached agent notes.
-- For important cross-role exchanges use contracts/agent-message.md, durable Linear or GitHub PR discussions, unique message/thread IDs and verified permalinks; message persistence never implies automatic wake-up or authorization.
-- Before session end or role transfer, create a concise referenced checkpoint/handoff when possible. On resume verify live issue/approvals, Git head/spec revisions and pending messages; stop on material drift.
-- A Reviewer must use approved requirements and the exact diff with independent reasoning; never import Coder conclusions as review.
-- No new runtime, task scheduler, message broker, DB, automatic dispatch, A2A server, autonomous merge or production action is enabled by V0.2.
+## CACF V0.2：共享上下文与通信
 
-## V0.3 specialized design rules
-- Master routes only relevant Architect/UI Designer Skills and documents S/M/L/XL risk and skipped roles; must not auto-run agents.
-- Whole-app/new-platform tech stack, APP-wide code structure or cross-system boundaries require the **Solution Architect** and a versioned Solution Architecture Baseline. An existing approved system is reused, not redesigned for each feature.
-- Module-specific API/schema/workflow/class/package design inside the approved baseline uses the **Module Architect**, with matching baseline SHA and technical/visual contracts. Master chooses system/module/both/none; no automatic double invocation.
-- Both roles provide structured contracts **and justified diagrams** using pinned diagram-design where required; renderer absence is BLOCKED/NOT RUN, never fabricated.
-- For UI changes the UI Designer loads the **project's own approved UI Profile** and cites its revision; concept/high-fi/interactive levels are chosen by complexity. Static images are not interactive source.
-- Design Handoff uses V0.2 contract; Master owns readiness/approval routing, Independent Reviewer audits DESIGN mode for L/XL and risk-triggered S/M, Owner approves material design changes and coding.
-- V0.3 framework rules are maintained on `main`; the immutable PADF v0.2.0 release remains unchanged.
+- 用分配的 Linear 任务与不可变原始 Feature ID 确定稳定 `context_id`，保留两类 ID 的区别。
+- 按[共享任务上下文](contracts/shared-task-context.md)和[上下文加载策略](governance/context-loading.md)解析最小来源。GitHub 代码、已批准规格与 ADR，Linear 实时状态和 Owner 批准记录的优先级高于缓存笔记。
+- 重要跨角色通信遵循[Agent Message 契约](contracts/agent-message.md)，保存在可持久化的 Linear 或 GitHub PR 讨论中，使用唯一 message/thread ID 并核验永久链接；消息持久化不代表自动唤醒或取得授权。
+- 会话结束或角色交接前，在条件允许时生成简短、有引用的检查点/交接；恢复时核对实时任务、批准、Git head、规格版本和待处理消息，重大漂移时停止。
+- Reviewer 根据批准需求和精确 diff 独立推理，不能导入 Coder 自审结论。
+- V0.2 不启用新运行时、调度器、消息代理、数据库、自动分派、A2A 服务、自主合并或生产操作。
 
+## V0.3 专业设计规则
 
-## V0.3 auditable orchestration and Owner Skill acceptance
-- Actual Master orchestration requires `Dispatch → independent Execution → Handoff → Master Dependency Reconciliation` records with exact permalinks, timestamps, Skill SHA, runtime/human initiation mode and source artifact SHA. Same-session role play = ROLE_SIMULATION.
-- No agent can claim RUNTIME_DISPATCH unless a real tool-issued task/run ID proves Master launched it. HUMAN_RELAY is Owner-started separate session, not automatic dispatch.
-- Master shall not impersonate recipient specialists or independent Reviewer to generate evidence. Owner separately rates Solution Architect, Module Architect and UI Designer outputs per contracts/skill-delivery-evaluation.md.
-- Before treating a new specialist task as unblocked, verify prior Handoff, baseline approvals and Master reconciliation. Missing evidence is BLOCKED/NOT RUN. Owner permissions/design review remain unchanged.
+- Master 按任务路由所需 Architect/UI Designer，记录 S/M/L/XL 风险与跳过角色的理由，不自动运行 Agent。
+- 全新应用、平台技术栈、应用级代码结构或跨系统边界变更需要 Solution Architect 与版本化 Solution Architecture Baseline；已有批准系统应优先复用。
+- 已批准基线内的模块 API、数据结构、流程、类与包设计交给 Module Architect，并匹配基线 SHA 与技术、视觉契约。Master 选择 system/module/both/none，不默认同时调用两类架构师。
+- 两类架构师都提交结构化契约与有理由的图表；按要求使用固定版本 diagram-design。缺少渲染能力标记 BLOCKED/NOT RUN，不伪造证据。
+- UI 变更读取项目自身已批准 UI Profile 并引用版本；概念、高保真与交互等级按复杂度选择，静态图不算交互源。
+- 设计交接沿用 V0.2 契约。Master 协调就绪与批准路由，Independent Reviewer 对 L/XL 和风险触发的 S/M 执行 DESIGN 审查，Owner 批准重大设计和编码。
+- V0.3 框架规则已进入 `main`；不可变 PADF v0.2.0 发布版本保持原样。主分支合并不自动创建新 Release。
+
+## V0.3 可审计编排与 Owner 质量验收
+
+- 真实 Master 编排须有 `Dispatch → independent Execution → Handoff → Master Dependency Reconciliation` 四阶段记录，包含精确永久链接、时间戳、Skill SHA、启动模式与产物源 SHA。同会话角色扮演属于 ROLE_SIMULATION。
+- 只有真实工具返回的 task/run ID 能证明 Master 启动 Agent 时，才可宣称 RUNTIME_DISPATCH；HUMAN_RELAY 是 Owner 启动独立会话。
+- Master 不得冒充专家或独立 Reviewer 生成证据。Owner 按[质量评价契约](contracts/skill-delivery-evaluation.md)分别评价 Solution Architect、Module Architect 和 UI Designer。
+- 下游任务解阻前核对前序 Handoff、基线批准和 Master 协调结论；缺少证据标记 BLOCKED/NOT RUN，保持 Owner 权限与设计审查要求。
