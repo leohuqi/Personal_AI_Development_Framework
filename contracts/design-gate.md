@@ -16,7 +16,7 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 
 当路由结果为 `ui_required: true` 时，阶段清单必须包含 `agent: ui-ux-designer` 且 `required` 不为 `false` 的阶段。缺失阶段、只有可选/N/A 的 UI 阶段，或以其他角色提交 UI 产物，都返回 `BLOCKED`，原因包含 `MISSING_UI_DESIGN_STAGE`，并强制 `coding_authorized: false`。已有 Owner 编码授权不能绕过设计门禁。
 
-阶段存在后，仍须继续验证其依赖、完成状态、UI Profile 版本、设计规格、视觉产物，以及 L3 所需的可运行交互原型；不能仅凭角色名称认定通过。未路由 UI 的任务不新增 UI 阶段要求。
+阶段存在后，仍须继续验证其依赖、完成状态、UI Profile 版本、设计规格、视觉产物，以及 L3 所需的可运行交互原型；不能仅凭角色名称认定通过。有多个必需 UI 阶段时逐个验证这些条件，不能只检查首个阶段；可选/N/A 阶段不替代必需阶段。未路由 UI 的任务不新增 UI 阶段要求。
 
 ## Risk-triggered review
 - 判定同时读取 `impacts` 与 `risk_flags`：任一字段出现已知强制风险类别，都不能通过另一个字段为空或填写 review-skip 理由取消独立审查。适用类别为 `auth`、`permissions`、`privacy`、`security`、`destructive-migration`、`risky-schema-migration`、`breaking-api`、`critical-business-rule`、`critical-workflow`、`design-system`、`shared-component`、`integration`、`concurrency`、`cross-module`、`financial-data`。

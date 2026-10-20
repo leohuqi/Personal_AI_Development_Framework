@@ -458,4 +458,42 @@ check('R2-03 non-UI tasks do not acquire a UI Profile approval dependency',()=>{
  const r=evaluateDesignGate(x);
  assert.equal(r.status,'DESIGN_READY');assert.equal(r.coding_authorized,true);
 });
+
+check('R3 every required UI stage must match the approved Profile regardless of order',()=>{
+ for(const reverse of [false,true])for(const profile of [undefined,ref('docs/ui-profile.md',B)]){
+  const x=uiOnly();const extra=stage('UX2','ui-ux-designer');
+  x.stages.push(extra);x.design_review.reviewed_refs=reviewed(x.stages);
+  assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+  extra.profile_ref=profile;
+  if(reverse)x.stages.reverse();
+  assertProfileBlocked(x,'UI_PROFILE_VERSION_MISMATCH');
+ }
+});
+check('R3 each required UI stage must provide its own specification and visual artifacts',()=>{
+ for(const [type,reason] of [['ui-design','MISSING_UI_SPECIFICATION'],['ui-concept','MISSING_UI_DESIGN_VISUAL']]){
+  const x=uiOnly();x.stages.push(stage('UX2','ui-ux-designer'));
+  x.stages[1].artifacts=x.stages[1].artifacts.filter(a=>a.type!==type);
+  x.design_review.reviewed_refs=reviewed(x.stages);
+  const r=evaluateDesignGate(x);
+  assert.equal(r.dependencies.valid,true);
+  assert.equal(r.status,'BLOCKED');assert.equal(r.coding_authorized,false);
+  assert(r.reasons.includes(reason));
+ }
+});
+check('R3 L3 prototype evidence is required for every required UI stage',()=>{
+ const x=uiOnly();x.ui_level='L3';x.stages.push(stage('UX2','ui-ux-designer'));
+ x.stages[0].artifacts.push(artifact('docs/UX-prototype.html','interactive-prototype'));
+ x.design_review.reviewed_refs=reviewed(x.stages);
+ assertProfileBlocked(x,'MISSING_INTERACTIVE_PROTOTYPE');
+ x.stages[1].artifacts.push(artifact('docs/UX2-prototype.html','interactive-prototype'));
+ x.design_review.reviewed_refs=reviewed(x.stages);
+ assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+});
+check('R3 optional UI stages do not substitute for or constrain complete required UI stages',()=>{
+ const x=uiOnly();const extra=stage('UXOPTION','ui-ux-designer');
+ extra.required=false;extra.na_reason='Exploratory alternative, excluded from this approved task';
+ extra.profile_ref=ref('docs/ui-profile.md',B);x.stages.push(extra);
+ const r=evaluateDesignGate(x);
+ assert.equal(r.status,'DESIGN_READY');assert.equal(r.coding_authorized,true);
+});
 console.log(JSON.stringify({suite:'PADF V0.3 system/module architecture routing, design dependency and gate simulation',status:'PASS',count:tests.length,tests},null,2));
