@@ -7,6 +7,8 @@ Schema: `padf.agent-dispatch/v1` · status: `PLANNED / DISPATCHED / EXECUTION_OB
 - Dispatch ID / created_at / Master run reference:
 - Master routing rationale, target role and **Skill path@commit SHA**:
 - Approval / bounded design Task Contract permalink@SHA / design scope and stop conditions:
+- Reused authorization ref/status, context/repository/environment, exact scope IDs, allowed role/action and required decision revisions (no new per-dispatch Owner approval within valid scope):
+- Pre-dispatch live source check and authorization snapshot result; retry check of existing execution:
 - Dependency dispatch IDs and verified prior Handoff/reconciliation refs:
 - Architecture scope / system baseline @SHA and applicable Owner approval:
 - Expected deliverables / quality rubric IDs:

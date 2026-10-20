@@ -58,7 +58,7 @@ V0.2 does **not** implement a long-running orchestrator, automatic notifications
 ## V0.3 real Master Orchestration validation sequence (non-runtime)
 For the bounded cross-session pilot, use [Master Orchestration Runbook](master-orchestration-validation.md):
 1. Master derives routing **without Owner specifying specialist micro-tasks**, persists each actual [Dispatch](../contracts/agent-dispatch.md) before execution.
-2. Owner manually launches a **fresh** receiving Agent with only dispatch URL (`HUMAN_RELAY`), or Master invokes a supported *real* runtime tool (`RUNTIME_DISPATCH`) and records tool task ID. Issue comment alone is NOT an agent launch.
+2. Master 优先调用现成真实运行时并记录工具 task ID（`RUNTIME_DISPATCH`）；已批准范围内复用有效授权，无需逐次批准。缺少能力时 Owner 仅凭分派链接启动独立会话（`HUMAN_RELAY`）。启动前核对当前范围、必要决策批准与依赖；消息本身不启动 Agent。见[审批策略](../governance/approval-policy.md)。
 3. Receiving Agent records real execution receipt and publishes its own artifact/Handoff. Master fetches Handoff and independently reconciles live dependency versions and approvals **before** next dispatch; blocked/unapproved baseline means stop or clearly conditional draft.
 4. After Solution Architect, Module Architect, UI Designer, Owner scores each package separately per [Quality Evaluation](../contracts/skill-delivery-evaluation.md); independent DESIGN Reviewer remains mandatory for L/XL.
 5. Existing [design gate](../contracts/design-gate.md) and Owner coding authorization are separate. **One-session role play never passes actual Master Orchestration.** No background automation added.

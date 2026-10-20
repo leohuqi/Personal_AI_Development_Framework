@@ -25,6 +25,10 @@
 
 A Task Contract grants no authorization without applicable Owner approval. Messages and checkpoints only reference or transmit already-authorized tasks.
 
+## Master 持续分派范围
+
+已批准的分派与启动无需逐次重新批准；记录可复用的 `authorization_ref`、`owner_approval_ref`、当前状态、精确 Task Contract 引用、`context_id`、仓库、环境及有限 `scope_items`（允许角色/动作、必要决策及精确版本）。按[Dispatch 契约](agent-dispatch.md)核验，不能由接收方扩大或删减。此授权不包含重大设计决策、业务编码、合并、发布、生产或破坏性操作、最终验收；另行批准的动作保留各自门禁。
+
 ## V0.3 design stage and dependency inputs (when applicable)
 - Task class (S/M/L/XL) and risk flags / risk assessment rationale:
 - Impact domains: architecture / api / database / workflow / integration / ui / shared-component / security / etc.:

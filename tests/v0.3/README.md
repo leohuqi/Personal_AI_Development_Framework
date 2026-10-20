@@ -1,5 +1,9 @@
 # PADF V0.3 — Specialist Agent & Design Gate Validation
 
+## Master 持续分派授权回归
+
+`node tests/v0.3/run-orchestration-tests.mjs` 当前包含 35 组检查（原 19 组证据链 + 新增 16 组授权回归）。复用同一有效 Owner 批准允许范围内多次 REVIEW/TEST；必要决策精确版本获批时允许正式设计。越界、授权撤销、必要决策缺失/错误版本及未授权编码等保留动作均须阻断。校验器只检查调用方已核验的快照，不创建运行时权限；真实调用验证见[手册](../../workflow/master-orchestration-validation.md)。现有 CI 已执行同一测试入口。
+
 ## V0.3.1：R2 安全回归
 
 `node tests/v0.3/run-tests.mjs` 新增 R2-01～03 回归矩阵：模块影响与显式 scope、S/M 的 impact-only 强制审查、UI Profile 状态/批准证据/精确版本绑定，以及低风险 UI、非 UI 和单独编码授权的正向对照。它们针对元数据门禁，不证明真实专家、Owner 决定或外部工具执行。

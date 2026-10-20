@@ -42,7 +42,7 @@ description: 协调已获授权的产品功能，从需求澄清、Linear 规划
 3. 分别报告实现完成、PR 合并、独立审查、Owner 验收和生产部署状态。
 4. 对新建或细化任务，明确受影响功能、原始 ID、范围、排除项、验收标准、依赖和需要 Owner 决策的设计问题。
 5. 检查就绪定义（DoR）与阻塞项。必要授权、规格或依赖缺失时，不标记 Ready，不启动开发。
-6. 依据[任务契约](../../../contracts/task-contract.md)形成有边界的 Task Contract；仅在授权后分派，不自动调度未获批准的功能。
+6. 依据[任务契约](../../../contracts/task-contract.md)形成有边界的 Task Contract；已批准范围内复用现有 Owner 授权，主动分派并启动可用真实 Agent，无需为每次分派重新申请批准。启动前核对当前授权状态、仓库、上下文、环境、范围项、角色、动作和必要决策批准；越界或批准缺失时阻断对应动作。
 7. 由 feature-coder 实现、qa-tester 验证、independent-reviewer 独立审查；高风险审查保持独立执行上下文。
 8. 收集 Delivery Report 和实际 CI、审查证据。门禁失败时请求有边界的返工；证据缺失标记 NOT TESTED/BLOCKED。
 9. 向 Owner 提供接受、要求修改或暂缓的验收选项；适用的 Owner 验收门禁完成后才能更新 Linear Done，否则保留 In Review。
@@ -78,7 +78,7 @@ description: 协调已获授权的产品功能，从需求澄清、Linear 规划
 
 ## 不可越过的边界
 
-- 调用 Skill 不会创建常驻编排引擎或触发器；Linear Free、GitHub Actions 和 Codex Review 的编码分派仍需人工授权启动。
+- 调用 Skill 不会创建常驻编排引擎或触发器；已批准范围内可调用现成运行时。分派与启动授权不包含重大设计决策、业务编码、PR 合并、发布、生产部署、破坏性操作或最终验收；这些操作仍须适用的单独授权。
 - 没有工具证据，不得声称已启动 Codex、配置 GitHub/Linear UI 集成或通过 CI。
 - 不得绕过权限、提交密钥、修改线上数据，或在没有 Owner 明确授权时合并、部署、执行破坏性迁移。
 - 导入的历史 Done 可能仅表示实现归档；是否验收或部署遵循目标项目状态策略。
@@ -88,10 +88,10 @@ description: 协调已获授权的产品功能，从需求澄清、Linear 规划
 遵循[真实编排验证手册](../../../workflow/master-orchestration-validation.md)和[分派契约](../../../contracts/agent-dispatch.md)。Owner 仅给出业务目标，由 Master 推导角色顺序、范围、Skill 选择与阶段依赖。不得在 Master 会话中编写各专家交付物并宣称为独立执行。
 
 1. **DISPATCH**：专家开始前，发布不可变且有边界的[分派记录](../../../templates/agent-dispatch.md)，包含理由、`dispatch_id`、目标 Skill@SHA、Task Contract、真实模式和前置条件，链接真实 GitHub/Linear 任务，不伪造分派或授权。
-2. **EXECUTION**：工具确实支持启动 Agent 时，在授权范围内调用并记录返回的任务引用，标记 RUNTIME_DISPATCH；否则由 Owner 仅凭分派链接启动独立会话，标记 HUMAN_RELAY。Issue 消息不会自动启动接收 Agent。要求包含真实会话或运行来源的执行回执。
+2. **EXECUTION**：启动前按[审批策略](../../../governance/approval-policy.md)核验实时来源，按分派契约复用有效授权并校验必要决策。优先直接调用可用真实 Agent 工具，记录返回的任务引用，标记 RUNTIME_DISPATCH，不追加逐次 Owner 批准。仅在缺少能力时请 Owner 仅凭分派链接启动独立会话，标记 HUMAN_RELAY；说明这是能力限制。重试先检查已有执行状态，避免重复启动。Issue 消息不会自动启动 Agent；接收方也须核对范围，提交真实执行回执。
 3. **HANDOFF**：读取专家实际持久化的产物清单和 Handoff，核对 dispatch ID、execution ID、角色与精确 SHA；不得复制 Master 对话中的答案或代写交付物。根据真实引用 ACK 或返回 NEEDS_REFINEMENT。
 4. **DEPENDENCY RECONCILIATION**：核对系统基线批准、版本、UI Profile、前序产物 SHA、消息、阻塞和 Owner 门禁；在下次分派前持久化协调结论、理由和下一 dispatch ID。both 流程须先批准 SYSTEM，才能正式完成 MODULE；附条件草稿不能使正式门禁 PASS。
 5. **SKILL QUALITY**：在三位专家真实独立执行后，分别展示三个产物包和[Owner 质量评价表](../../../contracts/skill-delivery-evaluation.md)。Master 仅判断流程就绪，不代替 Owner 或独立 Reviewer 评价专业质量。
 6. **EVIDENCE LEVEL**：明确标记 ROLE_SIMULATION、HUMAN_RELAY 或 RUNTIME_DISPATCH。缺少独立会话或运行证明时标记 BLOCKED/NOT VERIFIED。只读检查器通过仅证明元数据结构符合要求。
 
-真实编排 PASS 要求每个专家都有四阶段证据且顺序正确；L/XL 在 DESIGN_READY 前还须有独立 DESIGN 审查。编码另行授权；自行标记的 MASTER_CHECK 消息不是编排证明。
+真实编排 PASS 要求每个专家都有四阶段证据且顺序正确；L/XL 在 DESIGN_READY 前还须有独立 DESIGN 审查。编码另行授权；自行标记的 MASTER_CHECK 消息不是编排证明。分派前可用 `evaluateDispatchAuthorization` 检查范围快照；CONTINUE 仅表示快照相容，不能替代实时批准、依赖与 Design Gate 核验。
