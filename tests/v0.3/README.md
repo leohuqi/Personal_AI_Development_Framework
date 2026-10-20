@@ -1,6 +1,6 @@
 # PADF V0.3 — Specialist Agent & Design Gate Validation
 
-## Master 持续分派授权回归
+## v0.3.2：Master 持续分派授权回归
 
 `node tests/v0.3/run-orchestration-tests.mjs` 当前包含 36 组检查（原 19 组证据链 + 新增 17 组授权回归）。复用同一有效 Owner 批准允许范围内多次 REVIEW/TEST 及 context-coordinator 的 COORDINATE；必要决策精确版本获批时允许正式设计。越界、授权撤销、必要决策缺失/错误版本及未授权编码等保留动作均须阻断。校验器只检查调用方已核验的快照，不创建运行时权限；真实调用验证见[手册](../../workflow/master-orchestration-validation.md)。现有 CI 已执行同一测试入口。
 
@@ -19,7 +19,7 @@ node --check tests/v0.3/run-tests.mjs
 node tests/v0.3/run-tests.mjs
 ```
 
-38 deterministic fixture tests exercise explicit system/module/both/none routing and APP-vs-module artifact responsibilities, approved system baseline SHA/Owner approval, ordered system-to-module dependency, mandatory L/XL design review, S/M risk escalation, stage graph validity, blocked/STALE dependencies, immutable artifact references, project UI Profile version match, structured Architecture+diagram alignment, database source+diagram, L3 interactive prototype, handoff review versions, Owner approval and coding authorization separation. Test numbers are determined from the actual suite. **No external diagram-design execution or UI generation is implied.**
+72 deterministic fixture tests exercise explicit system/module/both/none routing and APP-vs-module artifact responsibilities, approved system baseline SHA/Owner approval, ordered system-to-module dependency, mandatory L/XL design review, S/M risk escalation, stage graph validity, blocked/STALE dependencies, immutable artifact references, project UI Profile version match, structured Architecture+diagram alignment, database source+diagram, L3 interactive prototype, handoff review versions, Owner approval and coding authorization separation. Test numbers are determined from the actual suite. **No external diagram-design execution or UI generation is implied.**
 
 ## Manual independent specialist-agent pilot — NOT RUN until separately executed
 
@@ -35,7 +35,7 @@ Use an isolated **non-PQA** sample Feature and approved sandbox with a stable is
 Record external plugin revision, actual artifact permalinks, screenshot/browser validation, Coder authorization, risk decisions, reviewed SHA, PASS/FAIL/BLOCKED/NOT RUN and session boundary evidence. Missing external tool, project design profile or interactive prototype means BLOCKED/NOT RUN, not PASS.
 
 ## Rollout policy
-V0.3 remains a Draft PR pending Owner approval and independent review. The v0.2.0 release/tag is immutable; PQA Draft PR #7 is untouched. Do not adopt V0.3 in PQA before an explicit separate authorization.
+当前版本为 v0.3.2，参见[版本说明](../../docs/releases/v0.3.2.md)。V0.3 的原始有边界设计试点已完成 Owner 验收，历史证据保持原样；各项目采用新版本仍须明确批准并固定 tag/SHA。历史发布标签不可变，框架升级不自动改变 PQA 的接入或授权状态。
 
 
 ## New V0.3 Master orchestration + Skill quality tests
@@ -47,5 +47,5 @@ node tests/v0.3/run-skill-quality-tests.mjs
 ```
 These are **synthetic metadata** fixture checks. They do not authenticate actual agent session identity, initiate Work/Codex, verify a real diagram/prototype or make an Owner decision. For a real test use [independent Master runbook](../../workflow/master-orchestration-validation.md), separate specialist sessions with only Master dispatch permalinks, and [Owner scoring sheets](../../contracts/skill-delivery-evaluation.md). Old [Issue #4](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/4) stays ROLE_SIMULATION, not a pass for real orchestration.
 
-## Open real acceptance issue
-Follow **[PADF Issue #5](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/5)** in fresh, distinct Master/Solution/Module/UI/Reviewer sessions, with only Master-written durable Dispatch URL passed to each specialist and separate Owner grading sheets. **Do not reuse Issue #4** as evidence of independent invocation; it is a role-simulation negative control.
+## 历史真实验收证据
+[PADF Issue #5](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/5) 的设计试点已完成；参见[Owner 验收](../../examples/issue-5-acceptance/OWNER-V0.3-ACCEPTANCE.md)。新试点仍需独立会话、执行证据及单独质量评价；不将既有验收或 Issue #4 的角色模拟当作新的实际运行证明。
