@@ -12,6 +12,12 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 - Approval/waiver records, unresolved issues, changed upstream refs, version freshness and blockers.
 - Separate bounded Owner authorization to begin coding.
 
+## 必需 UI 阶段的存在性
+
+当路由结果为 `ui_required: true` 时，阶段清单必须包含 `agent: ui-ux-designer` 且 `required` 不为 `false` 的阶段。缺失阶段、只有可选/N/A 的 UI 阶段，或以其他角色提交 UI 产物，都返回 `BLOCKED`，原因包含 `MISSING_UI_DESIGN_STAGE`，并强制 `coding_authorized: false`。已有 Owner 编码授权不能绕过设计门禁。
+
+阶段存在后，仍须继续验证其依赖、完成状态、UI Profile 版本、设计规格、视觉产物，以及 L3 所需的可运行交互原型；不能仅凭角色名称认定通过。未路由 UI 的任务不新增 UI 阶段要求。
+
 ## Risk-triggered review
 - **L/XL**: independent Design Review is **mandatory** even when the design looks low-risk.
 - **S/M**: Master classifies. Must trigger independent Design Review when authentication/permissions/privacy, risky or destructive schema migration, breaking API, critical financial/business rules/workflow, shared component/design-system baseline, serious integration/security/concurrency or cross-module behavior is touched.

@@ -89,6 +89,62 @@ check('Missing Architect stage blocks applicable design',()=>{
  const x=baseline();x.stages=[stage('UX','ui-ux-designer')];const r=evaluateDesignGate(x);
  assert(r.reasons.includes('MISSING_SOLUTION_ARCHITECT_STAGE'));
 });
+// 必需 UI 角色不能因缺少阶段或被标记为可选而绕过设计门禁。
+const uiTriggers=[
+ {label:'ui impact',impacts:['architecture','ui'],risk_flags:[]},
+ {label:'interaction impact',impacts:['architecture','interaction'],risk_flags:[]},
+ {label:'shared-component impact',impacts:['architecture','shared-component'],risk_flags:[]},
+ {label:'design-system impact',impacts:['architecture','design-system'],risk_flags:[]},
+ {label:'shared-component risk',impacts:['architecture'],risk_flags:['shared-component']},
+ {label:'design-system risk',impacts:['architecture'],risk_flags:['design-system']}
+];
+for(const trigger of uiTriggers)check('Missing required UI stage blocks '+trigger.label,()=>{
+ const x=baseline();x.impacts=trigger.impacts;x.risk_flags=trigger.risk_flags;
+ assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+ x.stages=x.stages.filter(s=>s.agent!=='ui-ux-designer');
+ x.design_review.reviewed_refs=reviewed(x.stages);
+ const r=evaluateDesignGate(x);
+ assert.equal(r.routing.ui_required,true);
+ assert.equal(r.dependencies.valid,true);
+ assert.equal(r.status,'BLOCKED');assert.equal(r.coding_authorized,false);
+ assert.deepEqual(r.reasons,['MISSING_UI_DESIGN_STAGE']);
+});
+check('Optional UI stage cannot satisfy a routed required UI role',()=>{
+ const x=baseline();
+ x.stages[1].required=false;x.stages[1].na_reason='Recorded but inapplicable to a routed UI change';
+ x.design_review.reviewed_refs=reviewed([x.stages[0]]);
+ const r=evaluateDesignGate(x);
+ assert.equal(r.dependencies.valid,true);
+ assert.equal(r.status,'BLOCKED');assert.equal(r.coding_authorized,false);
+ assert.deepEqual(r.reasons,['MISSING_UI_DESIGN_STAGE']);
+});
+check('UI-only L3 tasks of every size require a UI stage even with coding approval',()=>{
+ for(const task_class of ['S','M','L','XL']){
+  const x=baseline();x.task_class=task_class;x.architecture_scope='none';
+  x.impacts=['ui'];x.ui_level='L3';x.stages=[stage('UX','ui-ux-designer')];
+  x.stages[0].artifacts.push(artifact('docs/prototype.html','interactive-prototype'));
+  x.design_review.reviewed_refs=reviewed(x.stages);
+  assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+  x.stages=[];x.design_review.reviewed_refs=[];
+  const r=evaluateDesignGate(x);
+  assert.equal(r.status,'BLOCKED');assert.equal(r.coding_authorized,false);
+  assert.deepEqual(r.reasons,['MISSING_UI_DESIGN_STAGE']);
+ }
+});
+check('UI-looking artifacts from another role cannot replace the required UI stage',()=>{
+ const x=baseline();x.stages[1].agent='feature-coder';
+ const r=evaluateDesignGate(x);
+ assert.equal(r.status,'BLOCKED');assert.equal(r.coding_authorized,false);
+ assert.deepEqual(r.reasons,['MISSING_UI_DESIGN_STAGE']);
+});
+check('Non-UI tasks do not require a UI stage',()=>{
+ const x=moduleOnly();
+ assert.equal(x.stages.some(s=>s.agent==='ui-ux-designer'),false);
+ const r=evaluateDesignGate(x);
+ assert.equal(r.routing.ui_required,false);
+ assert.equal(r.status,'DESIGN_READY');assert.equal(r.coding_authorized,true);
+ assert.equal(r.reasons.includes('MISSING_UI_DESIGN_STAGE'),false);
+});
 check('Dependencies reject cycle and orphan',()=>{
  const x=baseline();x.stages[0].depends_on=['UX'];assert(evaluateStageDependencies(x).errors.some(e=>e.reason==='CYCLE'));
  x.stages[0].depends_on=['MISSING'];assert(evaluateStageDependencies(x).errors.some(e=>e.reason==='UNKNOWN_DEPENDENCY'));
