@@ -19,11 +19,13 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 阶段存在后，仍须继续验证其依赖、完成状态、UI Profile 版本、设计规格、视觉产物，以及 L3 所需的可运行交互原型；不能仅凭角色名称认定通过。未路由 UI 的任务不新增 UI 阶段要求。
 
 ## Risk-triggered review
+- 判定同时读取 `impacts` 与 `risk_flags`：任一字段出现已知强制风险类别，都不能通过另一个字段为空或填写 review-skip 理由取消独立审查。适用类别为 `auth`、`permissions`、`privacy`、`security`、`destructive-migration`、`risky-schema-migration`、`breaking-api`、`critical-business-rule`、`critical-workflow`、`design-system`、`shared-component`、`integration`、`concurrency`、`cross-module`、`financial-data`。
 - **L/XL**: independent Design Review is **mandatory** even when the design looks low-risk.
 - **S/M**: Master classifies. Must trigger independent Design Review when authentication/permissions/privacy, risky or destructive schema migration, breaking API, critical financial/business rules/workflow, shared component/design-system baseline, serious integration/security/concurrency or cross-module behavior is touched.
 - Other S/M tasks can use Designer self-check + Master artifact completeness/version check. Master must **record rationale** for review skipped. No self-approval represented as independent review.
 
 ## Two architecture responsibilities
+- 路由只能扩大实际影响要求的职责范围：已知系统影响要求 `system` 或 `both`，已知模块影响要求 `module` 或 `both`。同时存在两类影响时必须选择 `both`。`system` 不是 `module` 的替代，单独的理由或 N/A 声明不能排除已知必需角色。
 - Solution Architect: whole-app technical stack, system boundaries, high-level application code skeleton, deployment and matching diagrams; [Solution Architecture](solution-architecture.md).
 - Module Architect: module code/package/interface design and code-level diagrams **within** an approved system baseline; [Module Design](module-design.md).
 - Master selects by impact, not task size alone. Module-only features do not repeat system-level decisions. In BOTH, module starts only after system baseline approval and records its exact revision.
@@ -34,6 +36,18 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 - **Independent Reviewer (DESIGN mode)**: inspects original approved requirements and source designs at exact immutable revisions, runs independent checks, reports APPROVE / APPROVE WITH CONDITIONS / REQUEST CHANGES with P0–P3 findings. Reviewer does **not** authorize dispatch or mark Design Gate PASSED.
 - **Master**: validates dependency graph, required artifacts, risk, independent-review decision, Owner approvals, stale status; records PASS/BLOCKED/NEEDS_REFINEMENT as gate result and routes remediation. Cannot waive a missing required independent review.
 - **Owner**: approves material changes, accepts P2 risks with explicit conditions, separately authorizes coding. Owner acceptance is not a substitute for independent Design Review on L/XL.
+
+## UI Profile 批准与版本绑定（V0.3.1）
+
+路由要求 UI 时，输入必须同时提供 `ui_profile_ref`、`ui_profile_status: APPROVED`、`ui_profile_approval_ref` 和 `ui_profile_approved_ref`。其中 `ui_profile_approved_ref` 必须与固定版本的 `ui_profile_ref` 完全相同，UI 阶段的 `profile_ref` 也须匹配；批准其他 SHA 不能批准当前版本。
+
+- 状态缺失、PROPOSED、DEFERRED 或缺少批准证据引用：`PROJECT_UI_PROFILE_NOT_APPROVED`。
+- 被批准版本缺失或不匹配：`UI_PROFILE_APPROVAL_VERSION_MISMATCH`。
+- 上述问题均返回 BLOCKED 且 `coding_authorized: false`；不能用已有编码授权、绿色 CI、原型或独立审查结论替代 Profile 批准。
+- 旧输入不补齐这些字段会被阻断，这是修正宽松校验后的预期行为；仅固定 SHA 不再充分。未路由 UI 的任务不增加此依赖。
+- 允许继续编写 PROPOSED 设计草稿。正式门禁只接受已批准的项目基线，或 Owner 为当前任务明确批准的替代基线；替代基线使用相同字段和精确版本约束，不提供绕过开关。
+
+评估器仅检查这些元数据的一致性，不访问远程审批或认证批准人。Master/Reviewer 必须从真实来源核验批准人的权限、批准范围和绑定版本；不能仅凭输入中的 APPROVED 或一个链接认定授权真实。
 
 ## Gate outcome
 - `DESIGN_READY`: dependencies/evidence fresh, review requirement satisfied, material decisions approved, no blocking findings; **not coding authorization**.

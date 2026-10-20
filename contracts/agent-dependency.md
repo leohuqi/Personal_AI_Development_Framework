@@ -6,6 +6,12 @@ Schema: `padf.agent-dependency/v1`. Lightweight **declarative** stage dependency
 `context_id`, original Feature ID, Linear Issue, task class S/M/L/XL, risk flags, approved Feature Spec ref, **Master-selected `architecture_scope: none|system|module|both` with rationale**, `stages[]`. For MODULE/BOTH also record approved `system_baseline_ref`, `system_baseline_status: APPROVED` and Owner approval evidence.
 Each stage has unique `id`, `agent`, `required` (bool), `depends_on[]` (existing stage IDs), `status` (PENDING/READY/IN_PROGRESS/COMPLETED/BLOCKED/STALE/WAIVED), `artifacts[]` (type, immutable ref/SHA, required, verified, evidence_ref and check status; diagram generator SHA + PASS render result; interactive prototypes PASS interaction check and editable source), and `waiver` with recorded accountable Owner approval + reason when applicable.
 
+## UI 批准输入与路由约束（V0.3.1）
+
+已知系统影响只能选择 `system/both`，已知模块影响只能选择 `module/both`，两者同时存在须选 `both`；不能用人工选择较窄 scope 或 N/A 排除必需角色。强制 DESIGN 审查同时根据 `impacts` 与 `risk_flags` 判定，已知高风险影响不能通过漏填风险标签绕过。
+
+路由要求 UI 时，在任务根层增加 `ui_profile_status: APPROVED`、`ui_profile_approval_ref` 及 `ui_profile_approved_ref`，后者与固定版本的 `ui_profile_ref` 完全相同；阶段的 `profile_ref` 也须匹配。参见 [UI Profile 批准契约](project-ui-profile.md)及 [Design Gate](design-gate.md)。缺失或未批准的历史输入现在会被 BLOCKED；元数据通过不替代对实际 Owner 决定的核验。
+
 ## Dependency evaluation semantics
 1. No duplicate stage IDs; every `depends_on` points to a distinct existing ID; no self-loop/cycle. Reject invalid data, do not skip missing links.
 2. Stage COMPLETED means its own work and required artifacts have evidence; it **does not mean approved**.

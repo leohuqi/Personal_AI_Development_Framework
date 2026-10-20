@@ -1,5 +1,11 @@
 # PADF V0.3 — Specialist Agent & Design Gate Validation
 
+## V0.3.1：R2 安全回归
+
+`node tests/v0.3/run-tests.mjs` 新增 R2-01～03 回归矩阵：模块影响与显式 scope、S/M 的 impact-only 强制审查、UI Profile 状态/批准证据/精确版本绑定，以及低风险 UI、非 UI 和单独编码授权的正向对照。它们针对元数据门禁，不证明真实专家、Owner 决定或外部工具执行。
+
+旧 UI 测试输入须提供 `ui_profile_status: APPROVED`、`ui_profile_approval_ref` 和与 `ui_profile_ref` 相同的 `ui_profile_approved_ref`。数据库正向用例使用已批准系统基线下的模块阶段，不再借 system scope 绕过模块设计。新增反例在未修复实现上应失败；门禁修复后全套通过。
+
 ## Automated checks (declarative, not a running agent platform)
 
 ```bash
