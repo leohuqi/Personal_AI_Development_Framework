@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
-import {evaluateOrchestrationChain} from '../../lib/orchestration-evidence.mjs';
+import {evaluateOrchestrationChain,evaluateDispatchAuthorization} from '../../lib/orchestration-evidence.mjs';
 const A='a'.repeat(40),B='b'.repeat(40),C='c'.repeat(40);
 const base='https://github.com/example/padf/';
 const link=s=>base+s;
@@ -124,6 +124,131 @@ check('UI Designer requires project UI profile or creation authorization',()=>{
 check('Different context or executor role blocks chain',()=>{
  const x=baseline();x.chain[1].execution.executor_role='solution-architect';
  has(evaluateOrchestrationChain(x),'ROLE_MISMATCH');
+});
+// These are policy snapshots, not real Owner approvals or runtime executions.
+const authorizationFixture=()=>({
+ authorization:{schema_version:'padf.dispatch-authorization/v1',authorization_ref:link('issues/10#contract'),
+  owner_approval_ref:link('issues/10#owner-approval'),status:'APPROVED',context_id:'padf-task-10',
+  repository:'example/padf',task_contract_ref:link('issues/10#contract'),environment:'isolated',
+  scope_items:[{id:'bounded-review',allowed_roles:['independent-reviewer','qa-tester'],
+   allowed_actions:['REVIEW','TEST'],required_decisions:[]}]},
+ dispatch:{context_id:'padf-task-10',repository:'example/padf',task_contract_ref:link('issues/10#contract'),
+  environment:'isolated',target_role:'independent-reviewer',action:'REVIEW',scope_ids:['bounded-review']},
+ decision_approvals:[]});
+const blocked=(x,code)=>{const v=evaluateDispatchAuthorization(x);assert.equal(v.allowed,false);assert.equal(v.decision,'BLOCKED');assert(v.errors.includes(code),JSON.stringify(v))};
+const allowed=x=>{const v=evaluateDispatchAuthorization(x);assert.equal(v.allowed,true,JSON.stringify(v));assert.equal(v.decision,'CONTINUE');return v};
+const formalDesign=(role='module-architect',kind='SYSTEM_BASELINE')=>{
+ const x=authorizationFixture(),r={decision_id:'approved-baseline',kind,subject_ref:pin('docs/baseline.md')};
+ x.dispatch.target_role=role;x.dispatch.action='DESIGN';
+ Object.assign(x.authorization.scope_items[0],{allowed_roles:[role],allowed_actions:['DESIGN'],required_decisions:[r]});
+ x.decision_approvals=[{...r,status:'APPROVED',owner_approval_ref:link('issues/10#baseline-approval')}];return x;
+};
+check('Same Owner approval supports successive real-mode review/test dispatches without new approval',()=>{
+ const x=authorizationFixture(),before=structuredClone(x.authorization);allowed(x);
+ x.dispatch.target_role='qa-tester';x.dispatch.action='TEST';allowed(x);
+ assert.deepEqual(x.authorization,before);assert.equal(x.dispatch.owner_approval_ref,undefined);
+ const chain=wrap([make('independent-reviewer',null,0,'RUNTIME_DISPATCH')]);
+ assert.equal(evaluateOrchestrationChain(chain).level,'RUNTIME_DISPATCH_METADATA_ELIGIBLE');
+});
+check('Authorized context coordination continues and retains runtime evidence requirements',()=>{
+ const x=authorizationFixture();x.dispatch.target_role='context-coordinator';x.dispatch.action='COORDINATE';
+ Object.assign(x.authorization.scope_items[0],{allowed_roles:['context-coordinator'],allowed_actions:['COORDINATE']});
+ allowed(x);
+ const chain=wrap([make('context-coordinator',null,0,'RUNTIME_DISPATCH')]);
+ chain.chain[0].handoff.artifact_refs=[{kind:'context-checkpoint',ref:pin('docs/context-checkpoint.md')}];
+ assert.equal(evaluateOrchestrationChain(chain).level,'RUNTIME_DISPATCH_METADATA_ELIGIBLE');
+ delete chain.chain[0].execution.runtime_task_ref;
+ has(evaluateOrchestrationChain(chain),'RUNTIME_DISPATCH_NOT_PROVEN');
+ const wrong=authorizationFixture();wrong.dispatch.target_role='context-coordinator';wrong.dispatch.action='COORDINATE';
+ blocked(wrong,'ROLE_NOT_ALLOWED');blocked(wrong,'ACTION_NOT_ALLOWED');
+});
+check('Approved formal module and UI design may continue at matching decision revisions',()=>{
+ allowed(formalDesign());allowed(formalDesign('ui-ux-designer','UI_PROFILE'));
+ allowed(formalDesign('ui-ux-designer','UI_PROFILE_CREATION'));
+});
+check('Authorized proposal can proceed without making the proposed baseline approved',()=>{
+ const x=formalDesign();x.dispatch.action='DESIGN_PROPOSAL';
+ Object.assign(x.authorization.scope_items[0],{allowed_actions:['DESIGN_PROPOSAL'],required_decisions:[]});
+ x.decision_approvals=[];allowed(x);
+ const chain=baseline();chain.chain[1].dispatch.system_baseline_status='PROPOSED';
+ has(evaluateOrchestrationChain(chain),'UNAPPROVED_MODULE_BASELINE');
+});
+check('Absent authorization cannot be supplied by a dispatch-level approval label',()=>{
+ const x=authorizationFixture();delete x.authorization;x.dispatch.owner_approval_ref=link('issues/10#owner-approval');
+ blocked(x,'MISSING_AUTHORIZATION');
+});
+check('Missing canonical Owner approval or Task Contract reference blocks',()=>{
+ for(const key of ['owner_approval_ref','authorization_ref','task_contract_ref']){
+  const x=authorizationFixture();delete x.authorization[key];
+  blocked(x,key==='task_contract_ref'?'INVALID_TASK_CONTRACT':'MISSING_AUTHORIZATION');
+ }
+});
+check('Revoked expired cancelled completed or proposed authorization blocks',()=>{
+ for(const status of ['REVOKED','EXPIRED','CANCELLED','COMPLETED','PROPOSED',undefined]){
+  const x=authorizationFixture();x.authorization.status=status;blocked(x,'AUTHORIZATION_NOT_ACTIVE');
+ }
+});
+check('Repository context environment and exact Task Contract drift block',()=>{
+ for(const field of ['repository','context_id','environment','task_contract_ref']){
+  const x=authorizationFixture();x.dispatch[field]+='-other';blocked(x,'AUTHORIZATION_SCOPE_MISMATCH');
+ }
+});
+check('Unknown scope and mixed authorized plus unauthorized scopes block',()=>{
+ for(const scope_ids of [['another-scope'],['bounded-review','another-scope']]){
+  const x=authorizationFixture();x.dispatch.scope_ids=scope_ids;blocked(x,'SCOPE_NOT_AUTHORIZED');
+ }
+});
+check('Role and delegated action must both be permitted by the approved scope',()=>{
+ const x=authorizationFixture();x.dispatch.target_role='solution-architect';blocked(x,'ROLE_NOT_ALLOWED');
+ x.dispatch.target_role='independent-reviewer';x.dispatch.action='DESIGN';blocked(x,'ACTION_NOT_ALLOWED');
+});
+check('Coding major decisions merge release deployment destruction and acceptance never inherit dispatch approval',()=>{
+ for(const action of ['CODE','IMPLEMENT','APPROVE_DESIGN','ACCEPT_RISK','CHANGE_SCOPE','PR_MERGE','RELEASE',
+  'PRODUCTION_DEPLOY','DESTRUCTIVE_OPERATION','CREDENTIAL_ROTATION','MARK_DONE','unknown']){
+  const x=authorizationFixture();x.dispatch.action=action;x.authorization.scope_items[0].allowed_actions.push(action);
+  blocked(x,'ACTION_REQUIRES_SEPARATE_AUTHORIZATION');
+ }
+});
+check('Formal module/UI design cannot silently omit necessary baseline decision requirements',()=>{
+ for(const role of ['module-architect','ui-ux-designer']){
+  const x=formalDesign(role);x.authorization.scope_items[0].required_decisions=[];
+  blocked(x,role==='module-architect'?'SYSTEM_APPROVAL_REQUIREMENT_MISSING':'UI_APPROVAL_REQUIREMENT_MISSING');
+ }
+});
+check('Missing pending rejected stale or unlinked necessary decisions block before launch',()=>{
+ for(const mutate of [x=>x.decision_approvals=[],x=>x.decision_approvals[0].status='PROPOSED',
+  x=>x.decision_approvals[0].status='REJECTED',x=>x.decision_approvals[0].subject_ref='docs/baseline.md@'+B,
+  x=>delete x.decision_approvals[0].owner_approval_ref,x=>x.decision_approvals[0].kind='UI_PROFILE']){
+  const x=formalDesign();mutate(x);blocked(x,'REQUIRED_DECISION_NOT_APPROVED');
+ }
+});
+check('All selected scope decisions are required, not only the first scope',()=>{
+ const x=formalDesign();x.authorization.scope_items.push({id:'second-scope',allowed_roles:['module-architect'],
+  allowed_actions:['DESIGN'],required_decisions:[{decision_id:'other-baseline',kind:'SYSTEM_BASELINE',subject_ref:pin('docs/other.md')}]});
+ x.dispatch.scope_ids.push('second-scope');blocked(x,'REQUIRED_DECISION_NOT_APPROVED');
+});
+check('Malformed empty or ambiguous scope cannot fail open',()=>{
+ for(const scope_ids of [undefined,[],['bounded-review','bounded-review'],'bounded-review']){
+  const x=authorizationFixture();x.dispatch.scope_ids=scope_ids;blocked(x,'INVALID_DISPATCH_SCOPE');
+ }
+ for(const scope_items of [undefined,[],[null],[{},{}]]){
+  const x=authorizationFixture();x.authorization.scope_items=scope_items;blocked(x,'INVALID_AUTHORIZED_SCOPE');
+ }
+ const x=authorizationFixture();x.authorization.scope_items.push(structuredClone(x.authorization.scope_items[0]));
+ blocked(x,'INVALID_AUTHORIZED_SCOPE');
+});
+check('Malformed duplicate or unversioned decision requirements block',()=>{
+ for(const requirements of [undefined,[null],[{}],[{decision_id:'baseline',kind:'SYSTEM_BASELINE',subject_ref:'docs@main'}]]){
+  const x=formalDesign();x.authorization.scope_items[0].required_decisions=requirements;blocked(x,'INVALID_DECISION_REQUIREMENTS');
+ }
+ const x=formalDesign();x.decision_approvals.push(structuredClone(x.decision_approvals[0]));blocked(x,'REQUIRED_DECISION_NOT_APPROVED');
+ x.decision_approvals=null;blocked(x,'INVALID_DECISION_APPROVALS');
+});
+check('Null malformed and empty input safely block with explicit snapshot boundary',()=>{
+ for(const x of [null,undefined,{},[],{authorization:null,dispatch:null}]){
+  const v=evaluateDispatchAuthorization(x);assert.equal(v.allowed,false);
+  assert.equal(v.verification_boundary,'SNAPSHOT_ONLY_NOT_LIVE_AUTHORIZATION_OR_EXECUTION');
+ }
 });
 console.log(JSON.stringify({suite:'Master Orchestration evidence (synthetic metadata ONLY)',
  status:'PASS',count:checks.length,checks,external_sessions_executed:'NOT_RUN',
