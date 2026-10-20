@@ -1,8 +1,12 @@
 # 个人 AI 开发框架（PADF）
 
-**当前主分支：V0.3。** 系统级 Solution Architect、模块级 Module Architect 与 UI/UX Designer 分工协作，按任务风险进入 Design Gate；继续沿用 V0.2 的共享上下文与通信契约。V0.3 已通过 [PR #6](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/6) 合并，主分支状态与正式 Release 分开管理。
+**当前版本：v0.3.2（V0.3 系列）。** 系统级 Solution Architect、模块级 Module Architect 与 UI/UX Designer 分工协作，按任务风险进入 Design Gate；继续沿用 V0.2 的共享上下文与通信契约。参见 [v0.3.2 版本说明](docs/releases/v0.3.2.md)与 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.2)。
 
 PADF 定义由 Owner 决策、Agent 执行的增量软件开发流程。每个应用维护自己的 PRD、架构、UX 基线、功能目录、源码、AGENTS.md 与 CI；框架可供不同项目复用。
+
+## v0.3.2：批准范围内的持续分派
+
+Master 复用有效 Owner 授权与精确 Task Contract，优先调用可用真实 Agent 运行时，无需逐次重新批准；每次启动仍核对范围、环境、角色/动作、必要决策和依赖，并保留 Dispatch、工具执行 ID、Handoff 与协调记录。越界、授权撤销、必要批准缺失或未授权编码等操作仍阻断。重大设计决策、业务编码、合并、发布、生产部署、破坏性操作与最终验收保留各自授权门禁，参见[审批策略](governance/approval-policy.md)和[Dispatch 契约](contracts/agent-dispatch.md)。
 
 ## 文档语言
 
