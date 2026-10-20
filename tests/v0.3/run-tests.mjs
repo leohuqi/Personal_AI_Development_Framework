@@ -34,6 +34,8 @@ const baseline=()=>{
  return {
  context_id:'TEST-001',task_class:'L',architecture_scope:'system',routing_rationale:'New APP',
  feature_spec_ref:ref('docs/feature.md'),ui_profile_ref:ref('docs/ui-profile.md'),ui_level:'L1',
+ ui_profile_status:'APPROVED',ui_profile_approved_ref:ref('docs/ui-profile.md'),
+ ui_profile_approval_ref:'https://github.com/example/repo/issues/1#profile-owner-approval',
  impacts:['architecture','ui'],risk_flags:[],diagram_skill_sha:C,stages,
  consistency_checks:[{scope:'api-ui',status:'PASS',evidence_ref:'https://github.com/example/repo/issues/1#comment'}],
  design_review:{independent:true,mode:'DESIGN',decision:'APPROVE',evidence_ref:'https://github.com/example/repo/pull/4#review',
@@ -197,7 +199,7 @@ check('Missing diagram blocks Architect design',()=>{
  assert(evaluateDesignGate(x).reasons.includes('MISSING_SYSTEM_ARTIFACT:architecture-diagram'));
 });
 check('Database needs authoritative schema and matching diagram',()=>{
- const x=baseline();x.impacts=['database','ui'];
+ const x=moduleOnly();x.impacts=['database'];
  assert(evaluateDesignGate(x).reasons.includes('MISSING_DATABASE_SCHEMA_AND_DIAGRAM'));
  x.stages[0].artifacts.push(artifact('docs/schema.sql','database-schema'));
  x.stages[0].artifacts.push(artifact('docs/schema.html','database-schema-diagram'));
@@ -306,5 +308,192 @@ check('Invalid task class and unsupported status rejected',()=>{
  assert.equal(routeAgents({task_class:'unknown'}).valid,false);
  const x=baseline();x.stages[0].status='MAGIC';
  assert(evaluateStageDependencies(x).errors.some(e=>e.reason==='INVALID_STAGE_STATUS'));
+});
+
+// R2 回归：角色路由、强制独立审查和 Profile 批准必须分别闭合。
+check('R2-01 module impacts cannot be narrowed to system or none',()=>{
+ for(const task_class of ['S','M','L','XL'])
+ for(const impact of ['api','database','workflow','integration','module-design','code-structure','security']){
+  for(const architecture_scope of ['none','system']){
+   const r=routeAgents({task_class,impacts:[impact],risk_flags:[],architecture_scope});
+   assert.equal(r.valid,false,task_class+':'+impact+':'+architecture_scope);
+   assert.deepEqual(r.errors,['MODULE_DESIGN_IMPACT_REQUIRES_MODULE_ARCHITECT']);
+  }
+  for(const architecture_scope of ['module','both']){
+   const r=routeAgents({task_class,impacts:[impact],risk_flags:[],architecture_scope});
+   assert.equal(r.valid,true);assert.equal(r.module_architect_required,true);
+  }
+ }
+});
+check('R2-01 API impact with only a completed system stage cannot authorize coding',()=>{
+ const x=baseline();x.task_class='M';x.impacts=['api'];x.architecture_scope='system';
+ x.stages=[stage('ARCH','solution-architect')];x.design_review.reviewed_refs=reviewed(x.stages);
+ const r=evaluateDesignGate(x);
+ assert.equal(r.status,'BLOCKED');assert.equal(r.coding_authorized,false);
+ assert.deepEqual(r.reasons,['MODULE_DESIGN_IMPACT_REQUIRES_MODULE_ARCHITECT']);
+});
+check('R2-01 combined impacts require both architects and keep automatic routing symmetric',()=>{
+ const input={task_class:'M',impacts:['technology-stack','api'],risk_flags:[]};
+ for(const architecture_scope of ['none','system','module'])
+  assert.equal(routeAgents({...input,architecture_scope}).valid,false);
+ for(const architecture_scope of [undefined,'both']){
+  const r=routeAgents({...input,architecture_scope});
+  assert.equal(r.valid,true);assert.equal(r.architecture_scope,'both');
+  assert.equal(r.solution_architect_required,true);assert.equal(r.module_architect_required,true);
+ }
+});
+check('R2-01 required module stage cannot be missing or merely optional',()=>{
+ for(const optional of [false,true]){
+  const x=moduleOnly();
+  if(optional){x.stages[0].required=false;x.stages[0].na_reason='Proposed exemption without removing actual API impact';}
+  else x.stages=[];
+  x.design_review.reviewed_refs=[];
+  const r=evaluateDesignGate(x);
+  assert.equal(r.status,'BLOCKED');assert.equal(r.coding_authorized,false);
+  assert(r.reasons.includes('MISSING_MODULE_ARCHITECT_STAGE'));
+ }
+});
+const knownMandatoryRisks=['auth','permissions','privacy','security','destructive-migration',
+ 'risky-schema-migration','breaking-api','critical-business-rule','critical-workflow',
+ 'design-system','shared-component','integration','concurrency','cross-module','financial-data'];
+check('R2-02 known mandatory risks trigger S/M review from impacts or risk_flags',()=>{
+ for(const task_class of ['S','M'])for(const risk of knownMandatoryRisks){
+  for(const input of [{impacts:[risk],risk_flags:[]},{impacts:[],risk_flags:[risk]}]){
+   const r=routeAgents({task_class,...input});
+   assert.equal(r.valid,true);assert.equal(r.independent_review_required,true,task_class+':'+risk);
+  }
+ }
+});
+const uiOnly=()=>{
+ const x=baseline();x.task_class='M';x.architecture_scope='none';x.impacts=['ui'];
+ x.stages=[stage('UX','ui-ux-designer')];x.design_review.reviewed_refs=reviewed(x.stages);
+ return x;
+};
+for(const task_class of ['S','M'])for(const impact of ['shared-component','design-system'])
+check('R2-02 '+task_class+' '+impact+' cannot skip mandatory DESIGN review',()=>{
+ const x=uiOnly();x.task_class=task_class;x.impacts=[impact];
+ assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+ delete x.design_review;x.review_skip_rationale='Explicit request to skip review despite known shared UI impact';
+ const r=evaluateDesignGate(x);
+ assert.equal(r.routing.independent_review_required,true);
+ assert.equal(r.status,'BLOCKED');assert.equal(r.coding_authorized,false);
+ assert.deepEqual(r.reasons,['MANDATORY_DESIGN_REVIEW']);
+});
+check('R2-02 review evidence for shared UI impacts must be independent DESIGN approval',()=>{
+ for(const change of [
+  r=>{r.independent=false;},r=>{r.mode='IMPLEMENTATION';},
+  r=>{r.decision='REQUEST_CHANGES';},r=>{delete r.evidence_ref;}
+ ]){
+  const x=uiOnly();x.impacts=['design-system'];change(x.design_review);
+  const r=evaluateDesignGate(x);
+  assert.equal(r.status,'BLOCKED');assert.equal(r.coding_authorized,false);
+  assert(r.reasons.includes('MANDATORY_DESIGN_REVIEW'));
+ }
+});
+check('R2-02 ordinary UI-only S/M tasks can still skip review with a justified rationale',()=>{
+ for(const task_class of ['S','M']){
+  const x=uiOnly();x.task_class=task_class;delete x.design_review;
+  x.review_skip_rationale='Only local UI layout; no known shared, security or cross-module impact';
+  const r=evaluateDesignGate(x);
+  assert.equal(r.routing.independent_review_required,false);
+  assert.equal(r.status,'DESIGN_READY');assert.equal(r.coding_authorized,true);
+ }
+});
+function assertProfileBlocked(x,reason){
+ const r=evaluateDesignGate(x);
+ assert.equal(r.status,'BLOCKED');assert.equal(r.coding_authorized,false);
+ assert(r.reasons.includes(reason),JSON.stringify(r.reasons));
+}
+check('R2-03 every unapproved or absent UI Profile status blocks readiness',()=>{
+ for(const status of [undefined,null,'PROPOSED','DEFERRED','REJECTED','approved']){
+  const x=uiOnly();x.ui_profile_status=status;
+  assertProfileBlocked(x,'PROJECT_UI_PROFILE_NOT_APPROVED');
+ }
+});
+check('R2-03 an APPROVED label without Owner approval evidence is insufficient',()=>{
+ for(const approval of [undefined,null,'','   ','short']){
+  const x=uiOnly();x.ui_profile_approval_ref=approval;
+  assertProfileBlocked(x,'PROJECT_UI_PROFILE_NOT_APPROVED');
+ }
+});
+check('R2-03 Owner approval must bind to the exact pinned Profile revision',()=>{
+ for(const approvedRef of [undefined,null,ref('docs/ui-profile.md',B),'docs/ui-profile.md@main']){
+  const x=uiOnly();x.ui_profile_approved_ref=approvedRef;
+  assertProfileBlocked(x,'UI_PROFILE_APPROVAL_VERSION_MISMATCH');
+ }
+});
+check('R2-03 exact approval cannot compensate for an unpinned Profile or stale stage',()=>{
+ const x=uiOnly();x.ui_profile_ref='docs/ui-profile.md@main';
+ x.ui_profile_approved_ref=x.ui_profile_ref;x.stages[0].profile_ref=x.ui_profile_ref;
+ assertProfileBlocked(x,'UNVERSIONED_PROJECT_UI_PROFILE');
+ const y=uiOnly();y.stages[0].profile_ref=ref('docs/ui-profile.md',B);
+ assertProfileBlocked(y,'UI_PROFILE_VERSION_MISMATCH');
+});
+check('R2-03 L3 prototype and coding approval do not approve a proposed Profile',()=>{
+ const x=uiOnly();x.ui_level='L3';
+ x.stages[0].artifacts.push(artifact('docs/prototype.html','interactive-prototype'));
+ x.design_review.reviewed_refs=reviewed(x.stages);
+ assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+ x.ui_profile_status='PROPOSED';x.ui_profile_approval_ref=null;
+ assertProfileBlocked(x,'PROJECT_UI_PROFILE_NOT_APPROVED');
+});
+check('R2-03 proposed bootstrapping stays blocked until its precise alternative baseline is approved',()=>{
+ const x=uiOnly();x.ui_profile_ref=ref('docs/task-ui-baseline.md',B);
+ x.stages[0].profile_ref=x.ui_profile_ref;x.ui_profile_approved_ref=x.ui_profile_ref;
+ x.ui_profile_status='PROPOSED';
+ assertProfileBlocked(x,'PROJECT_UI_PROFILE_NOT_APPROVED');
+ x.ui_profile_status='APPROVED';
+ x.ui_profile_approval_ref='https://github.com/example/repo/issues/1#task-specific-baseline-owner';
+ assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+});
+check('R2-03 approved UI Profile does not grant coding authorization',()=>{
+ const x=uiOnly();delete x.coding_authorization;
+ const r=evaluateDesignGate(x);
+ assert.equal(r.status,'DESIGN_READY');assert.equal(r.coding_authorized,false);
+ assert.equal(r.execution_state,'AWAITING_OWNER_CODING_AUTHORIZATION');
+});
+check('R2-03 non-UI tasks do not acquire a UI Profile approval dependency',()=>{
+ const x=moduleOnly();delete x.ui_profile_ref;delete x.ui_profile_status;
+ delete x.ui_profile_approved_ref;delete x.ui_profile_approval_ref;
+ const r=evaluateDesignGate(x);
+ assert.equal(r.status,'DESIGN_READY');assert.equal(r.coding_authorized,true);
+});
+
+check('R3 every required UI stage must match the approved Profile regardless of order',()=>{
+ for(const reverse of [false,true])for(const profile of [undefined,ref('docs/ui-profile.md',B)]){
+  const x=uiOnly();const extra=stage('UX2','ui-ux-designer');
+  x.stages.push(extra);x.design_review.reviewed_refs=reviewed(x.stages);
+  assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+  extra.profile_ref=profile;
+  if(reverse)x.stages.reverse();
+  assertProfileBlocked(x,'UI_PROFILE_VERSION_MISMATCH');
+ }
+});
+check('R3 each required UI stage must provide its own specification and visual artifacts',()=>{
+ for(const [type,reason] of [['ui-design','MISSING_UI_SPECIFICATION'],['ui-concept','MISSING_UI_DESIGN_VISUAL']]){
+  const x=uiOnly();x.stages.push(stage('UX2','ui-ux-designer'));
+  x.stages[1].artifacts=x.stages[1].artifacts.filter(a=>a.type!==type);
+  x.design_review.reviewed_refs=reviewed(x.stages);
+  const r=evaluateDesignGate(x);
+  assert.equal(r.dependencies.valid,true);
+  assert.equal(r.status,'BLOCKED');assert.equal(r.coding_authorized,false);
+  assert(r.reasons.includes(reason));
+ }
+});
+check('R3 L3 prototype evidence is required for every required UI stage',()=>{
+ const x=uiOnly();x.ui_level='L3';x.stages.push(stage('UX2','ui-ux-designer'));
+ x.stages[0].artifacts.push(artifact('docs/UX-prototype.html','interactive-prototype'));
+ x.design_review.reviewed_refs=reviewed(x.stages);
+ assertProfileBlocked(x,'MISSING_INTERACTIVE_PROTOTYPE');
+ x.stages[1].artifacts.push(artifact('docs/UX2-prototype.html','interactive-prototype'));
+ x.design_review.reviewed_refs=reviewed(x.stages);
+ assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+});
+check('R3 optional UI stages do not substitute for or constrain complete required UI stages',()=>{
+ const x=uiOnly();const extra=stage('UXOPTION','ui-ux-designer');
+ extra.required=false;extra.na_reason='Exploratory alternative, excluded from this approved task';
+ extra.profile_ref=ref('docs/ui-profile.md',B);x.stages.push(extra);
+ const r=evaluateDesignGate(x);
+ assert.equal(r.status,'DESIGN_READY');assert.equal(r.coding_authorized,true);
 });
 console.log(JSON.stringify({suite:'PADF V0.3 system/module architecture routing, design dependency and gate simulation',status:'PASS',count:tests.length,tests},null,2));

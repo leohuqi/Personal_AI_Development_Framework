@@ -19,6 +19,8 @@ Default to a single Coder; parallel work requires clear non-overlapping boundari
 - Follow [CACF workflow](context-communication.md) and [Agent Message](../contracts/agent-message.md) rules.
 
 ## V0.3 capability-based routing
+V0.3.1 补充约束：`architecture_scope` 不得排除已知影响要求的角色。系统影响要求 `system/both`；模块影响要求 `module/both`；同时存在则要求 `both`。S/M 的强制 DESIGN 审查取 `impacts` 和 `risk_flags` 中已知强制风险类别的并集；例如仅在 impacts 声明 `shared-component` 或 `design-system`，即使 risk_flags 为空也必须独立审查。普通局部 UI 任务仍可按原规则说明理由后跳过独立审查。
+
 Master analyzes actual Feature Spec and sets `task_class`, `impacts`, `risk_flags` with rationale. Use [sequential design workflow](design-collaboration.md) and [declarative evaluator](../lib/design-gate.mjs) as optional read-only checks, not an execution engine.
 - Master explicitly decides `architecture_scope: none | system | module | both` using real affected boundaries and current approved architecture, **not only S/M/L/XL**; document rationale in Task Contract.
 - **solution-architect**: new APP, whole-system technology stack/framework selection, platform/storage/runtime replacement, system-wide service boundaries/deployment or major cross-module architecture decision. Output pinned [Solution Architecture Baseline](../contracts/solution-architecture.md), stack choices, high-level application code/module topology and professional diagrams.
