@@ -34,6 +34,7 @@ dispatch:
 decision_approvals: []
 ```
 
+- 可分派角色包括 solution-architect、module-architect、ui-ux-designer、feature-coder、qa-tester、independent-reviewer 和 context-coordinator；允许角色仍须在各范围项中明确绑定，角色名不自带执行权限。
 - 同一批准快照可用于多个有独立 `dispatch_id` 的启动；无需新增 dispatch 级 `owner_approval_ref`。仍须逐次核验实时状态。完成、取消、撤销、过期或缺少授权时阻断。
 - `scope_items` 是已批准 Task Contract 的有限范围清单；每项绑定允许角色、动作及 `required_decisions`（无前置决策显式写 `[]`）。不可用自由文本或通配符推断扩大授权，接收方不得自行删减前置条件。
 - 本校验器仅允许 `ANALYZE / DESIGN_PROPOSAL / DESIGN / TEST / REVIEW / COORDINATE`；未知动作、业务编码、决策批准、合并、发布、部署、破坏性操作和最终验收均不能通过，即使被误写入范围。另行批准的编码走既有编码 Task Contract 与 Design Gate 路径，不由此校验器授予。

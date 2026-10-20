@@ -150,6 +150,18 @@ check('Same Owner approval supports successive real-mode review/test dispatches 
  const chain=wrap([make('independent-reviewer',null,0,'RUNTIME_DISPATCH')]);
  assert.equal(evaluateOrchestrationChain(chain).level,'RUNTIME_DISPATCH_METADATA_ELIGIBLE');
 });
+check('Authorized context coordination continues and retains runtime evidence requirements',()=>{
+ const x=authorizationFixture();x.dispatch.target_role='context-coordinator';x.dispatch.action='COORDINATE';
+ Object.assign(x.authorization.scope_items[0],{allowed_roles:['context-coordinator'],allowed_actions:['COORDINATE']});
+ allowed(x);
+ const chain=wrap([make('context-coordinator',null,0,'RUNTIME_DISPATCH')]);
+ chain.chain[0].handoff.artifact_refs=[{kind:'context-checkpoint',ref:pin('docs/context-checkpoint.md')}];
+ assert.equal(evaluateOrchestrationChain(chain).level,'RUNTIME_DISPATCH_METADATA_ELIGIBLE');
+ delete chain.chain[0].execution.runtime_task_ref;
+ has(evaluateOrchestrationChain(chain),'RUNTIME_DISPATCH_NOT_PROVEN');
+ const wrong=authorizationFixture();wrong.dispatch.target_role='context-coordinator';wrong.dispatch.action='COORDINATE';
+ blocked(wrong,'ROLE_NOT_ALLOWED');blocked(wrong,'ACTION_NOT_ALLOWED');
+});
 check('Approved formal module and UI design may continue at matching decision revisions',()=>{
  allowed(formalDesign());allowed(formalDesign('ui-ux-designer','UI_PROFILE'));
  allowed(formalDesign('ui-ux-designer','UI_PROFILE_CREATION'));
