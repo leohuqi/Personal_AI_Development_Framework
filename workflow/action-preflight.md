@@ -46,3 +46,5 @@ node tests/v0.3/run-orchestration-tests.mjs
 ```
 
 另运行原Design/CACF/质量回归及CI。参数化合成输入只能证明函数判定，不等于真实Owner批准、Agent/Figma执行或平台设置验证。独立PR精确SHA须由另一个真实Reviewer会话审查实际diff并出具真实Handoff；Master不能自批。验收清单见[交付模板](../templates/action-preflight.md)。
+
+START_CODING始终合并当前Task Contract与设计快照已知风险后重跑Design Gate，不允许旧S/无风险快照抹去当前L/XL、permissions/security等强制设计审查。事后PR_MERGED保留PR源Base/HEAD和实际合并提交两套版本，正常merge/squash不会因两者不同被误报；低风险按政策明确NOT_RUN的可选Review不新增强制审查，已知阻断结论/发现仍阻断。

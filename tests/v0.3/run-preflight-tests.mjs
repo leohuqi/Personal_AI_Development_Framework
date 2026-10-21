@@ -73,6 +73,22 @@ function fixture(action='MERGE_PR'){
 function risk(x){return {status:'APPROVED',explicit:true,owner_approval_ref:link('issues/15#risk-acceptance'),
  action:x.action,subject:clone(x.subject),conditions:'Only this reviewed revision',remediation:'Follow up in tracked issue',recheck_ref:evidence};}
 function exception(x,rule_id='OPTIONAL_STYLE'){return {exception_id:'EX-001',rule_id,...risk(x),risk:'Cosmetic output variance'};}
+function addCompleteDesignReview(x){
+ const input=x.design_input,baseline='docs/system-baseline.md@'+A;
+ const artifacts=['module-design','module-code-structure','module-interface-contract','module-component-diagram'].map(type=>({
+  type,ref:'docs/'+type+'.md@'+B,source_revision:B,current_revision:B,verified:true,evidence_ref:evidence,
+  ...(type.endsWith('-diagram')?{generator:'diagram-design',generator_sha:C,render_status:'PASS'}:{})}));
+ Object.assign(input,{architecture_scope:'module',system_baseline_ref:baseline,system_baseline_status:'APPROVED',
+  system_baseline_approval_ref:evidence,diagram_skill_sha:C,
+  stages:[{id:'MODULE',agent:'module-architect',required:true,depends_on:[],status:'COMPLETED',system_baseline_ref:baseline,artifacts}],
+  design_review:{independent:true,mode:'DESIGN',decision:'APPROVE',evidence_ref:evidence,
+   reviewed_refs:artifacts.map(a=>a.ref),findings:[]}});
+ return x;
+}
+function mergedPr(x,method='squash'){
+ return {merged:true,repository:x.subject.repository,number:x.subject.pr_number??16,base_sha:x.subject.base_sha,
+  head_sha:x.subject.head_sha,merge_commit_sha:C,evidence_ref:evidence,merge_method:method};
+}
 
 // G-01.1 / G-01.5: separate actions, technical prerequisites and existing Owner scope.
 const actions=['MERGE_PR','START_CODING','RELEASE','DEPLOY_PRODUCTION','OWNER_ACCEPTANCE','MARK_ISSUE_DONE'];
@@ -121,6 +137,31 @@ for(const [path,value] of [['design_input.task_class','INVALID'],['design_input.
  test('design-reuse','START_CODING rechecks '+path,()=>decision(mutate(path,value,fixture('START_CODING'))));
 test('design-reuse','A DESIGN_READY label cannot substitute for original Design Gate input',()=>{
  const x=fixture('START_CODING');x.design_input={status:'DESIGN_READY',coding_authorized:true};decision(x);
+});
+for(const [name,change] of [
+ ['current L over old S',x=>x.policy.task_class='L'],
+ ['current XL over old S',x=>x.policy.task_class='XL'],
+ ['inner L over current M',x=>x.design_input.task_class='L'],
+ ['inner XL over current M',x=>x.design_input.task_class='XL'],
+ ['current permissions risk',x=>x.policy.risk_flags=['permissions']],
+ ['current security risk',x=>x.policy.risk_flags=['security']],
+ ['inner permissions risk',x=>x.design_input.risk_flags=['permissions']],
+ ['inner security risk',x=>x.design_input.risk_flags=['security']],
+ ['current permissions impact',x=>x.policy.impacts=['permissions']],
+ ['current security impact',x=>x.policy.impacts=['security']],
+ ['inner permissions impact',x=>x.design_input.impacts=['permissions']],
+ ['inner security impact',x=>x.design_input.impacts=['security']]]){
+ test('design-reuse',name+' cannot reuse an unreviewed low-risk design',()=>{
+  const x=fixture('START_CODING');change(x);decision(x);
+ });
+ test('design-reuse',name+' permits coding after complete applicable DESIGN Review',()=>{
+  const x=fixture('START_CODING');change(x);addCompleteDesignReview(x);const before=clone(x);
+  decision(x,'READY');assert.deepEqual(x,before);
+ });
+}
+test('design-reuse','Policy and design risk unions preserve obligations from both sources',()=>{
+ const x=fixture('START_CODING');x.policy.impacts=['security'];x.design_input.risk_flags=['permissions'];
+ addCompleteDesignReview(x);decision(x,'READY');delete x.design_input.design_review;decision(x);
 });
 
 // G-01.2: real-context metadata and actual precise diff, not a status label or CI.
@@ -217,6 +258,28 @@ test('policy','Explicit low-risk QA/Review exclusions need applicable policy evi
 test('policy','Optional Review cannot conceal a submitted REQUEST_CHANGES',()=>{
  const x=fixture();Object.assign(x.policy,{review_required:false,review_skip_ref:evidence});x.review.decision='REQUEST_CHANGES';decision(x);
 });
+test('policy','Low-risk Review omission and explicit NOT_RUN are equally ready under valid skip policy',()=>{
+ const x=fixture();Object.assign(x.policy,{review_required:false,review_skip_ref:evidence});delete x.review;
+ decision(x,'READY');x.review={status:'NOT_RUN'};decision(x,'READY');
+ x.review.conditions=[];decision(x,'READY');
+});
+for(const [name,review] of [
+ ['REQUEST_CHANGES',{status:'NOT_RUN',decision:'REQUEST_CHANGES'}],
+ ['APPROVE claim',{status:'NOT_RUN',decision:'APPROVE'}],
+ ['pending condition',{status:'NOT_RUN',conditions:[{id:'C1',status:'PENDING'}]}],
+ ...['P0','P1','P2'].map(severity=>[severity+' finding',{status:'NOT_RUN',findings:[{id:'R1',severity,status:'OPEN'}]}])])
+ test('policy','Explicit NOT_RUN cannot hide '+name,()=>{
+  const x=fixture();Object.assign(x.policy,{review_required:false,review_skip_ref:evidence});x.review=clone(review);decision(x);
+ });
+test('policy','NOT_RUN does not bypass missing skip evidence or current mandatory Review risk',()=>{
+ const x=fixture();x.policy.review_required=false;x.review={status:'NOT_RUN'};decision(x);
+ x.policy.review_skip_ref=evidence;x.policy.risk_flags=['security'];decision(x);
+});
+test('policy','NOT_RUN cannot hide shared findings while fixed findings remain non-blocking',()=>{
+ const x=fixture();Object.assign(x.policy,{review_required:false,review_skip_ref:evidence});x.review={status:'NOT_RUN'};
+ x.findings=[{id:'F1',severity:'P1',status:'OPEN'}];decision(x);
+ x.findings[0].status='FIXED';decision(x,'READY');
+});
 for(const field of ['review_required','qa_required'])for(const task_class of ['L','XL'])
  test('policy',task_class+' cannot suppress '+field,()=>{
   const x=fixture();x.policy.task_class=task_class;x.policy[field]=false;
@@ -307,24 +370,41 @@ for(const previous of [undefined,null,{}, {decision:'BLOCKED',fingerprint:'x'}, 
 const stateNames=['IMPLEMENTATION_COMPLETE','CI_PASSED','QA_PASSED','INDEPENDENT_REVIEW_PASSED',
  'PR_MERGED','OWNER_ACCEPTED','ISSUE_DONE','PRODUCTION_DEPLOYED'];
 test('lifecycle','All eight lifecycle states are separately reported',()=>{
- const x=fixture('MARK_ISSUE_DONE');x.pr={merged:true,head_sha:B,merge_commit_sha:B,evidence_ref:evidence};
+ const x=fixture('MARK_ISSUE_DONE');x.pr=mergedPr(x);
  x.issue={status_type:'completed',evidence_ref:evidence};x.deployment={status:'DEPLOYED',environment:'production',artifact_sha:B,evidence_ref:evidence};
  const before=clone(x),r=reconcileActionEvidence(x);assert.deepEqual(Object.keys(r.states).sort(),[...stateNames].sort());
  for(const name of stateNames)assert.equal(r.states[name].status,'VERIFIED',name+': '+JSON.stringify(r));
  assert.deepEqual(x,before);
 });
 test('lifecycle','Merged PR does not prove Owner acceptance or Done',()=>{
- const x=fixture();x.pr.merged=true;x.pr.merge_commit_sha=B;const r=reconcileActionEvidence(x);
+ const x=fixture();x.pr=mergedPr(x);const r=reconcileActionEvidence(x);
  assert.equal(r.states.PR_MERGED.status,'VERIFIED');assert.equal(r.states.OWNER_ACCEPTED.status,'NOT_VERIFIED');
  assert.equal(r.states.ISSUE_DONE.status,'NOT_VERIFIED');assert.equal(r.states.PRODUCTION_DEPLOYED.status,'NOT_VERIFIED');
 });
-test('lifecycle','PR source HEAD cannot substitute for verified merge commit SHA',()=>{
- const x=fixture();x.pr.merged=true;assert.equal(reconcileActionEvidence(x).states.PR_MERGED.status,'NOT_VERIFIED');
- x.pr.merge_commit_sha=C;assert.equal(reconcileActionEvidence(x).states.PR_MERGED.status,'NOT_VERIFIED');
- x.pr.merge_commit_sha=B;assert.equal(reconcileActionEvidence(x).states.PR_MERGED.status,'VERIFIED');
+test('lifecycle','PR merge needs an actual commit SHA independent of its source HEAD',()=>{
+ const x=fixture();x.pr=mergedPr(x);delete x.pr.merge_commit_sha;
+ assert.equal(reconcileActionEvidence(x).states.PR_MERGED.status,'NOT_VERIFIED');
+ x.pr.merge_commit_sha='main';assert.equal(reconcileActionEvidence(x).states.PR_MERGED.status,'NOT_VERIFIED');
+ x.pr.merge_commit_sha=C;assert.equal(reconcileActionEvidence(x).states.PR_MERGED.status,'VERIFIED');
 });
+for(const method of ['squash','merge'])
+ test('lifecycle',method+' retains source Base/HEAD, merge commit and existing technical evidence',()=>{
+  const x=fixture();x.pr=mergedPr(x,method);const before=clone(x),r=reconcileActionEvidence(x);
+  const merged=r.states.PR_MERGED;assert.equal(merged.status,'VERIFIED');
+  assert.equal(merged.source_base_sha,A);assert.equal(merged.source_head_sha,B);assert.equal(merged.merge_commit_sha,C);
+  for(const name of ['IMPLEMENTATION_COMPLETE','CI_PASSED','QA_PASSED','INDEPENDENT_REVIEW_PASSED'])
+   assert.equal(r.states[name].status,'VERIFIED',name);
+  assert.equal(x.subject.head_sha,B);assert.notEqual(x.pr.merge_commit_sha,x.subject.head_sha);assert.deepEqual(x,before);
+ });
+for(const [path,value] of [['repository','other/repo'],['number',99],['number','16'],['number',0],
+ ['base_sha',C],['head_sha',C],['repository',undefined],['number',undefined],['base_sha',undefined],['head_sha',undefined],
+ ['evidence_ref',undefined]])
+ test('lifecycle','Merged PR cannot substitute mismatched or missing '+path,()=>{
+  const x=fixture();x.pr=mergedPr(x);mutate('pr.'+path,value,x);
+  assert.equal(reconcileActionEvidence(x).states.PR_MERGED.status,'NOT_VERIFIED');
+ });
 test('lifecycle','Merge to Done without Owner acceptance raises governance anomaly and advisory recovery',()=>{
- const x=fixture();x.pr.merged=true;x.pr.merge_commit_sha=B;x.issue={status_type:'completed',evidence_ref:evidence};const before=clone(x);
+ const x=fixture();x.pr=mergedPr(x);x.issue={status_type:'completed',evidence_ref:evidence};const before=clone(x);
  const r=reconcileActionEvidence(x);assert(r.anomalies.some(a=>a.code==='DONE_WITHOUT_OWNER_ACCEPTANCE'));
  assert.equal(r.states.ISSUE_DONE.status,'NOT_VERIFIED');assert(r.recommended_actions.length>0);assert.deepEqual(x,before);
 });

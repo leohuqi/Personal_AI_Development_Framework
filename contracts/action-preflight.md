@@ -35,7 +35,7 @@ subject所有字段影响授权范围/摘要，必须准确：仓库、上下文
 | 动作 | 必需 |
 | --- | --- |
 | MERGE_PR | implementation.status=COMPLETE；CI/适用QA；独立实现Review；pr={state:OPEN,draft:false,number,repository,base_sha,head_sha,base_ref,merge_method,evidence_ref}与subject及policy允许分支/方法匹配 |
-| START_CODING | `design_input`为原Design Gate完整输入；重新evaluateDesignGate得到DESIGN_READY且coding_authorized=true；design_input附repository/context_id/task_contract_ref/source_base_sha/source_head_sha匹配subject；coding_authorization与外层原Owner引用/Task Contract相同，feature_spec_ref等由Master核对；不要求尚未发生的实现CI/QA/实现Review |
+| START_CODING | `design_input`为原Design Gate完整输入；取外层policy与内层设计两者较高task_class和impacts/risk_flags并集，重新evaluateDesignGate得到DESIGN_READY且coding_authorized=true，不能用旧低风险设计快照忽略当前已知强制DESIGN审查；design_input附repository/context_id/task_contract_ref/source_base_sha/source_head_sha匹配subject；coding_authorization与外层原Owner引用/Task Contract相同，feature_spec_ref等由Master核对；不要求尚未发生的实现CI/QA/实现Review |
 | RELEASE | implementation、CI/QA/独立实现Review；release={target_sha,tag,tag_available:true,notes_ref,rollback_ref,source_merge_ref}，版本目标匹配subject.target_ref/HEAD |
 | DEPLOY_PRODUCTION | implementation、CI/QA/独立实现Review；release={published:true,target_sha,evidence_ref}；deployment={environment:production,artifact_sha,runbook_ref,rollback_ref,recovery_verified:true}，subject环境必须production |
 | OWNER_ACCEPTANCE | implementation、CI/QA/独立实现Review，Owner明确此动作/精确成果范围；不把PR合并当此决定 |
@@ -43,7 +43,7 @@ subject所有字段影响授权范围/摘要，必须准确：仓库、上下文
 
 CI为`ci:{status:PASS,head_sha,evidence_ref,checks:[{name,status:PASS,head_sha,evidence_ref,required?:true}]}`，至少一项必需且全部必需项PASS。QA为`qa:{status:PASS,head_sha,evidence_ref,untested_required:0}`，未执行/阻塞不能PASS。START_CODING不运行后验CI/QA门禁，但Design Gate和单独编码授权不可豁免。
 
-policy必须明确review_required/qa_required；不可缺省为“不适用”。所有实施后动作默认应要求Review/QA；仅低风险项目政策允许明确false，附review_skip_ref/qa_skip_ref。L/XL或现有routeAgents识别的风险不得关闭Review。没有复用CI当Review的捷径；即便非强制Review，只要实际提交REQUEST CHANGES或已知阻断发现也不能忽略。
+policy必须明确review_required/qa_required；不可缺省为“不适用”。所有实施后动作默认应要求Review/QA；仅低风险项目政策允许明确false，附review_skip_ref/qa_skip_ref。L/XL或现有routeAgents识别的风险不得关闭Review。没有复用CI当Review的捷径；即便非强制Review，只要实际提交REQUEST CHANGES或已知阻断发现也不能忽略。低风险有效review_skip_ref下，review省略或显式{status:NOT_RUN}等价；后者不得夹带结论/未处置条件，任何已知阻断发现仍检查。
 
 ## Fresh-Context Review
 
@@ -83,10 +83,10 @@ Owner须明确豁免哪个规则/准确任务和HEAD、接受风险及补救/重
 
 fingerprint采用语义输入的稳定SHA256摘要（不含now及verification观测时间/链接，实时有效性仍每次重查），覆盖动作/subject、授权状态、政策、Review/CI/QA、发现/阻塞、设计/发布/部署/验收及例外。调用前再次获取实时HEAD/Base、批准状态、证据与平台状态；相同HEAD但撤销批准或新发现同样阻断。摘要变化必须重做正常预检，不带旧READY执行；真正操作使用工具原子HEAD匹配，失败后重核，不自动重试。
 
-reconcileActionEvidence分别输出IMPLEMENTATION_COMPLETE、CI_PASSED、QA_PASSED、INDEPENDENT_REVIEW_PASSED、PR_MERGED、OWNER_ACCEPTED、ISSUE_DONE、PRODUCTION_DEPLOYED及证据状态；不存在的证据为NOT_VERIFIED。输入issue={status_type:completed或started,evidence_ref}，观察completed却缺精确acceptance时产生DONE_WITHOUT_OWNER_ACCEPTANCE异常和审计/有授权恢复In Review建议，ISSUE_DONE不得标已验证。不会因pr.merged=true推断Owner接受，也不会执行恢复。
+reconcileActionEvidence分别输出IMPLEMENTATION_COMPLETE、CI_PASSED、QA_PASSED、INDEPENDENT_REVIEW_PASSED、PR_MERGED（保留PR源Base/HEAD与实际merge_commit_sha两个不同对象）、OWNER_ACCEPTED、ISSUE_DONE、PRODUCTION_DEPLOYED及证据状态；不存在的证据为NOT_VERIFIED。输入issue={status_type:completed或started,evidence_ref}，观察completed却缺精确acceptance时产生DONE_WITHOUT_OWNER_ACCEPTANCE异常和审计/有授权恢复In Review建议，ISSUE_DONE不得标已验证。不会因pr.merged=true推断Owner接受，也不会执行恢复。
 
 相关[操作手册](../workflow/action-preflight.md)、[设计评估](../lib/design-gate.mjs)和[Orchestration Evidence](../lib/orchestration-evidence.mjs)均保持各自边界。模拟快照只验证判定逻辑，真实连接器/权限/集成映射由Master现场核验。
 
-生命周期输入implementation={status:COMPLETE,head_sha,evidence_ref}、CI/QA/Review如上；pr={merged:true,merge_commit_sha,evidence_ref}的merge_commit_sha须匹配当前subject.head_sha，不能把PR原head当merge落地主分支版本；acceptance如上；deployment={status:DEPLOYED,environment:production,artifact_sha,evidence_ref}。reconcile输出states[上述八枚举]={status:VERIFIED|NOT_VERIFIED,evidence_ref或null}、anomalies[]及recommended_actions[]；独立事实不互相推断。
+生命周期输入implementation={status:COMPLETE,head_sha,evidence_ref}、CI/QA/Review如上；pr={merged:true,repository,number,base_sha,head_sha,merge_commit_sha,evidence_ref}须绑定subject仓库/PR身份（若声明）及源Base/HEAD，另保存实际40位merge_commit_sha；正常merge/squash该值与源HEAD不同，不能把两者强行视为相同版本，也不要求把subject改成merge提交来让原CI/QA/Review失效；acceptance如上；deployment={status:DEPLOYED,environment:production,artifact_sha,evidence_ref}。reconcile输出states[上述八枚举]={status:VERIFIED|NOT_VERIFIED,evidence_ref或null}、anomalies[]及recommended_actions[]；独立事实不互相推断。
 
 缺authorization或合法空对象/PENDING为待决定，其他畸形结构（数组、null等）、撤销或范围不匹配为BLOCKED。已解决的关键阻塞在历史来源保留，当前blockers清单只列未解决项；缺清单不等于无阻塞。
