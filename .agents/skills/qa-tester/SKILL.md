@@ -5,22 +5,9 @@ description: 为功能或 PR 设计验收场景并独立验证，按项目需要
 
 # 质量验证者（QA Tester）（PADF V0.3）
 
-## 最小持久消息模板（Agent Message）
+## 共用工作方式与协议
 
-以下 8 行 YAML 包含消息必填字段；用实时核验的任务事实替换占位符。Skill 统一标识 PADF V0.3；沿用 V0.2 契约与 `padf.*/v1` 协议，不因中文化更改字段或枚举。
-
-```yaml
-{schema_version: padf.agent-message/v1, message_id: "<unique-message-id>",
- thread_id: "<thread-id>", in_reply_to: null, context_id: "<project-task>",
- project: "<project>", repository: "<owner/repo>", linear_issue: "<canonical-issue-url>", original_feature_ids: ["<feature-id>"],
- sender: qa-tester, receiver: "<accountable-role>", created_at: "<ISO-8601-with-offset>",
- type: CLARIFICATION_REQUEST, priority: NORMAL, subject: "<subject>",
- body: "<question-or-finding>", source_refs: ["<immutable-url-or-path@SHA>"],
- requested_action: "<bounded-action>", requires_response: true,
- status: OPEN, resolution_ref: null, owner_approval_ref: null}
-```
-
-按实际情况选择消息类型、优先级和是否需要回复。回复沿用 `thread_id` 并设置 `in_reply_to`；重试保留同一不可变内容与 `message_id`。依赖授权时填入 `owner_approval_ref`，TASK_REQUEST 还须在 `source_refs` 引用已批准 Task Contract。HANDOFF 引用完整的[Agent Handoff](../../../contracts/agent-handoff.md)，不能用消息模板替代交接或[Context Checkpoint](../../../contracts/context-checkpoint.md)；编写这两类记录前须读取各自必填项。按[Agent Message 契约](../../../contracts/agent-message.md)核对后，写入获授权的任务/PR 并验证永久链接。缺少来源或持久化能力时报告 BLOCKED/NOT_PERSISTED，不编造字段或宣称已送达。
+开始前必读[补输入、研究与产出](../../../workflow/role-work-method.md)；首次发送消息、分派、交接或恢复前必读[共用协议](../../../workflow/agent-protocol.md)及对应契约，不凭记忆填写。Agent Message 模板与机器字段生成器集中维护；消息/Handoff、Context Checkpoint 与真实执行证据仍遵循原契约。先交付本角色主成果，执行记录放附录。
 
 ## 输入
 
@@ -33,6 +20,8 @@ description: 为功能或 PR 设计验收场景并独立验证，按项目需要
 3. 明确所需测试层：单元、API/契约、真实隔离 PostgreSQL、桌面或移动 Playwright、迁移、并发、安全或性能。
 4. 区分原型视觉与生产行为，不得把模拟数据作为正式集成证明。
 5. 需求不可测时，先向 Master 或负责需求细化的角色报告缺口，再判断是否 Ready。
+
+优先用核心用户任务和关键异常设计验收，不以页面数量或用例数量证明体验；报告真实环境、范围和未测项。需求含糊交 Product Analyst/Master，不自行补写。按[角色成果标准](../../../contracts/role-deliverables.md)判断证据是否足以支持结论。
 
 ## 实现后的验证
 

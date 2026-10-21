@@ -7,6 +7,10 @@ Schema: `padf.module-design/v1`. Owned by **Module Architect** for one bounded m
 - Current module source revision, change scope/N/A choices, existing interfaces/consumers, upstream contract versions, applicable UI Profile/UX references.
 - Document baseline conformity; any new runtime/DB/framework/major boundary proposal is **BLOCKED** pending system-level decision. Module status COMPLETED does **not** authorize that deviation.
 
+## 产品规格与实现深度
+
+正式模块设计前须有当前阶段详细 Feature Specs，明确用户行为、输入输出、规则/状态、重要异常、可修改/撤销/确认/拒绝与验收。仅 Catalog 或存在关键缺口时交 Product Analyst/Master，不在模块设计中创造产品规则。内部方案按需包含算法、事务/并发、物理表/索引/约束、数据生命周期、迁移兼容/回滚、异常恢复与测试，关键事项不得留给实现时猜测。复用批准规格与系统基线，只补本次变化。
+
 ## Implementable module artifacts (required for material module design)
 1. **Module design** (`module-design`): responsibility, affected components and domain invariants, input/output data, error conditions and contracts.
 2. **Module code structure** (`module-code-structure`): directory/package layout, files/classes/functions/ports, responsibility matrix, allowed dependency directions and integration seam. Contrast current and proposed structure.

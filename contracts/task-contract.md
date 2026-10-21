@@ -46,6 +46,12 @@ A Task Contract grants no authorization without applicable Owner approval. Messa
 
 This section is an extension of V0.2 contracts, not a second Task Contract or permission to execute from DESIGN_READY alone.
 
+## 成果与增量输入
+
+目标、范围、相关输入、预期主成果、授权边界和真实执行/交接引用是必需内容；其他字段按适用性引用，不复制无关材料。说明已有规格是否有效，`product_scope: reuse/define/refine`、详细 Feature Spec 和共享研究来源；先定义收件标准，再选择必要角色。关键输入/Owner 决策缺失时只暂停依赖动作，简单增量复用来源。
+
+每阶段保留一个主成果入口，推荐/取舍/Owner 待决事项在前，审计置于附录。参见[共用工作方式](../workflow/role-work-method.md)、[角色成果标准](role-deliverables.md)与[产品定义](product-definition.md)。不新建第二套批准或消息记录。
+
 ## Objective
 - User-visible outcome:
 - In scope:

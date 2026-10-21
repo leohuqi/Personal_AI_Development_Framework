@@ -8,9 +8,15 @@ PADF 定义由 Owner 决策、Agent 执行的增量软件开发流程。每个�
 
 Master 复用有效 Owner 授权与精确 Task Contract，优先调用可用真实 Agent 运行时，无需逐次重新批准；每次启动仍核对范围、环境、角色/动作、必要决策和依赖，并保留 Dispatch、工具执行 ID、Handoff 与协调记录。越界、授权撤销、必要批准缺失或未授权编码等操作仍阻断。重大设计决策、业务编码、合并、发布、生产部署、破坏性操作与最终验收保留各自授权门禁，参见[审批策略](governance/approval-policy.md)和[Dispatch 契约](contracts/agent-dispatch.md)。
 
+## 下一版工作内容：产品定义、完整方案与整体质量
+
+当前正式发布仍是 v0.3.2；本工作分支的新增能力尚未发布：Product Analyst 负责产品定义与详细 Feature Specs，SA 负责连贯完整系统方案，Master 负责问题推进、内容充分性、跨角色整合与交付质量。UI 按研究/任务 → IA/流程 → 概念比较/Owner反馈 → 细化逐步收敛；已有明确规格与局部改动直接复用。
+
+九个角色按[成果标准](contracts/role-deliverables.md)裁剪；[共用工作方法](workflow/role-work-method.md)统一补输入/研究/复用，[Agent 协议](workflow/agent-protocol.md)集中消息与交接，仅在相关动作前加载。机器字段用本地草稿生成器辅助，不增加审批权或运行时服务。
+
 ## 文档语言
 
-核心入口与全部 8 个 Skill 以中文说明为主，便于需求确认、审查与日常维护。Skill 名称、角色英文术语、文件路径、命令、YAML/JSON 字段、schema 标识及状态枚举保留英文，以保持工具兼容和协议可验证性。后续更新沿用同一份正文，不默认维护重复的中英文版本；技术契约中的既有标识与历史证据不因翻译而改版。
+核心入口与全部 9 个 Skill 以中文说明为主，便于需求确认、审查与日常维护。Skill 名称、角色英文术语、文件路径、命令、YAML/JSON 字段、schema 标识及状态枚举保留英文，以保持工具兼容和协议可验证性。后续更新沿用同一份正文，不默认维护重复的中英文版本；技术契约中的既有标识与历史证据不因翻译而改版。
 
 ## 核心流程
 
@@ -46,7 +52,7 @@ Linear Done / 下一项人工授权的功能
 
 [UI/UX Designer](.agents/skills/ui-ux-designer/SKILL.md)根据各项目的 [UI Profile](contracts/project-ui-profile.md)，产出设计理念、概念、高保真画面，以及风险所需的交互原型；不会为所有项目强制统一视觉风格。
 
-Master 负责[能力路由](workflow/agent-routing.md)、[阶段依赖](contracts/agent-dependency.md)与 [Design Gate](contracts/design-gate.md)。采用治理模型 C：L/XL 和风险触发的 S/M 需要独立 DESIGN 审查；Master 管流程就绪，Reviewer 判专业质量，Owner 批准重大决定与编码。设计者沿用 [V0.2 Handoff](contracts/agent-handoff.md)，接收方 ACK 或 NEEDS_REFINEMENT，不新增编码调度器或 Agent 守护进程。
+Master 负责[能力路由](workflow/agent-routing.md)、[阶段依赖](contracts/agent-dependency.md)与 [Design Gate](contracts/design-gate.md)。采用治理模型 C：L/XL 和风险触发的 S/M 需要独立 DESIGN 审查；Master 管内容充分性、整体一致性和流程就绪，Reviewer 独立判专业质量，Owner 批准重大决定与编码。设计者沿用 [V0.2 Handoff](contracts/agent-handoff.md)，接收方 ACK 或 NEEDS_REFINEMENT，不新增编码调度器或 Agent 守护进程。
 
 - [设计协作流程](workflow/design-collaboration.md)
 - [系统架构基线](contracts/solution-architecture.md)、[模块设计](contracts/module-design.md)、[架构包选择](contracts/architecture-design.md)、[UI 设计包](contracts/ui-design.md)
@@ -71,15 +77,17 @@ Owner 按[专家质量评价契约](contracts/skill-delivery-evaluation.md)分�
 ```bash
 node tests/v0.3/run-orchestration-tests.mjs
 node tests/v0.3/run-skill-quality-tests.mjs
+node tests/v0.3/run-product-tests.mjs
 ```
 
 这些脚本通过不等于实际跨会话执行、外部工具调用、独立 DESIGN 审查或 Owner 评分；真实结果以精确证据和批准记录为准。
 
-## 全部 8 个核心 Skill
+## 全部 9 个核心 Skill
 
 | Skill | 主要职责 |
 | --- | --- |
 | [master-orchestrator](.agents/skills/master-orchestrator/SKILL.md) | 范围、设计协调、任务就绪、冲突路由与验收组织 |
+| [product-analyst](.agents/skills/product-analyst/SKILL.md) | 产品定义、任务研究、详细 Feature Specs、优先级与版本切片 |
 | [context-coordinator](.agents/skills/context-coordinator/SKILL.md) | 最小共享上下文、持久消息、检查点、恢复与交接 |
 | [solution-architect](.agents/skills/solution-architect/SKILL.md) | 应用级技术栈、系统架构、代码骨架、ADR 与图表 |
 | [module-architect](.agents/skills/module-architect/SKILL.md) | 已批准系统基线内的模块包、接口、流程与测试设计 |
@@ -88,7 +96,7 @@ node tests/v0.3/run-skill-quality-tests.mjs
 | [qa-tester](.agents/skills/qa-tester/SKILL.md) | 验收用例、集成/E2E 验证与测试证据 |
 | [independent-reviewer](.agents/skills/independent-reviewer/SKILL.md) | 独立新上下文、精确 PR diff 与风险审查 |
 
-八个 Skill 均含最小 Agent Message YAML 模板，字段沿用 `padf.agent-message/v1`。
+九个 Skill 共享同一份 Agent Message 模板与草稿生成器，首次相关动作前必须读取共用协议；字段沿用 `padf.agent-message/v1`。
 
 - [开发工作流与质量门禁](workflow/WORKFLOW.md)
 - [Task Contract](contracts/task-contract.md)与[Delivery Report](contracts/delivery-report.md)
@@ -108,6 +116,7 @@ node tests/cacf/run-regressions.mjs
 node tests/v0.3/run-tests.mjs
 node tests/v0.3/run-orchestration-tests.mjs
 node tests/v0.3/run-skill-quality-tests.mjs
+node tests/v0.3/run-product-tests.mjs
 node tests/v0.3/verify-expense-pilot.mjs
 ```
 
@@ -125,4 +134,4 @@ node tests/v0.3/verify-expense-pilot.mjs
 
 框架维护不自动修改其他项目。PQA 的领域规则与既有 PR 边界位于 [PQA 专属规则](examples/pqa/AGENTS.md)，接入或更改须另获授权。
 
-**不在 V0.3 范围内：** Product Analyst、Feature Planner/Designer、Iteration Manager 专属 Skill，以及任何并行执行运行时。
+**不在 V0.3 范围内：** Feature Planner/Designer、Iteration Manager 专属 Skill，以及任何并行执行运行时。

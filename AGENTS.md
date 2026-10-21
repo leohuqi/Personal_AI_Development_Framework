@@ -10,6 +10,15 @@
 - 已批准范围内的 Master 任务分派与启动复用现有 Owner 授权，无需逐次重新批准；优先使用可用的真实 Agent 运行时，保留分派审计、工具返回的执行 ID 和 Handoff。
 - 该授权不扩展至重大设计决策、业务编码、PR 合并、发布、生产部署、破坏性操作或最终验收。新增 Linear Loops、自托管编排、常驻调度器仍须单独授权。
 
+## 成果与共用工作方式
+
+- 所有角色先读相关既有材料，按[共用工作方法](workflow/role-work-method.md)判断需问 Owner、主动研究、复用或仅补增量；关键答案未到前暂停依赖设计，其他授权研究可继续。
+- Product Analyst 负责产品定义与详细 Feature Specs，Catalog 只作索引；模块设计/编码不得猜测产品行为。有效规格可复用，简单任务不强制调用全部角色。
+- Solution Architect 交付连贯完整系统方案，说明职责、接口/数据、跨模块正常及失败流程、技术取舍、运行质量与演进；图、模型、API 和 ADR 支持正文。
+- UI 先研究/任务与流程、再概念比较及 Owner 反馈、最后精化；明确的局部变更直接复用。质量不按页面、tokens、热点数量评价。
+- Master 对整体推进、内容充分性、跨角色一致性、取舍整合和交付质量负责；不足应退修，不替代独立审查或 Owner 批准。按[角色成果标准](contracts/role-deliverables.md)提供统一成果入口，审计置于附录。
+- 共用消息/执行/Handoff 规则集中在[Agent 协议](workflow/agent-protocol.md)，首次相关动作前必须读取；机器字段可用本地草稿生成器，不以文档重复代替实际证据。Context Coordinator 默认作为共享能力，按需独立启用。
+
 ## CACF V0.2：共享上下文与通信
 
 - 用分配的 Linear 任务与不可变原始 Feature ID 确定稳定 `context_id`，保留两类 ID 的区别。

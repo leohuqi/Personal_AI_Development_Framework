@@ -33,7 +33,7 @@ Owner 批准任务及分派范围后，Master 可在当前获授权任务中完�
 
 ## V0.3 Design Gate：已批准模型 C
 
-- Master 负责路由、就绪与依赖门禁；不冒充独立设计审查，也不启动未授权开发。
+- Master 负责整体问题推进、交付充分性、跨角色一致性、方案整合及就绪/依赖门禁；可要求返工并推荐取舍，不冒充独立设计审查，不替 Owner 批准重大决定，也不启动未授权开发。
 - Solution Architect 提出应用级架构与技术选择；Module Architect 在已批准系统基线内完成模块设计，不能彼此替代或扩大框架范围。
 - 专家提交有证据的提案与自检；设计 Handoff 不等于独立批准或编码授权。
 - L/XL 及风险触发的 S/M 必须在精确设计版本上独立 DESIGN Review。Reviewer 可给出 APPROVE / APPROVE WITH CONDITIONS / REQUEST CHANGES，不能代替 Master 放行；缺少审查或存在 P0/P1 时 BLOCKED。

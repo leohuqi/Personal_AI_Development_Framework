@@ -12,6 +12,12 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 - Approval/waiver records, unresolved issues, changed upstream refs, version freshness and blockers.
 - Separate bounded Owner authorization to begin coding.
 
+## 产品定义先于正式设计（下一版增量）
+
+`product_scope: define/refine` 或已知 `new-product/product-definition/product-behavior` 影响时路由 Product Analyst；`reuse` 只能用于已有明确有效规格，不可排除已知产品影响。需有必需完成的 PA 阶段，提供 `product-definition`、`feature-specification`，后者匹配 `feature_spec_ref`；只有 Catalog 不足。必需 SA/Module/UI 阶段直接或传递依赖产品阶段，不能先正式完成后补产品。早期研究/条件提案不因此禁止，但不能使最终门禁通过。
+
+没有该增量输入的 v0.3.2 来源默认复用规格路径，以保留现有契约/测试兼容；这不把空白规格或未知产品方向解释为已批准。Master 仍实际阅读[产品定义](product-definition.md)和[角色成果标准](role-deliverables.md)，检查内容而非只信 artifact 类型。机器 PASS 不代表产品有用、系统完整或 UX 可用；独立审查与 Owner 权限不变。
+
 ## 必需 UI 阶段的存在性
 
 当路由结果为 `ui_required: true` 时，阶段清单必须包含 `agent: ui-ux-designer` 且 `required` 不为 `false` 的阶段。缺失阶段、只有可选/N/A 的 UI 阶段，或以其他角色提交 UI 产物，都返回 `BLOCKED`，原因包含 `MISSING_UI_DESIGN_STAGE`，并强制 `coding_authorized: false`。已有 Owner 编码授权不能绕过设计门禁。
@@ -34,7 +40,7 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 ## Separation of duties
 - **Designing agent**: technical/UI evidence and own validation; may send Handoff, never independently approve own work.
 - **Independent Reviewer (DESIGN mode)**: inspects original approved requirements and source designs at exact immutable revisions, runs independent checks, reports APPROVE / APPROVE WITH CONDITIONS / REQUEST CHANGES with P0–P3 findings. Reviewer does **not** authorize dispatch or mark Design Gate PASSED.
-- **Master**: validates dependency graph, required artifacts, risk, independent-review decision, Owner approvals, stale status; records PASS/BLOCKED/NEEDS_REFINEMENT as gate result and routes remediation. Cannot waive a missing required independent review.
+- **Master**: checks substantive coverage, implementability and cross-role consistency as well as dependencies, risk, independent-review evidence and Owner approvals; returns concrete content gaps for refinement and integrates recommendations. It cannot waive mandatory independent review or approve material decisions.
 - **Owner**: approves material changes, accepts P2 risks with explicit conditions, separately authorizes coding. Owner acceptance is not a substitute for independent Design Review on L/XL.
 
 ## UI Profile 批准与版本绑定（V0.3.1）

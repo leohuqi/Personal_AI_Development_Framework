@@ -34,7 +34,7 @@ dispatch:
 decision_approvals: []
 ```
 
-- 可分派角色包括 solution-architect、module-architect、ui-ux-designer、feature-coder、qa-tester、independent-reviewer 和 context-coordinator；允许角色仍须在各范围项中明确绑定，角色名不自带执行权限。
+- 可分派角色包括 solution-architect、module-architect、ui-ux-designer、feature-coder、qa-tester、independent-reviewer、context-coordinator 和 product-analyst；允许角色仍须在各范围项中明确绑定，角色名不自带执行权限。
 - 同一批准快照可用于多个有独立 `dispatch_id` 的启动；无需新增 dispatch 级 `owner_approval_ref`。仍须逐次核验实时状态。完成、取消、撤销、过期或缺少授权时阻断。
 - `scope_items` 是已批准 Task Contract 的有限范围清单；每项绑定允许角色、动作及 `required_decisions`（无前置决策显式写 `[]`）。不可用自由文本或通配符推断扩大授权，接收方不得自行删减前置条件。
 - 本校验器仅允许 `ANALYZE / DESIGN_PROPOSAL / DESIGN / TEST / REVIEW / COORDINATE`；未知动作、业务编码、决策批准、合并、发布、部署、破坏性操作和最终验收均不能通过，即使被误写入范围。另行批准的编码走既有编码 Task Contract 与 Design Gate 路径，不由此校验器授予。
@@ -60,6 +60,10 @@ decision_approvals: []
 4. **DEPENDENCY RECONCILIATION（Master）**：重读实时任务、授权、前序产物 SHA、源与 Skill 版本、阻塞消息和审查义务，记录 `reconciliation_ref`、`master_run_ref`、CONTINUE/BLOCKED/NEEDS_REFINEMENT、理由、观察时间及下一 `next_dispatch_id`。新依赖分派须引用前序 Handoff 与协调结论，时间必须在其后。
 
 Handoff 不等于批准。both 模式允许评审 PROPOSED SYSTEM 草稿，正式 MODULE 必须匹配 Owner 已批准的 SYSTEM 版本。L/XL 必须有最新独立 DESIGN Review；编码授权仍独立。
+
+## 成果与记录的比例
+
+分派先说明问题、预期主成果与内容标准，不以完成审计字段作为交付目标。共用[工作方法](../workflow/role-work-method.md)与[协议](../workflow/agent-protocol.md)按需加载；最小真实执行证据仍保留在附录。同一有效授权内的研究、返工、接续不逐次新增批准；重大决定与未授权业务编码等仍阻断。
 
 ## 证据有效性与角色交付
 

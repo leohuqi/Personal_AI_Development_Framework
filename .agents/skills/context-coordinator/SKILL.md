@@ -5,26 +5,13 @@ description: 为已授权 PADF 任务组织最小共享上下文、持久化可�
 
 # 上下文协调者（Context Coordinator）（PADF V0.3）
 
-## 最小持久消息模板（Agent Message）
+## 共用工作方式与协议
 
-以下 8 行 YAML 包含消息必填字段；用实时核验的任务事实替换占位符。Skill 统一标识 PADF V0.3；沿用 V0.2 契约与 `padf.*/v1` 协议，不因中文化更改字段或枚举。
-
-```yaml
-{schema_version: padf.agent-message/v1, message_id: "<unique-message-id>",
- thread_id: "<thread-id>", in_reply_to: null, context_id: "<project-task>",
- project: "<project>", repository: "<owner/repo>", linear_issue: "<canonical-issue-url>", original_feature_ids: ["<feature-id>"],
- sender: context-coordinator, receiver: "<accountable-role>", created_at: "<ISO-8601-with-offset>",
- type: CLARIFICATION_REQUEST, priority: NORMAL, subject: "<subject>",
- body: "<question-or-finding>", source_refs: ["<immutable-url-or-path@SHA>"],
- requested_action: "<bounded-action>", requires_response: true,
- status: OPEN, resolution_ref: null, owner_approval_ref: null}
-```
-
-按实际情况选择消息类型、优先级和是否需要回复。回复沿用 `thread_id` 并设置 `in_reply_to`；重试保留同一不可变内容与 `message_id`。依赖授权时填入 `owner_approval_ref`，TASK_REQUEST 还须在 `source_refs` 引用已批准 Task Contract。HANDOFF 引用完整的[Agent Handoff](../../../contracts/agent-handoff.md)，不能用消息模板替代交接或[Context Checkpoint](../../../contracts/context-checkpoint.md)；编写这两类记录前须读取各自必填项。按[Agent Message 契约](../../../contracts/agent-message.md)核对后，写入获授权的任务/PR 并验证永久链接。缺少来源或持久化能力时报告 BLOCKED/NOT_PERSISTED，不编造字段或宣称已送达。
+开始前必读[补输入、研究与产出](../../../workflow/role-work-method.md)；首次发送消息、分派、交接或恢复前必读[共用协议](../../../workflow/agent-protocol.md)及对应契约，不凭记忆填写。Agent Message 模板与机器字段生成器集中维护；消息/Handoff、Context Checkpoint 与真实执行证据仍遵循原契约。先交付本角色主成果，执行记录放附录。
 
 ## 用途
 
-这是程序性 Skill，通过权威 GitHub/Linear 记录支持 Master、Solution Architect、Module Architect、UI Designer、Coder、QA 和 Reviewer 的跨会话协作，不提供 Agent 守护进程、工具 API、消息服务或自动调度器。
+默认作为各角色的共享能力：只维护来源版本、关键决定、开放问题、执行 ID 与交接引用。仅在复杂跨会话恢复或冲突整理确有必要时启用独立角色，不为普通任务增加角色、重复加载或检查点。支持 Master、Product Analyst、SA、Module、UI、Coder、QA 和 Reviewer，不提供守护进程或调度器。
 
 ## 输入
 

@@ -1,5 +1,9 @@
 # PADF V0.3 — Specialist Agent & Design Gate Validation
 
+## 下一版：产品成果与共用协议回归
+
+运行 node tests/v0.3/run-product-tests.mjs，覆盖产品路由/正式设计依赖、仅 Catalog 拒绝、版本/批准边界、新 PA 真实模式元数据、可复用批准及共用消息草稿生成/回复/重试。CI 自动执行。元数据 PASS 不证明详细规格或方案实际有用；代表性 Skill 请求的独立运行另行记录在 PR，专业质量仍须读主成果。
+
 ## v0.3.2：Master 持续分派授权回归
 
 `node tests/v0.3/run-orchestration-tests.mjs` 当前包含 36 组检查（原 19 组证据链 + 新增 17 组授权回归）。复用同一有效 Owner 批准允许范围内多次 REVIEW/TEST 及 context-coordinator 的 COORDINATE；必要决策精确版本获批时允许正式设计。越界、授权撤销、必要决策缺失/错误版本及未授权编码等保留动作均须阻断。校验器只检查调用方已核验的快照，不创建运行时权限；真实调用验证见[手册](../../workflow/master-orchestration-validation.md)。现有 CI 已执行同一测试入口。

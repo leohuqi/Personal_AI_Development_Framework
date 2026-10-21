@@ -5,22 +5,9 @@ description: 依据已批准的功能规格、架构和 UI 约束，实现一个
 
 # 功能开发者（Feature Coder）（PADF V0.3）
 
-## 最小持久消息模板（Agent Message）
+## 共用工作方式与协议
 
-以下 8 行 YAML 包含消息必填字段；用实时核验的任务事实替换占位符。Skill 统一标识 PADF V0.3；沿用 V0.2 契约与 `padf.*/v1` 协议，不因中文化更改字段或枚举。
-
-```yaml
-{schema_version: padf.agent-message/v1, message_id: "<unique-message-id>",
- thread_id: "<thread-id>", in_reply_to: null, context_id: "<project-task>",
- project: "<project>", repository: "<owner/repo>", linear_issue: "<canonical-issue-url>", original_feature_ids: ["<feature-id>"],
- sender: feature-coder, receiver: "<accountable-role>", created_at: "<ISO-8601-with-offset>",
- type: CLARIFICATION_REQUEST, priority: NORMAL, subject: "<subject>",
- body: "<question-or-finding>", source_refs: ["<immutable-url-or-path@SHA>"],
- requested_action: "<bounded-action>", requires_response: true,
- status: OPEN, resolution_ref: null, owner_approval_ref: null}
-```
-
-按实际情况选择消息类型、优先级和是否需要回复。回复沿用 `thread_id` 并设置 `in_reply_to`；重试保留同一不可变内容与 `message_id`。依赖授权时填入 `owner_approval_ref`，TASK_REQUEST 还须在 `source_refs` 引用已批准 Task Contract。HANDOFF 引用完整的[Agent Handoff](../../../contracts/agent-handoff.md)，不能用消息模板替代交接或[Context Checkpoint](../../../contracts/context-checkpoint.md)；编写这两类记录前须读取各自必填项。按[Agent Message 契约](../../../contracts/agent-message.md)核对后，写入获授权的任务/PR 并验证永久链接。缺少来源或持久化能力时报告 BLOCKED/NOT_PERSISTED，不编造字段或宣称已送达。
+开始前必读[补输入、研究与产出](../../../workflow/role-work-method.md)；首次发送消息、分派、交接或恢复前必读[共用协议](../../../workflow/agent-protocol.md)及对应契约，不凭记忆填写。Agent Message 模板与机器字段生成器集中维护；消息/Handoff、Context Checkpoint 与真实执行证据仍遵循原契约。先交付本角色主成果，执行记录放附录。
 
 ## 输入门禁
 
@@ -38,16 +25,6 @@ description: 依据已批准的功能规格、架构和 UI 约束，实现一个
 8. 提交并创建可审查 PR，描述中同时引用 Linear ID 和原始 Feature ID，说明范围、测试、适用的 UI 截图、迁移与回滚风险。
 9. 按[交付报告](../../../contracts/delivery-report.md)提供证据，由独立 QA、Reviewer 和 Owner 分别完成验证、审查与验收。
 
-## V0.2 跨角色连续性
-
-- 开始或恢复时解析 context_id、当前 Task Contract 与授权，对照真实 HEAD、批准规格核对检查点，并读取发给自己的待处理 Agent Message。重大漂移或权限不足时停止。
-- 实现中向负责角色发送 CLARIFICATION_REQUEST、BLOCKER 或 CHANGE_REQUEST，保存消息 ID、来源和可验证永久链接；答复不自动批准新增范围。
-- 暂停或上下文不足前，生成简短 Context Checkpoint，记录完成证据、最后观察的 HEAD、待处理消息和下一授权动作，不保存完整对话或密钥。
-- PR 就绪时向 QA/Reviewer 发布 Agent Handoff，包含精确 head SHA、验收覆盖、实际 PASS/FAIL/BLOCKED/NOT RUN 和风险；交接不自动启动接收 Agent。
-- 从已核对的实时状态继续；并行任务使用不同分支或工作树。QA/Reviewer 必须独立核验，不能继承 Coder 自审结论。
-
-参见[消息契约](../../../contracts/agent-message.md)、[检查点](../../../contracts/context-checkpoint.md)、[交接契约](../../../contracts/agent-handoff.md)和[通信流程](../../../workflow/context-communication.md)。
-
 ## V0.3 设计输入门禁
 
 - 区分应用级 Solution Architecture Baseline（技术栈、分层及允许的模块依赖）与 Module Code Design（文件、包、类、接口及测试接缝）；仅消费本任务需要的角色产物和精确版本，不能只凭系统图推导模块代码。
@@ -56,6 +33,10 @@ description: 依据已批准的功能规格、架构和 UI 约束，实现一个
 - L/XL 与高风险 S/M 须有精确产物版本的独立 DESIGN 审查。证据缺失、版本不符、Profile/schema 过期或存在 BLOCKER 时停止。
 - DESIGN_READY 后仍需独立的 Owner 编码授权。不得临时调用 diagram-design 或原型工具掩盖设计缺失，应通过 Agent Message 请求专家补齐。
 - 将实现和测试追溯到批准架构、UX 与验收标准；发现偏离时提交批准，不能静默重设计。
+
+## 成果充分性
+
+交付可运行行为、针对真实风险的测试、必要文档和可审查 PR，说明已知限制。核对核心用户任务及关键异常，避免只证明字段/函数存在；产品行为空白回到 Product Analyst/Master，不临时设计。按[角色成果标准](../../../contracts/role-deliverables.md)收件。
 
 ## 完成门禁
 

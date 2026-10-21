@@ -1,5 +1,7 @@
 # PADF V0.3 真实 Master 编排与专家交付验收手册
 
+当前成果标准见[角色主成果](../contracts/role-deliverables.md)与[共用工作方法](role-work-method.md)。Master 对内容充分性、整体一致性和整合建议负责，独立 Reviewer 和 Owner 权限不变。产品未定义先补详细规格；UI 方向未收敛先概念反馈。消息、执行和交接按[共用协议](agent-protocol.md)按需读取，主成果在前、审计为附录，简单增量不重复完整试点。
+
 分别验收两件事：真实的 `Dispatch → independent Execution → Handoff → Dependency Reconciliation`，以及 Owner 对 Solution Architect、Module Architect、UI Designer 交付质量的评价。已批准范围内无需逐次请求 Owner 批准，优先使用可用真实 Agent 运行时；仅在缺少能力时采用 HUMAN_RELAY。Skill 和文档不创建后台服务。
 
 ## 场景与初始授权
