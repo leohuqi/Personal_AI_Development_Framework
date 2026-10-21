@@ -1,6 +1,6 @@
 # 个人 AI 开发框架（PADF）
 
-**当前版本：v0.3.2（V0.3 系列）。** 系统级 Solution Architect、模块级 Module Architect 与 UI/UX Designer 分工协作，按任务风险进入 Design Gate；继续沿用 V0.2 的共享上下文与通信契约。参见 [v0.3.2 版本说明](docs/releases/v0.3.2.md)与 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.2)。
+**当前版本：v0.3.3（V0.3 系列）。** 系统级 Solution Architect、模块级 Module Architect 与 UI/UX Designer 分工协作，按任务风险进入 Design Gate；继续沿用 V0.2 的共享上下文与通信契约。参见 [v0.3.3 版本说明](docs/releases/v0.3.3.md)与 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.3)。
 
 PADF 定义由 Owner 决策、Agent 执行的增量软件开发流程。每个应用维护自己的 PRD、架构、UX 基线、功能目录、源码、AGENTS.md 与 CI；框架可供不同项目复用。
 
@@ -10,7 +10,7 @@ Master 复用有效 Owner 授权与精确 Task Contract，优先调用可用真�
 
 ## 下一版工作内容：产品定义、完整方案与整体质量
 
-当前正式发布仍是 v0.3.2；本工作分支的新增能力尚未发布：PA负责High Level Specs/Catalog；SA技术初评、五级实现复杂度和完整系统方案；Master结合功能关系规划milestone/iteration并协调Handoff；Module Designer结合SA与已确认UI细化实施级Feature Spec。UI按概念图→Figma设计/原型确认→获授权前端高保真，QA交Test Cases与Test Results；Context Coordinator是共享恢复能力，进度归Master；已有明确规格与局部改动直接复用。
+v0.3.3 包含以下能力：PA负责High Level Specs/Catalog；SA技术初评、五级实现复杂度和完整系统方案；Master结合功能关系规划milestone/iteration并协调Handoff；Module Designer结合SA与已确认UI细化实施级Feature Spec。UI按概念图→Figma设计/原型确认→获授权前端高保真，QA交Test Cases与Test Results；Context Coordinator是共享恢复能力，进度归Master；已有明确规格与局部改动直接复用。
 
 九个角色按[成果标准](contracts/role-deliverables.md)裁剪；[共用工作方法](workflow/role-work-method.md)统一补输入/研究/复用，[Agent 协议](workflow/agent-protocol.md)集中消息与交接，仅在相关动作前加载。机器字段用本地草稿生成器辅助，不增加审批权或运行时服务。
 
@@ -140,8 +140,8 @@ node tests/v0.3/verify-expense-pilot.mjs
 
 **不在 V0.3 范围内：** Feature Planner/Designer、Iteration Manager 专属 Skill，以及任何并行执行运行时。
 
-## G-01：Master主动治理（未发布）
+## G-01：Master主动治理（v0.3.3）
 
 操作前预检覆盖合并、编码、发布、生产部署、Owner验收和Issue Done；Owner请求不隐式豁免必要门禁。见[设计与现状分析](docs/governance/G-01-design.md)、[契约](contracts/action-preflight.md)、[操作手册/平台限制](workflow/action-preflight.md)、[历史流程例外](docs/governance/PQA-PR7-process-exception.md)及[验收模板](templates/action-preflight.md)。
 
-只读评估器不认证远端权限、不执行操作或提供服务器强制拦截；本地验证：`node tests/v0.3/run-preflight-tests.mjs`。正式版本仍v0.3.2；G-01 已经独立 PR、Review 和 Owner 验收合并至 main，新 Release 仍须单独授权。
+只读评估器不认证远端权限、不执行操作或提供服务器强制拦截；本地验证：`node tests/v0.3/run-preflight-tests.mjs`。G-01 已经独立 PR、Review 和 Owner 验收，与角色成果优化一并纳入 v0.3.3；后续 Release 仍须单独授权。
