@@ -59,6 +59,15 @@ check('Every required module refinement is checked rather than only the first',(
  const x=twoPhase();x.stages.push({...structuredClone(x.stages[1]),id:'MODULE2'});ready(x);
  delete x.stages[2].spec_handoff_ref;blocked(x,'MISSING_SPEC_HANDOFF:MODULE2');
 });
+check('Every required module retains system baseline, package and diagram checks regardless of order',()=>{
+ for(const reverse of [false,true])for(const [mutate,reason] of [
+  [m=>m.system_baseline_ref='system.md@'+B,'MODULE_SYSTEM_BASELINE_MISMATCH'],
+  [m=>m.artifacts=m.artifacts.filter(a=>a.type!=='module-interface-contract'),'MISSING_MODULE_ARTIFACT'],
+  [m=>m.artifacts.at(-1).generator_sha=B,'DIAGRAM_SKILL_VERSION_MISMATCH']]){
+  const x=twoPhase();const second={...structuredClone(x.stages[1]),id:'MODULE2'};mutate(second);x.stages.push(second);
+  if(reverse)x.stages.reverse();blocked(x,reason);
+ }
+});
 check('Staged UI delivers concept, real Figma source and frontend runtime without granting coding',()=>ready(uiTask()));
 check('Concept-only L1 and Figma L2 can finish their selected scope without premature frontend work',()=>{
  const x=uiTask('L1');x.stages[0].artifacts=x.stages[0].artifacts.slice(0,2);delete x.stages[0].figma_confirmation;
@@ -79,6 +88,15 @@ check('Figma click-through and generic coding approval cannot substitute for aut
  const x=uiTask();x.stages[0].artifacts[3].runtime='figma';blocked(x,'MISSING_FRONTEND_HIGH_FIDELITY_PROTOTYPE');
  const y=uiTask();delete y.frontend_prototype_authorization_ref;
  y.coding_authorization={owner_approval_ref:link,task_contract_ref:link,scope_confirmed:true};blocked(y,'MISSING_FRONTEND_PROTOTYPE_AUTHORIZATION');
+});
+check('Declaring L1 or L2 cannot hide a required frontend prototype from confirmation and authorization',()=>{
+ for(const level of ['L1','L2']){
+  const x=uiTask(level);delete x.stages[0].figma_confirmation;delete x.frontend_prototype_authorization_ref;delete x.frontend_stack_ref;
+  x.coding_authorization={owner_approval_ref:link,task_contract_ref:link,scope_confirmed:true};
+  blocked(x,'FRONTEND_PROTOTYPE_REQUIRES_L3');
+ }
+ const x=uiTask('L2');x.stages[0].artifacts.pop();delete x.stages[0].figma_confirmation;
+ delete x.frontend_prototype_authorization_ref;delete x.frontend_stack_ref;ready(x);
 });
 check('Frontend must match approved stack and confirmed Figma and have actual interaction evidence',()=>{
  for(const mutate of [x=>x.frontend_stack_ref='frontend.md@main',x=>x.stages[0].artifacts[3].frontend_stack_ref='frontend.md@'+B,

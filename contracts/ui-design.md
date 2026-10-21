@@ -61,3 +61,5 @@ Figma 设计改变后重新核验确认、下游规格和原型一致性，不�
 UI Designer 按[Agent Handoff](agent-handoff.md)交接主方案、PA 高层来源、精确 Figma/前端版本、方向反馈与确认、待决项和验证限制。Master 协调已确认 Figma 和 SA 基线到 Module 实施级规格的交接，以及原型与最终规格的重新对齐；不把早期 UI 输入错误绑定到尚未形成的详细规格。Master 核对 Design Gate；L/XL 与风险触发的 S/M 由独立 Reviewer 审查精确版本。重大设计/Profile 批准、设计完成、审查结论与有边界编码授权是不同事实，不能互相替代。
 
 两阶段Module若消费staged L2的Figma，同样需要上述精确版本确认；仅作为待评审L2设计交付时可尚待确认，不得据此启动依赖它的正式细化。
+
+staged L1/L2若提交必需`interactive-prototype`会阻断为越级交付；实际前端原型须选择L3并核验确认/基线/授权，不能降低等级标签绕过。中期Figma点击原型以`figma-design`记录。

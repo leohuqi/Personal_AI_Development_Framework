@@ -77,3 +77,5 @@ For a Master-led *cross-session validation pilot*, require the complete [Agent D
 `ui_delivery_mode: staged` 在每个必需UI阶段校验所选L1/L2/L3：L1保留概念图；L2增加真实`figma-design`（固定清单ref、tool=figma、真实figma_url、design_version）；L3另需`figma_confirmation`精确匹配设计ref/version和Owner确认来源、顶层固定`frontend_stack_ref`与`frontend_prototype_authorization_ref`，以及runtime=frontend、匹配stack及figma_design_ref的可运行`interactive-prototype`，沿用真实交互测试/可编辑源证据。WAIVED不替代新staged交付。新复杂UI默认此模式，简单复用须说明裁剪；旧未声明模式的证据不冒称完成新三阶段。门禁不检查远端Figma/权限或证明确认发生时间，Master/Reviewer核验真实工具、先确认后制作及批准技术栈和原型授权范围。
 
 有两阶段Module且staged L2/L3时，Module的`ui_design_ref`匹配已确认Figma清单；实施细化消费中期源，无须依赖最终前端UI阶段完成，避免循环。阶段依赖仍保留必要SA批准及PA输入，所有来源变更重核受影响细化/原型/审查。原型制作授权不等于业务编码、合并或生产授权。
+
+所有必需Module均检查批准系统基线匹配、必需模块产物及图工具版本，不能只检查首个或依赖清单顺序。staged任务若提交必需`interactive-prototype`，须选择L3并满足完整确认/原型授权/前端证据；不能把等级降为L1/L2隐藏前端交付，中期Figma点击仍记`figma-design`。
