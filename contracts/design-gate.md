@@ -14,7 +14,7 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 
 ## 产品定义先于正式设计（下一版增量）
 
-`product_scope: define/refine` 或已知 `new-product/product-definition/product-behavior` 影响时路由 Product Analyst；`reuse` 只能用于已有明确有效规格，不可排除已知产品影响。需有必需完成的 PA 阶段，提供 `product-definition`、`feature-specification`，后者匹配 `feature_spec_ref`；只有 Catalog 不足。必需 SA/Module/UI 阶段直接或传递依赖产品阶段，不能先正式完成后补产品。早期研究/条件提案不因此禁止，但不能使最终门禁通过。
+`product_scope: define/refine` 或已知 `new-product/product-definition/product-behavior` 影响时路由 Product Analyst；`reuse` 只能用于已有明确有效规格，不可排除已知产品影响。需有必需 COMPLETED 且产物验证通过的 PA 阶段（WAIVED 不能替代完成/内容），提供 `product-definition`、`feature-specification`，后者匹配 `feature_spec_ref`；只有 Catalog 不足。必需 SA/Module/UI 阶段直接或传递依赖产品阶段，不能先正式完成后补产品。早期研究/条件提案不因此禁止，但不能使最终门禁通过。
 
 没有该增量输入的 v0.3.2 来源默认复用规格路径，以保留现有契约/测试兼容；这不把空白规格或未知产品方向解释为已批准。Master 仍实际阅读[产品定义](product-definition.md)和[角色成果标准](role-deliverables.md)，检查内容而非只信 artifact 类型。机器 PASS 不代表产品有用、系统完整或 UX 可用；独立审查与 Owner 权限不变。
 

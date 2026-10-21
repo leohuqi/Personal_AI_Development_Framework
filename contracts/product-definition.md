@@ -27,6 +27,6 @@ Feature Catalog 只承担 `Feature ID → 详细 Feature Spec → 所属阶段/�
 
 ## 声明式路由的增量输入
 
-Task Contract 可选择 `product_scope: reuse | define | refine`（省略等价 reuse，以兼容 v0.3.2 已有有效规格路径）。`define/refine` 路由 Product Analyst，正式 Design Gate 要求其必需完成阶段及 `product-definition`、`feature-specification` 两类固定版本产物；后者须匹配顶层 `feature_spec_ref`。本次必需 SA/Module/UI 阶段依赖该产品阶段，早期研究/概念可并行，但不能绕过正式依赖门禁。
+Task Contract 可选择 `product_scope: reuse | define | refine`（省略时按已知产品影响推断 define/refine；无此影响时保留 v0.3.2 的 reuse 路径）。`define/refine` 路由 Product Analyst，正式 Design Gate 要求其必需 COMPLETED 阶段及经过固定版本/验证证据检查的产物；WAIVED 不代替完成或内容。产物包含 `product-definition`、`feature-specification` 两类固定版本产物；后者须匹配顶层 `feature_spec_ref`。本次必需 SA/Module/UI 阶段依赖该产品阶段，早期研究/概念可并行，但不能绕过正式依赖门禁。
 
 `reuse` 不代表批准空白规格；Master 仍按内容标准核对当前任务与已有批准来源。只读评估器不会读取文档判断行为完整或认证 Owner，人工内容检查与独立审查不能省略。

@@ -49,6 +49,20 @@ check('Missing or merely optional PA stage blocks even with separate coding appr
   blocked(x,'MISSING_PRODUCT_ANALYST_STAGE');
  }
 });
+check('Owner waiver cannot replace completed verified product definition or inherit coding approval',()=>{
+ for(const mutate of [
+  p=>p.artifacts[0].verified=false,
+  p=>p.artifacts[0].ref='docs/product.md@main',
+  p=>p.artifacts[0].required=false,
+  p=>p
+ ]){
+  const x=task(),p=x.stages[0];p.status='WAIVED';
+  p.waiver={owner_approval_ref:link,reason:'Synthetic Owner waiver does not supply missing product content'};
+  mutate(p);x.coding_authorization={owner_approval_ref:link,task_contract_ref:link,scope_confirmed:true};
+  blocked(x,'UNREADY_PRODUCT_DEFINITION:PRODUCT');
+ }
+ const x=task();assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
+});
 check('A Feature Catalog cannot substitute for detailed product/specification artifacts',()=>{
  const x=task();x.stages[0].artifacts=[artifact('feature-catalog','docs/catalog.md')];
  blocked(x,'MISSING_PRODUCT_ARTIFACT:product-definition');

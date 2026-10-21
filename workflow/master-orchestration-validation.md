@@ -10,7 +10,7 @@
 
 Owner 只向新 Master 会话 A 给出业务目标、仓库、隔离环境、允许分派的设计/测试/审查范围与排除项。可使用如下请求：
 
-> 请作为 PADF Master 验证个人记账 APP 的真实专家分派与交接。读取批准的 PADF/Skill 版本与本手册，自行推导角色路由、风险、范围、顺序及产物。授权在该隔离设计试点内建立持久化 Task Contract 并启动必要的 Solution Architect、Module Architect、UI Designer 和独立 Reviewer，无需逐次请求启动批准。重大设计决策与业务编码、合并、发布、部署、破坏性操作及最终验收不在此授权内。每次真实执行后读取 Handoff、核验 SHA 并协调依赖，再决定下一次分派。准确区分 HUMAN_RELAY 与 RUNTIME_DISPATCH；最终提供三份专家产物供我分别评价。
+> 请作为 PADF Master 验证个人记账 APP 的真实专家分派与交接。读取批准的 PADF/Skill 版本与本手册，自行推导角色路由、风险、范围、顺序及产物。授权在该隔离设计试点内建立持久化 Task Contract 并启动必要的 Product Analyst（需要补产品定义时）、Solution Architect、Module Architect、UI Designer 和独立 Reviewer，无需逐次请求启动批准。重大设计决策与业务编码、合并、发布、部署、破坏性操作及最终验收不在此授权内。每次真实执行后读取 Handoff、核验 SHA 并协调依赖，再决定下一次分派。准确区分 HUMAN_RELAY 与 RUNTIME_DISPATCH；最终提供三份专家产物供我分别评价。
 
 不要在 Owner 提示中预先给出技术栈、专家设计答案或详细路由脚本；验证 Master 是否能自行协调并遵守必要批准。
 
@@ -23,6 +23,8 @@ Owner 只向新 Master 会话 A 给出业务目标、仓库、隔离环境、允
 5. 保持 Master 会话 A 与专家会话分离；不在 A 中代写专家产物，不伪造会话 ID。
 
 ## 专家执行与依赖协调
+
+- **按需 PA**：先核对本阶段已有详细产品规格；无效、缺失或变化时在批准范围分派 Product Analyst，交付产品定义、旅程及详细 Feature Specs。Catalog 不替代规格；关键方向先问 Owner，未回答只暂停依赖设计。SA/UI 可先研究或写明条件的提案，正式设计须引用就绪的产品输入。有效规格复用时不增加角色或审批。此处是新试点要求，不回写历史 Issue #5 或声称旧试点实际执行过 PA。
 
 - **B Solution Architect**：由运行时启动独立会话（或 HUMAN_RELAY 人工启动），只读取自己的分派、固定版本 Skill 及相关批准材料。交付 PROPOSED 技术栈、系统架构、应用代码结构与真实图表；持久化执行回执、精确源 SHA 和 Handoff。
 - **回到 A**：实时读取 Handoff，核对产物及来源，记录 ACK 与协调结论。重大 SYSTEM 基线须 Owner 实际批准后才能进入正式 MODULE；未批准时只可在明确授权内起草条件提案，正式 Gate 保持 BLOCKED。
