@@ -64,3 +64,7 @@ For the bounded cross-session pilot, use [Master Orchestration Runbook](master-o
 3. Receiving Agent records real execution receipt and publishes its own artifact/Handoff. Master fetches Handoff and independently reconciles live dependency versions and approvals **before** next dispatch; blocked/unapproved baseline means stop or clearly conditional draft.
 4. After Solution Architect, Module Architect, UI Designer, Owner scores each package separately per [Quality Evaluation](../contracts/skill-delivery-evaluation.md); independent DESIGN Reviewer remains mandatory for L/XL.
 5. Existing [design gate](../contracts/design-gate.md) and Owner coding authorization are separate. **One-session role play never passes actual Master Orchestration.** No background automation added.
+
+## G-01 主动操作门禁
+
+Owner Request → [Master Preflight](action-preflight.md) → Readiness → Authorized Action → Evidence Reconciliation。所有保留操作前按实时来源评估、调用前再核验并匹配HEAD，不能Owner说合并就跳过必需Review。准确Owner接受与Issue Done分开，Merge触发Done时识别异常并在获授权范围补偿；未验证集成设置不声称已关闭。v0.3.2分派继续复用有效批准。

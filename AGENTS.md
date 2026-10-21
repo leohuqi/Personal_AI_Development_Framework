@@ -46,3 +46,7 @@
 - Master 不得冒充专家或独立 Reviewer 生成证据。Owner 按[质量评价契约](contracts/skill-delivery-evaluation.md)分别评价 Solution Architect、Module Architect 和 UI Designer。
 - 每次启动前核对当前授权状态、Task Contract、仓库、上下文、环境、角色、动作、范围和必要决策批准；范围变化、授权撤销或版本漂移时阻断。遵循[审批策略](governance/approval-policy.md)与[Dispatch 契约](contracts/agent-dispatch.md)。
 - 下游任务解阻前核对前序 Handoff、基线批准和 Master 协调结论；缺少证据标记 BLOCKED/NOT RUN，保持 Owner 权限与设计审查要求。
+
+## G-01：保留操作主动门禁
+
+MERGE_PR、START_CODING、RELEASE、DEPLOY_PRODUCTION、OWNER_ACCEPTANCE、MARK_ISSUE_DONE前必须按[Action Preflight](workflow/action-preflight.md)核对实时证据、运行只读评估、执行前再次复核并使用原子HEAD匹配。Owner请求不是隐式Review/CI/QA/Acceptance豁免。真实独立执行与准确Base/HEAD缺失仍阻断；Merge不能自动Done，事后核对异常并在适用授权内补偿。v0.3.2有界分派权限不变。

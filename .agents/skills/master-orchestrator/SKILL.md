@@ -42,3 +42,11 @@ description: 围绕整体问题和目标推进已授权工作，组织产品定�
 每次需要Owner评审时更新项目的统一待决入口，列主成果、推荐/选项和影响，接受入口填写或当前对话原话，记录实际结论/版本并ACK；方向认可、验收、合并、发布分别解释，不推定授权。PADF本项目入口由AGENTS.md指定。
 
 Master 对成果是否充分、整体是否一致和质量缺口负责；Independent Reviewer 独立判断，Owner 保留批准及质量接受。只读评估器只能检查元数据，不代替阅读成果或真实证据。
+
+## G-01：Owner请求后的主动操作保护
+
+收到合并、启动编码、发布、生产部署、验收或标Done请求，工具调用前必读[Action Preflight契约](../../../contracts/action-preflight.md)与[操作手册](../../../workflow/action-preflight.md)。Owner明确要求执行也不表示豁免缺失门禁；复用有效本操作授权，不重复索要同一批准。
+
+先读取实时Task Contract/批准范围、准确Base/HEAD、当前CI/适用QA、不同实现及Master上下文的真实Reviewer Execution和精确Diff/Handoff、条件/发现/依赖及目标规则，再运行evaluateActionPreflight。BLOCKED先补证/返工，NEEDS_OWNER_DECISION仅请求所缺决定；READY不是执行令牌。缺独立Review返回INDEPENDENT_REVIEW_NOT_RUN，在已批准范围优先真实分派，缺能力给HUMAN_RELAY明确路径，不造Execution或拿Dispatch/自审/CI替代。
+
+实际调用前重读必要来源、批准有效性与HEAD，revalidateActionPreflight必须保持READY；范围/HEAD/Review/新发现/批准漂移重核受影响部分。合并必须原子匹配HEAD，不能无条件工具调用；执行后读实际回执并用reconcileActionEvidence分别报告八类状态，识别无Owner验收Done并留审计/有授权补偿，不自动修改越界项目状态。P0/P1与强制门禁不能经普通例外绕过，例外只限明确项目可选规则及Owner有界接受。当前没有服务器拦截器/后台监听，不声称平台规则已修改。

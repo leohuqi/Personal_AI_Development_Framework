@@ -49,5 +49,7 @@ jobs:
         run: node tests/v0.3/run-product-tests.mjs
       - name: Two-phase specs and staged UI regressions
         run: node tests/v0.3/run-feedback-tests.mjs
+      - name: G-01 action preflight and lifecycle regressions
+        run: node tests/v0.3/run-preflight-tests.mjs
       - name: Master-led expense pilot dependency and artifact checks
         run: node tests/v0.3/verify-expense-pilot.mjs

@@ -54,3 +54,5 @@ These are **synthetic metadata** fixture checks. They do not authenticate actual
 
 ## 历史真实验收证据
 [PADF Issue #5](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/5) 的设计试点已完成；参见[Owner 验收](../../examples/issue-5-acceptance/OWNER-V0.3-ACCEPTANCE.md)。新试点仍需独立会话、执行证据及单独质量评价；不将既有验收或 Issue #4 的角色模拟当作新的实际运行证明。
+
+G-01新增：`node tests/v0.3/run-preflight-tests.mjs`，只验证操作预检/Review证据/例外/TOCTOU/生命周期的合成快照，不认证平台或真实批准。原持续Dispatch授权回归仍执行。

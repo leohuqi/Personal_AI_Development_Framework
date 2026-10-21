@@ -139,3 +139,9 @@ node tests/v0.3/verify-expense-pilot.mjs
 框架维护不自动修改其他项目。PQA 的领域规则与既有 PR 边界位于 [PQA 专属规则](examples/pqa/AGENTS.md)，接入或更改须另获授权。
 
 **不在 V0.3 范围内：** Feature Planner/Designer、Iteration Manager 专属 Skill，以及任何并行执行运行时。
+
+## G-01：Master主动治理（未发布）
+
+操作前预检覆盖合并、编码、发布、生产部署、Owner验收和Issue Done；Owner请求不隐式豁免必要门禁。见[设计与现状分析](docs/governance/G-01-design.md)、[契约](contracts/action-preflight.md)、[操作手册/平台限制](workflow/action-preflight.md)、[历史流程例外](docs/governance/PQA-PR7-process-exception.md)及[验收模板](templates/action-preflight.md)。
+
+只读评估器不认证远端权限、不执行操作或提供服务器强制拦截；本地验证：`node tests/v0.3/run-preflight-tests.mjs`。正式版本仍v0.3.2；G-01 已经独立 PR、Review 和 Owner 验收合并至 main，新 Release 仍须单独授权。

@@ -61,3 +61,7 @@ Reviewer 不能替代 Master 或 Owner：不能标记 DESIGN_READY、授权编�
 分别检查真实 Master 分派、回执与跨会话来源，以及各专家交付质量。读取有永久引用的[Dispatch Chain](../../../contracts/agent-dispatch.md)；角色名称、同一 GitHub 账号的提交或 Master 代写的 Handoff 都不能证明独立会话。核验前序协调早于后续依赖分派，并检查实际批准和版本链接。工具或会话来源缺失须标记 NOT VERIFIED，不能 PASS。
 
 按[Owner 评价契约](../../../contracts/skill-delivery-evaluation.md)的 SA-Q1–5、MA-Q1–5 和 UI-Q1–5 分别审查三位专家的精确 SHA 产物。不得冒充 Owner 评分，不得在缺少证据时宣称设计工具已执行。L/XL 强制 DESIGN 审查与独立门禁仍适用。
+
+## G-01：操作门禁的审查证据
+
+向Master提供不同于Implementer/Master的真实会话与Execution（运行时任务证据或HUMAN_RELAY启动）、准确Base/HEAD及实际Diff来源、真实Handoff或GitHubReview，明确结论和全部发现/条件及未测范围。新HEAD使旧批准失效；未完成条件不能仅凭APPROVE标签放行。按[Action Preflight](../../../contracts/action-preflight.md)核对来源，元数据不能认证身份或Owner批准。事后Review标事后补证，不能重写为合并前完成；本角色不执行合并/验收/Done。

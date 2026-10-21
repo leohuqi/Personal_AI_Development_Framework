@@ -39,3 +39,7 @@ Owner 批准任务及分派范围后，Master 可在当前获授权任务中完�
 - L/XL 及风险触发的 S/M 必须在精确设计版本上独立 DESIGN Review。Reviewer 可给出 APPROVE / APPROVE WITH CONDITIONS / REQUEST CHANGES，不能代替 Master 放行；缺少审查或存在 P0/P1 时 BLOCKED。
 - 低风险 S/M 跳过审查须记录影响与理由；重大产品、架构或 UI Profile 变更无论规模都需 Owner 批准，P2 风险须明确接受。
 - DESIGN_READY 后仍须单独的有边界编码授权和 Task Contract；只读评估器既不启动 Agent，也不验证真实权限。
+
+## G-01：Owner请求不隐式豁免
+
+六项保留操作必须经过[主动Preflight与实时复核](../workflow/action-preflight.md)，复用本政策现有Owner授权与Task Contract，不新建授权引擎或改变有界分派。Owner明确操作请求不替代适用CI/QA、独立Review/真实上下文/准确版本、关键依赖、P0/P1和明确验收。非强制项目可选规则例外须记录Exception ID/具体规则/任务HEAD/Owner明确例外/风险条件补救复核；强制规则不走普通例外。紧急路径另行批准审计，普通接口不能启用。合并、发布、生产、Owner接受和Issue Done不互相授予权限；Done须准确OwnerAcceptance，自动Done无证据为治理异常。
