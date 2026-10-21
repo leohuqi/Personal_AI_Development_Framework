@@ -44,5 +44,7 @@ jobs:
         run: node tests/v0.3/run-orchestration-tests.mjs
       - name: Independent Owner quality sheet metadata tests
         run: node tests/v0.3/run-skill-quality-tests.mjs
+      - name: G-01 action preflight and lifecycle regressions
+        run: node tests/v0.3/run-preflight-tests.mjs
       - name: Master-led expense pilot dependency and artifact checks
         run: node tests/v0.3/verify-expense-pilot.mjs

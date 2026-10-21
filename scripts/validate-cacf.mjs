@@ -10,6 +10,13 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const required = [
+  "contracts/action-preflight.md",
+  "workflow/action-preflight.md",
+  "docs/governance/G-01-design.md",
+  "docs/governance/PQA-PR7-process-exception.md",
+  "templates/action-preflight.md",
+  "lib/action-preflight.mjs",
+  "tests/v0.3/run-preflight-tests.mjs",
   "README.md",
   "AGENTS.md",
   "workflow/WORKFLOW.md",
@@ -57,6 +64,7 @@ const required = [
 ];
 
 const schemaChecks = new Map([
+  ["contracts/action-preflight.md", "padf.action-preflight/v1"],
   ["contracts/shared-task-context.md", "padf.shared-task-context/v1"],
   ["contracts/agent-message.md", "padf.agent-message/v1"],
   ["contracts/context-checkpoint.md", "padf.context-checkpoint/v1"],

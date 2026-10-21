@@ -95,3 +95,11 @@ description: 协调已获授权的产品功能，从需求澄清、Linear 规划
 6. **EVIDENCE LEVEL**：明确标记 ROLE_SIMULATION、HUMAN_RELAY 或 RUNTIME_DISPATCH。缺少独立会话或运行证明时标记 BLOCKED/NOT VERIFIED。只读检查器通过仅证明元数据结构符合要求。
 
 真实编排 PASS 要求每个专家都有四阶段证据且顺序正确；L/XL 在 DESIGN_READY 前还须有独立 DESIGN 审查。编码另行授权；自行标记的 MASTER_CHECK 消息不是编排证明。分派前可用 `evaluateDispatchAuthorization` 检查范围快照；CONTINUE 仅表示快照相容，不能替代实时批准、依赖与 Design Gate 核验。
+
+## G-01：Owner请求后的主动操作保护
+
+收到合并、启动编码、发布、生产部署、验收或标Done请求，工具调用前必读[Action Preflight契约](../../../contracts/action-preflight.md)与[操作手册](../../../workflow/action-preflight.md)。Owner明确要求执行也不表示豁免缺失门禁；复用有效本操作授权，不重复索要同一批准。
+
+先读取实时Task Contract/批准范围、准确Base/HEAD、当前CI/适用QA、不同实现及Master上下文的真实Reviewer Execution和精确Diff/Handoff、条件/发现/依赖及目标规则，再运行evaluateActionPreflight。BLOCKED先补证/返工，NEEDS_OWNER_DECISION仅请求所缺决定；READY不是执行令牌。缺独立Review返回INDEPENDENT_REVIEW_NOT_RUN，在已批准范围优先真实分派，缺能力给HUMAN_RELAY明确路径，不造Execution或拿Dispatch/自审/CI替代。
+
+实际调用前重读必要来源、批准有效性与HEAD，revalidateActionPreflight必须保持READY；范围/HEAD/Review/新发现/批准漂移重核受影响部分。合并必须原子匹配HEAD，不能无条件工具调用；执行后读实际回执并用reconcileActionEvidence分别报告八类状态，识别无Owner验收Done并留审计/有授权补偿，不自动修改越界项目状态。P0/P1与强制门禁不能经普通例外绕过，例外只限明确项目可选规则及Owner有界接受。当前没有服务器拦截器/后台监听，不声称平台规则已修改。
