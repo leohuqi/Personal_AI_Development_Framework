@@ -13,7 +13,7 @@
 
 ## 产品与架构范围
 
-可选 `product_scope: reuse | define | refine`，省略时保留 v0.3.2 有效规格复用路径。已知 `new-product/product-definition/product-behavior` 影响不能以 reuse 排除 PA；define/refine 要求详细产品交付，Catalog 仅作索引。PA 是产品/功能设计角色，不批准重大方向，不编写应用实现。
+可选 `product_scope: reuse | define | refine`，省略时保留 v0.3.2 有效规格复用路径。`new-product` 未指定范围时默认补定义；已有完整有效获批规格时可明确 reuse，技术设计仍需 SA，不重复产品研究/PA。`product-definition/product-behavior` 表示本次仍需定义/修订的行为，不能用 reuse 掩盖；define/refine 要求详细交付，Catalog 仅索引。PA 是产品/功能设计角色，不批准重大方向，不编写应用实现。
 
 Master 按实际 `impacts`、`risk_flags` 和版本化来源选择 `architecture_scope: none | system | module | both`：
 - solution-architect：新应用、整体技术栈/平台/部署/系统边界；交付连贯[系统方案](../contracts/solution-architecture.md)，含职责依赖、接口/数据、正常/失败运行、技术取舍、质量和演进。目录/图表不代替正文。

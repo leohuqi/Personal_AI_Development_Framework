@@ -32,12 +32,27 @@ check('Existing precise specs and simple changes reuse without forcing all roles
  assert.equal(r.architect_required,false);assert.equal(r.ui_required,false);
  const x=task();delete x.product_scope;x.stages=[];assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
 });
-check('Explicit reuse cannot exclude known required product work',()=>{
- for(const impact of ['new-product','product-definition','product-behavior']){
+check('Explicit reuse cannot exclude current missing or changed product definition',()=>{
+ for(const impact of ['product-definition','product-behavior']){
   const r=routeAgents({task_class:'M',impacts:[impact],product_scope:'reuse'});assert.equal(r.valid,false);
   assert(r.errors.includes('PRODUCT_IMPACT_REQUIRES_DEFINITION'));
  }
  assert.equal(routeAgents({task_class:'M',product_scope:'unknown'}).valid,false);
+});
+check('A new app can reuse approved detailed specs while retaining system and approval gates',()=>{
+ const routed=routeAgents({task_class:'M',product_scope:'reuse',impacts:['new-product','architecture']});
+ assert.equal(routed.valid,true);assert.equal(routed.product_analyst_required,false);
+ assert.equal(routed.solution_architect_required,true);assert(!routed.stages.includes('product-analyst'));
+ const x=task();x.product_scope='reuse';x.architecture_scope='system';x.impacts=['new-product','architecture'];
+ x.diagram_skill_sha=C;x.material_change=true;x.material_owner_approval_ref=link;
+ x.stages=[{id:'SYSTEM',agent:'solution-architect',required:true,status:'COMPLETED',depends_on:[],
+ artifacts:[artifact('solution-architecture','docs/system.md'),artifact('technology-stack','docs/stack.md'),
+ artifact('application-code-structure','docs/code-map.md'),
+ {...artifact('architecture-diagram','docs/system.svg'),generator:'diagram-design',generator_sha:C,render_status:'PASS'}]}];
+ let result=evaluateDesignGate(x);assert.equal(result.status,'DESIGN_READY');assert.equal(result.coding_authorized,false);
+ delete x.material_owner_approval_ref;blocked(x,'MISSING_MATERIAL_OWNER_APPROVAL');
+ x.material_owner_approval_ref=link;x.feature_spec_ref='docs/feature.md@main';blocked(x,'UNVERSIONED_FEATURE_SPEC');
+ x.feature_spec_ref=pin('docs/feature.md');x.stages=[];blocked(x,'MISSING_SOLUTION_ARCHITECT_STAGE');
 });
 check('Valid detailed product definition passes metadata gate without granting coding',()=>{
  for(const scope of ['define','refine']){const x=task();x.product_scope=scope;
