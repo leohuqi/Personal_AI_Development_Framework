@@ -1,9 +1,11 @@
 # Specialized Design Agent Collaboration — PADF V0.3
 
+当前成果标准见[角色主成果](../contracts/role-deliverables.md)与[共用工作方法](role-work-method.md)。Master 对内容充分性、整体一致性和整合建议负责，独立 Reviewer 和 Owner 权限不变。PA先出High Level Specs/Catalog，SA评复杂度、Master规划，Module结合SA与已确认UI细化实施级Spec并Handoff；UI按概念→Figma确认→获授权前端高保真。消息、执行和交接按[共用协议](agent-protocol.md)按需读取，主成果在前、审计为附录，简单增量不重复完整试点。
+
 **Role-based sequential workflow, not parallel execution orchestration.** This document extends [WORKFLOW.md](WORKFLOW.md) and [CACF V0.2](context-communication.md); existing Task Contract, Agent Message, Checkpoint and Handoff remain in force.
 
 ## Stage selection
-Master reads approved feature scope, task class, risk flags and affected modules and runs a capability classification (documented in [agent-routing.md](agent-routing.md)). 
+Master 先核对产品输入，缺少或变化时路由 Product Analyst，已有有效规格则复用；确定 product_scope，再结合已批准功能规格、S/M/L/XL、风险与受影响边界进行[角色路由](agent-routing.md)。
 - S: code-only bug normally goes Coder -> tests -> risk-based review; no invented architecture/UI package.
 - M: invoke Module Architect if a module's API/schema/workflow or internal code structure needs design against an approved system baseline; Solution Architect only for APP-wide technology/boundary changes; UI Designer for UI/interaction.
 - L/XL: invoke relevant designers **and mandatory independent DESIGN review**, even if only one design domain is affected; large task size alone never forces Solution Architect.
@@ -13,7 +15,8 @@ Master reads approved feature scope, task class, risk flags and affected modules
 ## Phases and owners
 | Phase | Producer / owner | Evidence / criteria |
 | --- | --- | --- |
-| Feature/classification | Master | Approved spec, class S/M/L/XL, risks and routing reason |
+| Product definition (when needed) | Product Analyst | 产品/旅程、High Level Specs/Catalog、业务验收/优先级；SA补复杂度、Master划实施切片，Module细化实施级规格，复用有效规格可跳过 |
+| Feature/classification | Master | Approved spec, product_scope, class S/M/L/XL, risks and routing reason |
 | System Architecture | Solution Architect | [Solution Architecture Baseline](../contracts/solution-architecture.md): tech stack, whole-app system/module boundaries, high-level code topology, diagrams |
 | Module Code Design | Module Architect | [Module Design Package](../contracts/module-design.md): approved system baseline ref, module packages, signatures/contracts, tests and component/sequence/schema diagrams |
 | UI/UX | UI Designer | [UI Package](../contracts/ui-design.md), project [UI Profile](../contracts/project-ui-profile.md) + concept/high-fi/interactive level |
@@ -51,4 +54,4 @@ The pure [design-gate evaluator](../lib/design-gate.mjs) supports offline checks
 
 ## V0.3 prove Master coordination instead of role-labeled output
 For Owner-requested orchestration acceptance, route via [auditable Dispatch Chain](../contracts/agent-dispatch.md) and [independent session runbook](master-orchestration-validation.md). A Master-produced planning markdown, apparent SYSTEM/MODULE Handoff comments and two commits **in the same assistant session** prove only role-scoped simulation. Require a specialist's own execution receipt (fresh session/task ref), actual Handoff, live Master reconciliation **before** any dependent next dispatch, with HUMAN_RELAY distinguished from actual RUNTIME_DISPATCH. Cross-session verification does not assert parallel development.
-Owner applies [three independent Skill quality rubrics](../contracts/skill-delivery-evaluation.md) on actual professional artifacts. Master and metadata validator cannot grade design for the Owner.
+Owner applies [applicable independent Skill quality rubrics (including PA where routed)](../contracts/skill-delivery-evaluation.md) on actual professional artifacts. Master and metadata validator cannot grade design for the Owner.

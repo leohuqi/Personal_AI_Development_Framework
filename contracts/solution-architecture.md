@@ -1,19 +1,55 @@
-# Solution Architecture Baseline — PADF V0.3
+# 系统方案基线（Solution Architecture Baseline）— PADF V0.3
 
-Schema: `padf.solution-architecture/v1`. Owned by **Solution Architect** for a whole product/application or cross-system architecture revision. It is distinct from the module code design.
+Schema: `padf.solution-architecture/v1`。内容由 Solution Architect 负责，面向完整产品/应用或跨系统架构修订；模块代码详细设计另见 Module Design。
 
-## Mandatory deliverables for a new application / material platform change
-- `context_id`, immutable Feature ID(s), status PROPOSED/COMPLETED/APPROVED, Owner approval and versioned baseline ref.
-- **Architecture context and boundaries**: user/externals, system decomposition, bounded contexts, module ownership, communication and data-flow boundaries.
-- **Technology Stack Decision** (`technology-stack`): frontend/backend languages/frameworks, component/UI conventions, database/storage, integration/auth, build/test tools, runtime/hosting/deployment, versions and compatibility; accepted/rejected options, decision rationale and ADRs.
-- **Application Code Structure** (`application-code-structure`): top-level repositories/services/packages and module boundaries, dependency rules, shared libraries, layering, API direction, extension strategy and coding/architecture policies. This is the *application skeleton*, **not** classes/functions/algorithm for each feature module.
-- **Solution Architecture** (`solution-architecture`): logical + technical system model, system NFR/security, deployment/observability, failure boundaries, data ownership and high-level API contract conventions.
-- Professional `architecture-diagram` showing system/technology boundaries and applicable deployment/integration/data diagrams tied to technical sources using pinned diagram-design and verified rendering.
-- Impact/transition plan: existing-app baseline diffs, compatibility, migration, rollback and decisions for Owner; evidence/status refs.
+## 高层输入、技术初评与计划交接
 
-## Handoff and scope
-- Producer: Solution Architect -> Master, and to Module Architect/UI Designer as applicable, through V0.2 Agent Handoff.
-- Module Architect **consumes** this approved immutable baseline; it may propose changes but cannot replace technology decisions. Baseline change invalidates impacted module design and corresponding DESIGN review until revalidated.
-- On existing products, reference the **approved unchanged baseline** with pinned SHA instead of redesigning whole system for every Feature. When no valid baseline exists, Master routes Solution Architect (or Owner first approves establishment of a baseline).
-- Small non-architectural bugs need neither new Solution nor Module design by default.
-- [Architecture diagram](../integrations/diagram-design.md) supplements, does not supersede, precise source code/contracts.
+PA 提供 High Level Specs 和 Feature Catalog，明确业务目标、规则、范围与业务验收；SA 据此及项目约束/现有基线评估技术可行性和实现路径，不以 Module 实施级 Feature Spec 作为初评或系统设计前置。缺少业务意图回 PA/Master 澄清，不以技术设计暗补产品需求。
+
+对本次评估范围内每项 Feature，在同一 Catalog 或可追溯关联表记录：`Feature ID | 高层规格版本 | 实现复杂度 | 理由 | 假设/置信程度 | 实现依赖 | 高风险/待验证项`。实现复杂度只用以下五档，依据工作量、耦合与未知程度结合项目校准；不是固定工期、业务优先级或风险严重性：
+
+| 等级 | 参考判断 |
+| --- | --- |
+| `Very Low` | 既有明确模式内的极小局部调整，验证路径已知，几乎无新依赖 |
+| `Low` | 已知技术内的局部功能，少量组件/状态变化，依赖明确 |
+| `Medium` | 多组件或有限模块协作，需协调接口/数据/交互，主要路径可确认 |
+| `High` | 广泛跨模块协调、重要迁移/集成或复杂一致性处理，存在显著实现或验证工作 |
+| `Very High` | 多系统/基础能力重大变化，复杂耦合与关键未知叠加，需要先分解或验证才能提高估算置信 |
+
+理由须关联具体需求、现有能力及证据。高风险项提出验证问题/方法和先后依赖；未获授权的验证标记 NOT RUN，不能写成实测。输入不足时保留条件、较低置信和待确认项，不制造精确估算。后续 SA/UI/Module 发现变化时更新受影响 Feature，保留版本与原因。
+
+Master 接收高层规格、技术评估和功能内在关系，负责 milestone/iteration 划分、阶段依赖及计划更新；SA 提供技术建议，不自行承诺排期。Master 协调 PA 高层→SA/UI 设计→Module 实施级 Feature Spec 的 Handoff，Module 可以用已确认 Figma 与批准 SA 基线开始细化，不必等待最终前端原型。
+
+## 主成果与内容完整性
+
+新应用或重大平台变更交付一份连贯、可评审、能约束下游设计的系统方案正文。正文解释目标如何转成结构、模块如何协作、数据与失败如何处理、技术为什么适合以及如何运行演进。图、API、数据模型、代码目录和 ADR 为方案提供支撑，不能用产物目录或链接清单替代说明。
+
+内容按任务组织，无需固定章节或篇幅，但须覆盖实际影响并在正文相互对齐：
+
+| 方案内容 | 足以支持下游的说明 |
+| --- | --- |
+| 目标、约束、规模与质量 | 产品关键任务、范围/排除项，环境、团队、成本与合规约束；负载、数据规模与增长假设；可检查的质量目标、验证方法和未知量 |
+| 上下文与部署边界 | 用户/外部系统、集成及信任边界；逻辑模块如何映射到运行时、存储、部署环境与区域，哪些责任由外部承担 |
+| 领域与模块协作 | 模块职责和非职责、边界理由、依赖方向、共享能力归属；映射到仓库/服务/包和应用骨架，不展开每个功能的类/方法实现 |
+| 公共接口与数据 | 主要 API/事件的双方、语义、权限、错误和版本/兼容策略；关键实体、权威来源、读写所有权、生命周期、事务与跨模块一致性规则，引用适用的实际源模型 |
+| 正常与失败运行场景 | 选择有架构意义的跨模块任务，从触发到用户结果贯穿调用、数据变化与状态；说明适用的超时、部分失败、重复/并发及外部依赖故障，含幂等/重试、补偿或人工恢复 |
+| 技术比较与取舍 | 具体语言/框架、数据库/存储、集成/认证、构建/测试、前端、运行时及兼容版本；对现实替代方案（含适用的既有/更简单方案）给出需求匹配、成本和运行后果，记录接受/拒绝原因与 ADR |
+| 安全与运行质量 | 身份权限与敏感数据保护；性能预算、容量假设/瓶颈和扩展条件；可观测性、告警/诊断、故障隔离、备份和恢复目标及验证计划。估算、资料判断与实际测试须区分 |
+| 阶段实施与演进 | 当前/目标差异、阶段依赖与决策点，接口/数据兼容、迁移、回滚/恢复和后续演进触发条件；说明风险、技术债与 Owner 待决项 |
+
+适用内容不得仅写标题或通用口号。未受影响的部分引用批准基线和精确版本即可；不适用项说明理由。关键未知量保留假设和验证/决策责任，阻断依赖它的正式批准，不能用编造的环境、容量或技术实测补齐。
+
+职责与依赖可参考 [arc42 Building Block View](https://docs.arc42.org/section-5/)，代表性交互可参考 [Runtime View](https://docs.arc42.org/section-6/)；按架构相关性选取内容，不以图表或场景数量判断方案完整性。
+
+## 身份、产物与证据兼容
+
+- 保留 `context_id`、不可变 Feature ID(s)、版本化 baseline ref、状态 PROPOSED/COMPLETED/APPROVED 和真实 Owner approval。上游高层规格用 `product_spec_ref` 固定 PA 来源；`feature_spec_ref` 仍表示 Module 实施级规格，在其完成后供下游引用，已有任务仅提供有效获批 `feature_spec_ref` 的路径保持兼容。不得为消除输入循环而伪造尚未完成的详细规格或批准。完成不等于批准。
+- 保留现有产物类型：`solution-architecture`（连贯逻辑/技术方案）、`technology-stack`（技术决策）、`application-code-structure`（应用级结构）、`architecture-diagram`（支持图）。可在一个主文档中组织内容，通过[架构设计包](architecture-design.md)清单定位，不要求为每一项新建文件或新 schema。
+- 必需的系统/技术边界图和适用的部署、集成、数据图使用[锁定 diagram-design](../integrations/diagram-design.md)，绑定权威技术源、Skill SHA、项目 Profile 与真实渲染/一致性证据。图不是 SQL/API/行为的权威源；缺少安装、版本匹配或渲染证据标记 BLOCKED/NOT RUN。
+- 保留稳定的 `system_baseline_ref` 和文档/ADR 的真实路径@SHA，批准与证据绑定同一版本。主成果在前，来源、执行记录、检查与交接清单作为附录。
+
+## 交接与批准边界
+
+Solution Architect 按既有 V0.2 [Agent Handoff](agent-handoff.md)交给 Master，及适用的 Module Architect/UI Designer，说明主要决定、公共契约、待决问题和下一步。Master 协调依赖；L/XL 与风险触发的 S/M 需要独立 DESIGN 审查，重大决定由 Owner 批准。DESIGN_READY 不授予编码、合并或部署权。
+
+Module Architect 消费精确批准的不可变系统基线，可提出变更，不能替换系统技术决定。系统基线变化使受影响模块设计及对应 DESIGN 审查失效，须重新验证。已有产品优先复用未改变的批准基线并提交影响差异；无有效基线时由 Master 路由 Solution Architect（或 Owner 先授权建立基线）。小型非架构缺陷不默认新增两类架构设计。

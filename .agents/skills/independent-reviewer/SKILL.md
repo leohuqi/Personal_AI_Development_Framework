@@ -5,22 +5,9 @@ description: 基于独立新上下文和可核验证据审查 GitHub PR 或跨�
 
 # 独立审查者（Independent Reviewer）（PADF V0.3）
 
-## 最小持久消息模板（Agent Message）
+## 共用工作方式与协议
 
-以下 8 行 YAML 包含消息必填字段；用实时核验的任务事实替换占位符。Skill 统一标识 PADF V0.3；沿用 V0.2 契约与 `padf.*/v1` 协议，不因中文化更改字段或枚举。
-
-```yaml
-{schema_version: padf.agent-message/v1, message_id: "<unique-message-id>",
- thread_id: "<thread-id>", in_reply_to: null, context_id: "<project-task>",
- project: "<project>", repository: "<owner/repo>", linear_issue: "<canonical-issue-url>", original_feature_ids: ["<feature-id>"],
- sender: independent-reviewer, receiver: "<accountable-role>", created_at: "<ISO-8601-with-offset>",
- type: CLARIFICATION_REQUEST, priority: NORMAL, subject: "<subject>",
- body: "<question-or-finding>", source_refs: ["<immutable-url-or-path@SHA>"],
- requested_action: "<bounded-action>", requires_response: true,
- status: OPEN, resolution_ref: null, owner_approval_ref: null}
-```
-
-按实际情况选择消息类型、优先级和是否需要回复。回复沿用 `thread_id` 并设置 `in_reply_to`；重试保留同一不可变内容与 `message_id`。依赖授权时填入 `owner_approval_ref`，TASK_REQUEST 还须在 `source_refs` 引用已批准 Task Contract。HANDOFF 引用完整的[Agent Handoff](../../../contracts/agent-handoff.md)，不能用消息模板替代交接或[Context Checkpoint](../../../contracts/context-checkpoint.md)；编写这两类记录前须读取各自必填项。按[Agent Message 契约](../../../contracts/agent-message.md)核对后，写入获授权的任务/PR 并验证永久链接。缺少来源或持久化能力时报告 BLOCKED/NOT_PERSISTED，不编造字段或宣称已送达。
+开始前必读[补输入、研究与产出](../../../workflow/role-work-method.md)；首次发送消息、分派、交接或恢复前必读[共用协议](../../../workflow/agent-protocol.md)及对应契约，不凭记忆填写。Agent Message 模板与机器字段生成器集中维护；消息/Handoff、Context Checkpoint 与真实执行证据仍遵循原契约。先交付本角色主成果，执行记录放附录。
 
 ## 独立性门禁
 
@@ -58,6 +45,10 @@ description: 基于独立新上下文和可核验证据审查 GitHub PR 或跨�
 **IMPLEMENTATION：编码后。** 延续 V0.2 base-to-head 规则，对照批准设计和真实用户行为检查代码、测试，不只看截图。
 
 Reviewer 不能替代 Master 或 Owner：不能标记 DESIGN_READY、授权编码、批准自己的设计、合并或部署。Master 依据证据协调就绪状态，Owner 保留重大设计与编码授权。参见[Design Gate](../../../contracts/design-gate.md)和[设计协作流程](../../../workflow/design-collaboration.md)。
+
+## 成果质量审查
+
+除授权与形式门禁，实际阅读主方案和详细 Feature Specs：需求是否覆盖、产品任务是否有用、系统接口/数据/失败流程是否连贯、UX 与模块/实现是否一致、复杂度是否必要。只有 Catalog、目录、图表或可点击热点而缺行为/系统方案时提出具体发现，识别“合规但不好用、不完整”。按[角色成果标准](../../../contracts/role-deliverables.md)检查；Master 可要求返工，但不能取代本角色独立判断和 Owner 批准。
 
 ## 输出与边界
 

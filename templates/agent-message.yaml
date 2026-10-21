@@ -1,0 +1,9 @@
+# 仅为共用草稿模板；填真实事实，读取 contracts/agent-message.md 后才能发送。
+{schema_version: padf.agent-message/v1, message_id: "<unique-message-id>",
+ thread_id: "<thread-id>", in_reply_to: null, context_id: "<project-task>",
+ project: "<project>", repository: "<owner/repo>", linear_issue: null, original_feature_ids: [],
+ sender: "<role>", receiver: "<accountable-role>", created_at: "<ISO-8601-with-offset>",
+ type: CLARIFICATION_REQUEST, priority: NORMAL, subject: "<subject>",
+ body: "<question-or-finding>", source_refs: ["<immutable-url-or-path@SHA>"],
+ requested_action: "<bounded-action>", requires_response: true,
+ status: OPEN, resolution_ref: null, owner_approval_ref: null}

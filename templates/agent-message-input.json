@@ -1,0 +1,15 @@
+{
+  "context_id": "<actual-context>",
+  "project": "<project>",
+  "repository": "<owner/repo>",
+  "linear_issue": null,
+  "original_feature_ids": [],
+  "sender": "<sender-role>",
+  "receiver": "<receiver-role>",
+  "type": "CLARIFICATION_REQUEST",
+  "subject": "<decision or gap>",
+  "body": "<actual facts and question>",
+  "source_refs": ["<actual source@SHA or canonical task link>"],
+  "requested_action": "<bounded next action>",
+  "requires_response": true
+}

@@ -10,6 +10,23 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const required = [
+  ".agents/skills/product-analyst/SKILL.md",
+  "contracts/product-definition.md",
+  "contracts/role-deliverables.md",
+  "workflow/role-work-method.md",
+  "workflow/agent-protocol.md",
+  "templates/feature-spec.md",
+  "templates/product-spec.md",
+  "templates/feature-catalog.md",
+  "templates/implementation-plan.md",
+  "templates/qa-test-cases.md",
+  "templates/qa-test-results.md",
+  "tests/v0.3/run-feedback-tests.mjs",
+  "templates/stage-delivery.md",
+  "templates/agent-message.yaml",
+  "templates/agent-message-input.json",
+  "scripts/create-agent-message.mjs",
+  "tests/v0.3/run-product-tests.mjs",
   "contracts/action-preflight.md",
   "workflow/action-preflight.md",
   "docs/governance/G-01-design.md",
@@ -64,6 +81,8 @@ const required = [
 ];
 
 const schemaChecks = new Map([
+  ["contracts/product-definition.md", "padf.product-definition/v1"],
+  ["templates/agent-message.yaml", "padf.agent-message/v1"],
   ["contracts/action-preflight.md", "padf.action-preflight/v1"],
   ["contracts/shared-task-context.md", "padf.shared-task-context/v1"],
   ["contracts/agent-message.md", "padf.agent-message/v1"],
@@ -130,6 +149,14 @@ for (const [rel, needle] of [
   if (fs.existsSync(file) && !fs.readFileSync(file, "utf8").toLowerCase().includes(needle.toLowerCase())) {
     errors.push("Missing V0.2 integration marker in " + rel + ": " + needle);
   }
+}
+// Skills share one protocol source; every installed core role must resolve it.
+for (const entry of fs.readdirSync(path.join(root, ".agents/skills"), {withFileTypes: true})) {
+  if (!entry.isDirectory()) continue;
+  const rel = ".agents/skills/" + entry.name + "/SKILL.md";
+  const source = fs.readFileSync(path.join(root, rel), "utf8");
+  for (const target of ["../../../workflow/role-work-method.md", "../../../workflow/agent-protocol.md"])
+    if (!source.includes(target)) errors.push("Missing shared workflow reference in " + rel);
 }
 if (errors.length) {
   errors.forEach(e => console.error("FAIL " + e));

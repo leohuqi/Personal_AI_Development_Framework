@@ -12,6 +12,12 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 - Approval/waiver records, unresolved issues, changed upstream refs, version freshness and blockers.
 - Separate bounded Owner authorization to begin coding.
 
+## 产品定义先于正式设计（下一版增量）
+
+`product_scope: define/refine` 或本次尚需定义/修订的 `product-definition/product-behavior` 影响时路由 PA。新应用默认补产品定义，但已有本阶段完整有效获批规格时可明确 `product_scope: reuse`，仍需 SA；“应用尚未实现”不等于“产品规格尚未定义”。reuse 不能用于掩盖实际产品缺口/变更。需有必需 COMPLETED 且产物验证通过的 PA 阶段（WAIVED 不能替代完成/内容），提供 `product-definition`、`feature-specification`，后者匹配新两阶段任务的 `product_spec_ref`（旧任务仍匹配 `feature_spec_ref`）；只有 Catalog 不足。必需 SA/Module/UI 阶段直接或传递依赖产品阶段，不能先正式完成后补产品。早期研究/条件提案不因此禁止，但不能使最终门禁通过。
+
+没有该增量输入的 v0.3.2 来源默认复用规格路径，以保留现有契约/测试兼容；这不把空白规格或未知产品方向解释为已批准。Master 仍实际阅读[产品定义](product-definition.md)和[角色成果标准](role-deliverables.md)，检查内容而非只信 artifact 类型。机器 PASS 不代表产品有用、系统完整或 UX 可用；独立审查与 Owner 权限不变。
+
 ## 必需 UI 阶段的存在性
 
 当路由结果为 `ui_required: true` 时，阶段清单必须包含 `agent: ui-ux-designer` 且 `required` 不为 `false` 的阶段。缺失阶段、只有可选/N/A 的 UI 阶段，或以其他角色提交 UI 产物，都返回 `BLOCKED`，原因包含 `MISSING_UI_DESIGN_STAGE`，并强制 `coding_authorized: false`。已有 Owner 编码授权不能绕过设计门禁。
@@ -34,7 +40,7 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 ## Separation of duties
 - **Designing agent**: technical/UI evidence and own validation; may send Handoff, never independently approve own work.
 - **Independent Reviewer (DESIGN mode)**: inspects original approved requirements and source designs at exact immutable revisions, runs independent checks, reports APPROVE / APPROVE WITH CONDITIONS / REQUEST CHANGES with P0–P3 findings. Reviewer does **not** authorize dispatch or mark Design Gate PASSED.
-- **Master**: validates dependency graph, required artifacts, risk, independent-review decision, Owner approvals, stale status; records PASS/BLOCKED/NEEDS_REFINEMENT as gate result and routes remediation. Cannot waive a missing required independent review.
+- **Master**: checks substantive coverage, implementability and cross-role consistency as well as dependencies, risk, independent-review evidence and Owner approvals; returns concrete content gaps for refinement and integrates recommendations. It cannot waive mandatory independent review or approve material decisions.
 - **Owner**: approves material changes, accepts P2 risks with explicit conditions, separately authorizes coding. Owner acceptance is not a substitute for independent Design Review on L/XL.
 
 ## UI Profile 批准与版本绑定（V0.3.1）
@@ -63,3 +69,13 @@ Design Handoff adds `artifact_manifest_ref`, `spec_revision`, `architecture_revi
 ## V0.3 real orchestration acceptance is a separate gate input
 For a Master-led *cross-session validation pilot*, require the complete [Agent Dispatch Chain](agent-dispatch.md) in addition to the existing design/dependency/Owner/Reviewer gates. Set `orchestration_validation_required: true` and supply `orchestration_chain`, `owner_live_evidence_review_ref` and actual role execution refs for every routed professional Skill. Missing chain, a ROLE_SIMULATION record or an unreviewed external runtime claim is BLOCKED; the read-only checker can validate **metadata only**.
 **Do not equate** `ORCHESTRATION_CHAIN_COMPLETE` with professional design quality. The Owner independently grades each Skill using [Quality Evaluation](skill-delivery-evaluation.md); a real L/XL still requires Independent DESIGN Review and approved system/UI baselines before DESIGN_READY. A missing approved baseline permits a **conditional module draft** but never formal module completion.
+
+## 两阶段规格与 staged UI 的增量校验
+
+新任务按[产品契约](product-definition.md)提供固定 `product_spec_ref` 与 `feature_spec_ref`。PA只完成高层输入，Module按精确高层来源细化实施级Spec；每个必需Module须COMPLETED且产物验证通过，`feature-specification`匹配最终`feature_spec_ref`，并附`product_spec_ref`与实际`spec_handoff_ref`。裁剪独立Module只接受有理由、证据和最终详细规格引用的`simple_spec_refinement`，不能排除已知模块影响；内容充分性仍实际检查。只含高层不能使最终门禁就绪，旧未声明两阶段的元数据保持兼容。
+
+`ui_delivery_mode: staged` 在每个必需UI阶段校验所选L1/L2/L3：L1保留概念图；L2增加真实`figma-design`（固定清单ref、tool=figma、真实figma_url、design_version）；L3另需`figma_confirmation`精确匹配设计ref/version和Owner确认来源、顶层固定`frontend_stack_ref`与`frontend_prototype_authorization_ref`，以及runtime=frontend、匹配stack及figma_design_ref的可运行`interactive-prototype`，沿用真实交互测试/可编辑源证据。WAIVED不替代新staged交付。新复杂UI默认此模式，简单复用须说明裁剪；旧未声明模式的证据不冒称完成新三阶段。门禁不检查远端Figma/权限或证明确认发生时间，Master/Reviewer核验真实工具、先确认后制作及批准技术栈和原型授权范围。
+
+有两阶段Module且staged L2/L3时，Module的`ui_design_ref`匹配已确认Figma清单；实施细化消费中期源，无须依赖最终前端UI阶段完成，避免循环。阶段依赖仍保留必要SA批准及PA输入，所有来源变更重核受影响细化/原型/审查。原型制作授权不等于业务编码、合并或生产授权。
+
+所有必需Module均检查批准系统基线匹配、必需模块产物及图工具版本，不能只检查首个或依赖清单顺序。staged任务若提交必需`interactive-prototype`，须选择L3并满足完整确认/原型授权/前端证据；不能把等级降为L1/L2隐藏前端交付，中期Figma点击仍记`figma-design`。

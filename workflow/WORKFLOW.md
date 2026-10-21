@@ -1,5 +1,7 @@
 # AI-SDF V0.3 Development Candidate — Core Workflow (includes V0.2)
 
+当前成果标准见[角色主成果](../contracts/role-deliverables.md)与[共用工作方法](role-work-method.md)。Master 对内容充分性、整体一致性和整合建议负责，独立 Reviewer 和 Owner 权限不变。PA先出High Level Specs/Catalog，SA评复杂度、Master规划，Module结合SA与已确认UI细化实施级Spec并Handoff；UI按概念→Figma确认→获授权前端高保真。消息、执行和交接按[共用协议](agent-protocol.md)按需读取，主成果在前、审计为附录，简单增量不重复完整试点。
+
 **Specification, not an engine.** This workflow is human-initiated with hosted GitHub Actions and separately configured Codex review; it does not run continuously.
 
 ## Actors

@@ -1,34 +1,33 @@
-# Routing Skills by task size
+# 按问题、变化与风险路由角色
 
-| Work type | Route |
+先按[共用工作方法](role-work-method.md)判断输入：方向缺口问 Owner，目标明确方案未定主动研究，已有有效规格复用，增量只补变化。先定义有用成果，再安排角色；没有必要不启用全部九个角色。
+
+| 工作类型 | 最小路径 |
 | --- | --- |
-| S — isolated bug | Authorized Coder → focused tests → risk-based Review |
-| M — feature | Master/approved Feature Spec → Coder → QA & CI → Independent Reviewer → Owner |
-| L — cross-module | Architecture impact & feature splitting → bounded delivery → integration review |
-| XL — new product / major change | Discovery / UX / architecture approval → Roadmap → incremental MVP Cycles |
+| S 局部缺陷/明确的小改动 | 批准范围与现有规格 → Coder → 针对测试 → 风险审查；无需重复产品/系统/UX研究 |
+| 目标清楚但产品行为缺失或变化 | Product Analyst出High Level Specs/Catalog与业务验收 → SA初评/复杂度与UI → Master计划/Handoff → Module细化实施级Spec → 所需设计 |
+| 新产品/重大系统变更 | PA 产品定义（或复用有效规格）→ SA 完整系统方案 → 批准基线内所需 Module/UI → 设计门禁 |
+| 已批准系统内的模块/API/数据/工作流 | 复用详细规格与 system_baseline_ref → Module Architect；不重复选系统技术栈 |
+| UI 方向不清/复杂体验 | 产品任务与共享研究 → UI IA/流程 → 少量差异概念/取舍 → Owner反馈 → 所需高保真/交互 |
+| 明确局部 UI | 复用批准 Profile、产品行为与设计，只改受影响部分 |
 
-Default to a single Coder; parallel work requires clear non-overlapping boundaries, separate worktrees and explicit authorization. V0.3 adds separate Solution Architect, Module Architect and UI Designer, invoked only where scope/risk justifies the work; no new Product Analyst or scheduler.
+## 产品与架构范围
 
-## V0.2 context routing (all task sizes)
-- Master is accountable for resolving context_id, issue + immutable Feature ID, approved source revisions, owner authorization, and actionable unresolved messages **before** task dispatch.
-- The context-coordinator Skill is invoked **as a procedure** by the active role as needed: resolve_context, read_messages, record_message, create_checkpoint, prepare_handoff, resume_context and reconcile_context. It does not independently dispatch agents.
-- S bugs: minimal task context/checkpoint at handoff; avoid heavyweight choreography.
-- M/L/XL: typed handoffs at architect/design/coding/QA/review boundaries as applicable; link exact artifacts and source SHA. Parallel roles may converse directly, but durable decisions and approval-affecting changes must be traceable.
-- Clarifications go to relevant role, unresolved blockers/conflicts to Master, significant product/UX/architecture scope changes to Owner. Message routing does not change approval policy.
-- Fresh-context Independent Reviewer gets approved source contracts, exact diff and evidence—not the Coder's whole conversation.
-- Follow [CACF workflow](context-communication.md) and [Agent Message](../contracts/agent-message.md) rules.
+可选 `product_scope: reuse | define | refine`，省略时保留 v0.3.2 有效规格复用路径。`new-product` 未指定范围时默认补定义；已有完整有效获批规格时可明确 reuse，技术设计仍需 SA，不重复产品研究/PA。`product-definition/product-behavior` 表示本次仍需定义/修订的行为，不能用 reuse 掩盖；define/refine 要求产品级High Level Spec与Catalog；正式实施前Module结合SA/UI细化，简单任务可合并。PA 是产品/功能设计角色，不批准重大方向，不编写应用实现。
 
-## V0.3 capability-based routing
-V0.3.1 补充约束：`architecture_scope` 不得排除已知影响要求的角色。系统影响要求 `system/both`；模块影响要求 `module/both`；同时存在则要求 `both`。S/M 的强制 DESIGN 审查取 `impacts` 和 `risk_flags` 中已知强制风险类别的并集；例如仅在 impacts 声明 `shared-component` 或 `design-system`，即使 risk_flags 为空也必须独立审查。普通局部 UI 任务仍可按原规则说明理由后跳过独立审查。
+Master 按实际 `impacts`、`risk_flags` 和版本化来源选择 `architecture_scope: none | system | module | both`：
+- solution-architect：新应用、整体技术栈/平台/部署/系统边界；交付连贯[系统方案](../contracts/solution-architecture.md)，含职责依赖、接口/数据、正常/失败运行、技术取舍、质量和演进。目录/图表不代替正文。
+- module-architect：批准基线内的模块包/接口/数据/算法/事务并发/存储迁移/异常/测试设计；产品行为缺口回 PA/Master，不临时设计需求。
+- both：确需改变系统基线且要详细模块设计，按 SYSTEM → MODULE 和精确批准版本衔接，不因 L/XL 自动调用两类架构师。
+- none：无架构变化，引用现有基线。已知系统影响要求 system/both，模块影响要求 module/both，不能由 scope/N/A 理由排除。
+- ui-ux-designer：UI/导航/共享组件/交互影响；复用项目批准 UI Design Profile，以任务/研究/概念逐步收敛，按复杂度选 L1/L2/L3。
 
-Master analyzes actual Feature Spec and sets `task_class`, `impacts`, `risk_flags` with rationale. Use [sequential design workflow](design-collaboration.md) and [declarative evaluator](../lib/design-gate.mjs) as optional read-only checks, not an execution engine.
-- Master explicitly decides `architecture_scope: none | system | module | both` using real affected boundaries and current approved architecture, **not only S/M/L/XL**; document rationale in Task Contract.
-- **solution-architect**: new APP, whole-system technology stack/framework selection, platform/storage/runtime replacement, system-wide service boundaries/deployment or major cross-module architecture decision. Output pinned [Solution Architecture Baseline](../contracts/solution-architecture.md), stack choices, high-level application code/module topology and professional diagrams.
-- **module-architect**: module-local API/schema/workflow/data design, code packages/classes/interfaces/tests **inside an approved pinned system baseline**. Output [Module Code Design](../contracts/module-design.md), module structure/interface contract and diagrams. No independent technology stack replacement.
-- **both** only when selected system baseline is being established/changed **and** detailed module design is genuinely needed: enforce SYSTEM -> MODULE and new approved baseline ref before module proceeds. Never automatically invoke both because a Feature is L/XL.
-- **none** for simple bug/UI-only changes with reason; pass affected existing baseline to Coder by reference when useful.
-- UI/navigation/shared components/interaction: **ui-ux-designer**; use per-project approved design profile, choose concept/high-fi/interactive level by complexity.
-- Mixed system/module/UI feature: sequence based on dependency; early UX exploration can precede API feasibility discussion or vice versa. Don't require both for UI-only or backend-only work.
-- L/XL: mandatory independent DESIGN Review. S/M: review mandatory when high-risk; otherwise Master records skip rationale. Owner approves significant design changes regardless of size.
-- Master owns dependency assessment, Gate, blockers and next role; Reviewer independently assesses the design at exact source revisions. Do not conflate `DESIGN_READY` with authorized coding.
-- Producer handoff uses [existing V0.2 contract](../contracts/agent-handoff.md); Context Coordinator persists messages/checkpoints as before.
+正式设计依赖本阶段产品定义；研究可在无依赖条件下并行。`routeAgents` / Design Gate 只检查声明与来源元数据，不判断文档真实质量或自动启动角色。
+
+## Master、审查与上下文
+
+Master 检查[主成果](../contracts/role-deliverables.md)、跨角色一致性和不必要复杂度，整合取舍并退修明显不足；L/XL 和风险触发 S/M 必须独立 DESIGN 审查。强制风险同时读取 impacts/risk_flags，普通低风险跳过须说明理由。重大产品/架构/UI 决策仍 Owner 批准，DESIGN_READY 不等于业务编码授权。
+
+Context Coordinator 默认是当前角色的共享能力，只有复杂跨会话/冲突整理确需独立任务时分派。Shared Task Context 只放最小来源；消息和 Handoff 遵循[共用协议](agent-protocol.md)。fresh-context Reviewer 只读批准来源、精确 diff 与证据，不继承 Coder 自审。
+
+默认单一 Coder；并行实现须明确互不重叠的范围、隔离工作树与适用授权。已批准范围内 Master 优先真实运行时分派/接续，不逐次重批；缺能力才 HUMAN_RELAY，不新建调度器或后台服务。
