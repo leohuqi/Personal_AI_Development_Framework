@@ -1,6 +1,6 @@
 # Specialized Design Agent Collaboration — PADF V0.3
 
-当前成果标准见[角色主成果](../contracts/role-deliverables.md)与[共用工作方法](role-work-method.md)。Master 对内容充分性、整体一致性和整合建议负责，独立 Reviewer 和 Owner 权限不变。产品未定义先补详细规格；UI 方向未收敛先概念反馈。消息、执行和交接按[共用协议](agent-protocol.md)按需读取，主成果在前、审计为附录，简单增量不重复完整试点。
+当前成果标准见[角色主成果](../contracts/role-deliverables.md)与[共用工作方法](role-work-method.md)。Master 对内容充分性、整体一致性和整合建议负责，独立 Reviewer 和 Owner 权限不变。PA先出High Level Specs/Catalog，SA评复杂度、Master规划，Module结合SA与已确认UI细化实施级Spec并Handoff；UI按概念→Figma确认→获授权前端高保真。消息、执行和交接按[共用协议](agent-protocol.md)按需读取，主成果在前、审计为附录，简单增量不重复完整试点。
 
 **Role-based sequential workflow, not parallel execution orchestration.** This document extends [WORKFLOW.md](WORKFLOW.md) and [CACF V0.2](context-communication.md); existing Task Contract, Agent Message, Checkpoint and Handoff remain in force.
 
@@ -15,7 +15,7 @@ Master 先核对产品输入，缺少或变化时路由 Product Analyst，已有
 ## Phases and owners
 | Phase | Producer / owner | Evidence / criteria |
 | --- | --- | --- |
-| Product definition (when needed) | Product Analyst | 产品/旅程、详细 Feature Specs、优先级/版本切片；Catalog 仅索引，复用有效规格可跳过 |
+| Product definition (when needed) | Product Analyst | 产品/旅程、High Level Specs/Catalog、业务验收/优先级；SA补复杂度、Master划实施切片，Module细化实施级规格，复用有效规格可跳过 |
 | Feature/classification | Master | Approved spec, product_scope, class S/M/L/XL, risks and routing reason |
 | System Architecture | Solution Architect | [Solution Architecture Baseline](../contracts/solution-architecture.md): tech stack, whole-app system/module boundaries, high-level code topology, diagrams |
 | Module Code Design | Module Architect | [Module Design Package](../contracts/module-design.md): approved system baseline ref, module packages, signatures/contracts, tests and component/sequence/schema diagrams |

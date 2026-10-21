@@ -13,8 +13,8 @@ For each named mandatory criterion record `0 = MISSING`, `1 = INADEQUATE`, `2 = 
 | --- | --- |
 | PA-Q1 | 问题、用户/典型场景、成功标准、重要约束明确；区分事实、推断和假设 |
 | PA-Q2 | 研究服务真实任务和决策，比较相关方案并形成适用性/取舍结论；复用共享证据，不把资料阅读称用户实测 |
-| PA-Q3 | 产品旅程、功能关系、优先级和版本切片能解释用户价值；Catalog 链接详细定义 |
-| PA-Q4 | 本阶段 Feature Specs 明确输入输出/数据、正常与异常、规则状态、修改/撤销/确认/拒绝及验收，足以支持设计 |
+| PA-Q3 | 产品旅程、功能关系、优先级和版本切片能解释用户价值；Catalog链接高层规格、功能关系/依赖和后续实施级规格 |
+| PA-Q4 | High Level Specs明确产品价值/旅程、关键规则/异常/权限/可撤销边界与业务验收，足以支持SA/UI及Module细化，不要求实施级接口/存储 |
 | PA-Q5 | 具体待决问题、适用批准、范围/排除项、依赖和下游交接，不替 Owner 决策或把缺口留给模块 |
 
 ### Solution Architect — APP-wide design quality (SA-Q)
@@ -22,7 +22,7 @@ For each named mandatory criterion record `0 = MISSING`, `1 = INADEQUATE`, `2 = 
 | --- | --- |
 | SA-Q1 | Explicit decisions/trade-offs with **concrete technology stack, frameworks, integration/database/runtime versions and compatibility**; avoids arbitrary new infra |
 | SA-Q2 | 连贯系统主方案说明模块职责/依赖、公共接口、数据归属/一致性、跨模块正常与失败运行流程，不能仅给目录或图 |
-| SA-Q3 | High-level **application code/module layout**, dependency direction, repository/package structure, reuse strategy |
+| SA-Q3 | High-level application layout and reuse; preliminary feasibility and per-Feature Catalog complexity (Very High/High/Medium/Low/Very Low), rationale/uncertainty/dependencies supporting Master planning |
 | SA-Q4 | Diagrams (system, technical and applicable deployment/data) accurately correspond to structured specs, have real render evidence and pinned diagram-design execution when required |
 | SA-Q5 | 明确规模/质量目标及部署、安全、性能/容量、可观测性、备份恢复、分阶段兼容/迁移/演进和待决取舍 |
 
@@ -30,7 +30,7 @@ For each named mandatory criterion record `0 = MISSING`, `1 = INADEQUATE`, `2 = 
 | ID | Criterion |
 | --- | --- |
 | MA-Q1 | Exact Owner-approved SYSTEM baseline revision and demonstrated **no silent stack/boundary change** |
-| MA-Q2 | A concrete affected **package/file/class/interface map** with distinct responsibilities and direction of dependencies; actionable for Coder |
+| MA-Q2 | Implementation-level Feature Specs traced to PA/SA/confirmed UI and Master Handoff, plus concrete affected package/file/class/interface map with distinct responsibilities and direction of dependencies; actionable for Coder |
 | MA-Q3 | Versioned API/DB/typed internal contracts, errors, transactional/idempotency/permission rules for the module |
 | MA-Q4 | Module component/sequence/workflow and schema diagrams correspond to actual authoritative source and can be rendered; no false diagram-design proof |
 | MA-Q5 | Test seams, negative cases, security, migration/risk and clear coder handoff with no unauthorized production implementation |
@@ -40,8 +40,8 @@ For each named mandatory criterion record `0 = MISSING`, `1 = INADEQUATE`, `2 = 
 | --- | --- |
 | UI-Q1 | 产品任务与体验研究有证据分类；信息架构/流程可解释任务完成和理解负担；方向不明先比较真实差异概念并收反馈，明确局部变化复用 |
 | UI-Q2 | Exact **Project UI Profile** revision; tokens, component reuse, layout/nav, typography/density and documented exceptions |
-| UI-Q3 | 所选 L1/L2 的代表性概念/源和取舍、方向反馈及适用响应式/异常状态；不以页面、token 或热点数量代替任务质量 |
-| UI-Q4 | Where L3 selected: genuinely clickable **interactive prototype** with URL/source/startup, working state transitions and real interaction test evidence; static image is not L3 |
+| UI-Q3 | 所选L1概念图/L2真实可编辑Figma及原型精确版本与确认；适用响应式/异常状态；不以页面、token 或热点数量代替任务质量 |
+| UI-Q4 | Where staged L3 selected: frontend-stack high-fidelity runtime prototype after exact Figma confirmation, bounded prototype authorization, source/startup and real interaction evidence; Figma click-through alone is not final frontend. Legacy L3 evidence retains its original scope |
 | UI-Q5 | Accessible inputs/focus/keyboard/contrast, realistic product workflows, UI ↔ approved API/data/error behavior, consistency across screens |
 
 ## Owner evaluation sheet (one per independent execution)

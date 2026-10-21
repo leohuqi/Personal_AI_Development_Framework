@@ -10,9 +10,11 @@ Master 复用有效 Owner 授权与精确 Task Contract，优先调用可用真�
 
 ## 下一版工作内容：产品定义、完整方案与整体质量
 
-当前正式发布仍是 v0.3.2；本工作分支的新增能力尚未发布：Product Analyst 负责产品定义与详细 Feature Specs，SA 负责连贯完整系统方案，Master 负责问题推进、内容充分性、跨角色整合与交付质量。UI 按研究/任务 → IA/流程 → 概念比较/Owner反馈 → 细化逐步收敛；已有明确规格与局部改动直接复用。
+当前正式发布仍是 v0.3.2；本工作分支的新增能力尚未发布：PA负责High Level Specs/Catalog；SA技术初评、五级实现复杂度和完整系统方案；Master结合功能关系规划milestone/iteration并协调Handoff；Module Designer结合SA与已确认UI细化实施级Feature Spec。UI按概念图→Figma设计/原型确认→获授权前端高保真，QA交Test Cases与Test Results；Context Coordinator是共享恢复能力，进度归Master；已有明确规格与局部改动直接复用。
 
 九个角色按[成果标准](contracts/role-deliverables.md)裁剪；[共用工作方法](workflow/role-work-method.md)统一补输入/研究/复用，[Agent 协议](workflow/agent-protocol.md)集中消息与交接，仅在相关动作前加载。机器字段用本地草稿生成器辅助，不增加审批权或运行时服务。
+
+[Owner统一评审入口 #14](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/14)：成果、推荐和待决项集中查看，可在入口评论或PADF对话反馈；Master同步真实结论及版本，验收/合并/发布分别记录。
 
 ## 文档语言
 
@@ -78,6 +80,7 @@ Owner 按[专家质量评价契约](contracts/skill-delivery-evaluation.md)分�
 node tests/v0.3/run-orchestration-tests.mjs
 node tests/v0.3/run-skill-quality-tests.mjs
 node tests/v0.3/run-product-tests.mjs
+node tests/v0.3/run-feedback-tests.mjs
 ```
 
 这些脚本通过不等于实际跨会话执行、外部工具调用、独立 DESIGN 审查或 Owner 评分；真实结果以精确证据和批准记录为准。
@@ -87,7 +90,7 @@ node tests/v0.3/run-product-tests.mjs
 | Skill | 主要职责 |
 | --- | --- |
 | [master-orchestrator](.agents/skills/master-orchestrator/SKILL.md) | 范围、设计协调、任务就绪、冲突路由与验收组织 |
-| [product-analyst](.agents/skills/product-analyst/SKILL.md) | 产品定义、任务研究、详细 Feature Specs、优先级与版本切片 |
+| [product-analyst](.agents/skills/product-analyst/SKILL.md) | 产品定义、任务研究、High Level Specs/Catalog及优先级建议 |
 | [context-coordinator](.agents/skills/context-coordinator/SKILL.md) | 最小共享上下文、持久消息、检查点、恢复与交接 |
 | [solution-architect](.agents/skills/solution-architect/SKILL.md) | 应用级技术栈、系统架构、代码骨架、ADR 与图表 |
 | [module-architect](.agents/skills/module-architect/SKILL.md) | 已批准系统基线内的模块包、接口、流程与测试设计 |
@@ -117,6 +120,7 @@ node tests/v0.3/run-tests.mjs
 node tests/v0.3/run-orchestration-tests.mjs
 node tests/v0.3/run-skill-quality-tests.mjs
 node tests/v0.3/run-product-tests.mjs
+node tests/v0.3/run-feedback-tests.mjs
 node tests/v0.3/verify-expense-pilot.mjs
 ```
 

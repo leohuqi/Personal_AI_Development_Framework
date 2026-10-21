@@ -13,6 +13,10 @@ description: 为已授权 PADF 任务组织最小共享上下文、持久化可�
 
 默认作为各角色的共享能力：只维护来源版本、关键决定、开放问题、执行 ID 与交接引用。仅在复杂跨会话恢复或冲突整理确有必要时启用独立角色，不为普通任务增加角色、重复加载或检查点。支持 Master、Product Analyst、SA、Module、UI、Coder、QA 和 Reviewer，不提供守护进程或调度器。
 
+## 与项目进度的区别
+
+例如更换会话时，指出当前生效的系统/UI/两层规格版本、哪些决定仍待Owner、哪个Handoff已ACK，以及接收者下一步可做什么，避免读旧稿重做或越界。它维护可继续工作的“记忆”，不判断项目完成百分比、不负责排期或推进责任。Milestone/Iteration、优先级、进度和阻塞由Master维护[实施计划](../../../templates/implementation-plan.md)，上下文只引用，不再抄一套日报。普通任务由Master承担共享能力，不新增常驻记录员。
+
 ## 输入
 
 目标项目和仓库、任务或 Linear 链接、不可变原始 Feature ID、目标、角色、已有授权和 Task Contract，以及共享上下文、检查点、交接和消息引用。

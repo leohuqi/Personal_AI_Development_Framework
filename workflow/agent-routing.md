@@ -5,7 +5,7 @@
 | 工作类型 | 最小路径 |
 | --- | --- |
 | S 局部缺陷/明确的小改动 | 批准范围与现有规格 → Coder → 针对测试 → 风险审查；无需重复产品/系统/UX研究 |
-| 目标清楚但产品行为缺失或变化 | Product Analyst 补产品定义、旅程、详细 Feature Specs 与版本切片 → 所需设计 |
+| 目标清楚但产品行为缺失或变化 | Product Analyst出High Level Specs/Catalog与业务验收 → SA初评/复杂度与UI → Master计划/Handoff → Module细化实施级Spec → 所需设计 |
 | 新产品/重大系统变更 | PA 产品定义（或复用有效规格）→ SA 完整系统方案 → 批准基线内所需 Module/UI → 设计门禁 |
 | 已批准系统内的模块/API/数据/工作流 | 复用详细规格与 system_baseline_ref → Module Architect；不重复选系统技术栈 |
 | UI 方向不清/复杂体验 | 产品任务与共享研究 → UI IA/流程 → 少量差异概念/取舍 → Owner反馈 → 所需高保真/交互 |
@@ -13,7 +13,7 @@
 
 ## 产品与架构范围
 
-可选 `product_scope: reuse | define | refine`，省略时保留 v0.3.2 有效规格复用路径。`new-product` 未指定范围时默认补定义；已有完整有效获批规格时可明确 reuse，技术设计仍需 SA，不重复产品研究/PA。`product-definition/product-behavior` 表示本次仍需定义/修订的行为，不能用 reuse 掩盖；define/refine 要求详细交付，Catalog 仅索引。PA 是产品/功能设计角色，不批准重大方向，不编写应用实现。
+可选 `product_scope: reuse | define | refine`，省略时保留 v0.3.2 有效规格复用路径。`new-product` 未指定范围时默认补定义；已有完整有效获批规格时可明确 reuse，技术设计仍需 SA，不重复产品研究/PA。`product-definition/product-behavior` 表示本次仍需定义/修订的行为，不能用 reuse 掩盖；define/refine 要求产品级High Level Spec与Catalog；正式实施前Module结合SA/UI细化，简单任务可合并。PA 是产品/功能设计角色，不批准重大方向，不编写应用实现。
 
 Master 按实际 `impacts`、`risk_flags` 和版本化来源选择 `architecture_scope: none | system | module | both`：
 - solution-architect：新应用、整体技术栈/平台/部署/系统边界；交付连贯[系统方案](../contracts/solution-architecture.md)，含职责依赖、接口/数据、正常/失败运行、技术取舍、质量和演进。目录/图表不代替正文。

@@ -2,7 +2,8 @@
 
 ## 下一版：产品成果与共用协议回归
 
-运行 node tests/v0.3/run-product-tests.mjs，覆盖产品路由/正式设计依赖、仅 Catalog 拒绝、版本/批准边界、新 PA 真实模式元数据、可复用批准及共用消息草稿生成/回复/重试。CI 自动执行。元数据 PASS 不证明详细规格或方案实际有用；代表性 Skill 请求的独立运行另行记录在 PR，专业质量仍须读主成果。
+运行 node tests/v0.3/run-product-tests.mjs
+node tests/v0.3/run-feedback-tests.mjs，覆盖产品路由/正式设计依赖、仅 Catalog 拒绝、版本/批准边界、新 PA 真实模式元数据、可复用批准及共用消息草稿生成/回复/重试。CI 自动执行。元数据 PASS 不证明详细规格或方案实际有用；代表性 Skill 请求的独立运行另行记录在 PR，专业质量仍须读主成果。
 
 ## v0.3.2：Master 持续分派授权回归
 

@@ -18,8 +18,8 @@ description: 围绕整体问题和目标推进已授权工作，组织产品定�
 ## 推进方式
 
 1. 用短段落总结问题、用户任务、成功标准、已知事实、约束和缺口。按共用工作方式区分需 Owner 回答的方向问题、Agent 应研究的方案选择、已有有效规格和本次增量。
-2. 先定义有用的成果与收件标准，再按规模/风险安排角色、工具及顺序。新增或未定义产品行为先由 Product Analyst 定义；已有适用规格可直接复用，简单缺陷不走全部角色。
-3. 依据[路由](../../../workflow/agent-routing.md)选择 product_scope、architecture_scope、所需 UI 等级及独立审查；SA 负责完整系统方案，Module Architect 负责批准基线内可实现的模块设计，UI 负责逐步收敛体验。研究可并行，依赖关键输入/批准的正式设计不提前放行。
+2. 先定义有用的成果与收件标准，再按规模/风险安排角色、工具及顺序。新增或未定义产品行为先由 Product Analyst 提出High Level Specs/Catalog；已有适用规格可直接复用，简单缺陷不走全部角色。
+3. 依据[路由](../../../workflow/agent-routing.md)选择 product_scope、architecture_scope、所需 UI 等级及独立审查；SA负责技术初评、Catalog五级实现复杂度及完整系统方案；Master结合功能关系/价值/依赖/风险按[计划模板](../../../templates/implementation-plan.md)划milestone/iteration并维护进度。Module Designer结合SA与已确认UI细化实施级Feature Spec及模块设计，UI按概念→Figma确认→获授权前端高保真收敛。按[两阶段Handoff](../../../contracts/product-definition.md)协调ACK，避免前置最终详细Spec或等待最终原型的循环；简单项目有理由合并步骤。研究可并行，依赖关键输入/批准的正式设计不提前放行。
 4. 按[Task Contract](../../../contracts/task-contract.md)限定目标、范围、输入、成果、角色/动作、环境与停止条件。有效授权范围内优先真实运行时分派、启动、返工和接续，不新增逐次 Owner 批准；越界或必要批准缺失时阻断受影响动作。
 5. 收件时实际阅读主成果，按[角色成果标准](../../../contracts/role-deliverables.md)检查覆盖、具体性、可实现性、用户任务和不必要复杂度。只有 Catalog、目录/图、页面/token 清单、字段合规或流水记录而缺主内容时退回 NEEDS_REFINEMENT，指出具体缺口与负责角色。
 6. 对齐产品行为 → 系统接口/数据/运行流程 → UX 状态与操作 → 模块职责/存储/异常 → 实现和验收。识别跨角色矛盾、缺口和取舍，组织范围内修订，整合成一个可供 Owner 判断的方案；不简单转发九份互相矛盾的文档。
@@ -28,7 +28,7 @@ description: 围绕整体问题和目标推进已授权工作，组织产品定�
 
 ## 必须保留的门禁
 
-- 正式模块设计需要明确产品行为和精确 Owner 批准的 system_baseline_ref；缺失或漂移时退回 PA/SA，不让模块或 Coder 猜测行为、技术栈或 UX。
+- 正式模块设计接收PA高层产品意图，以及精确Owner批准的system_baseline_ref，再由Module细化实施级行为；缺失或漂移时退回 PA/SA，不让模块或 Coder 猜测行为、技术栈或 UX。
 - 新系统/重大技术选择由 SA 研究并给出完整提案，重大决定交 Owner；both 按 SYSTEM → MODULE 及批准版本交接。UI 新 Profile/重大方向须批准，方向未收敛先概念比较与反馈。
 - L/XL 和风险触发的 S/M 须精确版本的独立 DESIGN 审查；P0/P1 阻断，P2 修复或 Owner 明确接受条件。低风险跳过须说明具体理由，Master 收件检查不等于独立审查。
 - DESIGN_READY 不是业务编码授权；编码须单独有效 Owner 授权和 Task Contract。合并/发布/生产/破坏性操作/最终验收也各自授权，不能从分派权限推导。
@@ -38,5 +38,7 @@ description: 围绕整体问题和目标推进已授权工作，组织产品定�
 首次 DISPATCH/消息/Handoff/恢复前读取共用协议，按 Dispatch → independent Execution → Handoff → Master Dependency Reconciliation 留最小证据。真实 task/run ID 只能来自工具；同会话角色扮演标记 ROLE_SIMULATION，缺运行能力才 HUMAN_RELAY。重试前核对原执行，不重复启动 running 任务。
 
 收到 Handoff 后实时核对前序产物 SHA、必要批准、依赖、待处理消息和当前授权，再 ACK/退修及选择下一动作；新 SHA 重核受影响审查。Context Coordinator 默认作为共享能力，只有独立整理复杂上下文确有必要时启用；不堆积检查点或重新抄写契约。完整编排验收才使用[验证手册](../../../workflow/master-orchestration-validation.md)。
+
+每次需要Owner评审时更新项目的统一待决入口，列主成果、推荐/选项和影响，接受入口填写或当前对话原话，记录实际结论/版本并ACK；方向认可、验收、合并、发布分别解释，不推定授权。PADF本项目入口由AGENTS.md指定。
 
 Master 对成果是否充分、整体是否一致和质量缺口负责；Independent Reviewer 独立判断，Owner 保留批准及质量接受。只读评估器只能检查元数据，不代替阅读成果或真实证据。

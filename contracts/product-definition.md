@@ -1,34 +1,34 @@
-# 产品定义与详细功能规格
+# 两阶段 Feature Spec 与设计交接
 
-Schema：`padf.product-definition/v1`，由 Product Analyst 负责；它可以是已有 PRD 和 Feature Specs 的章节，不要求另建重复文档。Master 整合目标及跨角色决定，Owner 批准重大方向/范围变化。
+Schema：`padf.product-definition/v1`。Product Analyst 负责产品级 High Level Specs 和 Feature Catalog；Module Designer（沿用角色 ID `module-architect`）依据产品输入、SA 与 UI 细化实施级 Feature Specs。Master 协调收件、交接和计划，Owner 保留重大决定。
 
-## 产品层
+## 第一阶段：产品级 High Level Specs（PA）
 
-明确问题与用户、真实使用情境和核心任务、成功标准、约束与排除项；汇总问题驱动的研究结论和证据类别；给出核心旅程、功能之间的关系、优先级和可独立验证的版本切片。涉及数据安全/成本/习惯/体验偏好的关键未知先问 Owner，技术常规方案由相应角色研究推荐。
+明确问题、目标用户/场景、核心旅程、价值、范围/排除项、关键业务规则与成功/失败结果、产品约束、重要异常/权限/可撤销边界和业务验收。使用[产品级规格模板](../templates/product-spec.md)或已有 PRD 章节，不要求预先设计 API、表结构、组件或逐字段交互。
 
-Feature Catalog 只承担 `Feature ID → 详细 Feature Spec → 所属阶段/依赖` 的索引。每个本阶段将进入模块设计或实现的功能必须链接具体定义；仅有名称、优先级和一句话说明不足以交接。
+[Feature Catalog](../templates/feature-catalog.md)以稳定 Feature ID 关联 High Level Spec、价值/优先级、内在关系/依赖、实施级 Spec（初期可待细化）。PA 提出产品优先级与可验收切片建议，不独自承诺实现成本或最终 milestone/iteration。只有名称和一句话功能仍不足以交接，但不把实施级细节前置给 PA。
 
-## 每项 Feature 应回答
+## 第二阶段：实施级 Feature Specs（Module Designer）
 
-- 谁为什么需要、何时触发，以及可观察的成功结果。
-- 前置条件、输入/输出、数据来源与归属、权限和隐私约束。
-- 正常步骤、业务规则/优先级、状态变化，以及重要异常和恢复。
-- 用户可修改、撤销、确认或拒绝什么；不能撤销或有破坏性后果时说明影响。
-- 与其他功能/版本的关系、依赖、排除项和本次交付阶段。
-- 可验证验收标准：核心任务及重要失败/权限/边界场景，区分预期与实际证据。
+以已就绪的产品级规格、精确批准的系统方案，以及适用的已确认 Figma 设计/原型为输入，具体化前置条件、数据/输入输出、正常/异常流程、规则与状态转换、用户修改/撤销/确认/拒绝、接口/数据结构、并发/事务/迁移、UX 事件/反馈、依赖与可执行验收。详见[实施级模板](../templates/feature-spec.md)和[模块设计](module-design.md)。
 
-详见[Feature Spec 模板](../templates/feature-spec.md)。不适用项说明理由，可合并表达；不以填表数量代替明确行为。产品规格定义“应该怎样”，架构/UI/模块角色负责“如何实现/呈现”，不能让模块设计阶段临时创造产品规则。
+实施细化可以把产品意图转成具体行为，不得暗改价值、权限、范围或业务规则。新产品取舍由 Master 回 PA，重大变化交 Owner；技术冲突回 SA，体验冲突回 UI。详细 Spec 与模块结构可同文维护，不能让 Coder 在编码时补关键设计。
 
-## 状态、复用与交接
+## Master 协调的 Handoff 与计划
 
-明确草案、推荐与已批准内容；关键答案未回、行为冲突或必要决定未批时暂停受影响设计。仅批准方向不等于所有细节已完备，Catalog 也不等于详细规格。复用有效规格时引用精确版本与适用范围，只补变化；不强制重新调用 Product Analyst。
+1. PA → Master → SA/UI：链接 High Level Specs、Catalog、关键决定/开放问题、精确版本。接收方 ACK 或 NEEDS_REFINEMENT；关键方向不清只阻断依赖部分，研究可继续。
+2. SA 初评整个技术实现，逐 Feature 在 Catalog 填写五级复杂度、理由/置信与依赖，见[系统方案](solution-architecture.md)。Master 综合价值、复杂度、功能内在关系、风险与容量提出[Milestone/Iteration 计划](../templates/implementation-plan.md)，不把复杂度等级当工期承诺。
+3. SA/UI → Master → Module：交付批准系统基线及适用的已确认 Figma 精确版本、产品输入、接口/约束/未决项。Module 细化 Spec 并反馈可实现性；UI 前端高保真原型可再消费该细化，**不要求 SA/UI 先拿到最终实施级 Spec，也不要求 Module 等待最终前端原型**。
+4. Module → Master → Coder/QA：交接实施级 Spec、系统/UI追溯、模块设计与验收。复用原 [Handoff](agent-handoff.md)，不新增消息协议；接收方 ACK，Master 核对变化/依赖后推进。
 
-传递本阶段产品定义和各 Feature Spec 的固定版本、未决问题与需 Owner 决策项，按现有 Handoff 交给 Master、SA/UI 与 Module Architect。`COMPLETED` 不自动表示重大决定获批、DESIGN_READY 或编码授权。
+简单项目/已有明确的局部变更可以合并两层文档或合并执行步骤，记录裁剪理由、责任人、来源版本及实际收件确认；不为流程新开角色会话。仍须有足以实施/测试的详细内容，保留必要 SA/UI、独立审查、决定及编码授权，不以“简单”掩盖产品缺口。
 
-## 声明式路由的增量输入
+## 路由与兼容
 
-Task Contract 可选择 `product_scope: reuse | define | refine`。省略时，有 `product-definition/product-behavior` 影响则推断 define/refine；`new-product` 默认 define，无上述信号保留 v0.3.2 的 reuse 路径。新应用已有本阶段完整有效且获批规格时可明确 reuse，仍需所要求的 SA；新应用并不自动等于产品缺口。`product-definition/product-behavior` 指本次尚需定义或变更的行为，不能以 reuse 掩盖，也不应作为已完成需求的历史标签。
+`product_scope: reuse | define | refine` 沿用：缺省产品定义/行为影响推断 define/refine；new-product 默认 define，无此信号保留旧 reuse。新应用已有有效获批产品规格可显式 reuse，仍需 SA；当前缺口/变化不能用 reuse 隐藏。
 
-define/refine 路由 PA；正式门禁要求必需 COMPLETED 阶段和验证通过的固定版本 `product-definition`、`feature-specification`，后者匹配 `feature_spec_ref`。WAIVED 不替代完成或内容；本次必需 SA/Module/UI 阶段直接或传递依赖该产品阶段，早期研究/概念可并行，但不能绕过最终门禁。
+新两阶段任务声明 `product_spec_ref`（PA 高层）与 `feature_spec_ref`（Module 实施级）。define/refine 的必需 PA 阶段须 COMPLETED，具有验证/固定版本的 `product-definition` 和 `feature-specification`，后者匹配 `product_spec_ref`；PA 完成不等于最终 DESIGN_READY。Module 的必需阶段须 COMPLETED、附匹配 `feature_spec_ref` 的 `feature-specification` 和匹配的 `product_spec_ref`，以及引用实际 Handoff 的 `spec_handoff_ref`。仅 Catalog/高层规格、WAIVED 或陈旧引用都不能替代详细产物。
 
-`reuse` 不代表批准空白规格；Master 仍按内容标准核对当前任务与已有批准来源。只读评估器不会读取文档判断行为完整或认证 Owner，人工内容检查与独立审查不能省略。
+若新两阶段任务裁剪独立 Module，提供 `simple_spec_refinement: {rationale, evidence_ref, feature_spec_ref}`，其引用必须匹配最终详细规格；这只是实际内容收件/裁剪记录，不授予权限或排除已知模块影响所需角色。所有新阶段设计仍依赖 PA（若需要）；旧任务只含 `feature_spec_ref` 的兼容路径保留，不声称已按新两阶段执行。
+
+只读门禁只检查元数据。Master/Reviewer 必须实际核对高层意图、细化内容与批准来源，不能靠填写字段制造批准。规格、方案或 UI 版本改变时，重核受影响细化、测试和独立审查。完成设计不授权业务编码、合并、发布或部署。

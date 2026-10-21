@@ -2,6 +2,24 @@
 
 Schema: `padf.solution-architecture/v1`。内容由 Solution Architect 负责，面向完整产品/应用或跨系统架构修订；模块代码详细设计另见 Module Design。
 
+## 高层输入、技术初评与计划交接
+
+PA 提供 High Level Specs 和 Feature Catalog，明确业务目标、规则、范围与业务验收；SA 据此及项目约束/现有基线评估技术可行性和实现路径，不以 Module 实施级 Feature Spec 作为初评或系统设计前置。缺少业务意图回 PA/Master 澄清，不以技术设计暗补产品需求。
+
+对本次评估范围内每项 Feature，在同一 Catalog 或可追溯关联表记录：`Feature ID | 高层规格版本 | 实现复杂度 | 理由 | 假设/置信程度 | 实现依赖 | 高风险/待验证项`。实现复杂度只用以下五档，依据工作量、耦合与未知程度结合项目校准；不是固定工期、业务优先级或风险严重性：
+
+| 等级 | 参考判断 |
+| --- | --- |
+| `Very Low` | 既有明确模式内的极小局部调整，验证路径已知，几乎无新依赖 |
+| `Low` | 已知技术内的局部功能，少量组件/状态变化，依赖明确 |
+| `Medium` | 多组件或有限模块协作，需协调接口/数据/交互，主要路径可确认 |
+| `High` | 广泛跨模块协调、重要迁移/集成或复杂一致性处理，存在显著实现或验证工作 |
+| `Very High` | 多系统/基础能力重大变化，复杂耦合与关键未知叠加，需要先分解或验证才能提高估算置信 |
+
+理由须关联具体需求、现有能力及证据。高风险项提出验证问题/方法和先后依赖；未获授权的验证标记 NOT RUN，不能写成实测。输入不足时保留条件、较低置信和待确认项，不制造精确估算。后续 SA/UI/Module 发现变化时更新受影响 Feature，保留版本与原因。
+
+Master 接收高层规格、技术评估和功能内在关系，负责 milestone/iteration 划分、阶段依赖及计划更新；SA 提供技术建议，不自行承诺排期。Master 协调 PA 高层→SA/UI 设计→Module 实施级 Feature Spec 的 Handoff，Module 可以用已确认 Figma 与批准 SA 基线开始细化，不必等待最终前端原型。
+
 ## 主成果与内容完整性
 
 新应用或重大平台变更交付一份连贯、可评审、能约束下游设计的系统方案正文。正文解释目标如何转成结构、模块如何协作、数据与失败如何处理、技术为什么适合以及如何运行演进。图、API、数据模型、代码目录和 ADR 为方案提供支撑，不能用产物目录或链接清单替代说明。
@@ -25,7 +43,7 @@ Schema: `padf.solution-architecture/v1`。内容由 Solution Architect 负责，
 
 ## 身份、产物与证据兼容
 
-- 保留 `context_id`、不可变 Feature ID(s)、Feature Spec@approved SHA、版本化 baseline ref、状态 PROPOSED/COMPLETED/APPROVED 和真实 Owner approval。完成不等于批准。
+- 保留 `context_id`、不可变 Feature ID(s)、版本化 baseline ref、状态 PROPOSED/COMPLETED/APPROVED 和真实 Owner approval。上游高层规格用 `product_spec_ref` 固定 PA 来源；`feature_spec_ref` 仍表示 Module 实施级规格，在其完成后供下游引用，已有任务仅提供有效获批 `feature_spec_ref` 的路径保持兼容。不得为消除输入循环而伪造尚未完成的详细规格或批准。完成不等于批准。
 - 保留现有产物类型：`solution-architecture`（连贯逻辑/技术方案）、`technology-stack`（技术决策）、`application-code-structure`（应用级结构）、`architecture-diagram`（支持图）。可在一个主文档中组织内容，通过[架构设计包](architecture-design.md)清单定位，不要求为每一项新建文件或新 schema。
 - 必需的系统/技术边界图和适用的部署、集成、数据图使用[锁定 diagram-design](../integrations/diagram-design.md)，绑定权威技术源、Skill SHA、项目 Profile 与真实渲染/一致性证据。图不是 SQL/API/行为的权威源；缺少安装、版本匹配或渲染证据标记 BLOCKED/NOT RUN。
 - 保留稳定的 `system_baseline_ref` 和文档/ADR 的真实路径@SHA，批准与证据绑定同一版本。主成果在前，来源、执行记录、检查与交接清单作为附录。

@@ -1,6 +1,6 @@
 # PADF V0.3 真实 Master 编排与专家交付验收手册
 
-当前成果标准见[角色主成果](../contracts/role-deliverables.md)与[共用工作方法](role-work-method.md)。Master 对内容充分性、整体一致性和整合建议负责，独立 Reviewer 和 Owner 权限不变。产品未定义先补详细规格；UI 方向未收敛先概念反馈。消息、执行和交接按[共用协议](agent-protocol.md)按需读取，主成果在前、审计为附录，简单增量不重复完整试点。
+当前成果标准见[角色主成果](../contracts/role-deliverables.md)与[共用工作方法](role-work-method.md)。Master 对内容充分性、整体一致性和整合建议负责，独立 Reviewer 和 Owner 权限不变。PA先出High Level Specs/Catalog，SA评复杂度、Master规划，Module结合SA与已确认UI细化实施级Spec并Handoff；UI按概念→Figma确认→获授权前端高保真。消息、执行和交接按[共用协议](agent-protocol.md)按需读取，主成果在前、审计为附录，简单增量不重复完整试点。
 
 分别验收两件事：真实的 `Dispatch → independent Execution → Handoff → Dependency Reconciliation`，以及 Owner 对 Solution Architect、Module Architect、UI Designer 交付质量的评价。已批准范围内无需逐次请求 Owner 批准，优先使用可用真实 Agent 运行时；仅在缺少能力时采用 HUMAN_RELAY。Skill 和文档不创建后台服务。
 
@@ -24,7 +24,7 @@ Owner 只向新 Master 会话 A 给出业务目标、仓库、隔离环境、允
 
 ## 专家执行与依赖协调
 
-- **按需 PA**：先核对本阶段已有详细产品规格；无效、缺失或变化时在批准范围分派 Product Analyst，交付产品定义、旅程及详细 Feature Specs。Catalog 不替代规格；关键方向先问 Owner，未回答只暂停依赖设计。SA/UI 可先研究或写明条件的提案，正式设计须引用就绪的产品输入。有效规格复用时不增加角色或审批。此处是新试点要求，不回写历史 Issue #5 或声称旧试点实际执行过 PA。
+- **按需 PA**：先核对已有产品级高层规格；无效、缺失或变化时分派PA交High Level Specs/Catalog，由Master协调Handoff，SA/UI设计后Module细化实施级Spec。Catalog 不替代规格；关键方向先问 Owner，未回答只暂停依赖设计。SA/UI 可先研究或写明条件的提案，正式设计须引用就绪的产品输入。有效规格复用时不增加角色或审批。此处是新试点要求，不回写历史 Issue #5 或声称旧试点实际执行过 PA。
 
 - **B Solution Architect**：由运行时启动独立会话（或 HUMAN_RELAY 人工启动），只读取自己的分派、固定版本 Skill 及相关批准材料。交付 PROPOSED 技术栈、系统架构、应用代码结构与真实图表；持久化执行回执、精确源 SHA 和 Handoff。
 - **回到 A**：实时读取 Handoff，核对产物及来源，记录 ACK 与协调结论。重大 SYSTEM 基线须 Owner 实际批准后才能进入正式 MODULE；未批准时只可在明确授权内起草条件提案，正式 Gate 保持 BLOCKED。

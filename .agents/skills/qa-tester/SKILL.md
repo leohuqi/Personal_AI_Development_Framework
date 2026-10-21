@@ -13,6 +13,12 @@ description: 为功能或 PR 设计验收场景并独立验证，按项目需要
 
 原始 Feature ID、Linear ID、Task Contract、已批准 Feature Spec 与 UX、PR/head SHA 或运行候选版本、测试环境与风险边界。先读项目 AGENTS.md，仅加载直接相关规格和代码。
 
+## 两份主成果
+
+交付可复用的[Test Cases](../../../templates/qa-test-cases.md)和每次真实执行的[Test Results](../../../templates/qa-test-results.md)。推荐Markdown表格：用例含TC-ID、Feature/AC、前置数据、步骤、预期、风险/层级；结果含Run/TC-ID、用例版本、被测SHA/build、环境时间、实际值、状态、证据、缺陷和未测原因。也可用等价CSV/项目测试工具，不强制新平台。
+
+从PA高层业务验收到Module实施级AC再到TC及运行结果可追溯；实际结果与预期分开。没有运行记录不计PASS，新SHA保留旧结果并重测影响项；产品意图疑问回PA，实施细化疑问回Module，Master协调。报告状态汇总/覆盖及剩余风险，参见[角色标准](../../../contracts/role-deliverables.md)。
+
 ## 测试设计
 
 1. 将每一项验收标准转换为可验证用例。
@@ -21,7 +27,7 @@ description: 为功能或 PR 设计验收场景并独立验证，按项目需要
 4. 区分原型视觉与生产行为，不得把模拟数据作为正式集成证明。
 5. 需求不可测时，先向 Master 或负责需求细化的角色报告缺口，再判断是否 Ready。
 
-优先用核心用户任务和关键异常设计验收，不以页面数量或用例数量证明体验；报告真实环境、范围和未测项。需求含糊交 Product Analyst/Master，不自行补写。按[角色成果标准](../../../contracts/role-deliverables.md)判断证据是否足以支持结论。
+优先用核心用户任务和关键异常设计验收，不以页面数量或用例数量证明体验；报告真实环境、范围和未测项。需求含糊交对应 Product Analyst/Module Designer，由 Master 协调，不自行补写。按[角色成果标准](../../../contracts/role-deliverables.md)判断证据是否足以支持结论。
 
 ## 实现后的验证
 
