@@ -85,3 +85,7 @@ Include success, invalid, empty/loading/error, authorization and regression case
 
 ## V0.3 Master-orchestrated specialist acceptance fields
 For a real independent-specialist pilot (not ordinary chat drafting) record the [Dispatch Record](agent-dispatch.md): `dispatch_id`, `master_run_ref`, `target_role`, `target_skill_ref@SHA`, `execution_mode` (ROLE_SIMULATION/HUMAN_RELAY/RUNTIME_DISPATCH), expected artifacts, upstream `depends_on_dispatch_ids`, exact design and Owner approval refs, `dispatch_ref` and reason. Specialist execution must read this **before** starting and cite it in its receipt. A Task Contract or Agent Message **alone does not start an agent**.
+
+## G-01操作前输入
+
+保留操作引用[Action Preflight快照](action-preflight.md)：准确action/subject、原Owner授权及范围、项目规则/适用门禁、实时观测证据、Review执行/差异/条件、发现/依赖、摘要与执行前复核，实际工具回执及事后状态协调。引用既有授权/Delivery Report/Design Gate/Dispatch，不复制新批准体系；明确生产/原型/隔离环境。只读READY不能自行执行，普通请求不是例外。
