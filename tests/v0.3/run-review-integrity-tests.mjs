@@ -613,6 +613,58 @@ for(const [label,mutate] of [
   const x=formal();r4Outcome(x,'READY');mutate(x.stages.find(s=>s.id==='PRODUCT'));r4Outcome(x,'BLOCKED');
  });
 
+// R5: professional prerequisites remain prerequisites across nonprofessional
+// coordination nodes. Those nodes are stage evidence, not fake specialists.
+function r5Bridge(x,sourceIds,targetIds,hops=1){
+ let previous=sourceIds;
+ for(let i=0;i<hops;i++){
+  const id=`COORDINATE${i}`;
+  x.stages.push({id,agent:i%2?'context-coordinator':'master-orchestrator',required:true,status:'COMPLETED',
+   depends_on:previous,artifacts:[artifact('coordination-record',`docs/${id}.md`)]});
+  previous=[id];
+ }
+ for(const s of x.stages.filter(s=>targetIds.includes(s.id)))
+  s.depends_on=[...s.depends_on.filter(id=>!sourceIds.includes(id)),...previous];
+ return refresh(x);
+}
+function r5BindProfessionals(x,lateId){
+ const all=x.stages,professionals=all.filter(s=>Object.hasOwn(types,s.agent));
+ if(lateId){const i=professionals.findIndex(s=>s.id===lateId);professionals.push(...professionals.splice(i,1));}
+ x.stages=professionals;bindChain(x);x.stages=[...professionals,...all.filter(s=>!Object.hasOwn(types,s.agent))];
+ for(const s of x.stages.filter(s=>!Object.hasOwn(types,s.agent)))assert.equal(s.orchestration_binding,undefined);
+ return refresh(x);
+}
+function r5Fixture(kind,hops){
+ if(kind==='all-roles')return r5Bridge(formal(),['PRODUCT'],['SYSTEM','UI0'],hops);
+ if(kind==='cross-role')return r5Bridge(r4CrossRole('solution-architect','ui-ux-designer'),['SYSTEM0'],['UI0'],hops);
+ return r5Bridge(uiTask('L1','legacy',2),['UI0'],['UI1'],hops);
+}
+for(const kind of ['all-roles','cross-role','same-role'])for(const hops of [1,2])for(const late of [false,true])
+ test(`F3-r5-${kind}-${hops}-${late?'ancestor-late':'ordered'}`,
+  'Required professional ancestor across coordination nodes must really precede its consumer',()=>{
+   const x=r5Fixture(kind,hops),source=kind==='all-roles'?'PRODUCT':kind==='cross-role'?'SYSTEM0':'UI0';
+   r5BindProfessionals(x,late?source:undefined);r4Outcome(x,late?'BLOCKED':'READY');
+  });
+test('F3-r5-stage-list-order','Correct runtime path through multiple coordinator nodes survives stage metadata reordering',()=>{
+ const x=r5BindProfessionals(r5Fixture('all-roles',2));
+ for(const order of [[...x.stages].reverse(),[...x.stages.slice(2),...x.stages.slice(0,2)],
+  [...x.stages].sort((a,b)=>a.id.localeCompare(b.id))]){x.stages=order;refresh(x);r4Outcome(x,'READY');}
+});
+test('F3-r5-nonformal-compatible','Nonformal coordination stages acquire no new runtime binding obligation',()=>{
+ const x=r5BindProfessionals(r5Fixture('all-roles',2),'PRODUCT');
+ delete x.orchestration_validation_required;delete x.orchestration_chain;
+ for(const s of x.stages)delete s.orchestration_binding;r4Outcome(x,'READY');
+});
+for(const late of [undefined,'UI0','UI1'])test(`F3-r5-all-ancestors-${late??'ordered'}`,
+ 'A branching coordination dependency preserves every reachable professional ancestor',()=>{
+  const x=r5Bridge(uiTask('L1','legacy',3),['UI0','UI1'],['UI2'],2);
+  r5BindProfessionals(x,late);r4Outcome(x,late?'BLOCKED':'READY');
+ });
+test('F3-r5-ancestor-binding-missing','A professional prerequisite hidden behind a coordinator still needs its actual binding',()=>{
+ const x=r5BindProfessionals(r5Fixture('all-roles',2));r4Outcome(x,'READY');
+ delete x.stages.find(s=>s.id==='PRODUCT').orchestration_binding;r4Outcome(x,'BLOCKED');
+});
+
 const failed=cases.filter(t=>t.status==='FAIL');
 console.log(JSON.stringify({suite:'Issue18 independent Design Gate integrity / G01 regression',
  status:failed.length?'FAIL':'PASS',count:cases.length,passed:cases.length-failed.length,failed:failed.length,
