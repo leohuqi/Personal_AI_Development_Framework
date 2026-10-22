@@ -403,6 +403,86 @@ for(const [name,mutate] of stagedMutations)negative(`F4-staged-${name}`,'Staged 
 for(const level of ['L1','L2'])negative(`F4-staged-downgrade-${level}`,'Lower level cannot hide required frontend prototype',
  ()=>uiTask('L3','staged'),x=>{x.ui_level=level;delete x.frontend_stack_ref;delete x.frontend_prototype_authorization_ref;delete x.stages[0].figma_confirmation;});
 
+// Follow-up to fresh-context Review of 36f1030. The original 236 registered
+// cases above remain unchanged; these fixtures exercise cross-checker inputs
+// that complete artifact coverage alone cannot establish.
+function multipleSystemChain(providerFirst=false){
+ const x=architectures('both',1),support=stage('SUPPORT','solution-architect');
+ x.stages.splice(providerFirst?1:0,0,support);
+ bindChain(x);
+ const chain=x.orchestration_chain.chain;
+ const provider=chain.find(i=>i.handoff.artifact_refs.some(a=>a.kind==='solution-architecture'&&a.ref===x.system_baseline_ref));
+ const module=chain.find(i=>i.dispatch.target_role==='module-architect');
+ if(!module.dispatch.depends_on_dispatch_ids.includes(provider.dispatch.dispatch_id))
+  module.dispatch.depends_on_dispatch_ids.push(provider.dispatch.dispatch_id);
+ return x;
+}
+// Collect both entrances before asserting, so an unfixed Gate cannot short-circuit
+// the recorded G01 result. Keep this separate from the frozen original helpers.
+function followupOutcome(x,expected){
+ const chain=evaluateOrchestrationChain(x.orchestration_chain),gate=evaluateDesignGate(x);
+ const action=evaluateActionPreflight(preflight(x));
+ const actual=JSON.stringify({chain,gate,action});
+ if(expected==='READY'){
+  assert.equal(chain.eligible,true,actual);assert.equal(gate.status,'DESIGN_READY',actual);
+  assert.equal(gate.coding_authorized,true,actual);assert.equal(action.decision,'READY',actual);
+ }else{
+  assert(['BLOCKED','NEEDS_REFINEMENT'].includes(gate.status),actual);
+  assert.equal(gate.coding_authorized,false,actual);assert.equal(action.decision,'BLOCKED',actual);
+ }
+ return {chain,gate,action};
+}
+for(const providerFirst of [false,true])test(`F2-followup-multi-sa-${providerFirst?'provider-first':'support-first'}`,
+ 'Formal multi-SA chain resolves the unique exact baseline provider regardless of SA order',()=>{
+  followupOutcome(multipleSystemChain(providerFirst),'READY');
+ });
+for(const [label,mutate] of [
+ ['missing',x=>x.stages.find(s=>s.agent==='module-architect').depends_on=[]],
+ ['unrelated',x=>x.stages.find(s=>s.agent==='module-architect').depends_on=['SUPPORT']]]){
+ for(const providerFirst of [false,true])test(`F2-followup-provider-dependency-${label}-${providerFirst}`,
+  'Module requires the actual provider stage dependency in either order',()=>{
+   const x=multipleSystemChain(providerFirst);followupOutcome(x,'READY');mutate(x);followupOutcome(x,'BLOCKED');
+ });
+}
+test('F2-followup-dispatch-provider-dependency','Module Dispatch directly depends on actual provider, not only unrelated prior SA',()=>{
+ const x=multipleSystemChain(true);followupOutcome(x,'READY');
+ const provider=x.orchestration_chain.chain.find(i=>i.handoff.artifact_refs.some(a=>a.kind==='solution-architecture'&&a.ref===x.system_baseline_ref));
+ const module=x.orchestration_chain.chain.find(i=>i.dispatch.target_role==='module-architect');
+ module.dispatch.depends_on_dispatch_ids=module.dispatch.depends_on_dispatch_ids.filter(id=>id!==provider.dispatch.dispatch_id);
+ followupOutcome(x,'BLOCKED');
+});
+test('F2-followup-ambiguous-handoff-provider','Two prior SA Handoffs cannot implicitly provide one approved exact baseline',()=>{
+ const x=multipleSystemChain(true);followupOutcome(x,'READY');
+ const chain=x.orchestration_chain.chain;
+ const provider=chain.find(i=>i.handoff.artifact_refs.some(a=>a.kind==='solution-architecture'&&a.ref===x.system_baseline_ref));
+ const support=chain.find(i=>i!==provider&&i.dispatch.target_role==='solution-architect');
+ support.handoff.artifact_refs.push(clone(provider.handoff.artifact_refs.find(a=>a.kind==='solution-architecture')));
+ const actual=followupOutcome(x,'BLOCKED');assert.equal(actual.chain.eligible,false,JSON.stringify(actual));
+});
+for(const [label,factory,field] of [
+ ['module',()=>bindChain(architectures('module',1)),'system_baseline_ref'],
+ ['ui',()=>bindChain(uiTask()),'ui_profile_ref']]){
+ test(`F3-followup-${label}-current-input`,'Formal role Dispatch consumes the current approved exact input',()=>{
+  followupOutcome(factory(),'READY');
+ });
+ for(const drift of ['old-sha','missing'])test(`F3-followup-${label}-${drift}`,
+  'Current Task and exact Handoff cannot conceal a stale or absent dispatched design input',()=>{
+   const x=factory();followupOutcome(x,'READY');
+   const d=x.orchestration_chain.chain[0].dispatch;
+   if(drift==='missing')delete d[field];else d[field]=d[field].replace(A,B);
+   followupOutcome(x,'BLOCKED');
+  });
+}
+for(const [label,mutate] of [
+ ['missing-status',d=>delete d.system_baseline_status],
+ ['unapproved-status',d=>d.system_baseline_status='PROPOSED'],
+ ['missing-approval',d=>delete d.system_baseline_owner_approval_ref],
+ ['different-approval',d=>d.system_baseline_owner_approval_ref=link('unrelated-system-approval')]
+])test(`F3-followup-module-${label}`,'Formal Module Dispatch baseline approval inputs match the Gate approval',()=>{
+ const x=bindChain(architectures('module',1));followupOutcome(x,'READY');
+ mutate(x.orchestration_chain.chain[0].dispatch);followupOutcome(x,'BLOCKED');
+});
+
 const failed=cases.filter(t=>t.status==='FAIL');
 console.log(JSON.stringify({suite:'Issue18 independent Design Gate integrity / G01 regression',
  status:failed.length?'FAIL':'PASS',count:cases.length,passed:cases.length-failed.length,failed:failed.length,
