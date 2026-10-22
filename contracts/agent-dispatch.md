@@ -67,6 +67,8 @@ Handoff 不等于批准。both 模式允许评审 PROPOSED SYSTEM 草稿，正�
 
 ## 证据有效性与角色交付
 
+当链作为 Design Gate 的正式编排证据时，还须遵循[当前任务/阶段绑定](design-gate.md#正式编排与当前设计绑定)：链顶层的 context_id/repository/task_contract_ref 绑定 Gate；各 Dispatch.repository 同一仓库，各必需设计阶段以 orchestration_binding 定位唯一 dispatch/execution 和精确任务契约；对应 Handoff 覆盖全部必需产物@SHA。链内部自洽不代表它属于当前任务。独立使用 evaluateOrchestrationChain 的既有结构检查不签发这些跨输入事实。
+
 - Master 与执行会话须不同并有独立佐证；相同 GitHub 登录不证明会话相同或独立。HUMAN_RELAY 记录人工启动证据，RUNTIME_DISPATCH 记录工具返回任务 ID 及完成证据。
 - 四阶段 ID、角色、上下文、Skill/产物版本和时间顺序必须一致；过期 SHA、缺少批准时标记 STALE/BLOCKED，不回写历史 PASS。
 - 合成 fixture 的 URL/ID 只测试元数据，不能证明真实运行、Owner 批准、设计质量或外部工具执行。[只读检查器](../lib/orchestration-evidence.mjs)不能访问或认证运行时。

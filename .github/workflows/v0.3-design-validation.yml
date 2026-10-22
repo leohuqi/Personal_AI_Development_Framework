@@ -51,5 +51,7 @@ jobs:
         run: node tests/v0.3/run-feedback-tests.mjs
       - name: G-01 action preflight and lifecycle regressions
         run: node tests/v0.3/run-preflight-tests.mjs
+      - name: Review, multi-stage, orchestration binding and UI integrity regressions
+        run: node tests/v0.3/run-review-integrity-tests.mjs
       - name: Master-led expense pilot dependency and artifact checks
         run: node tests/v0.3/verify-expense-pilot.mjs

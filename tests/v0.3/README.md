@@ -1,5 +1,11 @@
 # PADF V0.3 — Specialist Agent & Design Gate Validation
 
+## 下一补丁：设计证据完整性回归
+
+`node tests/v0.3/run-review-integrity-tests.mjs` 覆盖所有任务等级已有审查的拒绝与发现、多 SA/Module 顺序不变、任务级 schema/流程集合、正式编排任务与逐阶段精确产物绑定、legacy/staged 的合法 UI 等级和高保真源，以及 G-01 START_CODING 跨入口。包含完整正确输入和缺失/错版本的拒绝对照；全部为合成元数据，不证明真实授权、Figma 或运行时执行。CI执行同一入口。
+
+正式编排旧输入须按[契约](../../contracts/design-gate.md#正式编排与当前设计绑定)补齐 repository/task_contract_ref 与 stage.orchestration_binding。legacy L2/L3 补齐[可编辑高保真源](../../contracts/ui-design.md#三阶段交付等级与证据)；原 L3 正常测试夹具现在显式声明交互源 fidelity=high，而非默认为任意交互源都高保真。既有未开启正式编排验证的任务不新增绑定要求；未满足证据的历史输入应诚实BLOCKED。
+
 ## 下一版：产品成果与共用协议回归
 
 运行 node tests/v0.3/run-product-tests.mjs
@@ -40,7 +46,7 @@ Use an isolated **non-PQA** sample Feature and approved sandbox with a stable is
 Record external plugin revision, actual artifact permalinks, screenshot/browser validation, Coder authorization, risk decisions, reviewed SHA, PASS/FAIL/BLOCKED/NOT RUN and session boundary evidence. Missing external tool, project design profile or interactive prototype means BLOCKED/NOT RUN, not PASS.
 
 ## Rollout policy
-当前版本为 v0.3.2，参见[版本说明](../../docs/releases/v0.3.2.md)。V0.3 的原始有边界设计试点已完成 Owner 验收，历史证据保持原样；各项目采用新版本仍须明确批准并固定 tag/SHA。历史发布标签不可变，框架升级不自动改变 PQA 的接入或授权状态。
+当前正式版本为 v0.3.3，参见[版本说明](../../docs/releases/v0.3.3.md)。V0.3 的原始有边界设计试点已完成 Owner 验收，历史证据保持原样；各项目采用新版本仍须明确批准并固定 tag/SHA。历史发布标签不可变，框架升级不自动改变 PQA 的接入或授权状态。
 
 
 ## New V0.3 Master orchestration + Skill quality tests

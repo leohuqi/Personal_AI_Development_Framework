@@ -28,6 +28,8 @@ Schema: `padf.ui-design/v1`。UI/UX Designer 负责内容，Master 路由与协�
 
 L1 只要求概念；staged L2 需要真实 Figma；staged L3 需要完整确认→原型授权→运行前端证据。复杂交互、重大 UX 重设计或 Owner 指定选择 L3。未启用 staged 的既有 L2 保留可编辑 Figma 或版本化前端设计源，既有 L3 保留其已选工具/可运行原型契约；不把兼容描述当作新复杂任务的工具替代许可。
 
+路由需要 UI 时，无论 legacy 或 staged，`ui_level` 都必须明确为 L1/L2/L3。legacy 的 L2/L3 也必须有固定版本高保真可编辑源：验证通过的 `figma-design`（tool/链接/设计版本沿用下述字段），或 `ui-prototype` 且 `editable_source: true`；同一可运行交互源也可用 `interactive-prototype`、`fidelity: high`、`editable_source: true` 同时表达高保真与交互。L3 仍另需真实交互测试通过；概念图或只有可点击声明不足。缺源字段会阻断，这是修复宽松校验后的补证要求，不能以旧格式兼容为由降级。staged 的 Figma/确认/前端栈和原型授权要求保持原样。
+
 ### staged 增量证据字段
 
 沿用 `padf.ui-design/v1`，新增证据不改已有状态、原型等级和清单含义：
