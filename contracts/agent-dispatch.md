@@ -63,6 +63,8 @@ Handoff 不等于批准。both 模式允许评审 PROPOSED SYSTEM 草稿，正�
 
 同一链包含 SA 时，Module 按 `system_baseline_ref` 在整条链的 SA Handoff 中寻找唯一的精确 `solution-architecture` 来源，该来源须先于 Module 执行，并在 `depends_on_dispatch_ids` 中被直接依赖。不得任取第一位 SA，也不能将稍后才完成的系统设计视为链外已有基线；来源缺失、重复、晚于 Module 或未建立实际来源依赖时阻断。纯 module 链可复用链外已批准基线，正式 Gate 另核对 Dispatch 与当前任务所用基线、批准引用及 UI Profile，不能用旧输入执行产生的声明替代当前输入。
 
+用链证明正式设计完成时，所有必需专业阶段间已有的阶段依赖，都须在实际绑定 Dispatch 的先后顺序和直接/传递依赖上成立。不能把产品定义或其他前序专业工作放到实际执行最后，再凭最终 COMPLETED 标签补认。合法的运行时传递依赖无需重复直接列出全部先祖；both 的精确 SYSTEM 来源直接依赖另按上一段核对。
+
 ## 成果与记录的比例
 
 分派先说明问题、预期主成果与内容标准，不以完成审计字段作为交付目标。共用[工作方法](../workflow/role-work-method.md)与[协议](../workflow/agent-protocol.md)按需加载；最小真实执行证据仍保留在附录。同一有效授权内的研究、返工、接续不逐次新增批准；重大决定与未授权业务编码等仍阻断。

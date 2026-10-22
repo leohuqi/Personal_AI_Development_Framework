@@ -526,6 +526,93 @@ test('F2-r3-module-only-external-baseline','A pure Module-only formal task can s
  followupOutcome(x,'READY');
 });
 
+// R4: every declared required professional-stage dependency must be reflected
+// by actual prior execution and a direct or transitive Dispatch path. Capture
+// both public entrances even if malformed formal evidence makes one throw.
+function r4Outcome(x,expected){
+ const actual={};
+ for(const [name,evaluate] of [['gate',()=>evaluateDesignGate(x)],['action',()=>evaluateActionPreflight(preflight(x))]]){
+  try{actual[name]=evaluate();}catch(error){actual[name]={threw:error.name,message:error.message};}
+ }
+ const message=JSON.stringify(actual);
+ assert.equal(actual.gate.threw,undefined,message);assert.equal(actual.action.threw,undefined,message);
+ assert.equal(actual.gate.status,expected==='READY'?'DESIGN_READY':'BLOCKED',message);
+ assert.equal(actual.gate.coding_authorized,expected==='READY',message);
+ assert.equal(actual.action.decision,expected,message);
+ return actual;
+}
+function r4CrossRole(source,target){
+ const roles=[source,target];
+ const x=roles.includes('module-architect')?architectures('module',1):
+  roles.includes('solution-architect')?architectures('system',1):base();
+ const stages=new Map(x.stages.map(s=>[s.agent,s]));
+ if(roles.includes('ui-ux-designer')){
+  const u=uiTask();for(const [k,v] of Object.entries(u))if(k.startsWith('ui_'))x[k]=v;
+  x.impacts.push('ui');stages.set('ui-ux-designer',clone(u.stages[0]));
+ }
+ if(roles.includes('product-analyst')){
+  x.product_scope='define';const pa=stage('PRODUCT','product-analyst');pa.artifacts[1].ref=x.feature_spec_ref;
+  stages.set('product-analyst',pa);
+ }
+ x.stages=roles.map(role=>stages.get(role));x.stages[1].depends_on=[x.stages[0].id];return refresh(x);
+}
+for(const [source,target] of [
+ ['product-analyst','solution-architect'],['product-analyst','module-architect'],['product-analyst','ui-ux-designer'],
+ ['solution-architect','ui-ux-designer'],['ui-ux-designer','solution-architect'],
+ ['module-architect','ui-ux-designer'],['ui-ux-designer','module-architect']]){
+ test(`F3-r4-${source}-to-${target}-ordered`,'Declared cross-role prerequisite executes before its consumer',()=>{
+  r4Outcome(bindChain(r4CrossRole(source,target)),'READY');
+ });
+ test(`F3-r4-${source}-to-${target}-reversed`,'Declared cross-role prerequisite cannot execute after its consumer',()=>{
+  const x=r4CrossRole(source,target);x.stages.reverse();bindChain(x);r4Outcome(x,'BLOCKED');
+ });
+}
+function r4SameRole(role){
+ const x=role==='ui-ux-designer'?uiTask('L1','legacy',2):role==='solution-architect'?architectures('system',2):
+  role==='module-architect'?architectures('module',2):base();
+ if(role==='product-analyst'){
+  x.product_scope='define';x.stages=[stage('PA0',role),stage('PA1',role)];
+  for(const s of x.stages)s.artifacts.find(a=>a.type==='feature-specification').ref=x.feature_spec_ref;
+ }
+ x.stages[1].depends_on=[x.stages[0].id];return refresh(x);
+}
+for(const role of Object.keys(types))for(const reversed of [false,true])test(`F3-r4-${role}-same-role-${reversed}`,
+ 'Two same-role stages retain their actual declared prerequisite direction',()=>{
+  const x=r4SameRole(role);if(reversed)x.stages.reverse();bindChain(x);r4Outcome(x,reversed?'BLOCKED':'READY');
+ });
+test('F3-r4-all-roles-transitive-correct','PA prerequisite may reach UI through intervening SA and Module Dispatches',()=>{
+ const x=formal();
+ assert.deepEqual(x.stages.at(-1).depends_on,['PRODUCT']);
+ assert.deepEqual(x.orchestration_chain.chain.at(-1).dispatch.depends_on_dispatch_ids,[x.orchestration_chain.chain[2].dispatch.dispatch_id]);
+ r4Outcome(x,'READY');
+});
+test('F3-r4-product-last','Complete Task/ref bindings cannot conceal PA execution after all dependent designs',()=>{
+ const x=formal(),pa=x.stages.shift();x.stages.push(pa);bindChain(x);r4Outcome(x,'BLOCKED');
+});
+test('F3-r4-transitive-same-role-and-metadata-order','Same-role declared dependency accepts a transitive runtime path in every stage list order',()=>{
+ const x=uiTask('L1','legacy',3);x.stages[1].depends_on=[x.stages[0].id];x.stages[2].depends_on=[x.stages[0].id];bindChain(x);
+ for(const order of permutations(x.stages)){x.stages=order;refresh(x);r4Outcome(x,'READY');}
+});
+test('F3-r4-unreachable-dependency','Earlier timestamp alone cannot replace a reachable declared Dispatch dependency',()=>{
+ const x=uiTask('L1','legacy',3);x.stages[1].depends_on=[x.stages[0].id];x.stages[2].depends_on=[x.stages[0].id];bindChain(x);
+ r4Outcome(x,'READY');x.orchestration_chain.chain[1].dispatch.depends_on_dispatch_ids=[];
+ r4Outcome(x,'BLOCKED');
+});
+for(const [label,value] of [
+ ['missing',undefined],['null',null],['string','missing formal evidence'],['number',42],
+ ['empty-array',[]],['empty-object',{}],['empty-chain',{chain:[]}]])test(`F3-r4-formal-chain-${label}`,
+ 'Missing or malformed formal chain reports BLOCKED at both public entrances without throwing',()=>{
+  const x=formal();r4Outcome(x,'READY');
+  if(value===undefined)delete x.orchestration_chain;else x.orchestration_chain=clone(value);
+  r4Outcome(x,'BLOCKED');
+ });
+for(const [label,mutate] of [
+ ['missing',s=>delete s.orchestration_binding],['null',s=>s.orchestration_binding=null],
+ ['missing-dispatch',s=>delete s.orchestration_binding.dispatch_id]])test(`F3-r4-prerequisite-binding-${label}`,
+ 'A required prerequisite without a usable execution binding reports BLOCKED without throwing',()=>{
+  const x=formal();r4Outcome(x,'READY');mutate(x.stages.find(s=>s.id==='PRODUCT'));r4Outcome(x,'BLOCKED');
+ });
+
 const failed=cases.filter(t=>t.status==='FAIL');
 console.log(JSON.stringify({suite:'Issue18 independent Design Gate integrity / G01 regression',
  status:failed.length?'FAIL':'PASS',count:cases.length,passed:cases.length-failed.length,failed:failed.length,
