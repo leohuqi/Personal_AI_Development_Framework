@@ -61,7 +61,7 @@ decision_approvals: []
 
 Handoff 不等于批准。both 模式允许评审 PROPOSED SYSTEM 草稿，正式 MODULE 必须匹配 Owner 已批准的 SYSTEM 版本。L/XL 必须有最新独立 DESIGN Review；编码授权仍独立。
 
-同一链包含多个 SA 时，Module 按 `system_baseline_ref` 在所有先前 SA 的 Handoff 中寻找唯一的精确 `solution-architecture` 来源，并在 `depends_on_dispatch_ids` 中直接依赖该来源。不得任取第一位 SA；来源缺失、重复或未建立实际来源依赖时阻断。纯 module 链可复用链外已批准基线，正式 Gate 另核对 Dispatch 与当前任务所用基线、批准引用及 UI Profile，不能用旧输入执行产生的声明替代当前输入。
+同一链包含 SA 时，Module 按 `system_baseline_ref` 在整条链的 SA Handoff 中寻找唯一的精确 `solution-architecture` 来源，该来源须先于 Module 执行，并在 `depends_on_dispatch_ids` 中被直接依赖。不得任取第一位 SA，也不能将稍后才完成的系统设计视为链外已有基线；来源缺失、重复、晚于 Module 或未建立实际来源依赖时阻断。纯 module 链可复用链外已批准基线，正式 Gate 另核对 Dispatch 与当前任务所用基线、批准引用及 UI Profile，不能用旧输入执行产生的声明替代当前输入。
 
 ## 成果与记录的比例
 

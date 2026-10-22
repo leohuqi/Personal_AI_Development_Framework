@@ -95,6 +95,7 @@ For a Master-led *cross-session validation pilot*, require the complete [Agent D
 - 顶层 Gate 与 `orchestration_chain` 的 `context_id`、`repository`、`task_contract_ref` 完全相同；repository 非空，Task Contract 为可引用的真实来源。
 - 每个必需 PA/SA/Module/UI 阶段提供 `orchestration_binding: {dispatch_id, execution_id, task_contract_ref?}`。默认使用 Gate 的 Task Contract；确有角色专属契约时显式指定精确引用，对应 Dispatch 必须一致。链的每个 Dispatch 同属当前 repository。
 - Module Dispatch 的 `system_baseline_ref`、`system_baseline_status`、`system_baseline_owner_approval_ref` 必须匹配当前 Gate 的基线、状态与批准引用，且基线同时匹配该 Module 阶段。UI Dispatch 的 `ui_profile_ref` 必须同时匹配当前 Gate 和 UI 阶段的 `profile_ref`；创建 Profile 的授权不能替代最终获批 Profile 的输入绑定。
+- both 中实际提供全局基线的唯一 SA 阶段，其绑定 Dispatch 必须与 Module Dispatch 的实际来源依赖相同，且在链中先于 Module；阶段图上的 `depends_on` 不能代替实际执行顺序和来源依赖。
 - binding 唯一定位链的一项，dispatch/execution ID 与角色匹配；同一 Dispatch 不能代替两个必需阶段。允许实际运行时会话接续，但不得编造新运行 UUID。
 - 每个绑定阶段必须实际 COMPLETED，全部必需 artifact.ref（含准确 SHA）被该项 Handoff.artifact_refs 覆盖。角色齐全、链内部自洽或 Owner 已读链接都不能替代任务与产物匹配。
 

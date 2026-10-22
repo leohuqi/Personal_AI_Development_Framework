@@ -483,6 +483,49 @@ for(const [label,mutate] of [
  mutate(x.orchestration_chain.chain[0].dispatch);followupOutcome(x,'BLOCKED');
 });
 
+// R3: a declared SYSTEM -> Module edge must agree with the bound runtime chain.
+// Keep pure Module-only reuse of a genuinely external approved baseline legal.
+test('F2-r3-system-before-module','Bound SYSTEM completion precedes Module execution on the formal both path',()=>{
+ followupOutcome(bindChain(architectures('both',1)),'READY');
+});
+test('F2-r3-module-before-system','A later in-task SYSTEM provider cannot be treated as an external approved baseline',()=>{
+ const x=architectures('both',1);x.stages.reverse();bindChain(x);
+ assert.deepEqual(x.stages.find(s=>s.agent==='module-architect').depends_on,['SYSTEM']);
+ assert.equal(x.orchestration_chain.chain[0].dispatch.target_role,'module-architect');
+ followupOutcome(x,'BLOCKED');
+});
+test('F2-r3-stage-array-order-independent','Changing stage metadata order does not invalidate a correct chronological runtime chain',()=>{
+ const x=bindChain(architectures('both',1));x.stages.reverse();refresh(x);
+ followupOutcome(x,'READY');
+});
+test('F2-r3-forward-dependency-id','A forward Dispatch ID cannot prove the provider already completed',()=>{
+ const x=architectures('both',1);x.stages.reverse();bindChain(x);
+ x.orchestration_chain.chain[0].dispatch.depends_on_dispatch_ids=[x.orchestration_chain.chain[1].dispatch.dispatch_id];
+ followupOutcome(x,'BLOCKED');
+});
+test('F2-r3-wrong-runtime-provider','A prior unrelated SA Dispatch cannot stand in for the stage-bound SYSTEM source',()=>{
+ const x=multipleSystemChain(true);followupOutcome(x,'READY');
+ const provider=x.stages.find(s=>s.id==='SYSTEM').orchestration_binding.dispatch_id;
+ const module=x.orchestration_chain.chain.find(i=>i.dispatch.target_role==='module-architect');
+ module.dispatch.depends_on_dispatch_ids=module.dispatch.depends_on_dispatch_ids.filter(id=>id!==provider);
+ followupOutcome(x,'BLOCKED');
+});
+test('F2-r3-wrong-stage-provider','A correct runtime chain cannot repair a Module stage declaring the wrong SYSTEM source',()=>{
+ const x=multipleSystemChain(true);followupOutcome(x,'READY');
+ x.stages.find(s=>s.agent==='module-architect').depends_on=['SUPPORT'];
+ followupOutcome(x,'BLOCKED');
+});
+test('F2-r3-provider-after-module-with-support','An unrelated earlier SA does not make the later actual provider optional',()=>{
+ const x=architectures('both',1),support=stage('SUPPORT','solution-architect');
+ x.stages=[support,x.stages[1],x.stages[0]];bindChain(x);
+ followupOutcome(x,'BLOCKED');
+});
+test('F2-r3-module-only-external-baseline','A pure Module-only formal task can still consume its approved external baseline',()=>{
+ const x=bindChain(architectures('module',1));
+ assert.equal(x.stages.some(s=>s.agent==='solution-architect'),false);
+ followupOutcome(x,'READY');
+});
+
 const failed=cases.filter(t=>t.status==='FAIL');
 console.log(JSON.stringify({suite:'Issue18 independent Design Gate integrity / G01 regression',
  status:failed.length?'FAIL':'PASS',count:cases.length,passed:cases.length-failed.length,failed:failed.length,
