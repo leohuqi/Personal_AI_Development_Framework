@@ -25,6 +25,8 @@ Schema: `padf.design-gate/v1`. **Approved governance model C**: Master manages t
 阶段存在后，仍须继续验证其依赖、完成状态、UI Profile 版本、设计规格、视觉产物，以及 L3 所需的可运行交互原型；不能仅凭角色名称认定通过。有多个必需 UI 阶段时逐个验证这些条件，不能只检查首个阶段；可选/N/A 阶段不替代必需阶段。未路由 UI 的任务不新增 UI 阶段要求。
 
 ## Risk-triggered review
+- 风险分类只决定独立审查是否必须开展。只要提供了 `design_review`，就必须校验其 DESIGN 模式、独立性、证据、精确产物覆盖和发现结构；`REQUEST_CHANGES`、未修复 P0/P1、未获明确条件接受的 P2 在所有 S/M/L/XL 上阻断。低风险跳过理由不能覆盖已有拒绝或发现；未提供审查时才适用有理由的低风险跳过。修复后的发现、合法的 P2 接受与已知 P3 按原政策处理。
+- 已提供审查的 `findings` 必须为数组；无发现显式写 `[]`。每项须有 P0/P1/P2/P3 严重度和非空状态，畸形或未声明的发现清单不能解释为“没有发现”。
 - 判定同时读取 `impacts` 与 `risk_flags`：任一字段出现已知强制风险类别，都不能通过另一个字段为空或填写 review-skip 理由取消独立审查。适用类别为 `auth`、`permissions`、`privacy`、`security`、`destructive-migration`、`risky-schema-migration`、`breaking-api`、`critical-business-rule`、`critical-workflow`、`design-system`、`shared-component`、`integration`、`concurrency`、`cross-module`、`financial-data`。
 - **L/XL**: independent Design Review is **mandatory** even when the design looks low-risk.
 - **S/M**: Master classifies. Must trigger independent Design Review when authentication/permissions/privacy, risky or destructive schema migration, breaking API, critical financial/business rules/workflow, shared component/design-system baseline, serious integration/security/concurrency or cross-module behavior is touched.
@@ -79,3 +81,24 @@ For a Master-led *cross-session validation pilot*, require the complete [Agent D
 有两阶段Module且staged L2/L3时，Module的`ui_design_ref`匹配已确认Figma清单；实施细化消费中期源，无须依赖最终前端UI阶段完成，避免循环。阶段依赖仍保留必要SA批准及PA输入，所有来源变更重核受影响细化/原型/审查。原型制作授权不等于业务编码、合并或生产授权。
 
 所有必需Module均检查批准系统基线匹配、必需模块产物及图工具版本，不能只检查首个或依赖清单顺序。staged任务若提交必需`interactive-prototype`，须选择L3并满足完整确认/原型授权/前端证据；不能把等级降为L1/L2隐藏前端交付，中期Figma点击仍记`figma-design`。
+
+## 多阶段与任务级产物范围
+
+所有必需 Solution Architect 和 Module Architect 阶段逐个检查角色必需产物和图工具版本。当前输入仍只有一个获批 `system_baseline_ref`；both 中每个 Module 必须直接依赖唯一一个实际提供该精确系统基线的 SA 阶段，其他系统阶段不得被默认为来源，重复来源不明确时阻断。调换清单顺序不能改变结论。
+
+顶层 database/workflow 是任务级影响，从所有必需架构阶段的产物集合核验：database 需要 `database-schema` 与 `database-schema-diagram`，workflow 需要 `workflow-diagram`（图形证据沿用固定 diagram-design 版本、渲染和产物验证规则）。不要求无关模块复制同一套 SQL 或流程图。具体所有权及图与源的一致性仍由项目契约、consistency_checks 和实际 Review 核验，不以“首个模块”决定适用范围。
+
+## 正式编排与当前设计绑定
+
+仅在 `orchestration_validation_required: true` 时追加以下严格绑定；缺字段须补证，不以历史未绑定格式宣称当前任务执行完成：
+
+- 顶层 Gate 与 `orchestration_chain` 的 `context_id`、`repository`、`task_contract_ref` 完全相同；repository 非空，Task Contract 为可引用的真实来源。
+- 每个必需 PA/SA/Module/UI 阶段提供 `orchestration_binding: {dispatch_id, execution_id, task_contract_ref?}`。默认使用 Gate 的 Task Contract；确有角色专属契约时显式指定精确引用，对应 Dispatch 必须一致。链的每个 Dispatch 同属当前 repository。
+- Module Dispatch 的 `system_baseline_ref`、`system_baseline_status`、`system_baseline_owner_approval_ref` 必须匹配当前 Gate 的基线、状态与批准引用，且基线同时匹配该 Module 阶段。UI Dispatch 的 `ui_profile_ref` 必须同时匹配当前 Gate 和 UI 阶段的 `profile_ref`；创建 Profile 的授权不能替代最终获批 Profile 的输入绑定。
+- both 中实际提供全局基线的唯一 SA 阶段，其绑定 Dispatch 必须与 Module Dispatch 的实际来源依赖相同，且在链中先于 Module；阶段图上的 `depends_on` 不能代替实际执行顺序和来源依赖。
+- 所有必需 PA/SA/Module/UI 阶段间已声明的 `depends_on` 均映射到各自绑定的实际 Dispatch：前序阶段在执行链中必须真实先行，并通过直接或传递 Dispatch 依赖连接。产品定义、跨专业阶段及同角色多阶段适用同一规则；不因最终状态都 COMPLETED 就追认倒置执行。一般依赖允许经中间阶段传递，both 基线来源继续要求上述直接依赖。仅调换阶段清单顺序不改变结论。
+- 阶段图的依赖按完整可达路径核对：经过 Master 协调或其他无专业绑定的必需节点时，继续查找其专业祖先，不能停止于直接父节点。协调节点无需伪造专业 Execution；可达专业祖先仍须真实先行并在 Dispatch 依赖中可达。
+- binding 唯一定位链的一项，dispatch/execution ID 与角色匹配；同一 Dispatch 不能代替两个必需阶段。允许实际运行时会话接续，但不得编造新运行 UUID。
+- 每个绑定阶段必须实际 COMPLETED，全部必需 artifact.ref（含准确 SHA）被该项 Handoff.artifact_refs 覆盖。角色齐全、链内部自洽或 Owner 已读链接都不能替代任务与产物匹配。
+
+这只检查调用方已核验元数据的交叉一致性，不认证链接、Owner 或远端运行时；已有真实 Execution/Handoff、授权与源核验仍不可省略。G-01 START_CODING 重新调用此 Gate，不能因外层 findings 为空而忽略内层已有拒绝/发现。

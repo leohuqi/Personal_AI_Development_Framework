@@ -6,7 +6,7 @@ const ref=(p,s=A)=>p+'@'+s;
 const artifact=(p,type,rev=A)=>({type,ref:ref(p,rev),source_revision:rev,current_revision:rev,verified:true,
  evidence_ref:'https://github.com/example/repo/issues/1#artifact-review',
  ...(type.endsWith('-diagram')?{generator:'diagram-design',generator_sha:C,render_status:'PASS'}:{}),
- ...(type==='interactive-prototype'?{interaction_test_status:'PASS',editable_source:true}:{})
+ ...(type==='interactive-prototype'?{interaction_test_status:'PASS',editable_source:true,fidelity:'high'}:{})
 });
 const SYSTEM_BASELINE=ref('docs/SYSTEM.md');
 const stage=(id,agent,deps=[],revision=A)=>{

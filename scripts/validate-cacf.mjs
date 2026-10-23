@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const required = [
+  "tests/v0.3/run-review-integrity-tests.mjs",
   ".agents/skills/product-analyst/SKILL.md",
   "contracts/product-definition.md",
   "contracts/role-deliverables.md",
