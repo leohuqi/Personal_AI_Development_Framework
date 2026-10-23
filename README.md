@@ -1,14 +1,18 @@
 # 个人 AI 开发框架（PADF）
 
-**当前版本：v0.3.3（V0.3 系列）。** 系统级 Solution Architect、模块级 Module Architect 与 UI/UX Designer 分工协作，按任务风险进入 Design Gate；继续沿用 V0.2 的共享上下文与通信契约。参见 [v0.3.3 版本说明](docs/releases/v0.3.3.md)与 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.3)。
+**当前版本：v0.3.4（V0.3 系列）。** 系统级 Solution Architect、模块级 Module Architect 与 UI/UX Designer 分工协作，按任务风险进入 Design Gate；继续沿用 V0.2 的共享上下文与通信契约。参见 [v0.3.4 版本说明](docs/releases/v0.3.4.md)与 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.4)。
 
 PADF 定义由 Owner 决策、Agent 执行的增量软件开发流程。每个应用维护自己的 PRD、架构、UX 基线、功能目录、源码、AGENTS.md 与 CI；框架可供不同项目复用。
+
+## v0.3.4：设计证据与执行依赖完整性
+
+修复所有规模已知 Review 拒绝/严重发现漏检，逐项核对全部必需架构阶段；正式编排绑定当前任务、精确产物和获批基线/Profile，并按完整阶段依赖图核对实际先行与运行时依赖。legacy/staged UI 的等级、高保真及交互证据保持一致，G-01 编码门禁继承阻断。旧正式输入与 legacy L2/L3 的补证要求见[v0.3.4 接入说明](docs/releases/v0.3.4.md#接入与补证)。修复不自动升级其他项目或授予操作权限。
 
 ## v0.3.2：批准范围内的持续分派
 
 Master 复用有效 Owner 授权与精确 Task Contract，优先调用可用真实 Agent 运行时，无需逐次重新批准；每次启动仍核对范围、环境、角色/动作、必要决策和依赖，并保留 Dispatch、工具执行 ID、Handoff 与协调记录。越界、授权撤销、必要批准缺失或未授权编码等操作仍阻断。重大设计决策、业务编码、合并、发布、生产部署、破坏性操作与最终验收保留各自授权门禁，参见[审批策略](governance/approval-policy.md)和[Dispatch 契约](contracts/agent-dispatch.md)。
 
-## 下一版工作内容：产品定义、完整方案与整体质量
+## v0.3.3：产品定义、完整方案与整体质量
 
 v0.3.3 包含以下能力：PA负责High Level Specs/Catalog；SA技术初评、五级实现复杂度和完整系统方案；Master结合功能关系规划milestone/iteration并协调Handoff；Module Designer结合SA与已确认UI细化实施级Feature Spec。UI按概念图→Figma设计/原型确认→获授权前端高保真，QA交Test Cases与Test Results；Context Coordinator是共享恢复能力，进度归Master；已有明确规格与局部改动直接复用。
 
@@ -121,6 +125,8 @@ node tests/v0.3/run-orchestration-tests.mjs
 node tests/v0.3/run-skill-quality-tests.mjs
 node tests/v0.3/run-product-tests.mjs
 node tests/v0.3/run-feedback-tests.mjs
+node tests/v0.3/run-preflight-tests.mjs
+node tests/v0.3/run-review-integrity-tests.mjs
 node tests/v0.3/verify-expense-pilot.mjs
 ```
 
