@@ -2,6 +2,8 @@
 
 **当前版本：v0.3.4（V0.3 系列）。** 系统级 Solution Architect、模块级 Module Architect 与 UI/UX Designer 分工协作，按任务风险进入 Design Gate；继续沿用 V0.2 的共享上下文与通信契约。参见 [v0.3.4 版本说明](docs/releases/v0.3.4.md)与 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.4)。
 
+[完整更新历史](CHANGELOG.md)汇总各正式版本及 V0.1 历史基线；发布后同步维护，详细证据保留在各版本说明和 Release 中。
+
 PADF 定义由 Owner 决策、Agent 执行的增量软件开发流程。每个应用维护自己的 PRD、架构、UX 基线、功能目录、源码、AGENTS.md 与 CI；框架可供不同项目复用。
 
 ## v0.3.4：设计证据与执行依赖完整性
