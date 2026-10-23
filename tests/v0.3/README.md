@@ -46,7 +46,7 @@ Use an isolated **non-PQA** sample Feature and approved sandbox with a stable is
 Record external plugin revision, actual artifact permalinks, screenshot/browser validation, Coder authorization, risk decisions, reviewed SHA, PASS/FAIL/BLOCKED/NOT RUN and session boundary evidence. Missing external tool, project design profile or interactive prototype means BLOCKED/NOT RUN, not PASS.
 
 ## Rollout policy
-当前正式版本为 v0.3.3，参见[版本说明](../../docs/releases/v0.3.3.md)。V0.3 的原始有边界设计试点已完成 Owner 验收，历史证据保持原样；各项目采用新版本仍须明确批准并固定 tag/SHA。历史发布标签不可变，框架升级不自动改变 PQA 的接入或授权状态。
+当前正式版本为 v0.3.4，参见[版本说明](../../docs/releases/v0.3.4.md)。V0.3 的原始有边界设计试点已完成 Owner 验收，历史证据保持原样；各项目采用新版本仍须明确批准并固定 tag/SHA。历史发布标签不可变，框架升级不自动改变 PQA 的接入或授权状态。
 
 
 ## New V0.3 Master orchestration + Skill quality tests
