@@ -1,5 +1,7 @@
 # Delivery Report — Template
 
+先用[阶段短卡片](../templates/stage-delivery.md)给人说明交付结果、推荐、重要风险和需要的决定。以下是执行者按角色/实际影响维护的证据视图，不是人人每次都填的全表；已存在的测试、交接、设计和批准只引用一次。一个记录可承载多个部分，必要事实和精确版本仍须可核验，未测/未批准不能补成通过。
+
 ## Identity
 - Linear issue:
 - Original Feature ID:

@@ -2,6 +2,12 @@
 
 首次发送消息、真实分派、交接或恢复前，必须读取本文件及对应契约的必填项；未读取不得凭记忆自由填写。协议用于已获授权的工作，不增加角色或审批轮次。简单同角色任务不为留痕创建无意义消息；实质决定、跨角色交接和真实执行必须可核验。
 
+## 最小记录先行
+
+Task Contract 默认写[六项任务信息](../contracts/task-contract.md)，Handoff 默认回答[六个交接问题](../contracts/agent-handoff.md)。已有准确版本/批准/测试直接引用一次；同一持久记录可包含主成果、HANDOFF envelope、交接正文及所需检查点，不重复复制正文。正式 schema、唯一身份、关联/状态、真实来源和执行先后仍按原契约保留；正文变短不等于机器必需字段可省略。
+
+同角色普通进度不创建新交接；责任/会话切换、实质决定和真实跨角色执行才保留相应记录。人只核对内容和决定，Agent 整理机器字段；缺失事实写缺失，不用生成器补造批准、ACK 或执行。小团队真人责任见[协作约定](small-team-collaboration.md)。
+
 ## 消息（Agent Message）
 
 以[消息契约](../contracts/agent-message.md)为唯一语义来源。共用[最小 YAML 模板](../templates/agent-message.yaml)集中维护，不在九个 Skill 中复制。使用 `node scripts/create-agent-message.mjs <input.json>` 可生成 schema、唯一 message/thread ID、时间和初始状态；输出只是 DRAFT / NOT_PERSISTED，工具不发送、不授予权限或认证来源。

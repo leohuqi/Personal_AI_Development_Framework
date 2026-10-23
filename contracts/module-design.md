@@ -7,6 +7,10 @@ Schema: `padf.module-design/v1`. Owned by **Module Architect** for one bounded m
 - Current module source revision, change scope/N/A choices, existing interfaces/consumers, upstream contract versions, applicable UI Profile/UX references.
 - Document baseline conformity; any new runtime/DB/framework/major boundary proposal is **BLOCKED** pending system-level decision. Module status COMPLETED does **not** authorize that deviation.
 
+## 最小充分设计
+
+复用批准系统和现有包/接口，只展开当前实现必须知道的决定。结构、接口、数据和必要图表可以同文清单定位；不要求为小功能新增多层架构、通用插件或每类产物一份文件。足以实现/测试即停止；已触发的模块产物、系统基线、独立审查和批准仍按原要求核对。
+
 ## 产品规格与实现深度
 
 Module Designer 接收 PA 的 High Level Specs/Catalog、批准 SA 系统方案与适用已确认 Figma，由 Master 协调 Handoff/ACK，然后产出当前阶段实施级 Feature Specs，明确具体行为、接口/数据、规则/状态、重要异常、可修改/撤销/确认/拒绝与可执行验收。产品级关键缺口回 PA/Master，不能要求 PA 先产完整实施设计，也不自行改变业务规则。详见[两阶段规格](product-definition.md)。内部方案按需包含算法、事务/并发、物理表/索引/约束、数据生命周期、迁移兼容/回滚、异常恢复与测试，关键事项不得留给实现时猜测。复用批准规格与系统基线，只补本次变化。

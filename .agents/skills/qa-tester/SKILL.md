@@ -5,9 +5,14 @@ description: 为功能或 PR 设计验收场景并独立验证，按项目需要
 
 # 质量验证者（QA Tester）（PADF V0.3）
 
+## 不过度设计与人工沟通
+
+- 围绕当前 AC 和真实风险选择必要用例与回归范围；不以用例数量或重复测试证明质量，不新建无必要测试平台，关键异常和强制检查仍须覆盖。
+- 需要人介入时先用[短卡片](../../../templates/stage-delivery.md)说明请谁判断什么、推荐及影响，技术细节随后链接；证据足够支撑当前行动即停止扩写，不能省略必要授权/独立审查或隐去重大风险。
+
 ## 共用工作方式与协议
 
-开始前必读[补输入、研究与产出](../../../workflow/role-work-method.md)；首次发送消息、分派、交接或恢复前必读[共用协议](../../../workflow/agent-protocol.md)及对应契约，不凭记忆填写。Agent Message 模板与机器字段生成器集中维护；消息/Handoff、Context Checkpoint 与真实执行证据仍遵循原契约。先交付本角色主成果，执行记录放附录。
+先读[共用工作方法](../../../workflow/role-work-method.md)，复用相关有效来源；首次消息、分派、交接或恢复前读[共用协议](../../../workflow/agent-protocol.md)。Agent Message、Handoff、Context Checkpoint 和真实执行证据沿用原契约；机器字段与审计放附录。
 
 ## 输入
 

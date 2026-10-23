@@ -1,8 +1,10 @@
-# Feature Catalog：<项目 / 产品阶段>
+# Feature Catalog：<项目 / 当前阶段>
 
-PA 维护功能意图/产品优先级；SA 补技术初评；Module 链接实施级规格；Master 维护实施切片与当前进度。同一表逐步丰富，不复制多套。
+同一份索引由 PA 提出价值/优先级，SA 补技术复杂度，Module 链接实施级规格，Master 维护实施顺序；不另建四套表。
 
-| Feature ID | 名称/价值 | High Level Spec@版本 | 优先级 | 关系/依赖 Feature IDs | 技术复杂度 | 理由/风险/待验证 | 置信/评估基线 | 实施级 Spec@版本 | Milestone/Iteration | 当前状态/证据 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Feature ID / 用户结果 | 优先级 / 关系依赖 | 规格链接@版本（高层 / 实施级） | 技术复杂度及理由 / 关键未知 | Milestone/Iteration / 负责人 / 状态 |
+| --- | --- | --- | --- | --- |
 
-复杂度只取 Very High / High / Medium / Low / Very Low，语义见[SA标准](../contracts/solution-architecture.md)；未知填待评估并列出验证动作，不用 Low 冒充结论。该等级是相对复杂度，非优先级、S/M/L/XL治理风险或工期。关系同时说明前置、共享能力、互斥/协同、可并行与集成约束。Master 结合价值、依赖、风险及实际容量编排，不简单按从低到高排序。
+按阶段逐步填写，未完成细化如实标待细化；不要求 PA 先填技术判断。复杂度只取 Very High / High / Medium / Low / Very Low，见[SA 标准](../contracts/solution-architecture.md)，不是优先级、S/M/L/XL 或工期。理由/置信/评估基线和关键验证可在关联技术初评中维护，表内链接即可；未知不能写 Low。
+
+仅列当前规划需要的 Feature，必要关系说明前置、并行或集成约束；远期方向用简短暂缓项和重新评估条件，不展开完整功能树。Master 按价值、关系、风险和容量安排顺序，不机械从低复杂度排到高。

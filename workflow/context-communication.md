@@ -1,5 +1,8 @@
 # Context & Agent Communication Workflow — PADF V0.2 (CACF)
 
+
+普通任务先用[最小 Task Contract](../contracts/task-contract.md)和[六问 Handoff](../contracts/agent-handoff.md)；下文描述正式协议的事实要求，不要求为每步新建一份文档。相关 envelope、交接正文与所需检查点可在同一持久记录中按准确引用维护，真实执行先后与接收确认不省略。
+
 **Specification/Skill integration, not a service, task queue, autonomous agent loop or A2A server.** Agents may communicate through durable Linear/GitHub records without sharing a chat history; recipients must explicitly start/poll through an authorized runtime. Persisted messages do not imply auto-wake, guaranteed delivery or automatic task execution.
 
 ## Model and contracts

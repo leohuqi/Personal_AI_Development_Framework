@@ -2,6 +2,8 @@
 
 Schema：`padf.product-definition/v1`。Product Analyst 负责产品级 High Level Specs 和 Feature Catalog；Module Designer（沿用角色 ID `module-architect`）依据产品输入、SA 与 UI 细化实施级 Feature Specs。Master 协调收件、交接和计划，Owner 保留重大决定。
 
+两阶段是内容责任，不是两份必建文件或强制两次审批。当前意图/验收足以支持 SA/UI 即停止 PA 细化；实施级规格只补执行必须知道的行为和约束。已有有效内容按版本引用，不展开未批准的未来功能；简单任务按下述裁剪路径合并，必要门禁不变。
+
 ## 第一阶段：产品级 High Level Specs（PA）
 
 明确问题、目标用户/场景、核心旅程、价值、范围/排除项、关键业务规则与成功/失败结果、产品约束、重要异常/权限/可撤销边界和业务验收。使用[产品级规格模板](../templates/product-spec.md)或已有 PRD 章节，不要求预先设计 API、表结构、组件或逐字段交互。
