@@ -319,6 +319,107 @@ for(const level of ['L1','L2']){
  });
 }
 
+// CM-21: delivery selection cannot hide a report already supplied for the
+// current task. Each control has a clean primary report AND a second current
+// report. The only negative mutation is one field on that second report.
+// Report placement is fixture setup, never a simultaneous fault mutation.
+const attachedReviewRef=ref('additional-current-impeccable-report.md');
+function additionalReview(level,placement){
+ const x=level==='L3'?fixture():reviewedConcept(level);
+ const target=art(x,level==='L3'?'interactive-prototype':'ui-concept').ref;
+ const report=artifact('impeccable-review','additional-current-impeccable-report.md',{
+  tool:'impeccable',skill_ref:SKILL,target_ref:target,profile_ref:PROFILE,status:'PASS',findings:[],
+  ...(placement==='optional-report'?{required:false}:{})});
+ if(placement==='optional-report')ui(x).artifacts.push(report);
+ else x.stages.push({id:'ADDITIONAL-REVIEW',
+  agent:placement==='optional-ui-stage'?'ui-ux-designer':'master',
+  required:placement==='required-coordination-stage',status:'COMPLETED',depends_on:['UI'],
+  ...(placement==='required-coordination-stage'?{}:{na_reason:'Additional advisory delivery; required UI deliverables remain in UI stage'}),
+  ...(placement==='optional-ui-stage'?{profile_ref:PROFILE}:{}),artifacts:[report]});
+ return refreshReview(x);
+}
+function additionalReport(x){return x.stages.flatMap(s=>s.artifacts??[]).find(a=>a.ref===attachedReviewRef);}
+function bothEntrypoints(x,ready){
+ gate(x,ready);const input=preflight(x);assert.deepEqual(input.findings,[]);
+ action(input,ready);
+}
+for(const level of ['L1','L2','L3'])for(const placement of [
+ 'optional-report','optional-ui-stage','required-coordination-stage','optional-coordination-stage']){
+ const make=()=>additionalReview(level,placement);
+ test('CM-21',`${level}/${placement}: clean additional current report passes both gates`,()=>
+  bothEntrypoints(make(),true));
+ for(const severity of ['P0','P1','P2']){
+  test('CM-21',`${level}/${placement}: additional ${severity} blocks both gates`,()=>{
+   const x=make();additionalReport(x).findings=[{id:'SYNTHETIC-ADDITIONAL-FINDING',severity,status:'OPEN'}];
+   bothEntrypoints(x,false);
+  });
+  test('CM-22',`${level}/${placement}: fixed additional ${severity} passes both gates`,()=>{
+   const x=make();additionalReport(x).findings=[{id:'SYNTHETIC-ADDITIONAL-FINDING',severity,status:'FIXED'}];
+   bothEntrypoints(x,true);
+  });
+ }
+ for(const [name,field,value] of [
+  ['failed conclusion','status','FAIL'],
+  ['unexecuted conclusion','status','NOT_RUN'],
+  ['missing findings','findings',undefined],
+  ['non-array findings','findings',{}],
+  ['malformed severity','findings',[{severity:'P4',status:'OPEN'}]],
+  ['missing finding disposition','findings',[{severity:'P1'}]]
+ ])test('CM-21',`${level}/${placement}: ${name} blocks both gates`,()=>{
+  const x=make();if(value===undefined)delete additionalReport(x)[field];else additionalReport(x)[field]=clone(value);
+  bothEntrypoints(x,false);
+ });
+ test('CM-22',`${level}/${placement}: individually Owner accepted P2 passes both gates`,()=>{
+  const x=make();additionalReport(x).findings=clone(art(acceptedP2(),'impeccable-review').findings);
+  bothEntrypoints(x,true);
+ });
+ for(const field of ['owner_risk_acceptance_ref','acceptance_conditions'])
+  test('CM-22',`${level}/${placement}: P2 acceptance without ${field} blocks both gates`,()=>{
+   const x=make();additionalReport(x).findings=clone(art(acceptedP2(),'impeccable-review').findings);
+   delete additionalReport(x).findings[0][field];bothEntrypoints(x,false);
+  });
+ test('CM-22',`${level}/${placement}: tracked P3 passes both gates`,()=>{
+  const x=make();additionalReport(x).findings=[{id:'SYNTHETIC-ADDITIONAL-P3',severity:'P3',status:'OPEN'}];
+  bothEntrypoints(x,true);
+ });
+}
+
+// CM-23: optional current-target reports retain their evidence/binding checks.
+for(const [name,field,value] of [
+ ['unverified source','verified',false],
+ ['unpinned report source','ref','synthetic/additional-current-impeccable-report.md@main'],
+ ['missing report evidence','evidence_ref',undefined],
+ ['wrong review tool','tool','other-tool'],
+ ['another Profile','profile_ref',ref('different-profile.md')],
+ ['another Skill revision','skill_ref',ref('impeccable/SKILL.md',B)],
+ ['missing target','target_ref',undefined],
+ ['unversioned target','target_ref','synthetic/UI-mockup.jsx@main']
+ ])test('CM-23',`Optional current report with ${name} blocks both gates`,()=>{
+  const x=additionalReview('L3','optional-report'),report=additionalReport(x);
+  if(value===undefined)delete report[field];else report[field]=value;
+  bothEntrypoints(x,false);
+ });
+
+// CM-24: a report explicitly bound to an unselected immutable draft is a
+// reference, not evidence about the selected current Mockup. Its own failures
+// neither satisfy a missing current review nor contaminate the current result.
+function unselectedDraftReview(){const x=additionalReview('L3','optional-report');
+ additionalReport(x).target_ref=ref('UI-mockup.jsx',B);return x;}
+test('CM-24','An optional report for another pinned draft is not a current deliverable',()=>
+ bothEntrypoints(unselectedDraftReview(),true));
+for(const severity of ['P0','P1','P2'])
+ test('CM-24',`Unselected pinned draft ${severity} does not contaminate current gates`,()=>{
+  const x=unselectedDraftReview();additionalReport(x).findings=[{id:'SYNTHETIC-OTHER-DRAFT',severity,status:'OPEN'}];
+  bothEntrypoints(x,true);
+ });
+test('CM-24','Failed review of another pinned optional draft does not fail the current Mockup',()=>{
+ const x=unselectedDraftReview();additionalReport(x).status='FAIL';bothEntrypoints(x,true);
+});
+test('CM-24','Another pinned draft report cannot replace the required current Mockup review',()=>{
+ const x=unselectedDraftReview();ui(x).artifacts=ui(x).artifacts.filter(a=>
+  a.type!=='impeccable-review'||a.ref===attachedReviewRef);bothEntrypoints(x,false);
+});
+
 const failed=results.filter(r=>r.status==='FAIL');
 for(const r of failed)console.error(`FAIL ${r.id}: ${r.name}\n${r.error}`);
 console.log(`Concept/Mockup synthetic metadata regressions: ${results.length-failed.length}/${results.length} PASS; ${failed.length} FAIL.`);

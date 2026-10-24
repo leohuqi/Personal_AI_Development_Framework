@@ -29,7 +29,7 @@ Schema：padf.ui-design/v1。UI Designer 负责体验与视觉，Master 协调�
 
 L1/L2 可按需提供概念审查，target_ref 指当前概念；不提供不新增该阶段的工具要求，但已提供报告和已知发现仍按当前源/Skill/Profile及下述规则核对，不能用等级低忽略阻断。
 
-审查发现以 P0–P3、状态和实际影响记录。未修复 P0/P1 阻断，P2 修复或 Owner 逐项明确接受条件（沿用 owner_risk_acceptance_ref 与 acceptance_conditions），P3 可跟踪；PASS 标签不能遮盖未处置发现。报告明确实际执行、人工按指南检查、未运行及工具限制；分数或 detector clean 不等于任务好用，也不等于独立 DESIGN 审查。详见[Impeccable 适配](../integrations/impeccable.md)。
+审查发现以 P0–P3、状态和实际影响记录。报告或所在阶段标为可选只影响交付选择，不能忽略已提供报告中的失败结论、畸形发现或未处置问题；所有角色/阶段上指向当前选定概念/Mockup的报告均核对来源、Profile、Skill、结果和发现。显式指向另一固定版本且未选用的可选草稿不变成当前必交物；没有target或来源不明不能冒充无关参考。Master仍核对真实未解决风险，不靠更改引用藏匿。未修复 P0/P1 阻断，P2 修复或 Owner 逐项明确接受条件（沿用 owner_risk_acceptance_ref 与 acceptance_conditions），P3 可跟踪；PASS 标签不能遮盖未处置发现。报告明确实际执行、人工按指南检查、未运行及工具限制；分数或 detector clean 不等于任务好用，也不等于独立 DESIGN 审查。详见[Impeccable 适配](../integrations/impeccable.md)。
 
 ## 内容、验证与交接
 
