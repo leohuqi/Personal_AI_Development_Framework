@@ -4,18 +4,13 @@
 
 ## 未发布
 
-- UI 改为概念图确认后直接前端交互 Mockup，取消强制 Figma；Impeccable 审查绑定当前源/Profile/Skill，并保留团队确认权限和重大决定边界。
-
-- 增加无需新增服务的 2–3 人协作约定，明确 Owner / PM、技术成员与 Agent 的责任。
-- Task Contract / Handoff 以六项最小内容开头；人工评审使用短卡片，协议证据复用原记录。
-- 九个核心 Skill 共用不过度设计/编码与停止细化要求，并贯彻到项目文档、评审、交接和日常沟通：结论/请求先行、原文单点维护、链接复用；收紧 PA/SA 交付范围，保留既有授权与质量门禁。
-
-- 新增统一中文更新日志，并在 README 提供入口；这是 v0.3.4 发布后的文档补记，不新建版本、不移动已发布标签。
+暂无待发布条目。
 
 ## 版本总览
 
 | 版本 | 发布日期（北京时间） | 主题 | 发布提交 |
 | --- | --- | --- | --- |
+| [v0.3.5](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.5) | 2026-10-24 | 小团队简化、概念 Mockup 与文档评审 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.5) |
 | [v0.3.4](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.4) | 2026-10-23 | 设计证据与执行依赖完整性 | [3afcb5b4](https://github.com/leohuqi/Personal_AI_Development_Framework/commit/3afcb5b4b038656f50bab57f4722b4a3f3accda7) |
 | [v0.3.3](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.3) | 2026-10-21 | 角色成果优化与 Master 主动门禁 | [8a1fa814](https://github.com/leohuqi/Personal_AI_Development_Framework/commit/8a1fa8142c2a7304f8c5f2978fa557437a8942f6) |
 | [v0.3.2](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.2) | 2026-10-21 | 批准范围内的持续分派 | [15866db0](https://github.com/leohuqi/Personal_AI_Development_Framework/commit/15866db0cf09c5ac5d44b5bdb5c62e311c553ee2) |
@@ -24,6 +19,15 @@
 | [v0.2.0](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.2.0) | 2026-10-13 | 共享上下文与 Agent 通信（CACF） | [c2caac0a](https://github.com/leohuqi/Personal_AI_Development_Framework/commit/c2caac0a6eac220f65667b7fe7cd5e6943dbe807) |
 
 V0.1 是发布前的历史基线，见文末；仓库没有独立的 V0.1 tag 或 Release，不将其补记为正式发布。
+
+## v0.3.5 — 2026-10-24
+
+- **协作与沟通：**明确2–3人团队职责，精简任务/交接；全部角色遵循不过度设计/编码，文档与评审结论/请求先行、单份维护、链接复用。
+- **UI流程：**取消强制Figma，改为概念图→Owner或获授权成员确认→前端交互Mockup→Impeccable审查与修正。
+- **修复：**当前Impeccable报告的失败或未处置发现不因报告/阶段可选而被忽略，Design Gate与START_CODING均阻断严重问题。
+- **历史维护：**纳入v0.3.4之后补记的各版本中文更新历史；保留旧版本说明和标签。
+
+接入需按[版本说明](docs/releases/v0.3.5.md#接入与迁移)同步UI字段、契约和Skill；staged/省略模式也执行新规则。重大决定、编码、合并、发布和生产授权不变。来源：[PR22](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/22)；准确发布提交由上方不可变tag解析，避免预填尚未产生的最终合并SHA。验证、限制及回退统一见版本说明。
 
 ## v0.3.4 — 2026-10-23
 
