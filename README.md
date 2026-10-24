@@ -14,7 +14,7 @@ PADF 定义由 Owner 决策、Agent 执行的增量软件开发流程。每个�
 
 Owner / PM 保留最终决定，1–2 名技术成员可兼技术、开发、接口联测和获批准部署的执行职责；Master 协调人和 Agent。角色不等于人数，不为普通任务启动全部角色或复制多份文档。
 
-从[小团队协作入口](workflow/small-team-collaboration.md)开始：Task Contract 只先写六项任务信息，Handoff 回答六个交接问题；机器协议/执行证据按需附在原记录。所有角色遵循不过度设计：只补当前验收/风险所需内容，复用基线，足以实施/验证即停止；人工评审先看[短卡片](templates/stage-delivery.md)，技术和审计按需展开。必要门禁仍适用。
+从[小团队协作入口](workflow/small-team-collaboration.md)开始：Task Contract 只先写六项任务信息，Handoff 回答六个交接问题；机器协议/执行证据按需附在原记录。所有角色遵循不过度设计：只补当前验收/风险所需内容，复用基线，足以实施/验证即停止；项目文档、评审和日常沟通同样遵循[最小充分规则](workflow/role-work-method.md#文档评审与沟通同样最小充分)：结论/请求先行，更新原文并用链接复用，技术和审计按需展开；人工评审可用[短卡片](templates/stage-delivery.md)。必要门禁仍适用。
 
 本次对标 BMAD 的方法，不安装新插件或部署服务。正式发布版本仍为 v0.3.4；主分支后续改进不会自动改变已发布 tag 或接入项目。
 

@@ -1,6 +1,6 @@
 # Delivery Report — Template
 
-先用[阶段短卡片](../templates/stage-delivery.md)给人说明交付结果、推荐、重要风险和需要的决定。以下是执行者按角色/实际影响维护的证据视图，不是人人每次都填的全表；已存在的测试、交接、设计和批准只引用一次。一个记录可承载多个部分，必要事实和精确版本仍须可核验，未测/未批准不能补成通过。
+按[文档与评审规则](../workflow/role-work-method.md#文档评审与沟通同样最小充分)用结论或请求开头；需人工决定时可用[阶段短卡片](../templates/stage-delivery.md)。以下是执行者按角色/实际影响维护的证据视图，不是人人每次都填的全表；已存在的测试、交接、设计和批准只引用一次。一个记录可承载多个部分，必要事实和精确版本仍须可核验，未测/未批准不能补成通过。
 
 ## Identity
 - Linear issue:
@@ -57,12 +57,12 @@ Do not infer that a visual prototype, simulated stage evaluation or designer sel
 - Defects with reproducible steps / assigned issues:
 
 ## Independent Review
+- Decision: PENDING / APPROVE / APPROVE WITH CONDITIONS / REQUEST CHANGES; blockers / requested action first.
 - Reviewer identity/context independence:
 - Exact reviewed PR and base/head SHA:
 | Finding | Severity (P0–P3) | File/line | Scenario and impact | Resolution |
 | --- | --- | --- | --- | --- |
 | (none or evidence) | | | | |
-- Decision: PENDING / APPROVE / APPROVE WITH CONDITIONS / REQUEST CHANGES
 - Tests independently reproduced vs claimed vs NOT RUN:
 - Residual risk and owner condition for P2, if any:
 - Re-review status for newer SHA:
