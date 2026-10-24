@@ -32,7 +32,7 @@ description: 基于高层产品规格初评技术可行性与逐 Feature 实现�
 
 保留[架构包](../../../contracts/architecture-design.md)所需 solution-architecture、technology-stack、application-code-structure、architecture-diagram 类型与 system_baseline_ref。可在同一主文档按章节定位，不逐类型新建文件。必需正式图表使用锁定的 [diagram-design](../../../integrations/diagram-design.md)，保存真实 Skill SHA、源模型、项目 Profile、渲染/一致性证据；不增加无决策价值的图，缺能力标 BLOCKED/NOT RUN。
 
-交接 PA 高层规格、Catalog/复杂度、准确方案/ADR及基线版本、接口/数据约束、必要细化模块与未决决定。Module 消费精确获批准系统基线及适用已确认 UI/Figma，细化最终 Feature Spec；不要求先有实施级 Spec，也不等待最终前端原型。新基线在 Owner 批准前保持 PROPOSED。
+交接 PA 高层规格、Catalog/复杂度、准确方案/ADR及基线版本、接口/数据约束、必要细化模块与未决决定。Module 消费精确获批准系统基线及适用已确认 UI 概念图，细化最终 Feature Spec；不要求先有实施级 Spec，也不等待最终前端原型。新基线在 Owner 批准前保持 PROPOSED。
 
 ## 不过度设计与人工沟通
 

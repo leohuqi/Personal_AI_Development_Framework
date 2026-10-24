@@ -6,6 +6,10 @@
 
 PADF 定义由 Owner 决策、Agent 执行的增量软件开发流程。每个应用维护自己的 PRD、架构、UX 基线、功能目录、源码、AGENTS.md 与 CI；框架可供不同项目复用。
 
+## UI 原型新流程（未发布）
+
+高层原型采用概念图；Owner 或获授权团队成员确认准确版本后，直接用批准前端栈制作高保真交互 Mockup，并依据[Impeccable](integrations/impeccable.md)审查任务体验和一致性。Figma 不再是必需产物。L1 为概念草稿，L2 为已确认概念，L3 为前端 Mockup；新旧模式都核对概念确认、原型授权和当前审查，迁移字段见[UI 契约](contracts/ui-design.md)。已发布历史 tag 不回写，重大决定/编码/生产门禁不变。
+
 ## 小团队协作与简化工作方式
 
 Owner / PM 保留最终决定，1–2 名技术成员可兼技术、开发、接口联测和获批准部署的执行职责；Master 协调人和 Agent。角色不等于人数，不为普通任务启动全部角色或复制多份文档。
@@ -24,7 +28,7 @@ Master 复用有效 Owner 授权与精确 Task Contract，优先调用可用真�
 
 ## v0.3.3：产品定义、完整方案与整体质量
 
-v0.3.3 包含以下能力：PA负责High Level Specs/Catalog；SA技术初评、五级实现复杂度和完整系统方案；Master结合功能关系规划milestone/iteration并协调Handoff；Module Designer结合SA与已确认UI细化实施级Feature Spec。UI按概念图→Figma设计/原型确认→获授权前端高保真，QA交Test Cases与Test Results；Context Coordinator是共享恢复能力，进度归Master；已有明确规格与局部改动直接复用。
+v0.3.3 包含以下能力：PA负责High Level Specs/Catalog；SA技术初评、五级实现复杂度和完整系统方案；Master结合功能关系规划milestone/iteration并协调Handoff；Module Designer结合SA与已确认UI细化实施级Feature Spec。UI按概念图→Owner/获授权团队成员确认→获授权前端高保真，QA交Test Cases与Test Results；Context Coordinator是共享恢复能力，进度归Master；已有明确规格与局部改动直接复用。
 
 九个角色按[成果标准](contracts/role-deliverables.md)裁剪；[共用工作方法](workflow/role-work-method.md)统一补输入/研究/复用，[Agent 协议](workflow/agent-protocol.md)集中消息与交接，仅在相关动作前加载。机器字段用本地草稿生成器辅助，不增加审批权或运行时服务。
 
@@ -95,6 +99,7 @@ node tests/v0.3/run-orchestration-tests.mjs
 node tests/v0.3/run-skill-quality-tests.mjs
 node tests/v0.3/run-product-tests.mjs
 node tests/v0.3/run-feedback-tests.mjs
+node tests/v0.3/run-concept-mockup-tests.mjs
 ```
 
 这些脚本通过不等于实际跨会话执行、外部工具调用、独立 DESIGN 审查或 Owner 评分；真实结果以精确证据和批准记录为准。
@@ -135,6 +140,7 @@ node tests/v0.3/run-orchestration-tests.mjs
 node tests/v0.3/run-skill-quality-tests.mjs
 node tests/v0.3/run-product-tests.mjs
 node tests/v0.3/run-feedback-tests.mjs
+node tests/v0.3/run-concept-mockup-tests.mjs
 node tests/v0.3/run-preflight-tests.mjs
 node tests/v0.3/run-review-integrity-tests.mjs
 node tests/v0.3/verify-expense-pilot.mjs

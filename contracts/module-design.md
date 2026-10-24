@@ -13,10 +13,10 @@ Schema: `padf.module-design/v1`. Owned by **Module Architect** for one bounded m
 
 ## 产品规格与实现深度
 
-Module Designer 接收 PA 的 High Level Specs/Catalog、批准 SA 系统方案与适用已确认 Figma，由 Master 协调 Handoff/ACK，然后产出当前阶段实施级 Feature Specs，明确具体行为、接口/数据、规则/状态、重要异常、可修改/撤销/确认/拒绝与可执行验收。产品级关键缺口回 PA/Master，不能要求 PA 先产完整实施设计，也不自行改变业务规则。详见[两阶段规格](product-definition.md)。内部方案按需包含算法、事务/并发、物理表/索引/约束、数据生命周期、迁移兼容/回滚、异常恢复与测试，关键事项不得留给实现时猜测。复用批准规格与系统基线，只补本次变化。
+Module Designer 接收 PA 的 High Level Specs/Catalog、批准 SA 系统方案与适用已确认概念图，由 Master 协调 Handoff/ACK，然后产出当前阶段实施级 Feature Specs，明确具体行为、接口/数据、规则/状态、重要异常、可修改/撤销/确认/拒绝与可执行验收。产品级关键缺口回 PA/Master，不能要求 PA 先产完整实施设计，也不自行改变业务规则。详见[两阶段规格](product-definition.md)。内部方案按需包含算法、事务/并发、物理表/索引/约束、数据生命周期、迁移兼容/回滚、异常恢复与测试，关键事项不得留给实现时猜测。复用批准规格与系统基线，只补本次变化。
 
 ## Implementable module artifacts (required for material module design)
-0. **Implementation-level Feature Spec** (`feature-specification`): product intent → SA/UI → executable behavior and acceptance trace. New two-phase tasks cite `product_spec_ref`, exact final `feature_spec_ref`, and actual `spec_handoff_ref`; UI consumes confirmed Figma without waiting for final frontend prototype.
+0. **Implementation-level Feature Spec** (`feature-specification`): product intent → SA/UI → executable behavior and acceptance trace. New two-phase tasks cite `product_spec_ref`, exact final `feature_spec_ref`, and actual `spec_handoff_ref`; UI consumes confirmed concept source without waiting for final frontend prototype.
 1. **Module design** (`module-design`): responsibility, affected components and domain invariants, input/output data, error conditions and contracts.
 2. **Module code structure** (`module-code-structure`): directory/package layout, files/classes/functions/ports, responsibility matrix, allowed dependency directions and integration seam. Contrast current and proposed structure.
 3. **Module interface contract** (`module-interface-contract`): method signatures/types or API/OpenAPI portions, transactions and failure/validation semantics at accurate versions. Where no external API is changed, still specify stable internal/public module interface.

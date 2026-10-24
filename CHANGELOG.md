@@ -4,6 +4,8 @@
 
 ## 未发布
 
+- UI 改为概念图确认后直接前端交互 Mockup，取消强制 Figma；Impeccable 审查绑定当前源/Profile/Skill，并保留团队确认权限和重大决定边界。
+
 - 增加无需新增服务的 2–3 人协作约定，明确 Owner / PM、技术成员与 Agent 的责任。
 - Task Contract / Handoff 以六项最小内容开头；人工评审使用短卡片，协议证据复用原记录。
 - 九个核心 Skill 加入不过度设计与停止细化要求，收紧 PA/SA 交付范围，保留既有授权与质量门禁。

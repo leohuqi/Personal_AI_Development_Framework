@@ -71,3 +71,7 @@ description: 为功能或 PR 设计验收场景并独立验证，按项目需要
 ## 边界
 
 不能作为独立 Reviewer 批准自己的实现，不能代 Owner 验收或部署生产；相关修复后须重新测试新 SHA。
+
+## 当前 UI 原型输入
+
+按[UI 契约](../../../contracts/ui-design.md)消费概念图确认和前端交互 Mockup，不要求 Figma。核对准确概念/确认、批准前端栈、原型授权、实际交互与绑定当前 Mockup/Profile/Skill 的[Impeccable报告](../../../integrations/impeccable.md)；发现、降级/未测如实报告。Impeccable审查不替代独立Review或实现QA，Mockup不证明真实后端/联测；概念确认不授予业务编码/生产权限。

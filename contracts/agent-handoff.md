@@ -38,7 +38,7 @@ Schema：padf.agent-handoff/v1。交接传递任务责任和可核验产物，�
 ## 适用设计与真实执行时补充
 
 - 设计交接用 handoff_kind: DESIGN，引用实际[系统/模块架构包](architecture-design.md)、[UI 包](ui-design.md)、精确批准基线及清单；仅补本次受影响的接口、约束、设计决定与未决冲突。
-- Module 接收批准的 system_baseline_ref；适用 UI/Figma、产品/实施级规格和 Profile 均需版本匹配。PROPOSED 系统不能作为获批准约束。设计者 COMPLETED、独立 DESIGN Review、Master Design Gate 和 Owner 批准分别记录，不由 Handoff 推导。
+- Module 接收批准的 system_baseline_ref；适用 UI 概念图、产品/实施级规格和 Profile 均需版本匹配。PROPOSED 系统不能作为获批准约束。设计者 COMPLETED、独立 DESIGN Review、Master Design Gate 和 Owner 批准分别记录，不由 Handoff 推导。
 - 验证真实 Master 编排时保留 dispatch_id、工具返回的 execution_id、skill_ref_used@SHA、实际执行会话/回执、产物源 SHA 和 Master 读件/协调证据；见[Dispatch 契约](agent-dispatch.md)。六行摘要不替代这些证据，Master 代写不能证明专家执行。
 - 真人工作保留真实姓名/账号、动作、版本及接收记录；不为真人捏造 Agent ID，不把人工交接标为 RUNTIME_DISPATCH，也不声称当前机器门禁已认证真人。需要现有门禁的真实独立 Agent 证据时仍须提供，不能用人工简表绕过。
 

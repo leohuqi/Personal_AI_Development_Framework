@@ -70,3 +70,7 @@ Reviewer 不能替代 Master 或 Owner：不能标记 DESIGN_READY、授权编�
 ## G-01：操作门禁的审查证据
 
 向Master提供不同于Implementer/Master的真实会话与Execution（运行时任务证据或HUMAN_RELAY启动）、准确Base/HEAD及实际Diff来源、真实Handoff或GitHubReview，明确结论和全部发现/条件及未测范围。新HEAD使旧批准失效；未完成条件不能仅凭APPROVE标签放行。按[Action Preflight](../../../contracts/action-preflight.md)核对来源，元数据不能认证身份或Owner批准。事后Review标事后补证，不能重写为合并前完成；本角色不执行合并/验收/Done。
+
+## 当前 UI 原型输入
+
+按[UI 契约](../../../contracts/ui-design.md)消费概念图确认和前端交互 Mockup，不要求 Figma。核对准确概念/确认、批准前端栈、原型授权、实际交互与绑定当前 Mockup/Profile/Skill 的[Impeccable报告](../../../integrations/impeccable.md)；发现、降级/未测如实报告。Impeccable审查不替代独立Review或实现QA，Mockup不证明真实后端/联测；概念确认不授予业务编码/生产权限。

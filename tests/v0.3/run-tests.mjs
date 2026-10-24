@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {conceptEvidence} from './ui-fixture.mjs';
 import assert from 'node:assert/strict';
 import {evaluateStageDependencies,evaluateDesignGate,routeAgents} from '../../lib/design-gate.mjs';
 const A='a'.repeat(40),B='b'.repeat(40),C='c'.repeat(40);
@@ -125,6 +126,7 @@ check('UI-only L3 tasks of every size require a UI stage even with coding approv
   const x=baseline();x.task_class=task_class;x.architecture_scope='none';
   x.impacts=['ui'];x.ui_level='L3';x.stages=[stage('UX','ui-ux-designer')];
   x.stages[0].artifacts.push(artifact('docs/prototype.html','interactive-prototype'));
+ conceptEvidence(x,x.stages[0]);
   x.design_review.reviewed_refs=reviewed(x.stages);
   assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
   x.stages=[];x.design_review.reviewed_refs=[];
@@ -210,6 +212,8 @@ check('L3 requires a verified interactive prototype artifact',()=>{
  const x=baseline();x.ui_level='L3';
  assert(evaluateDesignGate(x).reasons.includes('MISSING_INTERACTIVE_PROTOTYPE'));
  x.stages[1].artifacts.push(artifact('docs/prototype.html','interactive-prototype'));
+ conceptEvidence(x,x.stages[1]);
+ x.design_review.reviewed_refs=reviewed(x.stages);
  x.design_review.reviewed_refs.push(ref('docs/prototype.html'));
  assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
 });
@@ -228,8 +232,10 @@ check('Artifact must include independent evidence link',()=>{
 check('Interactive prototype must have passing interaction check and editable source',()=>{
  const x=baseline();x.ui_level='L3';
  x.stages[1].artifacts.push(artifact('docs/prototype.html','interactive-prototype'));
+ conceptEvidence(x,x.stages[1]);
+ x.design_review.reviewed_refs=reviewed(x.stages);
  x.design_review.reviewed_refs.push(ref('docs/prototype.html'));
- x.stages[1].artifacts.at(-1).interaction_test_status='NOT_RUN';
+ x.stages[1].artifacts.find(a=>a.type==='interactive-prototype').interaction_test_status='NOT_RUN';
  assert(evaluateDesignGate(x).reasons.includes('UNSATISFIED_STAGE:UX'));
 });
 check('Whole-app architectural scope is routed only to Solution Architect',()=>{
@@ -432,6 +438,7 @@ check('R2-03 exact approval cannot compensate for an unpinned Profile or stale s
 check('R2-03 L3 prototype and coding approval do not approve a proposed Profile',()=>{
  const x=uiOnly();x.ui_level='L3';
  x.stages[0].artifacts.push(artifact('docs/prototype.html','interactive-prototype'));
+ conceptEvidence(x,x.stages[0]);
  x.design_review.reviewed_refs=reviewed(x.stages);
  assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
  x.ui_profile_status='PROPOSED';x.ui_profile_approval_ref=null;
@@ -483,9 +490,11 @@ check('R3 each required UI stage must provide its own specification and visual a
 check('R3 L3 prototype evidence is required for every required UI stage',()=>{
  const x=uiOnly();x.ui_level='L3';x.stages.push(stage('UX2','ui-ux-designer'));
  x.stages[0].artifacts.push(artifact('docs/UX-prototype.html','interactive-prototype'));
+ conceptEvidence(x,x.stages[0]);
  x.design_review.reviewed_refs=reviewed(x.stages);
  assertProfileBlocked(x,'MISSING_INTERACTIVE_PROTOTYPE');
  x.stages[1].artifacts.push(artifact('docs/UX2-prototype.html','interactive-prototype'));
+ conceptEvidence(x,x.stages[1]);
  x.design_review.reviewed_refs=reviewed(x.stages);
  assert.equal(evaluateDesignGate(x).status,'DESIGN_READY');
 });

@@ -47,8 +47,10 @@ jobs:
         run: node tests/v0.3/run-skill-quality-tests.mjs
       - name: Product scope, dependency and shared protocol tests
         run: node tests/v0.3/run-product-tests.mjs
-      - name: Two-phase specs and staged UI regressions
+      - name: Two-phase specs and concept Mockup regressions
         run: node tests/v0.3/run-feedback-tests.mjs
+      - name: Concept confirmation, frontend Mockup and Impeccable regressions
+        run: node tests/v0.3/run-concept-mockup-tests.mjs
       - name: G-01 action preflight and lifecycle regressions
         run: node tests/v0.3/run-preflight-tests.mjs
       - name: Review, multi-stage, orchestration binding and UI integrity regressions

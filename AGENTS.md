@@ -22,7 +22,7 @@
 - 所有角色先读相关既有材料，按[共用工作方法](workflow/role-work-method.md)判断需问 Owner、主动研究、复用或仅补增量；关键答案未到前暂停依赖设计，其他授权研究可继续。
 - Product Analyst负责High Level Specs与Catalog；Module Designer结合SA与已确认UI细化实施级Feature Specs，由Master协调Handoff/ACK；简单项目可有理由合并步骤，编码不得猜测产品行为。有效规格可复用，简单任务不强制调用全部角色。
 - Solution Architect做技术初评，在Catalog按Very High/High/Medium/Low/Very Low评估实现复杂度，并交付连贯完整系统方案，说明职责、接口/数据、跨模块正常及失败流程、技术取舍、运行质量与演进；图、模型、API 和 ADR 支持正文。
-- UI明确概念图→Figma设计/原型确认→按批准前端栈和原型授权制作高保真可运行原型；明确的局部变更直接复用。质量不按页面、tokens、热点数量评价。
+- UI明确概念图→Owner/获授权团队成员确认→按批准前端栈和原型授权制作高保真可运行原型；明确的局部变更直接复用。用 Impeccable 审查任务体验、组件/Profile 一致性和实际前端；不强制 Figma。概念可由 Owner 或获授权成员确认，重大设计和编码批准不下放。质量不按页面、tokens、热点数量评价。
 - Master 对整体推进、内容充分性、跨角色一致性、取舍整合和交付质量负责；不足应退修，不替代独立审查或 Owner 批准。按[角色成果标准](contracts/role-deliverables.md)提供统一成果入口，审计置于附录。
 - Master依据SA复杂度、功能关系/依赖、价值与风险规划milestone/iteration和进度；Context Coordinator只提供共享上下文/恢复能力。QA交付可追溯Test Cases与逐版本Test Results。Owner评审统一入口为[评审中心 #14](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/14)，接受入口评论或当前对话原话，Master同步并保留结论/适用版本。
 - 共用消息/执行/Handoff 规则集中在[Agent 协议](workflow/agent-protocol.md)，首次相关动作前必须读取；机器字段可用本地草稿生成器，不以文档重复代替实际证据。Context Coordinator 默认作为共享能力，按需独立启用。

@@ -1,6 +1,6 @@
 # Specialized Design Agent Collaboration — PADF V0.3
 
-当前成果标准见[角色主成果](../contracts/role-deliverables.md)与[共用工作方法](role-work-method.md)。Master 对内容充分性、整体一致性和整合建议负责，独立 Reviewer 和 Owner 权限不变。PA先出High Level Specs/Catalog，SA评复杂度、Master规划，Module结合SA与已确认UI细化实施级Spec并Handoff；UI按概念→Figma确认→获授权前端高保真。消息、执行和交接按[共用协议](agent-protocol.md)按需读取，主成果在前、审计为附录，简单增量不重复完整试点。
+当前成果标准见[角色主成果](../contracts/role-deliverables.md)与[共用工作方法](role-work-method.md)。Master 对内容充分性、整体一致性和整合建议负责，独立 Reviewer 和 Owner 权限不变。PA先出High Level Specs/Catalog，SA评复杂度、Master规划，Module结合SA与已确认UI细化实施级Spec并Handoff；UI按概念图→Owner/获授权团队成员确认→前端交互 Mockup 与 Impeccable 审查。消息、执行和交接按[共用协议](agent-protocol.md)按需读取，主成果在前、审计为附录，简单增量不重复完整试点。
 
 **Role-based sequential workflow, not parallel execution orchestration.** This document extends [WORKFLOW.md](WORKFLOW.md) and [CACF V0.2](context-communication.md); existing Task Contract, Agent Message, Checkpoint and Handoff remain in force.
 

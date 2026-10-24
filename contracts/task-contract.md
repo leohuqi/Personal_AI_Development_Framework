@@ -29,7 +29,7 @@
 | --- | --- |
 | 产品行为新增或变化 | product_scope: reuse/define/refine；适用 product_spec_ref、最终 feature_spec_ref 和 spec_handoff_ref；沿用[两阶段规格](product-definition.md)，简单任务可同文裁剪 |
 | 系统/模块设计 | S/M/L/XL、impacts/risk_flags、architecture_scope 及理由；适用的获批准 system_baseline_ref、设计产物/依赖与准确版本 |
-| UI | 任务所需 L1/L2/L3、项目 UI Profile；复杂 staged 任务保留 Figma 确认、批准前端栈与原型制作授权，见[UI 契约](ui-design.md) |
+| UI | 任务所需 L1/L2/L3、项目 UI Profile；概念图确认后直接前端 Mockup，保留批准栈、原型授权和当前 Impeccable 审查，见[UI 契约](ui-design.md) |
 | 跨系统接口 | 双方负责人、接口版本与兼容约定、联测环境/标准及阻塞；不以 mock 当双方联测 |
 | 实施与验证 | 受影响 AC、必要测试/CI、QA 和独立 Review；迁移、安全、性能等仅按实际风险补充 |
 | 真实 Agent 分派 | 按[Dispatch 契约](agent-dispatch.md)记录有限 scope_items、角色/动作、必要决策及真实 Dispatch → Execution → Handoff → Master 协调 |

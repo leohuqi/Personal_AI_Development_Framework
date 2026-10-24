@@ -15,7 +15,7 @@ Owner 保留重大产品/UX/架构、风险接受、编码范围、合并、发�
 
 1. 先用短段落说明目标、当前事实/缺口和可观察成果，按[最小 Task Contract](../../../contracts/task-contract.md)写范围、输入、交付、负责人、授权和停止条件。
 2. 复用有效规格/批准基线；有产品缺口才补 PA 高层规格/Catalog，有系统变化才补 SA，按风险安排 UI 和 Module 细化。SA 逐 Feature 给五级复杂度；Master 结合关系、价值、依赖和容量维护[实施计划](../../../templates/implementation-plan.md)，只细化近期。
-3. 按[路由](../../../workflow/agent-routing.md)选择 product_scope、architecture_scope 和 UI 等级。依[两阶段规格](../../../contracts/product-definition.md)协调 PA→SA/UI→Module→Coder/QA；简单任务可同文合并，不强制九个会话。必要决定和依赖未就绪不提前放行；Figma 确认与最终前端原型分开，避免输入循环。
+3. 按[路由](../../../workflow/agent-routing.md)选择 product_scope、architecture_scope 和 UI 等级。依[两阶段规格](../../../contracts/product-definition.md)协调 PA→SA/UI→Module→Coder/QA；简单任务可同文合并，不强制九个会话。必要决定和依赖未就绪不提前放行；概念图确认与最终前端 Mockup 分开，避免输入循环。
 4. 小团队按[责任与协作](../../../workflow/small-team-collaboration.md)指定真人交付负责人、实际执行者、审查者和批准人；技术成员在批准范围内决定常规实现。接口任务明确双方责任/版本/联测标准；生产明确批准版本、执行/运维负责人和恢复方案。
 5. 有效授权内优先真实运行时分派、返工和接续，不逐次重复批准。按 Dispatch → independent Execution → Handoff → Master Dependency Reconciliation 保留真实来源/时间/工具 ID；同会话角色扮演标 ROLE_SIMULATION，缺运行能力才用 HUMAN_RELAY，不能捏造执行。
 6. 实际阅读主成果，按[角色成果标准](../../../contracts/role-deliverables.md)检查当前行为、系统/API/数据、UX、模块与测试是否相互一致。缺关键内容、互相矛盾或复杂度无依据时退 NEEDS_REFINEMENT，明确缺口和责任人；不能只检查字段/文件/图数量。

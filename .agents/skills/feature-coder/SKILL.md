@@ -56,3 +56,7 @@ description: 依据已批准的功能规格、架构和 UI 约束，实现一个
 ## 禁止事项
 
 不得自动标记 Linear Done、自动合并、改写受保护的不可变业务或审计历史、修改生产凭证，或未经 Owner 授权降低权限与数据血缘要求。
+
+## 当前 UI 原型输入
+
+按[UI 契约](../../../contracts/ui-design.md)消费概念图确认和前端交互 Mockup，不要求 Figma。核对准确概念/确认、批准前端栈、原型授权、实际交互与绑定当前 Mockup/Profile/Skill 的[Impeccable报告](../../../integrations/impeccable.md)；发现、降级/未测如实报告。Impeccable审查不替代独立Review或实现QA，Mockup不证明真实后端/联测；概念确认不授予业务编码/生产权限。

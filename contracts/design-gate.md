@@ -72,15 +72,17 @@ Design Handoff adds `artifact_manifest_ref`, `spec_revision`, `architecture_revi
 For a Master-led *cross-session validation pilot*, require the complete [Agent Dispatch Chain](agent-dispatch.md) in addition to the existing design/dependency/Owner/Reviewer gates. Set `orchestration_validation_required: true` and supply `orchestration_chain`, `owner_live_evidence_review_ref` and actual role execution refs for every routed professional Skill. Missing chain, a ROLE_SIMULATION record or an unreviewed external runtime claim is BLOCKED; the read-only checker can validate **metadata only**.
 **Do not equate** `ORCHESTRATION_CHAIN_COMPLETE` with professional design quality. The Owner independently grades each Skill using [Quality Evaluation](skill-delivery-evaluation.md); a real L/XL still requires Independent DESIGN Review and approved system/UI baselines before DESIGN_READY. A missing approved baseline permits a **conditional module draft** but never formal module completion.
 
-## 两阶段规格与 staged UI 的增量校验
+## 两阶段规格与概念图/Mockup 校验
 
 新任务按[产品契约](product-definition.md)提供固定 `product_spec_ref` 与 `feature_spec_ref`。PA只完成高层输入，Module按精确高层来源细化实施级Spec；每个必需Module须COMPLETED且产物验证通过，`feature-specification`匹配最终`feature_spec_ref`，并附`product_spec_ref`与实际`spec_handoff_ref`。裁剪独立Module只接受有理由、证据和最终详细规格引用的`simple_spec_refinement`，不能排除已知模块影响；内容充分性仍实际检查。只含高层不能使最终门禁就绪，旧未声明两阶段的元数据保持兼容。
 
-`ui_delivery_mode: staged` 在每个必需UI阶段校验所选L1/L2/L3：L1保留概念图；L2增加真实`figma-design`（固定清单ref、tool=figma、真实figma_url、design_version）；L3另需`figma_confirmation`精确匹配设计ref/version和Owner确认来源、顶层固定`frontend_stack_ref`与`frontend_prototype_authorization_ref`，以及runtime=frontend、匹配stack及figma_design_ref的可运行`interactive-prototype`，沿用真实交互测试/可编辑源证据。WAIVED不替代新staged交付。新复杂UI默认此模式，简单复用须说明裁剪；旧未声明模式的证据不冒称完成新三阶段。门禁不检查远端Figma/权限或证明确认发生时间，Master/Reviewer核验真实工具、先确认后制作及批准技术栈和原型授权范围。
+UI 统一执行[概念图 → 确认 → 前端 Mockup](ui-design.md)，不再强制 Figma。ui_delivery_mode: concept-mockup 为推荐值，staged 是别名，省略也不能绕过当前规则。L1 概念草稿，L2 已确认概念，L3 可运行前端；每个必需 UI 阶段都有一份选定 ui-concept 与 ui-design，WAIVED/可选产物不能代替完成。
 
-有两阶段Module且staged L2/L3时，Module的`ui_design_ref`匹配已确认Figma清单；实施细化消费中期源，无须依赖最终前端UI阶段完成，避免循环。阶段依赖仍保留必要SA批准及PA输入，所有来源变更重核受影响细化/原型/审查。原型制作授权不等于业务编码、合并或生产授权。
+L2/L3 或 Module 消费时核对 concept_confirmation 对应当前概念，包含实际确认人/角色/来源；TEAM_MEMBER 需有效 delegation_ref，重大变更/design-system 仍要求 OWNER。Profile 原批准门禁保持。Module 的 ui_design_ref 指向已确认概念，不等待最终 Mockup，所有必需 Module 逐一核对。
 
-所有必需Module均检查批准系统基线匹配、必需模块产物及图工具版本，不能只检查首个或依赖清单顺序。staged任务若提交必需`interactive-prototype`，须选择L3并满足完整确认/原型授权/前端证据；不能把等级降为L1/L2隐藏前端交付，中期Figma点击仍记`figma-design`。
+L3 另需固定 frontend_stack_ref、有边界原型授权、runtime=frontend/fidelity=high 的可编辑且实际交互检查通过的 Mockup，绑定概念与栈；每个 Mockup 有绑定当前源/Profile/Skill 的 Impeccable 报告。缺失/陈旧/失败报告、未修复P0/P1、未有Owner条件处置的P2阻断；L1/L2不能夹带运行前端绕过。旧 Figma 字段不能制造确认或审查，不影响必需角色存在性、独立 Review 或 G-01。
+
+评估器仅检查来源投影的一致性，不能证明真人确认、确认先于制作、外部Skill调用或浏览器行为真实发生；Master/Reviewer实际核验，工具/实测缺失如实说明，不能伪造PASS。详细字段与旧输入迁移只维护在UI契约，不新增运行时服务。
 
 ## 多阶段与任务级产物范围
 

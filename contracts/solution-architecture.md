@@ -24,7 +24,7 @@ PA 提供 High Level Specs 和 Feature Catalog，明确业务目标、规则、�
 
 理由须关联具体需求、现有能力及证据。高风险项提出验证问题/方法和先后依赖；未获授权的验证标记 NOT RUN，不能写成实测。输入不足时保留条件、较低置信和待确认项，不制造精确估算。后续 SA/UI/Module 发现变化时更新受影响 Feature，保留版本与原因。
 
-Master 接收高层规格、技术评估和功能内在关系，负责 milestone/iteration 划分、阶段依赖及计划更新；SA 提供技术建议，不自行承诺排期。Master 协调 PA 高层→SA/UI 设计→Module 实施级 Feature Spec 的 Handoff，Module 可以用已确认 Figma 与批准 SA 基线开始细化，不必等待最终前端原型。
+Master 接收高层规格、技术评估和功能内在关系，负责 milestone/iteration 划分、阶段依赖及计划更新；SA 提供技术建议，不自行承诺排期。Master 协调 PA 高层→SA/UI 设计→Module 实施级 Feature Spec 的 Handoff，Module 可以用已确认概念图 与批准 SA 基线开始细化，不必等待最终前端原型。
 
 ## 主成果与内容完整性
 

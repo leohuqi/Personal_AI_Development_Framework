@@ -12,7 +12,7 @@ Schema：`padf.product-definition/v1`。Product Analyst 负责产品级 High Lev
 
 ## 第二阶段：实施级 Feature Specs（Module Designer）
 
-以已就绪的产品级规格、精确批准的系统方案，以及适用的已确认 Figma 设计/原型为输入，具体化前置条件、数据/输入输出、正常/异常流程、规则与状态转换、用户修改/撤销/确认/拒绝、接口/数据结构、并发/事务/迁移、UX 事件/反馈、依赖与可执行验收。详见[实施级模板](../templates/feature-spec.md)和[模块设计](module-design.md)。
+以已就绪的产品级规格、精确批准的系统方案，以及适用的已确认概念图/关键流程为输入，具体化前置条件、数据/输入输出、正常/异常流程、规则与状态转换、用户修改/撤销/确认/拒绝、接口/数据结构、并发/事务/迁移、UX 事件/反馈、依赖与可执行验收。详见[实施级模板](../templates/feature-spec.md)和[模块设计](module-design.md)。
 
 实施细化可以把产品意图转成具体行为，不得暗改价值、权限、范围或业务规则。新产品取舍由 Master 回 PA，重大变化交 Owner；技术冲突回 SA，体验冲突回 UI。详细 Spec 与模块结构可同文维护，不能让 Coder 在编码时补关键设计。
 
@@ -20,7 +20,7 @@ Schema：`padf.product-definition/v1`。Product Analyst 负责产品级 High Lev
 
 1. PA → Master → SA/UI：链接 High Level Specs、Catalog、关键决定/开放问题、精确版本。接收方 ACK 或 NEEDS_REFINEMENT；关键方向不清只阻断依赖部分，研究可继续。
 2. SA 初评整个技术实现，逐 Feature 在 Catalog 填写五级复杂度、理由/置信与依赖，见[系统方案](solution-architecture.md)。Master 综合价值、复杂度、功能内在关系、风险与容量提出[Milestone/Iteration 计划](../templates/implementation-plan.md)，不把复杂度等级当工期承诺。
-3. SA/UI → Master → Module：交付批准系统基线及适用的已确认 Figma 精确版本、产品输入、接口/约束/未决项。Module 细化 Spec 并反馈可实现性；UI 前端高保真原型可再消费该细化，**不要求 SA/UI 先拿到最终实施级 Spec，也不要求 Module 等待最终前端原型**。
+3. SA/UI → Master → Module：交付批准系统基线及适用的已确认概念图 精确版本、产品输入、接口/约束/未决项。Module 细化 Spec 并反馈可实现性；UI 前端高保真原型可再消费该细化，**不要求 SA/UI 先拿到最终实施级 Spec，也不要求 Module 等待最终前端原型**。
 4. Module → Master → Coder/QA：交接实施级 Spec、系统/UI追溯、模块设计与验收。复用原 [Handoff](agent-handoff.md)，不新增消息协议；接收方 ACK，Master 核对变化/依赖后推进。
 
 简单项目/已有明确的局部变更可以合并两层文档或合并执行步骤，记录裁剪理由、责任人、来源版本及实际收件确认；不为流程新开角色会话。仍须有足以实施/测试的详细内容，保留必要 SA/UI、独立审查、决定及编码授权，不以“简单”掩盖产品缺口。
