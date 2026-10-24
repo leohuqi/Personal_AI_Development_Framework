@@ -40,8 +40,8 @@ For each named mandatory criterion record `0 = MISSING`, `1 = INADEQUATE`, `2 = 
 | --- | --- |
 | UI-Q1 | 产品任务与体验研究有证据分类；信息架构/流程可解释任务完成和理解负担；方向不明先比较真实差异概念并收反馈，明确局部变化复用 |
 | UI-Q2 | Exact **Project UI Profile** revision; tokens, component reuse, layout/nav, typography/density and documented exceptions |
-| UI-Q3 | 所选L1概念图/L2真实可编辑Figma及原型精确版本与确认；适用响应式/异常状态；不以页面、token 或热点数量代替任务质量 |
-| UI-Q4 | Where staged L3 selected: frontend-stack high-fidelity runtime prototype after exact Figma confirmation, bounded prototype authorization, source/startup and real interaction evidence; Figma click-through alone is not final frontend. Legacy L3 evidence retains its original scope |
+| UI-Q3 | L1概念草稿/L2确认概念图、准确版本与有效Owner或团队成员确认；不强制Figma，不以页面/token/热点数量代替任务质量 |
+| UI-Q4 | L3直接使用批准前端栈和有边界原型授权制作可运行交互Mockup，绑定当前确认概念，具可编辑源/运行和交互证据，并有准确版本的Impeccable审查与发现处置 |
 | UI-Q5 | Accessible inputs/focus/keyboard/contrast, realistic product workflows, UI ↔ approved API/data/error behavior, consistency across screens |
 
 ## Owner evaluation sheet (one per independent execution)

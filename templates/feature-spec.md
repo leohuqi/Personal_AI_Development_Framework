@@ -4,7 +4,7 @@
 
 ## 来源与接收
 
-产品级 Spec@SHA、系统基线@批准版本、适用的已确认 Figma/交互设计版本、Task Contract、Master Handoff/ACK 与当前状态；引用 PA 的业务验收 AC-ID。输入缺口与取舍回原负责角色，不暗改已批准产品行为。
+产品级 Spec@SHA、系统基线@批准版本、适用的已确认概念图/交互设计版本、Task Contract、Master Handoff/ACK 与当前状态；引用 PA 的业务验收 AC-ID。输入缺口与取舍回原负责角色，不暗改已批准产品行为。
 
 ## 具体行为与实现约束
 

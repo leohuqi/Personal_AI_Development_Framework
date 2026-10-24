@@ -1,5 +1,8 @@
 # PADF V0.3 — Specialist Agent & Design Gate Validation
 
+
+当前UI流程使用概念图确认后直接前端Mockup，不强制Figma。运行 `node tests/v0.3/run-concept-mockup-tests.mjs` 验证Owner/授权成员确认、原型授权、Impeccable报告的版本/发现、多阶段及G01跨入口；全部是合成元数据，不代表实际UI、工具或批准。旧输入省略mode或使用staged别名也执行新规则；L2现为确认概念，L3为可运行Mockup，迁移见UI契约。
+
 ## 下一补丁：设计证据完整性回归
 
 `node tests/v0.3/run-review-integrity-tests.mjs` 覆盖所有任务等级已有审查的拒绝与发现、多 SA/Module 顺序不变、任务级 schema/流程集合、正式编排任务与逐阶段精确产物绑定、legacy/staged 的合法 UI 等级和高保真源，以及 G-01 START_CODING 跨入口。包含完整正确输入和缺失/错版本的拒绝对照；全部为合成元数据，不证明真实授权、Figma 或运行时执行。CI执行同一入口。

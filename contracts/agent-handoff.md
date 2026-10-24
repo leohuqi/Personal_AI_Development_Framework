@@ -1,74 +1,45 @@
-# Agent-to-Agent Handoff Contract — PADF V0.2
+# Agent Handoff：让下一位能继续
 
-A handoff transfers **task responsibility and verifiable artifacts**, not an agent's hidden reasoning or authority. It can be between different roles, sessions or runtimes; no direct synchronous Agent connection is required.
+Schema：padf.agent-handoff/v1。交接传递任务责任和可核验产物，不传递私有推理或新增权限；人、角色、会话之间都可交接，不需要新平台。
 
-## Required fields
-- schema_version: padf.agent-handoff/v1
-- handoff_id, context_id, Linear issue/Feature IDs, sender/receiver agent roles, created_at
-- task objective and bounded scope; owner authorization/Task Contract reference
-- expected next role/action and explicit stop/escalation conditions
-- source baseline: approved spec revision, PR URL, base/head SHA, branch, relevant ADR/API/UI revision
-- outcomes: what is completed vs not completed, each with artifact/evidence refs
-- acceptance/test coverage: PASS/FAIL/BLOCKED/NOT RUN with provenance; no invented PASS
-- pending message IDs, blockers, open design questions, dependencies, known risks
-- current workspace ownership and integration boundaries if agents work in parallel
-- delivery location/permalink and receiver acknowledgement or NEEDS_REFINEMENT response
+## 默认回答六个问题
 
-## Producer procedure
-1. Reconcile live issue/PR state and pending messages. Link changed paths/PR, exact revisions and evidence.
-2. Write concise facts; tag unverified assertions and missing tests accurately.
-3. Publish at a durable task/PR location and create a HANDOFF message pointing to its permalink.
-4. Do not transfer permission to deploy/merge/expand scope; include existing owner approval reference only.
-5. Record next responsible role and whether work is BLOCKED.
+| 问题 | 内容 |
+| --- | --- |
+| 交给谁做什么？ | 发送者、实际接收者/角色、任务和下一授权动作 |
+| 已完成什么？ | 结果、主成果链接及准确版本；只报实际完成 |
+| 还缺什么？ | 未完成项、关键阻塞、待决问题和负责方 |
+| 怎么验证？ | 必要检查的 PASS/FAIL/BLOCKED/NOT RUN 与实际证据；没有执行不能写 PASS |
+| 依据什么继续？ | 原 Task Contract、批准范围及相关规格/基线版本 |
+| 何时停止？ | 范围/版本/授权冲突、依赖缺失或其他具体升级条件 |
 
-## Receiver procedure
-1. Verify task identity, authorization, source revisions and assigned scope.
-2. Resolve links to source specs/code/evidence and check pending messages.
-3. ACK with accepted scope or NEEDS_REFINEMENT/BLOCKER if handoff is incomplete or stale.
-4. Do not rely on sender's self-review as independent QA/Review. A reviewer should use fresh context: approved Task Contract/Feature Spec and actual diff at the exact SHA; handoff locates evidence only.
-5. Continue only authorized work and publish a new checkpoint/handoff at the next boundary.
+直接写在原 Issue/PR 线程，引用已有来源；不另建相同的“交接报告、检查点和摘要”三份正文。接收方读来源、核对实时授权及版本后，简短回复 ACK（范围/版本）或 NEEDS_REFINEMENT/BLOCKED（具体缺口）。未收到实际确认就是待接收；ACK 不等于验收、批准设计、编码或部署。
 
-## Example — Coder to QA (illustrative only)
+## Agent 维护的正式记录与兼容
 
-    schema_version: padf.agent-handoff/v1
-    handoff_id: HO-DEMO-123-001
-    context_id: DEMO-123
-    linear_issue: "<canonical-linear-link>"
-    original_feature_ids: ["<original-id>"]
-    sender: feature-coder
-    receiver: qa-tester
-    created_at: "2026-10-13T12:00:00+08:00"
-    task_contract_ref: "<approved-contract-permalink>"
-    owner_approval_ref: "<approval-reference>"
-    scope: "<approved-scope>"
-    source_baseline:
-      pr_url: "<pull-request-url>"
-      base_sha: "<sha>"
-      head_sha: "<sha>"
-      approved_spec: "docs/features/batch-import.md@<sha>"
-    completed_with_evidence: ["<code-or-test-ref>"]
-    not_completed: ["<explicitly-skipped-check>"]
-    test_status: NOT_RUN
-    pending_message_ids: []
-    blockers: []
-    next_authorized_action: "Verify acceptance criteria at the exact head SHA"
-    stop_conditions: ["Spec revision conflict", "Unapproved scope change"]
+上面是人工阅读视图，不改变既有 schema 或必需语义。正式交接在同一记录或其准确引用中保留以下信息，由 Agent 从真实来源整理，人无需逐项手填：
 
-A HANDOFF event records a transfer request; it does not automatically run the receiving agent.
+- schema_version: padf.agent-handoff/v1；唯一 handoff_id、稳定 context_id、任务/Linear 引用及原始 Feature IDs（不适用明确 N/A）、sender/receiver、created_at。
+- task objective/scope、task_contract_ref、owner_approval_ref、next_authorized_action、stop_conditions。
+- source_baseline：规格及相关 ADR/API/UI 的准确版本，适用 PR URL、base/head SHA、分支；completed_with_evidence、not_completed、test_status。
+- pending_message_ids、blockers、开放问题/依赖/风险；并行时的工作区责任和集成边界。
+- 实际 handoff_ref 永久链接及接收方 ACK/NEEDS_REFINEMENT 的证据。
 
-## V0.3 design artifact extension
-For Architect/UI Producer -> downstream Agent, include `handoff_kind: DESIGN` and cite [Architecture Package](architecture-design.md) or [UI Package](ui-design.md), immutable versions and Owner-approved Feature Spec. Use the **same V0.2 envelope**, message IDs and ACK rules; do not introduce a parallel handoff transport.
+已有字段和批准可引用精确来源，但不能删除必需语义、用“继承”掩盖缺失内容，或让下游猜测。重试保留同一逻辑交接身份，查询原记录；有变化追加版本，不覆盖历史。按[消息契约](agent-message.md)保留 HANDOFF envelope、关联 ID 及实际状态，可与交接正文/所需检查点放在同一持久记录，不必分开发相同内容；记录位置合并不消除真实先后顺序。分派必须先于执行，执行者提交与 Master 协调仍分别保留真实作者/来源、时间及引用。
 
-Optional-as-applicable fields:
-- `architecture_scope`, `solution_architecture_ref` and `technology_stack_ref` (system-level), `module_design_ref` and `system_baseline_ref` (module-level), `module_interface_contract_ref`, `code_structure_ref`, `schema/api/workflow_contract_refs`, `diagram_manifest_ref`, `diagram_generator_lock_ref`, `diagram_render_status`.
-- `project_ui_profile_ref`, `ui_design_ref`, `prototype_level`, `concept/high-fi/interactive_artifact_refs`, interaction test status.
-- `dependency_manifest_ref`, `design_review_ref` (only if actually completed), `design_gate_ref`, `stale_checks`, and `unresolved_design_conflicts`.
+## 接收与停止
 
-Producer marks completed only with actual evidence. Receiver checks required artifacts/source revisions and ACKs or responds NEEDS_REFINEMENT/BLOCKED. **Master** owns Design Gate and next-role routing; **Independent Reviewer** owns risk-required design quality opinion, never the Gate. Completed Handoff does not start Coder automatically.
+1. 核对任务身份、允许动作、当前授权及来源版本，读取有关未决消息；陈旧或缺必需输入时指出具体阻塞。
+2. 实际打开产物和证据后 ACK；完整性或含义不清时退修，不让 Owner 重述已记录事实。
+3. 只继续已授权工作；下次责任/会话边界再增量交接，普通进度更新不自动生成一套新记录。
 
+独立 Reviewer 只用交接定位批准需求、准确 diff 和证据，不导入 Coder 自审结论/私有推理。消息或 ACK 不会自动启动 Agent，也不批准合并、生产或扩大范围。
 
-Do not hand the Module Architect a not-yet-approved proposed system baseline and treat it as binding. In a combined SYSTEM/MODULE workflow, attach a verified approved system baseline SHA to the downstream MODULE handoff, then check it again before Coder starts.
+## 适用设计与真实执行时补充
 
+- 设计交接用 handoff_kind: DESIGN，引用实际[系统/模块架构包](architecture-design.md)、[UI 包](ui-design.md)、精确批准基线及清单；仅补本次受影响的接口、约束、设计决定与未决冲突。
+- Module 接收批准的 system_baseline_ref；适用 UI 概念图、产品/实施级规格和 Profile 均需版本匹配。PROPOSED 系统不能作为获批准约束。设计者 COMPLETED、独立 DESIGN Review、Master Design Gate 和 Owner 批准分别记录，不由 Handoff 推导。
+- 验证真实 Master 编排时保留 dispatch_id、工具返回的 execution_id、skill_ref_used@SHA、实际执行会话/回执、产物源 SHA 和 Master 读件/协调证据；见[Dispatch 契约](agent-dispatch.md)。六行摘要不替代这些证据，Master 代写不能证明专家执行。
+- 真人工作保留真实姓名/账号、动作、版本及接收记录；不为真人捏造 Agent ID，不把人工交接标为 RUNTIME_DISPATCH，也不声称当前机器门禁已认证真人。需要现有门禁的真实独立 Agent 证据时仍须提供，不能用人工简表绕过。
 
-## V0.3 provenance extension for actual multi-session pilot
-When verifying Master orchestration, each HANDOFF must additionally cite `dispatch_id`, `execution_id`, actual source `skill_ref_used@SHA`, sender execution session/run evidence, `handoff_ref` and artifact source SHA; recipient Master records the live read/ACK or NEEDS_REFINEMENT. A Master-written Handoff claiming to be from a specialist is not independently sourced execution evidence. Owner relay/attestation is distinct from Master-launched runtime dispatch. See [Dispatch Chain](agent-dispatch.md).
+同一主成果可承载多个设计章节并在清单定位，不要求每个字段单建文件。缺图表、原型、审查或执行能力时如实标记 BLOCKED/NOT RUN，不因“简化”宣布完成。

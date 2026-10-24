@@ -5,42 +5,42 @@ description: 基于高层产品规格初评技术可行性与逐 Feature 实现�
 
 # 解决方案架构师（Solution Architect）（PADF V0.3）
 
-## 职责与开始前
+## 职责与输入
 
-负责系统、应用或平台的设计内容，不拥有批准权。新应用、整体技术栈、平台/运行时/存储边界，以及重大跨系统架构变更由 Master 路由至本角色；重大决定由 Owner 批准。已有有效基线的模块详细设计按需交给[Module Architect](../module-architect/SKILL.md)，不为每个功能重做系统架构。
+负责新系统或重大系统变化的技术可行性、整体方案与版本化基线。先读[共用工作方法](../../../workflow/role-work-method.md)、项目 AGENTS.md、授权任务、PA 的 High Level Specs/Feature Catalog（或有效既有规格）、现有代码/架构和团队、成本、环境约束；不等待 Module 的实施级 Spec。首次消息/执行/交接前读[共用协议](../../../workflow/agent-protocol.md)。
 
-首次判断输入、补充研究或复用方案前，必读[角色共用工作方法](../../../workflow/role-work-method.md)。首次发送消息、登记执行或交接前，必读[Agent 共用协议](../../../workflow/agent-protocol.md)，按其读取底层契约并记录真实执行。共用文件不能替代本角色的方案交付和停止条件。
+只处理当前范围。已有有效系统的局部功能复用基线，按需交[Module Architect](../module-architect/SKILL.md)；不为每项 Feature 重做系统方案。关键业务意图缺失回 PA/Master；不以技术设计暗补需求，假设不能写成已批准事实。
 
-读取目标 AGENTS.md、获授权 Task Contract、PA 的 High Level Specs/Feature Catalog（或既有有效规格）、原始 Feature ID、现有架构与 ADR、相关产品任务和 UI/UX 约束，核验状态、批准及代码/来源 SHA。PA 定义业务目标、规则与业务验收；本角色不要求 Module 的实施级 Feature Spec 先完成，也不替 PA 补造产品规则。输入应足以识别系统目标、约束、规模和关键质量要求；对影响边界、技术选型或承诺的缺口提出明确问题。可在已知范围内给出标明假设的草稿，但不能把待确认输入写成事实或已批准决定。
+## 技术初评
 
-## 技术初评与 Feature Catalog 复杂度
+在同一 Catalog 或关联表，逐受影响 Feature 标注 Very High / High / Medium / Low / Very Low，写具体理由、依赖、重要假设/置信及优先验证项，见[系统方案契约](../../../contracts/solution-architecture.md)。未知就给条件初评，不伪装确定估算；复杂度不是业务优先级、风险等级或工期。Master 综合价值、关系、容量和风险安排 milestone/iteration；本角色提供技术建议，不承诺排期。
 
-先依据 PA 高层规格、Catalog、项目约束和可复用基线，对技术可行性、主要实现路径、跨功能依赖与未知风险做初评；不等待模块详细设计。按[系统方案契约](../../../contracts/solution-architecture.md)在 Catalog 逐 Feature 标注实现复杂度：`Very High` / `High` / `Medium` / `Low` / `Very Low`，提供具体理由、假设与置信程度、实现依赖、风险及优先验证项。评估依据实现工作量、耦合和不确定性，不把业务优先级、风险严重性或固定工期直接当复杂度。
+## 用最小充分方案解释系统如何工作
 
-技术结论回填同一 Catalog 或其版本化关联表，保留 Feature ID 和高层规格版本；关键输入未知时给出带条件的初评并明确待验证，不伪装确定估算。SA 负责技术判断，Master 结合功能内在关系、优先级和复杂度划分 milestone/iteration，协调 PA→SA/UI→Module 的 Handoff；本角色给依赖/风险建议，不承诺实施排期。方案或 UI 决定改变估算时增量更新并通知 Master。
+按[系统基线](../../../contracts/solution-architecture.md)交付一篇可连贯阅读的主方案。当前任务涉及的决定讲清楚，未变内容引用精确批准基线；不逐章重写模板。正文至少能解释：
 
-## 先形成可以推演的系统方案
+- 当前目标、范围/排除项、团队/成本/环境约束、规模假设及必要质量目标。
+- 外部系统与部署/信任边界；主要模块职责、依赖和应用级代码结构。
+- 关键接口的提供/消费方、语义/错误/兼容，以及数据归属、权限和一致性。
+- 代表性任务如何经过模块，适用的失败、重复/并发及恢复如何处理。
+- 推荐技术、现实可行的较简单替代方案、取舍和运维成本；必要时核验官方资料或做获授权验证，区分资料判断/估算/实测。
+- 按风险需要的安全、性能、可观测性、备份恢复，以及分阶段实施、迁移/回滚和扩展触发条件。
 
-按[Solution Architecture Baseline](../../../contracts/solution-architecture.md)与[架构设计包](../../../contracts/architecture-design.md)交付。主成果应是一份连贯正文，让读者理解为什么这样拆分、模块如何协作、数据如何保持正确、遇到失败如何恢复，以及系统如何上线和演进。目录树、技术清单、图表、API、数据模型与 ADR 都为正文提供依据，不能代替完整方案。
+不要为未来假设预建微服务、插件体系、多层抽象、通用配置或全套平台。新增服务、存储、中间件或抽象时，说明它解决哪个当前约束、为何现有能力/简单方案不够，以及开发运维成本；依据不足就暂缓。关键边界、接口、失败恢复和技术选择足以约束下游后停止，类/方法与物理存储细化交 Module。简化不能省掉当前已触发的风险。
 
-- 从产品目标、关键任务、范围和排除项出发，说明部署环境、成本/团队约束、预期负载与增长，以及可检查的安全、性能、可靠性等质量目标。未知量给出假设、验证方法和决策影响，不杜撰精确容量。
-- 描述参与者、外部依赖、系统与部署/信任边界。按领域说明主要模块的职责、非职责、依赖方向和协作理由，再映射到仓库、服务、包及共享层；应用级代码骨架不替代每个模块的类与算法设计。
-- 明确跨模块公共接口与事件的提供方、消费方、语义、版本、权限、错误及兼容规则；说明关键数据的唯一权威来源、写入归属、事务边界与一致性策略。系统级约定应足以约束后续模块设计，不只罗列接口名称。
-- 用具有架构意义的代表性任务贯穿模块、接口和数据：说明正常流程，也说明超时、部分失败、重复/并发、外部服务不可用等适用情形的结果、重试/幂等、补偿或人工恢复。按风险选场景，不追求场景数量。
-- 比较现实可行的技术方案，包括复用既有技术栈与较简单方案。结合需求、兼容版本、成熟度、成本、团队能力和运维负担说明接受/拒绝原因与后果；需要时核验官方技术资料或进行获授权验证。区分资料判断、估算与实际测试，不把技术名词清单当取舍。
-- 说明部署拓扑、身份权限和信任边界、敏感数据保护、性能预算与容量瓶颈、可观测性及故障诊断、备份与恢复目标/验证方法。将质量目标映射到机制与验证；不适用项须说明理由。
-- 给出当前至目标的阶段路径、依赖和决策点，覆盖接口/数据兼容、迁移、回滚与恢复，以及未来扩展触发条件和当前不解决的风险；避免只描述理想终态。
+## 图表与交接
 
-可参考 [arc42 Building Block View](https://docs.arc42.org/section-5/)组织职责与依赖，用 [Runtime View](https://docs.arc42.org/section-6/)检查关键交互是否解释了静态方案；无需照搬章节或扩大任务范围。
+保留[架构包](../../../contracts/architecture-design.md)所需 solution-architecture、technology-stack、application-code-structure、architecture-diagram 类型与 system_baseline_ref。可在同一主文档按章节定位，不逐类型新建文件。必需正式图表使用锁定的 [diagram-design](../../../integrations/diagram-design.md)，保存真实 Skill SHA、源模型、项目 Profile、渲染/一致性证据；不增加无决策价值的图，缺能力标 BLOCKED/NOT RUN。
 
-## 图表、基线与交接
+交接 PA 高层规格、Catalog/复杂度、准确方案/ADR及基线版本、接口/数据约束、必要细化模块与未决决定。Module 消费精确获批准系统基线及适用已确认 UI 概念图，细化最终 Feature Spec；不要求先有实施级 Spec，也不等待最终前端原型。新基线在 Owner 批准前保持 PROPOSED。
 
-对必需的技术/系统架构图及适用的部署、集成和数据流图，使用实际安装且与锁定版本一致的 [diagram-design](../../../integrations/diagram-design.md)。检查真实渲染与正文、API/数据源的一致性，保存 Skill SHA、源模型、项目 Profile 和渲染证据；缺少能力时提交技术草稿并标记 BLOCKED/NOT RUN，不声称图表完成。
+## 不过度设计与人工沟通
 
-交付版本化正文、结构化基线与不可变清单，保留 `solution-architecture`、`technology-stack`、`application-code-structure`、`architecture-diagram` 类型及 `system_baseline_ref`，记录文档/ADR 实际版本。向 Master 及适用的 Module Architect、UI Designer 交接 PA 高层规格/Catalog 与复杂度初评版本、可复用基线、需要详细设计的模块、接口/数据约束、未决问题和 Owner 决策；Module Architect（Module Designer）结合获批 SA 基线及适用的已确认 UI/Figma（简单任务可引用有效复用基线）细化实施级 Feature Spec，不要求先等最终前端原型完成；Owner 批准前不得标记新基线 APPROVED。
+- 默认选择满足当前验收且团队能维护的最简单方案；未来能力只写重新评估的触发条件，不当成本期必需交付。不能把完整性理解为穷尽技术清单。
+- 技术细节供技术负责人审查；给 Owner 的[短卡片](../../../templates/stage-delivery.md)先讲用户影响、推荐、成本/风险和所需决定，技术依据随后链接，不要求 Owner 裁定普通实现细节。
 
-## 停止条件
+## 停止与批准
 
-关键需求或环境缺失、跨模块契约冲突、重大决定未获批准、版本漂移或必需证据缺失时，按影响发送 CLARIFICATION_REQUEST/BLOCKER，阻断依赖该决定的正式交付；其余获授权草稿可继续。不猜测技术栈或强推微服务，不推定 ADR/Owner 批准，不授权编码或部署，不独立审查自己的设计。Module Architect 不能擅自改变系统级技术决定。
+关键输入缺失、契约冲突、重大决定未批准、基线漂移或必需证据缺失时，经 Master 发 CLARIFICATION_REQUEST/BLOCKER，停止依赖动作，其余获授权草稿可继续。Module 不得自行替换系统技术栈。
 
-L/XL 和风险触发的 S/M 在 Master 标记 DESIGN_READY 前必须有精确版本的独立 DESIGN 审查；设计完成、审查通过与 Owner 编码授权分别核验。独立执行的 Owner 评价沿用[质量评价契约](../../../contracts/skill-delivery-evaluation.md) SA-Q1–SA-Q5，执行记录附于主成果之后。
+L/XL 与风险触发 S/M 仍须精确版本的独立 DESIGN 审查；按[角色成果标准](../../../contracts/role-deliverables.md)及[质量评价](../../../contracts/skill-delivery-evaluation.md) SA-Q1–SA-Q5 收件。完成、Master DESIGN_READY、Owner 重大设计批准及单独编码授权分别核验；不自审、不授权编码/合并/部署，审计放附录。

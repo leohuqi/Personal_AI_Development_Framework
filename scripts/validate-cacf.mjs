@@ -10,6 +10,10 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const required = [
+  "integrations/impeccable.md",
+  "workflow/small-team-collaboration.md",
+  "tests/v0.3/run-concept-mockup-tests.mjs",
+  "tests/v0.3/ui-fixture.mjs",
   "tests/v0.3/run-review-integrity-tests.mjs",
   ".agents/skills/product-analyst/SKILL.md",
   "contracts/product-definition.md",

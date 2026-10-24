@@ -3,6 +3,7 @@
 // remote identity verification, Figma execution, dispatches or Owner acceptance.
 // Oracle: Issue #18, pre-launch D-GATE-FIX-QA and the proposed Gate/UI contracts.
 // No implementation internals, external report files, packages or /tmp fixtures.
+import {conceptEvidence} from './ui-fixture.mjs';
 import assert from 'node:assert/strict';
 import {evaluateDesignGate} from '../../lib/design-gate.mjs';
 import {evaluateActionPreflight} from '../../lib/action-preflight.mjs';
@@ -51,24 +52,12 @@ function uiTask(level='L1',mode='legacy',count=1){
  const x=base();x.impacts=['ui'];x.ui_level=level;
  Object.assign(x,{ui_profile_ref:pin('docs/profile.md'),ui_profile_status:'APPROVED',
   ui_profile_approved_ref:pin('docs/profile.md'),ui_profile_approval_ref:link('profile-approval')});
- if(mode==='staged'){
-  x.ui_delivery_mode='staged';x.frontend_stack_ref=pin('docs/frontend.md');
-  x.frontend_prototype_authorization_ref=link('prototype-approval');
- }
+ if(mode!=='legacy')x.ui_delivery_mode=mode;
  for(let i=0;i<count;i++){
   const s=stage(`UI${i}`,'ui-ux-designer');s.profile_ref=x.ui_profile_ref;
-  if(level==='L2'||level==='L3'){
-   if(mode==='staged'){
-    const f={...artifact('figma-design',`docs/${s.id}/figma.json`),tool:'figma',
-     figma_url:'https://www.figma.com/design/synthetic18/design',design_version:`version-${i}`};
-    s.artifacts.push(f);
-    s.figma_confirmation={design_ref:f.ref,design_version:f.design_version,owner_confirmation_ref:link(`confirm-${i}`)};
-   }else s.artifacts.push({...artifact('ui-prototype',`docs/${s.id}/editable.html`),editable_source:true});
-  }
   if(level==='L3')s.artifacts.push({...artifact('interactive-prototype',`docs/${s.id}/runtime.html`),
-   editable_source:true,fidelity:'high',interaction_test_status:'PASS',
-   ...(mode==='staged'?{runtime:'frontend',frontend_stack_ref:x.frontend_stack_ref,
-    figma_design_ref:s.artifacts.find(a=>a.type==='figma-design').ref}:{})});
+   editable_source:true,fidelity:'high',interaction_test_status:'PASS'});
+  if(level==='L2'||level==='L3')conceptEvidence(x,s);
   x.stages.push(s);
  }
  return refresh(x);
@@ -342,69 +331,45 @@ test('F3-nonformal-compatible','Nonformal task acquires no chain or binding obli
  for(const s of x.stages)delete s.orchestration_binding;ready(x);
 });
 
-// F4: level enum and high-fidelity source inheritance apply to every required UI.
-for(const mode of ['legacy','staged']){
- for(const level of ['L1','L2','L3'])test(`F4-${mode}-${level}-complete`,'Complete selected UI scope succeeds',()=>ready(uiTask(level,mode)));
- for(const level of [undefined,'','L0','L4','l2',2])negative(`F4-${mode}-enum-${String(level)}`,'UI level is explicitly L1/L2/L3',
+// F4: current concept/Mockup contract applies to every stage and old mode aliases.
+for(const mode of ['legacy','staged','concept-mockup']){
+ for(const level of ['L1','L2','L3'])test(`F4-${mode}-${level}-complete`,'Selected scope succeeds without Figma',()=>{
+  const x=uiTask(level,mode);assert(!x.stages.some(s=>s.artifacts.some(a=>a.type==='figma-design')));ready(x);
+ });
+ for(const level of [undefined,'','L0','L4','l2',2])negative(`F4-${mode}-enum-${String(level)}`,'UI level is explicit',
   ()=>uiTask('L1',mode),x=>{if(level===undefined)delete x.ui_level;else x.ui_level=level;});
- for(const level of ['L2','L3'])negative(`F4-${mode}-${level}-concept-only`,'Concept alone cannot satisfy high fidelity',
-  ()=>uiTask(level,mode),x=>x.stages[0].artifacts=x.stages[0].artifacts.filter(a=>['ui-design','ui-concept'].includes(a.type)));
- negative(`F4-${mode}-L3-no-interaction`,'L3 inherits source and additionally requires real interaction evidence',
+ negative(`F4-${mode}-L2-unconfirmed`,'L2 needs exact concept confirmation',()=>uiTask('L2',mode),x=>delete x.stages[0].concept_confirmation);
+ negative(`F4-${mode}-L3-concept-only`,'Confirmed concept alone cannot satisfy frontend scope',
   ()=>uiTask('L3',mode),x=>x.stages[0].artifacts=x.stages[0].artifacts.filter(a=>a.type!=='interactive-prototype'));
  for(const value of ['NOT_RUN','FAIL',undefined])negative(`F4-${mode}-interaction-${value}`,'Interaction declaration alone cannot pass L3',
   ()=>uiTask('L3',mode),x=>x.stages[0].artifacts.find(a=>a.type==='interactive-prototype').interaction_test_status=value);
-}
-for(const level of ['L2','L3']){
- test(`F4-legacy-${level}-figma`,'Versioned valid Figma source is a supported high-fidelity source',()=>{
-  const x=uiTask(level),s=x.stages[0];s.artifacts=s.artifacts.filter(a=>a.type!=='ui-prototype');
-  // In L3 make the separate interaction source non-high-fidelity to prove Figma supplies fidelity.
-  const p=s.artifacts.find(a=>a.type==='interactive-prototype');if(p)delete p.fidelity;
-  s.artifacts.push({...artifact('figma-design','docs/figma.json'),tool:'figma',
-   figma_url:'https://www.figma.com/design/synthetic18/design',design_version:'version-18'});ready(refresh(x));
+ for(const level of ['L1','L2'])negative(`F4-${mode}-downgrade-${level}`,'Lower labels cannot conceal frontend',
+  ()=>uiTask('L3',mode),x=>{x.ui_level=level;delete x.frontend_stack_ref;delete x.frontend_prototype_authorization_ref;});
+ for(const target of [1,2])test(`F4-${mode}-later-stage-${target}`,'All required stages checked independent of order',()=>{
+  const x=uiTask('L3',mode,3);ready(x);x.stages[target].artifacts=x.stages[target].artifacts.filter(a=>a.type!=='impeccable-review');
+  for(const order of permutations(x.stages)){x.stages=order;refresh(x);denied(x);}
  });
- test(`F4-legacy-${level}-combined`,'One high-fidelity editable interactive source can meet both requirements',()=>{
-  const x=uiTask('L3');x.ui_level=level;x.stages[0].artifacts=x.stages[0].artifacts.filter(a=>a.type!=='ui-prototype');ready(refresh(x));
- });
- for(const value of [undefined,false])negative(`F4-legacy-${level}-editable-${value}`,'UI prototype must be explicitly editable',
-  ()=>uiTask(level),x=>{
-   const s=x.stages[0];s.artifacts.find(a=>a.type==='ui-prototype').editable_source=value;
-   const p=s.artifacts.find(a=>a.type==='interactive-prototype');if(p)delete p.fidelity;
-  });
- for(const [label,mutate] of [
-  ['missing-fidelity',p=>delete p.fidelity],['low-fidelity',p=>p.fidelity='low'],
-  ['missing-editable',p=>delete p.editable_source],['false-editable',p=>p.editable_source=false]]){
-  negative(`F4-combined-${level}-${label}`,'Combined interactive source needs high fidelity and editability',()=>{
-   const x=uiTask('L3');x.ui_level=level;x.stages[0].artifacts=x.stages[0].artifacts.filter(a=>a.type!=='ui-prototype');return refresh(x);
-  },x=>mutate(x.stages[0].artifacts.find(a=>a.type==='interactive-prototype')));
- }
 }
-for(const field of ['tool','figma_url','design_version'])negative(`F4-legacy-figma-${field}`,'Invalid Figma metadata cannot count as a high-fidelity source',()=>{
- const x=uiTask('L2');x.stages[0].artifacts=x.stages[0].artifacts.filter(a=>a.type!=='ui-prototype');
- x.stages[0].artifacts.push({...artifact('figma-design','docs/figma.json'),tool:'figma',
-  figma_url:'https://www.figma.com/design/synthetic18/design',design_version:'version-18'});return refresh(x);
-},x=>{const f=x.stages[0].artifacts.find(a=>a.type==='figma-design');
- if(field==='tool')f.tool='html';else if(field==='figma_url')f.figma_url='https://example.test/figma';else delete f.design_version;});
-for(const mode of ['legacy','staged'])for(const target of [1,2])test(`F4-${mode}-later-stage-${target}`,'Every required UI stage must meet level-specific evidence in any order',()=>{
- const x=uiTask('L2',mode,3);ready(x);x.stages[target].artifacts=x.stages[target].artifacts.filter(a=>['ui-design','ui-concept'].includes(a.type));
- for(const order of permutations(x.stages)){x.stages=order;refresh(x);denied(x);}
-});
-const stagedMutations=[
- ['confirmation',x=>delete x.stages[0].figma_confirmation],
- ['confirmation-sha',x=>x.stages[0].figma_confirmation.design_ref=pin('docs/UI0/figma.json',B)],
- ['confirmation-version',x=>x.stages[0].figma_confirmation.design_version='old'],
- ['confirmation-owner',x=>delete x.stages[0].figma_confirmation.owner_confirmation_ref],
+const uiMutations=[
+ ['confirmation',x=>delete x.stages[0].concept_confirmation],
+ ['confirmation-sha',x=>x.stages[0].concept_confirmation.concept_ref=pin('old-concept.md',B)],
+ ['confirmation-source',x=>delete x.stages[0].concept_confirmation.confirmation_ref],
  ['authorization',x=>delete x.frontend_prototype_authorization_ref],
  ['stack',x=>delete x.frontend_stack_ref],
- ['runtime',x=>x.stages[0].artifacts.at(-1).runtime='figma'],
- ['runtime-stack',x=>x.stages[0].artifacts.at(-1).frontend_stack_ref=pin('docs/frontend.md',B)],
- ['runtime-figma',x=>x.stages[0].artifacts.at(-1).figma_design_ref=pin('docs/UI0/figma.json',B)]
+ ['runtime',x=>x.stages[0].artifacts.find(a=>a.type==='interactive-prototype').runtime='figma'],
+ ['runtime-stack',x=>x.stages[0].artifacts.find(a=>a.type==='interactive-prototype').frontend_stack_ref=pin('frontend.md',B)],
+ ['runtime-concept',x=>x.stages[0].artifacts.find(a=>a.type==='interactive-prototype').concept_ref=pin('concept.md',B)],
+ ['fidelity',x=>x.stages[0].artifacts.find(a=>a.type==='interactive-prototype').fidelity='low'],
+ ['editable',x=>x.stages[0].artifacts.find(a=>a.type==='interactive-prototype').editable_source=false],
+ ['review-pin',x=>delete x.impeccable_skill_ref],
+ ['review-target',x=>x.stages[0].artifacts.find(a=>a.type==='impeccable-review').target_ref=pin('old.html',B)],
+ ['review-profile',x=>x.stages[0].artifacts.find(a=>a.type==='impeccable-review').profile_ref=pin('old-profile.md',B)],
+ ['review-findings',x=>x.stages[0].artifacts.find(a=>a.type==='impeccable-review').findings=[{severity:'P1',status:'OPEN'}]]
 ];
-for(const [name,mutate] of stagedMutations)negative(`F4-staged-${name}`,'Staged confirmation, authorization and approved frontend remain mandatory',()=>uiTask('L3','staged'),mutate);
-for(const level of ['L1','L2'])negative(`F4-staged-downgrade-${level}`,'Lower level cannot hide required frontend prototype',
- ()=>uiTask('L3','staged'),x=>{x.ui_level=level;delete x.frontend_stack_ref;delete x.frontend_prototype_authorization_ref;delete x.stages[0].figma_confirmation;});
+for(const [name,mutate] of uiMutations)negative(`F4-current-${name}`,'Current confirmation, frontend and Impeccable remain mandatory',()=>uiTask('L3','concept-mockup'),mutate);
 
-// Follow-up to fresh-context Review of 36f1030. The original 236 registered
-// cases above remain unchanged; these fixtures exercise cross-checker inputs
+// Follow-up to fresh-context Review of 36f1030. Non-UI integrity cases retain their original oracle; F4 follows the current UI contract.
+// These fixtures exercise cross-checker inputs
 // that complete artifact coverage alone cannot establish.
 function multipleSystemChain(providerFirst=false){
  const x=architectures('both',1),support=stage('SUPPORT','solution-architect');

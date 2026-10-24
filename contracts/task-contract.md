@@ -1,99 +1,46 @@
-# Task Contract — Template
+# Task Contract：一份任务说明即可开始
 
-> Copy the relevant fields into the Linear issue or the explicit Codex task. Do not fill with invented approvals or test results.
+在现有 Issue、PR 或明确任务中维护；不要求 Owner 手填机器字段，不为每次分派重建文档。本契约引用已有批准，不自行授予权限。
 
-## Identity and authorization
-- Project/repository:
-- Linear issue URL and identifier:
-- Original immutable Feature ID(s):
-- Module / Cycle:
-- Task class (S bug / M feature / L cross-module / XL product):
-- Owner approval reference and scope:
-- Authorized environment: prototype / local / isolated CI
-- Base branch/commit or approved release:
+## 默认只写六项
 
-## V0.2 shared context / communication
-- context_id (stable project-task reference):
-- Shared Task Context permalink/revision (or location to reconstruct it):
-- Owner approval evidence link (not only a free-text assertion):
-- Pending Agent Message thread IDs/links and unresolved blockers at dispatch:
-- Last verified Git HEAD / spec revision / Linear observation time:
-- Design/API handoff refs (if relevant):
-- Recipient agent/role, expected next authorized action and stop conditions:
-- Context loading profile: minimal / design / review (bounded by role):
-- Session recovery/checkpoint permalink if continuing interrupted work:
+| 项目 | 最小内容 |
+| --- | --- |
+| 目标与验收 | 要完成的用户结果，以及可以观察/验证的通过条件 |
+| 范围 | 本次做什么、不做什么；受影响功能或模块 |
+| 人与下一步 | 交付负责人、实际执行者、接收/审查者；下一动作及停止/升级条件 |
+| 输入 | 相关规格、设计、接口或代码的准确版本；复用已批准基线 |
+| 交付 | 主成果或 PR、必要测试/审查证据、未完成项 |
+| 授权与环境 | 真实 Owner 批准引用及范围、允许环境；不能从设计完成推导编码/上线权限 |
 
-A Task Contract grants no authorization without applicable Owner approval. Messages and checkpoints only reference or transmit already-authorized tasks.
+写法可以是六行正文；已有可观察验收或批准范围只引用一次。目标已清楚时不额外创建 PRD、研究报告或两套规格。跨角色交接参见[最小 Handoff](agent-handoff.md)；真人责任参见[小团队协作](../workflow/small-team-collaboration.md)。
 
-## Master 持续分派范围
+例如局部缺陷任务可以描述：修复搜索无结果提示；不改查询和权限；张某负责，开发 Agent 执行，QA 接收；引用当前规格/代码版本；交付 PR 和空结果回归证据；引用该修复的有效编码授权、仅在隔离环境执行。示例不是实际批准。
 
-已批准的分派与启动无需逐次重新批准；记录可复用的 `authorization_ref`、`owner_approval_ref`、当前状态、精确 Task Contract 引用、`context_id`、仓库、环境及有限 `scope_items`（允许角色/动作、必要决策及精确版本）。按[Dispatch 契约](agent-dispatch.md)核验，不能由接收方扩大或删减。此授权不包含重大设计决策、业务编码、合并、发布、生产或破坏性操作、最终验收；另行批准的动作保留各自门禁。
+## Agent 维护的来源信息
 
-## V0.3 design stage and dependency inputs (when applicable)
-- Task class (S/M/L/XL) and risk flags / risk assessment rationale:
-- Impact domains: architecture / api / database / workflow / integration / ui / shared-component / security / etc.:
-- Master-selected `architecture_scope` (none/system/module/both), routing rationale and affected system/module boundaries:
-- Applicable approved `system_baseline_ref` for module design; current architecture Owner approval and matching baseline revision:
-- Required specialist stages (Solution Architect, Module Architect, UI Designer as applicable) and `padf.agent-dependency/v1` manifest permalink:
-- System Solution Architecture Package: tech stack/framework, app-level code structure + diagrams; or unchanged approved baseline/N/A reason:
-- Module Code Design Package: package/class/interface layout, implementation guidance + module diagrams; or N/A reason:
-- UI package level L1/L2/L3 + approved project UI Profile revision, or N/A with reason:
-- Design Handoff links and receiving agent ACK / NEEDS_REFINEMENT:
-- Independent DESIGN Review decision/evidence (mandatory L/XL or risk-triggered S/M), otherwise Master skip rationale:
-- Design Consistency Gate result/evidence `padf.design-gate/v1`:
-- Owner material design approval (if changed) and **separate bounded coding authorization**:
-- Review expected at exact artifact revisions; versions that changed invalidate relevant gate evidence.
+在同一任务的附录/现有记录里维护 context_id、仓库、任务 URL/ID、不可变 Feature ID、base/head SHA、Task Contract 永久引用、真实批准引用及当前状态。无 Linear 或 Feature ID 时写 N/A 并保留真实任务引用，不发明 ID。仅在有待处理消息、并行工作或恢复时引用对应 thread、工作区归属或检查点；不重复建立 STC、消息与交接正文。
 
-This section is an extension of V0.2 contracts, not a second Task Contract or permission to execute from DESIGN_READY alone.
+每次执行前核对实时授权、来源和依赖，陈旧/冲突只阻断受影响动作。机器字段只能从已核验事实整理，缺失的授权、身份或测试证据不能自动生成。正式 Agent Message 的 envelope 仍按[共用协议](../workflow/agent-protocol.md)及原 schema 完整记录；上面的六项是阅读/填写入口，不是替代机器契约的新 schema。
 
-## 成果与增量输入
+## 只有发生相应影响才展开
 
-目标、范围、相关输入、预期主成果、授权边界和真实执行/交接引用是必需内容；其他字段按适用性引用，不复制无关材料。说明已有规格是否有效，`product_scope: reuse/define/refine`、两阶段的`product_spec_ref`/`feature_spec_ref`及`spec_handoff_ref`和共享研究来源；先定义收件标准，再选择必要角色。关键输入/Owner 决策缺失时只暂停依赖动作，简单增量复用来源。
+| 触发条件 | 增加的必要输入 |
+| --- | --- |
+| 产品行为新增或变化 | product_scope: reuse/define/refine；适用 product_spec_ref、最终 feature_spec_ref 和 spec_handoff_ref；沿用[两阶段规格](product-definition.md)，简单任务可同文裁剪 |
+| 系统/模块设计 | S/M/L/XL、impacts/risk_flags、architecture_scope 及理由；适用的获批准 system_baseline_ref、设计产物/依赖与准确版本 |
+| UI | 任务所需 L1/L2/L3、项目 UI Profile；概念图确认后直接前端 Mockup，保留批准栈、原型授权和当前 Impeccable 审查，见[UI 契约](ui-design.md) |
+| 跨系统接口 | 双方负责人、接口版本与兼容约定、联测环境/标准及阻塞；不以 mock 当双方联测 |
+| 实施与验证 | 受影响 AC、必要测试/CI、QA 和独立 Review；迁移、安全、性能等仅按实际风险补充 |
+| 真实 Agent 分派 | 按[Dispatch 契约](agent-dispatch.md)记录有限 scope_items、角色/动作、必要决策及真实 Dispatch → Execution → Handoff → Master 协调 |
+| 受保护操作 | 按[Action Preflight](action-preflight.md)及[审批策略](../governance/approval-policy.md)核对本操作授权、准确版本和实时证据；生产增加准确产物、手册及回滚/恢复证据 |
 
-每阶段保留一个主成果入口，推荐/取舍/Owner 待决事项在前，审计置于附录。参见[共用工作方式](../workflow/role-work-method.md)、[角色成果标准](role-deliverables.md)与[产品定义](product-definition.md)。不新建第二套批准或消息记录。
+字段可引用既有精确来源，不要求逐项新建文件。省略的是不适用材料和重复填写，不是已触发的强制证据。新设计仍须适用 Design Gate 和独立 DESIGN Review；设计、编码、合并、发布、验收、Done、生产是不同动作。
 
-新复杂UI任务记录 `ui_delivery_mode: staged` 与目标L1/L2/L3：概念→Figma→确认后的前端原型。按[UI契约](ui-design.md)引用精确Figma版本/确认、批准前端栈与有边界原型制作授权；这些不授予业务编码/生产权限。简单局部任务说明复用/裁剪理由。Master在Catalog记录SA五级复杂度并关联milestone/iteration，QA计划/结果以TC-ID追溯。
+## 已批准范围内继续执行
 
-## Objective
-- User-visible outcome:
-- In scope:
-- Out of scope:
-- Business rules / invariants:
+Master 复用有效 authorization_ref / owner_approval_ref、精确 Task Contract、context_id、仓库、环境和有限 scope_items；启动、接续、返工或重试不重复请求同一批准。必要决策、允许角色/动作和范围不能由接收方自行删减或扩大。
 
-## Source documents — load only relevant parts
-- Approved Feature Spec (file + section/commit):
-- UI prototype / design baseline if applicable:
-- API/database/architecture contract sections if applicable:
-- Dependencies, with Feature ID and linked Linear blocking issue:
-- Resolved blockers:
-- Open questions requiring clarification:
+分派授权不包含重大设计决策、业务编码、合并、发布、生产、破坏性操作或最终验收；另行有效授权仍可引用。重试先查已有执行，防止重复启动；版本、环境、授权或依赖变化时重新核对受影响部分。
 
-## Acceptance criteria
-| AC-ID | Behavior / observable result | Test type / expected evidence |
-| --- | --- | --- |
-| AC-1 | [specific observable behavior] | [pytest/API/PG/E2E/manual] |
-
-Include success, invalid, empty/loading/error, authorization and regression cases when applicable.
-
-## Implementation constraints
-- Files/modules expected to be affected (indicative, not permission to broaden):
-- Data source and fixture/real-data boundary:
-- Migration/version/compatibility constraints:
-- Performance/security/reliability constraints:
-- Approval required for scope, architecture or environment changes:
-
-## Execution and handoff
-- Requested skill(s):
-- Required tests / CI workflow:
-- Independent review requirement:
-- PR title: [Linear-ID] [Feature-ID] concise scope
-- Required result: Delivery Report, PR URL, commit/head SHA, test/QA/review evidence, pending message dispositions and durable Agent Handoff/Checkpoint refs if applicable.
-- Forbidden without separate owner approval: production deployment, destructive migration, credential changes, deleting live data, declaring owner acceptance.
-
-
-## V0.3 Master-orchestrated specialist acceptance fields
-For a real independent-specialist pilot (not ordinary chat drafting) record the [Dispatch Record](agent-dispatch.md): `dispatch_id`, `master_run_ref`, `target_role`, `target_skill_ref@SHA`, `execution_mode` (ROLE_SIMULATION/HUMAN_RELAY/RUNTIME_DISPATCH), expected artifacts, upstream `depends_on_dispatch_ids`, exact design and Owner approval refs, `dispatch_ref` and reason. Specialist execution must read this **before** starting and cite it in its receipt. A Task Contract or Agent Message **alone does not start an agent**.
-
-## G-01操作前输入
-
-保留操作引用[Action Preflight快照](action-preflight.md)：准确action/subject、原Owner授权及范围、项目规则/适用门禁、实时观测证据、Review执行/差异/条件、发现/依赖、摘要与执行前复核，实际工具回执及事后状态协调。引用既有授权/Delivery Report/Design Gate/Dispatch，不复制新批准体系；明确生产/原型/隔离环境。只读READY不能自行执行，普通请求不是例外。
+完成时在原任务给出[Delivery Report](delivery-report.md)或等价事实和 Handoff；接收方实际 ACK 后继续授权工作。没有批准、没有独立审查或没有实测，必须如实保留待批准/BLOCKED/NOT RUN。

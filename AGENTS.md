@@ -10,12 +10,20 @@
 - 已批准范围内的 Master 任务分派与启动复用现有 Owner 授权，无需逐次重新批准；优先使用可用的真实 Agent 运行时，保留分派审计、工具返回的执行 ID 和 Handoff。
 - 该授权不扩展至重大设计决策、业务编码、PR 合并、发布、生产部署、破坏性操作或最终验收。新增 Linear Loops、自托管编排、常驻调度器仍须单独授权。
 
+## 小团队与不过度设计
+
+- Owner / PM 保留最终决定权；技术成员在已批准范围内负责技术、编码、接口联测和获批准部署的执行。按[小团队协作](workflow/small-team-collaboration.md)明确真人交付负责人、实际执行者、审查者和批准人；角色可兼任，独立审查不可自审。
+- 每个角色优先复用，只设计当前验收和真实风险所需内容。新增功能、基础设施、抽象或文档须有当前依据及简单方案比较；无依据删除/暂缓，写重新评估条件，不预建未来平台。
+- 不过度设计/编码也适用于项目文档、评审、交接和日常沟通：结论或请求先行，同一内容维护一份，其他位置用明确链接引用；具体做法见[共用工作方法](workflow/role-work-method.md#文档评审与沟通同样最小充分)。
+- 信息足以实施/验证、必要决定清楚后停止细化；简单任务合并规格/步骤。必要授权、已触发设计门禁、独立审查和真实证据不因简化取消。
+- Task Contract 与 Handoff 先用最小阅读入口，机器字段和来源由 Agent 维护；向任何团队成员请求审查/决定先用[短卡片](templates/stage-delivery.md)给出问题、推荐、影响、回复方式和版本，详细技术/审计按需展开，重大风险在前。
+
 ## 成果与共用工作方式
 
 - 所有角色先读相关既有材料，按[共用工作方法](workflow/role-work-method.md)判断需问 Owner、主动研究、复用或仅补增量；关键答案未到前暂停依赖设计，其他授权研究可继续。
 - Product Analyst负责High Level Specs与Catalog；Module Designer结合SA与已确认UI细化实施级Feature Specs，由Master协调Handoff/ACK；简单项目可有理由合并步骤，编码不得猜测产品行为。有效规格可复用，简单任务不强制调用全部角色。
 - Solution Architect做技术初评，在Catalog按Very High/High/Medium/Low/Very Low评估实现复杂度，并交付连贯完整系统方案，说明职责、接口/数据、跨模块正常及失败流程、技术取舍、运行质量与演进；图、模型、API 和 ADR 支持正文。
-- UI明确概念图→Figma设计/原型确认→按批准前端栈和原型授权制作高保真可运行原型；明确的局部变更直接复用。质量不按页面、tokens、热点数量评价。
+- UI明确概念图→Owner/获授权团队成员确认→按批准前端栈和原型授权制作高保真可运行原型；明确的局部变更直接复用。用 Impeccable 审查任务体验、组件/Profile 一致性和实际前端；不强制 Figma。概念可由 Owner 或获授权成员确认，重大设计和编码批准不下放。质量不按页面、tokens、热点数量评价。
 - Master 对整体推进、内容充分性、跨角色一致性、取舍整合和交付质量负责；不足应退修，不替代独立审查或 Owner 批准。按[角色成果标准](contracts/role-deliverables.md)提供统一成果入口，审计置于附录。
 - Master依据SA复杂度、功能关系/依赖、价值与风险规划milestone/iteration和进度；Context Coordinator只提供共享上下文/恢复能力。QA交付可追溯Test Cases与逐版本Test Results。Owner评审统一入口为[评审中心 #14](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/14)，接受入口评论或当前对话原话，Master同步并保留结论/适用版本。
 - 共用消息/执行/Handoff 规则集中在[Agent 协议](workflow/agent-protocol.md)，首次相关动作前必须读取；机器字段可用本地草稿生成器，不以文档重复代替实际证据。Context Coordinator 默认作为共享能力，按需独立启用。
