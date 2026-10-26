@@ -42,6 +42,12 @@ decision_approvals: []
 - 正式 Module `DESIGN` 的每个范围项须包含 `kind: SYSTEM_BASELINE`；正式 UI `DESIGN` 须包含 `UI_PROFILE` 或 `UI_PROFILE_CREATION` 前置条件。Owner 已明确授权的提案起草用 `DESIGN_PROPOSAL`，不能标记正式完成或放行 Gate。创建 Profile 的批准不能替代后续重大视觉决策批准。
 - 范围、仓库、上下文、环境或 Task Contract 不匹配时阻断对应启动。重试先查询已有执行，避免并发重复；有效批准不会因单次工具失败而自动失效，也不会因此扩大。
 
+## 同一 Agent 的接续
+
+按[共用接续规则](../workflow/agent-protocol.md#优先接续已有-agent)先查询并复用合适的实际会话。接续是当前有界分派的执行方式，仍逐次核对授权与依赖；不要求为每次启动新增Owner批准。
+
+会话/运行时任务引用可保持原值；新分派的 dispatch_id、当前输入/Skill版本、实际执行回执、时间及Handoff关联仍须准确。复用 executor_session_ref / runtime_task_ref 不等于复用旧阶段的执行事实；正式设计链仍检查当前阶段的唯一绑定和真实先行，运行时缺证据不能补造。需要新会话时在已有记录写原因与恢复来源，不改变schema或增加必填表。
+
 ## 执行模式
 
 | execution_mode | 启动方与证据 | 可声明的事实 |
