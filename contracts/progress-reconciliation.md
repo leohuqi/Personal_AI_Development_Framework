@@ -65,6 +65,8 @@ readReceipt(receipt_ref) -> core
 
 执行器先读Issue/Team，再在写前重读，检测updated_at及状态/关系的语义漂移；写后核对准确Issue、状态、依赖和无意外关系变化。当前Linear工具没有原子CAS，`expected_updated_at`是适配器前读约束，不是服务器CAS承诺。回执固定标记`READ_BACK_OBSERVED_NOT_ATOMIC`；跨会话读取与写入间仍有竞态，高风险操作无法接受此边界时先BLOCKED。不会通过全局配置、锁服务或无限重试掩盖限制。
 
+回执同时保存初读、`pre_write_issue`及最终readback的真实观察时间。写前和最终观察均须新鲜，且初读→写前→最终回读不倒序；最终回读不得早于本attempt计划观察，距synced_at最多5分钟。历史Receipt按它自身observed_at/写前/synced_at相对核对，不因离线复查时系统日期改变而失效。
+
 ## 结果、Receipt与重试
 
 | 结果 | 可声明事实 |
@@ -82,6 +84,10 @@ Receipt包含identity、稳定operation_key与本attempt身份、事件/细分�
 
 `evaluateOrchestrationChain`在新链级要求或任一新progress_identity出现时，强制所有阶段显式适用性。Linear阶段必须有准确身份/Handoff/ACK/源SHA绑定且已持久化回读的成功Receipt，缺失、失败、错绑及链末尾遗漏都不eligible。`evaluateDesignGate`传入该要求，不能被旧orchestration开关关闭。原有未采用扩展的记录不受新增必填约束。
 
+用于证明阶段已收件的`reconciliation.progress_receipt`必须来自HANDOFF_ACKNOWLEDGED、REVIEW_COMPLETED或DONE_REQUESTED及对应收件后阶段；READY/Todo或初始启动Receipt只证明启动前/启动事实，不能即使复制相同Handoff/ACK/SHA也冒充收件协调完成。它们仍可作为原任务中的独立进度记录保留。
+
 Done额外要求完整`done_input`：subject、authorization.subject与acceptance必须同时绑定当前execution_issue_id/execution_context_id、原context/Task Contract/仓库/源码SHA；父级、兄弟任务或无执行绑定的旧验收先BLOCKED。随后直接调用原`evaluateActionPreflight(MARK_ISSUE_DONE)`并在执行前用新时钟`revalidateActionPreflight`；只有两者READY才允许Done。不会接受调用方字符串READY，原action-preflight实现保持不变。
+
+当前所有未满足的start/integration依赖，以及计划增删后仍无满足证据的live blockedBy，均并入原G-01 blockers再评估；旧done_input的空blockers不能抹去这些事实。写前重读仍适用，Done Receipt保留全部依赖事实，且最终不得仍有未满足依赖或blockedBy。
 
 PQA/PKMS采用时，在已有任务附加准确绑定，核对现有Team状态并在受控环境试验，再单独批准项目接入。此框架PR不写真实项目状态、不改业务、不自动升级正在进行的CR。历史失步回归使用Owner提供事实，当前只读观察不能冒充本修复效果。

@@ -7,8 +7,8 @@
 - [模块设计与必要流程图](DESIGN.md)：身份、状态、依赖、失败恢复及兼容边界。
 - [独立DESIGN复审](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/28#issuecomment-6417140907)：准确设计`a26f5c7`，原2项P2已修复；此结论不代表实现通过。
 - [统一契约与执行API](../../../contracts/progress-reconciliation.md)：精确身份、状态映射、工具适配、Receipt、失败和幂等规则；[实现](../../../lib/progress-reconciliation.mjs)使用现有工具的注入接口。
-- [RED原始结果](validation/tdd-red.json)：准确提交`c711f6d`的37例中36例失败，包含两个旧编排入口漏检；[GREEN与针对性回归](validation/coder-results.json)的40例通过。
-- [独立QA](validation/qa-results.json)：55例通过，含W1–W4、实际Team状态ID注入、失败与并发、时钟推进、旧合同、Done门禁，以及完整Mock收件/回读/持久化链和下游依赖链；[首轮真实失败](validation/qa-first-failures.json)保留原输入绑定，不倒写为通过。
+- [初始RED](validation/tdd-red.json)：准确提交`c711f6d`的37例中36例失败，包含两个旧编排入口漏检。独立实现审查另发现3类遗漏，已先固定[返修RED](validation/implementation-review-red.json)，再完成[45/45 GREEN与回归](validation/implementation-review-green.json)；初轮结果保留原版本。
+- [当前独立QA](QA.md)：66例和13条受影响原回归通过，覆盖W1–W4、真实Team配置注入、依赖/Done、Receipt事件语义/新鲜度、失败与并发、时钟和旧合同。实际结果保存[完整Mock链与源哈希](validation/qa-rereview-results.json)及[回归记录](validation/qa-rereview-regressions.json)；原55例结果、[首轮失败](validation/qa-first-failures.json)和[旧实现缺陷复现](validation/qa-review-findings-8d6.json)保留，不倒写为通过。
 
 ## 事实与范围
 
