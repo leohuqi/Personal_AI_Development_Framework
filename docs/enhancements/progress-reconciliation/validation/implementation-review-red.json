@@ -1,0 +1,194 @@
+{
+  "suite": "Master progress reconciliation: controlled history and injected integration",
+  "scope": "MOCK_ONLY_NO_LIVE_LINEAR",
+  "count": 45,
+  "passed": 40,
+  "failed": 5,
+  "tests": [
+    {
+      "name": "new Linear profile cannot silently pass existing ACK/CONTINUE without Receipt",
+      "status": "PASS"
+    },
+    {
+      "name": "unextended historical chain remains compatible",
+      "status": "PASS"
+    },
+    {
+      "name": "W1 updates only LEO-202 and persists read-back evidence",
+      "status": "PASS"
+    },
+    {
+      "name": "W2 APPROVE with Draft PR is In Review",
+      "status": "PASS"
+    },
+    {
+      "name": "W3 conditional approval keeps all open conditions",
+      "status": "PASS"
+    },
+    {
+      "name": "W4 real DESIGN rework maps In Progress",
+      "status": "PASS"
+    },
+    {
+      "name": "review rejection without real rework cannot claim started rework",
+      "status": "PASS"
+    },
+    {
+      "name": "parent does not become blockedBy",
+      "status": "PASS"
+    },
+    {
+      "name": "completed old prerequisite removed with evidence; unrelated retained",
+      "status": "PASS"
+    },
+    {
+      "name": "integration dependency does not regress real implementation to Backlog",
+      "status": "PASS"
+    },
+    {
+      "name": "already correct status performs no write but still reads and persists",
+      "status": "PASS"
+    },
+    {
+      "name": "duplicate Handoff retries without repeated writes",
+      "status": "PASS"
+    },
+    {
+      "name": "write failure cannot report synchronization success",
+      "status": "PASS"
+    },
+    {
+      "name": "read failure cannot report synchronization success",
+      "status": "PASS"
+    },
+    {
+      "name": "receipt persistence failure cannot report synchronization success",
+      "status": "PASS"
+    },
+    {
+      "name": "receipt read failure cannot report synchronization success",
+      "status": "PASS"
+    },
+    {
+      "name": "write/read mismatch cannot report synchronization success",
+      "status": "PASS"
+    },
+    {
+      "name": "persisted receipt tampering cannot report synchronization success",
+      "status": "PASS"
+    },
+    {
+      "name": "pre-write concurrent change blocks rather than overwrites",
+      "status": "PASS"
+    },
+    {
+      "name": "same timestamp semantic relation drift is detected",
+      "status": "PASS"
+    },
+    {
+      "name": "late old start cannot regress In Review",
+      "status": "PASS"
+    },
+    {
+      "name": "missing execution Issue never falls back to parent",
+      "status": "PASS"
+    },
+    {
+      "name": "parent Issue cannot stand in for execution task",
+      "status": "PASS"
+    },
+    {
+      "name": "wrong ACK execution binding blocks",
+      "status": "PASS"
+    },
+    {
+      "name": "wrong live team/status mapping blocks",
+      "status": "PASS"
+    },
+    {
+      "name": "Done does not follow from APPROVE/CI/merged PR",
+      "status": "PASS"
+    },
+    {
+      "name": "exact execution acceptance still requires original G-01",
+      "status": "PASS"
+    },
+    {
+      "name": "Done rejects parent acceptance scope",
+      "status": "PASS"
+    },
+    {
+      "name": "Done rejects context acceptance scope",
+      "status": "PASS"
+    },
+    {
+      "name": "Done rejects missing acceptance scope",
+      "status": "PASS"
+    },
+    {
+      "name": "Done rejects owner acceptance scope",
+      "status": "PASS"
+    },
+    {
+      "name": "Done rejects fake acceptance scope",
+      "status": "PASS"
+    },
+    {
+      "name": "old unbound Contract remains readable but cannot synchronize child",
+      "status": "PASS"
+    },
+    {
+      "name": "explicit GitHub-only task is N/A without Linear calls",
+      "status": "PASS"
+    },
+    {
+      "name": "failed Receipt cannot let existing chain CONTINUE",
+      "status": "PASS"
+    },
+    {
+      "name": "accurate verified Receipt allows the new final-stage entry",
+      "status": "PASS"
+    },
+    {
+      "name": "new stage identity cannot disable Receipt checking with false old flag",
+      "status": "PASS"
+    },
+    {
+      "name": "explicit progress requirement cannot be disabled by old Design Gate switch",
+      "status": "PASS"
+    },
+    {
+      "name": "invalid evidence source is blocked without mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "planner does not mutate caller input",
+      "status": "PASS"
+    },
+    {
+      "name": "implementation review: Done blocks known unmet start prerequisite",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'SYNCED'\n- 'BLOCKED'\n"
+    },
+    {
+      "name": "implementation review: Done blocks known unmet integration prerequisite",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'SYNCED'\n- 'BLOCKED'\n"
+    },
+    {
+      "name": "implementation review: unexplained live blockedBy cannot be silently dropped from Done scope",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'SYNCED'\n- 'BLOCKED'\n"
+    },
+    {
+      "name": "implementation review: pre-Handoff READY Receipt cannot prove completed stage coordination",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n\ntrue !== false\n"
+    },
+    {
+      "name": "implementation review: stale final readback cannot report verified synchronization",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'SYNCED'\n- 'PROGRESS_SYNC_FAILED'\n"
+    }
+  ]
+}
