@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Master 进度协调模块</title>
+<style>
+:root{--paper:#f5f5f5;--ink:#2d3142;--muted:#4f5d75;--soft:#5a6580;--accent:#bf4520;--link:#2e5aa8;--rule:#bfc0c0;--sans:"Geist","PingFang SC","Microsoft YaHei",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;--serif:"Instrument Serif","Songti SC",serif}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans)}main{max-width:1080px;padding:32px 24px;margin:auto;min-width:0}h1{font:400 28px var(--serif);margin:8px 0 12px}p{font-size:14px;line-height:1.7;margin:0 0 16px;color:var(--muted)}.eyebrow{font:500 8px var(--mono);letter-spacing:.18em;color:var(--soft)}.diagram-container{width:100%;overflow-x:auto}svg{width:100%;min-width:960px;display:block}.name{font:600 12px var(--sans);fill:var(--ink)}.detail{font:400 9px var(--mono);fill:var(--muted)}.note{font:400 11px var(--sans);fill:var(--muted)}.tag,.label{font:400 8px var(--mono);fill:var(--soft);letter-spacing:.06em}.edge{fill:none;stroke:var(--muted);stroke-width:1.2}.external{stroke:var(--link)}.focal{fill:rgba(191,69,32,.08);stroke:var(--accent)}.node{fill:var(--paper);stroke:var(--rule);stroke-width:1}.label-mask{fill:var(--paper)}@media print{main{padding:0}.diagram-container{overflow-x:visible}svg{min-width:0}}
+</style>
+</head>
+<body><main>
+<div class="eyebrow">PADF · COMPONENT VIEW · PROGRESS-MA-01</div>
+<h1>Master 进度协调模块</h1>
+<p>从准确执行 Issue 开始，以实际回读和已保存的收据结束。图中工具均由 Master 注入；库不连接真实 Linear，不增加常驻进程。</p>
+<div class="diagram-container">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="progress-components-title progress-components-desc">
+<title id="progress-components-title">Master 进度协调模块</title>
+<desc id="progress-components-desc">Master 将 Handoff 与确认交给计划器和一次执行器，经注入工具读取与有限更新 Linear，再回读并保存收据，将已核验结果交回 Master。</desc>
+<defs>
+<marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4f5d75"/></marker>
+<marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#bf4520"/></marker>
+<marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2e5aa8"/></marker>
+</defs>
+<rect width="960" height="600" fill="#f5f5f5"/>
+<rect x="256" y="48" width="288" height="376" rx="8" fill="rgba(45,49,66,.02)" stroke="rgba(45,49,66,.12)"/>
+<text class="tag" x="272" y="64">lib/progress-reconciliation.mjs</text>
+<g data-edge-id="master-plan" data-from="master" data-to="planner"><path class="edge" d="M216 208 H240 Q248 208 248 200 V140 Q248 132 256 132 H280" marker-end="url(#arrow)"/></g>
+<g data-edge-id="master-run" data-from="master" data-to="runner"><path class="edge" d="M216 272 H240 Q248 272 248 280 V320 Q248 328 256 328 H280" marker-end="url(#arrow)"/></g>
+<g data-edge-id="plan-run" data-from="planner" data-to="runner"><path class="edge" d="M400 184 V256" marker-end="url(#arrow)"/></g>
+<g data-edge-id="run-linear" data-from="runner" data-to="linear"><path class="edge external" d="M520 296 H552 Q560 296 560 288 V208 Q560 200 568 200 H600" marker-end="url(#arrow-link)"/></g>
+<g data-edge-id="run-receipt" data-from="runner" data-to="receipt"><path class="edge" d="M520 368 H552 Q560 368 560 376 V380 Q560 388 568 388 H600" marker-end="url(#arrow)"/></g>
+<g data-edge-id="receipt-master" data-from="receipt" data-to="master"><path class="edge" d="M744 440 V472 Q744 480 736 480 H136 Q128 480 128 472 V304" marker-end="url(#arrow)"/></g>
+<g data-label="PLAN"><rect class="label-mask" x="210" y="145" width="32" height="16"/><text class="label" x="226" y="156" text-anchor="middle">PLAN</text></g>
+<g data-label="EXECUTE"><rect class="label-mask" x="184" y="306" width="56" height="16"/><text class="label" x="212" y="317" text-anchor="middle">EXECUTE</text></g>
+<g data-label="VALIDATED"><rect class="label-mask" x="410" y="208" width="64" height="16"/><text class="label" x="442" y="219" text-anchor="middle">VALIDATED</text></g>
+<g data-label="READ + WRITE"><rect class="label-mask" x="570" y="252" width="88" height="16"/><text class="label" x="614" y="263" text-anchor="middle">READ + WRITE</text></g>
+<g data-label="SAVE + READ"><rect class="label-mask" x="524" y="344" width="72" height="16"/><text class="label" x="560" y="355" text-anchor="middle">SAVE + READ</text></g>
+<g data-label="VERIFIED"><rect class="label-mask" x="424" y="456" width="64" height="16"/><text class="label" x="456" y="467" text-anchor="middle">VERIFIED</text></g>
+<g data-node-id="master"><rect data-role="bounds" class="node" x="40" y="176" width="176" height="128" rx="6"/><text class="tag" x="56" y="196">EXISTING ROLE</text><text class="name" x="128" y="224" text-anchor="middle">Master</text><text class="note" x="128" y="248" text-anchor="middle">准确任务、Handoff 与 ACK</text><text class="detail" x="128" y="272" text-anchor="middle">授权与事实核验</text></g>
+<g data-node-id="planner"><rect data-role="bounds" class="node" x="280" y="80" width="240" height="104" rx="6"/><text class="tag" x="296" y="100">PURE FUNCTION</text><text class="name" x="400" y="128" text-anchor="middle">进度计划器</text><text class="detail" x="400" y="152" text-anchor="middle">planProgressReconciliation</text><text class="note" x="400" y="172" text-anchor="middle">身份、阶段、依赖、Done 门禁</text></g>
+<g data-node-id="runner"><rect data-role="bounds" class="node focal" x="280" y="256" width="240" height="144" rx="6"/><text class="tag" x="296" y="276">BOUNDED EXECUTION</text><text class="name" x="400" y="304" text-anchor="middle">一次进度执行器</text><text class="detail" x="400" y="328" text-anchor="middle">reconcileProgress</text><text class="note" x="400" y="352" text-anchor="middle">前读 → 最小更新 → 回读</text><text class="note" x="400" y="376" text-anchor="middle">无变化零写入，失败明确返回</text></g>
+<g data-node-id="linear"><rect data-role="bounds" class="node" x="600" y="104" width="280" height="144" rx="6"/><text class="tag" x="616" y="124">INJECTED TOOL ADAPTER</text><text class="name" x="740" y="152" text-anchor="middle">已有 Linear 工具 / Mock</text><text class="detail" x="740" y="176" text-anchor="middle">readIssue / readStatuses / updateIssue</text><text class="note" x="740" y="200" text-anchor="middle">只定位执行 Issue，不修改父 CR</text><text class="note" x="740" y="224" text-anchor="middle">现有工具无原子 CAS，回读显式记录界限</text></g>
+<g data-node-id="receipt"><rect data-role="bounds" class="node focal" x="600" y="336" width="280" height="104" rx="6"/><text class="tag" x="616" y="356">EXISTING TASK / PR THREAD</text><text class="name" x="740" y="384" text-anchor="middle">ProgressSyncReceipt</text><text class="detail" x="740" y="408" text-anchor="middle">persistReceipt / readReceipt</text><text class="note" x="740" y="428" text-anchor="middle">状态、依赖、实际回执与失败项</text></g>
+<line x1="40" y1="520" x2="920" y2="520" stroke="rgba(45,49,66,.12)"/>
+<text class="tag" x="40" y="544">LEGEND</text><rect x="112" y="532" width="16" height="16" rx="2" fill="rgba(191,69,32,.08)" stroke="#bf4520"/><text class="note" x="140" y="544">本次新增协调职责</text><line x1="324" y1="540" x2="360" y2="540" stroke="#2e5aa8"/><text class="note" x="372" y="544">注入式外部工具调用</text><text class="note" x="40" y="572">原 G-01 决定 Done；回读与收据未核验时，不宣布整个进度协调成功。</text>
+</svg></div>
+<p>顺序：Master收件 → 计划检查 → 实际前读、有限更新与回读 → 保存并回读收据 → 返回SYNCED、NO_CHANGE_REQUIRED、BLOCKED或PROGRESS_SYNC_FAILED。工程细分状态不创建新的Linear状态。</p>
+</main></body></html>
