@@ -10,6 +10,10 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const required = [
+  "contracts/progress-reconciliation.md",
+  "lib/progress-reconciliation.mjs",
+  "tests/v0.3/progress-fixture.mjs",
+  "tests/v0.3/run-progress-tests.mjs",
   "standards/architecture/README.md",
   "standards/architecture/sources.md",
   "standards/terminology/README.md",
@@ -108,6 +112,7 @@ const required = [
 ];
 
 const schemaChecks = new Map([
+  ["contracts/progress-reconciliation.md", "padf.progress-sync-receipt/v1"],
   ["contracts/product-definition.md", "padf.product-definition/v1"],
   ["templates/agent-message.yaml", "padf.agent-message/v1"],
   ["contracts/action-preflight.md", "padf.action-preflight/v1"],

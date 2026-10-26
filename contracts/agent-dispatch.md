@@ -60,6 +60,8 @@ decision_approvals: []
 
 ## 每个阶段的不可变证据链
 
+新任务采用[进度协调扩展](progress-reconciliation.md)：Dispatch携带准确`progress_identity`，Handoff/ACK后必须取得可核验ProgressSyncReceipt。旧阶段格式继续兼容；新Linear身份/Receipt缺失或失败不能由Master CONTINUE标签覆盖，也不能从父CR推导执行Issue。
+
 1. **DISPATCH（启动前）**：持久化 `dispatch_id`、`context_id`、目标角色、批准的 Task Contract / Feature ID、Skill@SHA、输入规格与系统基线、`depends_on_dispatch_ids`、预期产物、范围与停止条件、既有授权引用、实际模式、启动方和 `dispatch_ref` 永久链接。记录 Master 理由、创建时间与分派前核验结果。分派请求不等于执行。
 2. **EXECUTION（接收方）**：读取分派及当前依赖，记录 `execution_id`、`executor_role`、`executor_session_ref` 或真实运行时任务 ID、`started_at`、`dispatch_ref_read`、`skill_ref_used`、`initiated_by` 与证据类型 RUNTIME_ISSUED / SESSION_VERIFIED / OWNER_ATTESTED / SELF_REPORTED / NONE。自述不等于已独立核验。
 3. **HANDOFF（执行方）**：持久化 `handoff_id/ref`、dispatch/execution ID、发送/接收方、固定到源 SHA 的产物、测试/渲染/原型 PASS/FAIL/BLOCKED/NOT_RUN、未决事项及 ACK/NEEDS_REFINEMENT。未核验永久链接时标记 NOT_PERSISTED。

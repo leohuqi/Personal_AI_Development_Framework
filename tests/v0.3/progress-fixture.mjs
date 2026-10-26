@@ -19,7 +19,7 @@ export function fixture(issue='LEO-202'){
 }
 export function mockAdapter(input,options={}){
  let state=structuredClone(input.issue);const receipts=new Map();const calls={reads:0,writes:[],persists:0,receiptReads:0};
- const adapter={calls,get state(){return state},set state(x){state=x},receipts,
+ const adapter={calls,now:()=>input.now,get state(){return state},set state(x){state=x},receipts,
   async readIssue(id){calls.reads++;if(options.readError)throw Error('read unavailable');if(options.onRead)await options.onRead(calls.reads,state);return structuredClone(state)},
   async readStatuses(){return structuredClone(input.statuses)},
   async updateIssue(id,patch,meta){calls.writes.push({id,patch:structuredClone(patch),meta:structuredClone(meta)});if(options.writeError)throw Error('write forbidden');if(patch.state_id)state.state_id=patch.state_id;state.blocked_by=[...new Set([...state.blocked_by,...patch.add_blocked_by])].filter(x=>!patch.remove_blocked_by.includes(x));state.updated_at='2026-10-26T11:59:00.000Z';if(options.afterWrite)options.afterWrite(state);return {success:true,evidence_ref:ref('issues/27#write')};},

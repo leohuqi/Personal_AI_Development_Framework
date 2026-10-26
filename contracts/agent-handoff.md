@@ -31,6 +31,8 @@ Schema：padf.agent-handoff/v1。交接传递任务责任和可核验产物，�
 
 ## 接收与停止
 
+新执行交接按[进度协调契约](progress-reconciliation.md)绑定`execution_issue_id`、`execution_context_id`、`handoff_id`、不可变`evidence_ref/source_head_sha`，父CR单列。Master ACK后读取准确执行Issue、同步必要状态/依赖、回读并保存/回读Receipt；失败保留Handoff/ACK，但协调尚未完成。旧Handoff不重写，准确绑定通过引用原件的增量记录补齐。
+
 1. 核对任务身份、允许动作、当前授权及来源版本，读取有关未决消息；陈旧或缺必需输入时指出具体阻塞。
 2. 实际打开产物和证据后 ACK；完整性或含义不清时退修，不让 Owner 重述已记录事实。
 3. 只继续已授权工作；下次责任/会话边界再增量交接，普通进度更新不自动生成一套新记录。

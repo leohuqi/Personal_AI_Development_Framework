@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import {evaluateOrchestrationChain} from '../../lib/orchestration-evidence.mjs';
 import {evaluateActionPreflight} from '../../lib/action-preflight.mjs';
+import {evaluateDesignGate} from '../../lib/design-gate.mjs';
 import {fixture,mockAdapter,chainFixture,doneInput,NOW} from './progress-fixture.mjs';
 let helper=null;try{helper=await import('../../lib/progress-reconciliation.mjs')}catch{}
 const tests=[];
@@ -35,6 +36,9 @@ for(const bad of ['parent','context','missing','owner','fake'])await test('Done 
 await test('old unbound Contract remains readable but cannot synchronize child',()=>{const x=fixture();delete x.identity;assert.equal(plan(x).result,'BLOCKED')});
 await test('explicit GitHub-only task is N/A without Linear calls',async()=>{const x=fixture();x.identity.tracker='none';x.identity.parent_cr_id=null;x.identity.execution_issue_id=null;x.authorization.identity=structuredClone(x.identity);const r=await run(x,null);assert.equal(r.result,'NO_CHANGE_REQUIRED');assert.equal(r.applicability,'NOT_APPLICABLE')});
 await test('failed Receipt cannot let existing chain CONTINUE',()=>{const x=chainFixture();x.progress_reconciliation_required=true;x.chain[0].reconciliation.progress_receipt={result:'PROGRESS_SYNC_FAILED'};assert.equal(evaluateOrchestrationChain(x).eligible,false)});
+await test('accurate verified Receipt allows the new final-stage entry',async()=>{const x=fixture(),r=await run(x,mockAdapter(x)),chain=chainFixture(x);chain.progress_reconciliation_required=true;chain.chain[0].reconciliation.progress_receipt=r;chain.chain[0].reconciliation.observed_at='2026-10-26T12:01:00Z';assert.equal(evaluateOrchestrationChain(chain).eligible,true)});
+await test('new stage identity cannot disable Receipt checking with false old flag',()=>{const x=chainFixture();x.progress_reconciliation_required=false;assert.equal(evaluateOrchestrationChain(x).eligible,false)});
+await test('explicit progress requirement cannot be disabled by old Design Gate switch',()=>{const x=fixture(),r=evaluateDesignGate({context_id:x.identity.context_id,repository:x.identity.repository,task_contract_ref:x.identity.task_contract_ref,task_class:'S',architecture_scope:'none',routing_rationale:'Bounded existing task',feature_spec_ref:'task.md@'+x.evidence.source_head_sha,impacts:[],risk_flags:[],stages:[],consistency_checks:[{scope:'task',status:'PASS',evidence_ref:x.evidence.evidence_ref}],review_skip_rationale:'Low-risk unchanged sources',progress_reconciliation_required:true,orchestration_validation_required:false});assert(r.reasons.includes('ORCHESTRATION_CHAIN_INCOMPLETE'))});
 await test('invalid evidence source is blocked without mutation',()=>{const x=fixture();x.evidence.evidence_ref='https://github.com/example/padf/blob/main/result.md';assert.equal(plan(x).result,'BLOCKED')});
 await test('planner does not mutate caller input',()=>{const x=fixture(),before=structuredClone(x);plan(x);assert.deepEqual(x,before)});
 const failed=tests.filter(t=>t.status==='FAIL');console.log(JSON.stringify({suite:'Master progress reconciliation: controlled history and injected integration',scope:'MOCK_ONLY_NO_LIVE_LINEAR',count:tests.length,passed:tests.length-failed.length,failed:failed.length,tests},null,2));process.exitCode=failed.length?1:0;

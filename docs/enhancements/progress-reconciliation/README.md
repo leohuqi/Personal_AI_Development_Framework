@@ -1,12 +1,14 @@
 # Master 进度协调修复
 
-本轮修复“Agent实际完成、Master已ACK，但执行子任务仍显示未启动”的框架缺口。任务为[Enhancement #27](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/27)，交付为[Draft PR #28](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/28)。当前状态：实现与QA进行中，等待准确最终提交的独立审查及Owner验收。
+本轮修复“Agent实际完成、Master已ACK，但执行子任务仍显示未启动”的框架缺口。任务为[Enhancement #27](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/27)，交付为[Draft PR #28](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/28)。实现与受控验证已完成；独立实现审查的准确版本、结论及Owner待决事项以PR当前记录为准。
 
 ## 阅读入口
 
 - [模块设计与必要流程图](DESIGN.md)：身份、状态、依赖、失败恢复及兼容边界。
 - [独立DESIGN复审](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/28#issuecomment-6417140907)：准确设计`a26f5c7`，原2项P2已修复；此结论不代表实现通过。
-- 实现API、TDD与独立QA结果将在本入口完成后链接。
+- [统一契约与执行API](../../../contracts/progress-reconciliation.md)：精确身份、状态映射、工具适配、Receipt、失败和幂等规则；[实现](../../../lib/progress-reconciliation.mjs)使用现有工具的注入接口。
+- [RED原始结果](validation/tdd-red.json)：准确提交`c711f6d`的37例中36例失败，包含两个旧编排入口漏检；[GREEN与针对性回归](validation/coder-results.json)的40例通过。
+- [独立QA](validation/qa-results.json)：55例通过，含W1–W4、实际Team状态ID注入、失败与并发、时钟推进、旧合同、Done门禁，以及完整Mock收件/回读/持久化链和下游依赖链；[首轮真实失败](validation/qa-first-failures.json)保留原输入绑定，不倒写为通过。
 
 ## 事实与范围
 

@@ -38,6 +38,8 @@ Master 对同一项目、同一职责的后续工作和返工，默认先接续�
 
 ## 来源、独立性与门禁
 
+新任务在真实启动、阶段交接/ACK、Review/Gate和依赖变化后执行[进度协调](../contracts/progress-reconciliation.md)：Dispatch → Execution → Handoff → Master ACK → Progress Reconciliation → Verified State。Master核对准确执行子Issue，读取、必要更新、回读及Receipt保存/回读；已正确零写入。失败不推翻Handoff事实，但不能声明协调完成或借CONTINUE解阻。旧记录不改写，采用新流程先补显式身份；父子、阻塞和集成依赖分别核对，Done权限不变。
+
 - Shared Task Context 是最小源索引，不是第二套规格。仅增量核对受影响内容，状态和证据可由工具采集，不能自动推断“批准”或“实测成功”。
 - 专家不独立批准自己；fresh-context Reviewer 读取原始需求、精确 diff 和证据，不导入 Coder 私有推理或自审结论。
 - Master 负责充分性、跨角色一致性、取舍整合和 [Design Gate](../contracts/design-gate.md)；独立 Reviewer 保留独立判断，Owner 保留重大决定、风险接受和验收权限。

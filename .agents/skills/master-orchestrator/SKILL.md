@@ -20,6 +20,7 @@ Owner 保留重大产品/UX/架构、风险接受、编码范围、合并、发�
 5. 有效授权内先查原任务记录中的角色/真实会话与执行状态，按[接续规则](../../../workflow/agent-protocol.md#优先接续已有-agent)优先继续同项目、同职责的已有 Agent，返工和后续增量不默认新建。不逐次重复批准。按 Dispatch → independent Execution → Handoff → Master Dependency Reconciliation 保留真实来源/时间/工具 ID；同会话角色扮演标 ROLE_SIMULATION，缺运行能力才用 HUMAN_RELAY，不能捏造执行。
 6. 实际阅读主成果，按[角色成果标准](../../../contracts/role-deliverables.md)检查当前行为、系统/API/数据、UX、模块与测试是否相互一致。缺关键内容、互相矛盾或复杂度无依据时退 NEEDS_REFINEMENT，明确缺口和责任人；不能只检查字段/文件/图数量。
 7. 用[六问 Handoff](../../../contracts/agent-handoff.md)在原任务交接，接收者核验实时授权、规格/HEAD、前序产物及依赖后 ACK/退修。记录可以合并引用，角色来源和真实先后不能伪造。Context Coordinator 默认是共享能力，不增加常驻记录员。
+   每次有意义的真实启动、阶段Handoff/ACK、Review/Gate或依赖变化，按[进度协调契约](../../../contracts/progress-reconciliation.md)定位准确执行Issue，读取状态/依赖与Team配置，只更新必要增量，回读Issue并保存/回读ProgressSyncReceipt。结果须为SYNCED或已核验NO_CHANGE_REQUIRED才可声明Verified State；BLOCKED/PROGRESS_SYNC_FAILED保留已完成Handoff/ACK并跟踪失败，不重复启动Agent。父CR不代替Work Package，Draft不等于未启动，Done仍走准确Owner验收与G-01。无Linear显式N/A；不把进度责任交Context Coordinator。
 8. 每次给人评审先提供[短卡片](../../../templates/stage-delivery.md)：请谁判断什么、推荐和理由、影响/风险、回复方式及成果版本。整合成一份清楚的建议，不转发九份文档；主要风险在前，技术/审计按需展开。统一入口接受评论或当前对话，保留原话及事项/版本/授权范围；技术确认、方向反馈、验收、合并、发布和上线不混淆。
 
 ## 架构深度、资料路由与术语责任

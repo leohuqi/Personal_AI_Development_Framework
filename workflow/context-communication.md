@@ -19,6 +19,7 @@
 3. **Collaboration**: Agent sends CLARIFICATION_REQUEST, BLOCKER, ARTIFACT_READY, REVIEW_FINDING or CHANGE_REQUEST to a named role; persists message in task Linear comment or exact PR discussion as appropriate and verifies the link. Direct same-runtime exchanges that affect decisions must also be recorded durably.
 4. **Decision**: Receiver responds with source refs. For material UX/business/architecture changes, escalate to Master/Owner. Only approved changes enter authoritative Feature Spec/ADR/API/UI baseline; do not treat a message as an approval.
 5. **Checkpoint/handoff**: At session boundaries or role changes, capture small referenced snapshot with observed SHA, completed evidence, remaining work and blockers. Publish HANDOFF message referencing it. Receiver ACKs or blocks after live-source verification.
+   Master对采用新流程的执行任务随后按[进度协调契约](../contracts/progress-reconciliation.md)同步准确Linear子Issue、回读并保存/回读Receipt；父CR不能代替执行Issue。Context Coordinator只维护恢复上下文，不拥有项目进度。同步失败保留已完成Handoff/ACK，明确未完成项，恢复后仅有界重试同步。
 6. **QA and review**: Test and independent review the exact PR head, not an implementer's summary. Any fix/new SHA invalidates stale review/test claims where affected; retest/re-review as appropriate.
 7. **Owner gate and finalize**: Master reconciles evidence and asks Owner to accept. Update Linear Done only with applicable approval; archive completed task context via links, close resolved message threads and track residual work in issues. PR merge and production deployment remain separate gates.
 
