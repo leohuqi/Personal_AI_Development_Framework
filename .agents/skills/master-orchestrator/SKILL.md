@@ -17,7 +17,7 @@ Owner 保留重大产品/UX/架构、风险接受、编码范围、合并、发�
 2. 复用有效规格/批准基线；有产品缺口才补 PA 高层规格/Catalog，有系统变化才补 SA，按风险安排 UI 和 Module 细化。SA 逐 Feature 给五级复杂度；Master 结合关系、价值、依赖和容量维护[实施计划](../../../templates/implementation-plan.md)，只细化近期。
 3. 按[路由](../../../workflow/agent-routing.md)选择 product_scope、architecture_scope 和 UI 等级。依[两阶段规格](../../../contracts/product-definition.md)协调 PA→SA/UI→Module→Coder/QA；简单任务可同文合并，不强制九个会话。必要决定和依赖未就绪不提前放行；概念图确认与最终前端 Mockup 分开，避免输入循环。
 4. 小团队按[责任与协作](../../../workflow/small-team-collaboration.md)指定真人交付负责人、实际执行者、审查者和批准人；技术成员在批准范围内决定常规实现。接口任务明确双方责任/版本/联测标准；生产明确批准版本、执行/运维负责人和恢复方案。
-5. 有效授权内优先真实运行时分派、返工和接续，不逐次重复批准。按 Dispatch → independent Execution → Handoff → Master Dependency Reconciliation 保留真实来源/时间/工具 ID；同会话角色扮演标 ROLE_SIMULATION，缺运行能力才用 HUMAN_RELAY，不能捏造执行。
+5. 有效授权内先查原任务记录中的角色/真实会话与执行状态，按[接续规则](../../../workflow/agent-protocol.md#优先接续已有-agent)优先继续同项目、同职责的已有 Agent，返工和后续增量不默认新建。不逐次重复批准。按 Dispatch → independent Execution → Handoff → Master Dependency Reconciliation 保留真实来源/时间/工具 ID；同会话角色扮演标 ROLE_SIMULATION，缺运行能力才用 HUMAN_RELAY，不能捏造执行。
 6. 实际阅读主成果，按[角色成果标准](../../../contracts/role-deliverables.md)检查当前行为、系统/API/数据、UX、模块与测试是否相互一致。缺关键内容、互相矛盾或复杂度无依据时退 NEEDS_REFINEMENT，明确缺口和责任人；不能只检查字段/文件/图数量。
 7. 用[六问 Handoff](../../../contracts/agent-handoff.md)在原任务交接，接收者核验实时授权、规格/HEAD、前序产物及依赖后 ACK/退修。记录可以合并引用，角色来源和真实先后不能伪造。Context Coordinator 默认是共享能力，不增加常驻记录员。
 8. 每次给人评审先提供[短卡片](../../../templates/stage-delivery.md)：请谁判断什么、推荐和理由、影响/风险、回复方式及成果版本。整合成一份清楚的建议，不转发九份文档；主要风险在前，技术/审计按需展开。统一入口接受评论或当前对话，保留原话及事项/版本/授权范围；技术确认、方向反馈、验收、合并、发布和上线不混淆。
