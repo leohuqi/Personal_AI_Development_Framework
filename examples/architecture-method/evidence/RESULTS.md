@@ -9,11 +9,13 @@
 - 锁定Skill `self_check.py --offline`与`export_svg.py --system-fonts`分别对8图执行，全部exit 0；完整结果[export-check.json](export-check.json)。证明静态安全/可访问结构和SVG导出，不证明实际浏览器呈现或图语义正确。
 - `tools/check.py`核对模型ID/关系方向/消息顺序、端点、预算、权威来源与本地文档链接；结果[source-check.json](source-check.json)。仅静态检查。
 
-## BLOCKED：真实浏览器、PNG和实看
+## 实际浏览器、PNG和实看：PASS（恢复后补证）
 
-已验证现有Playwright模块与Google Chrome存在。首次按普通执行权限启动独立headless Chrome，进程SIGABRT/EPERM，未完成渲染。随后申请环境授权运行同一只读本地渲染，automatic approval review因HTTP 403服务故障拒绝执行；返回明确为review failure，而非动作不安全判定，且不得绕过审批。没有控制用户现有浏览器，也没有安装新依赖。
+初次普通Chrome启动受限；随后自动审批服务HTTP403，命令未执行。保留该历史失败，不将其改写成早期通过。服务恢复后，Master通过同一正常审批机制运行`tools/render.cjs`，没有绕过审批、接管用户现有浏览器或安装依赖。
 
-因此：浏览器真实布局/实际系统字体、文本或连线遮挡、窄屏呈现、独立SVG浏览器兼容、PNG截图/实看与视觉质量均 **BLOCKED / NOT RUN**。没有render-results.json或PNG成功证据；Markdown暂直接嵌入已导出SVG并链接静态HTML，不能据此宣称看图已通过。待审批服务恢复/所需运行许可明确后，用上述render.cjs重跑并实际看全部相关图，再更新准确结果。
+最终运行：2026-10-26T05:54:28.939Z；Chrome155.0.8059.85 / Playwright1.62.1；最新模型SHA256 `bde3dd16fd1a6e413e180ef39c83fe68a3a3c4a41789a7f522cdfae004a3187a`，8/8 PASS。真实记录[render-results.json](render-results.json)含每图HTML/SVG/PNG hash、节点/边/顺序/guard、字形边界/节点标签、实际PingFang SC字体、390px局部滚动、独立SVG加载及零远程请求。
+
+Master实际查看了8图，并对校正后的两张组件图再次实看；[逐图结果](VISUAL-REVIEW.md)。实看识别Standard组件图把所属运行单元写成C-API，现模型显式container_id，Standard=S-API、Full=C-API；从模型生成并在HTML/SVG静态核验，两张图已重新导出、渲染、实看。没有因此改变节点、关系、模块或权限语义。12组源破坏测试另覆盖边界身份/标签，不以文件存在当验证。
 
 ## 已完成的有界语义推演与未测
 

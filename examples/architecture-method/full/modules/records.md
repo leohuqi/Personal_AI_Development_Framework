@@ -6,7 +6,7 @@
 
 Records拥有Record、SourceRevision、Operation、受管对象键及文件接管/恢复；Policy判权限，Tasks拥有任务/租约，Parser只计算。Records不治理身份源、不解析、不把派生文本变原件。存储适配器只在限定根/对象命名空间内操作，拒绝任意客户端路径、根逃逸、符号链接逃逸；实际对象存储能力待验证。
 
-![Records Component](../../diagrams/full-component.svg)
+![Records Component](../../diagrams/full-component.png)
 
 [HTML](../../diagrams/full-component.html) · [SVG](../../diagrams/full-component.svg)。C4 Component，仅API内Records边界：UseCases编排Rules、Repository及Recovery；Recovery恢复已持久化操作，不是独立服务。外部Policy/Tasks/字节存储端口在下表，不把其他模块复制进本图。源/关系模型固定在[model](../../model.json)。
 

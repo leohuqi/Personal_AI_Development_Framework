@@ -321,7 +321,8 @@
       "authoritative_source": "standard/MODULE.md",
       "purpose": "当前Catalog在API内的依赖",
       "cuts": "Policy外部模块接口在正文，非新服务",
-      "status": "PROPOSED_SYNTHETIC"
+      "status": "PROPOSED_SYNTHETIC",
+      "container_id": "S-API"
     },
     {
       "id": "full-context",
@@ -412,7 +413,8 @@
       "authoritative_source": "full/modules/records.md",
       "purpose": "同一API内组件职责与恢复接缝",
       "cuts": "外部Policy/Tasks/Bytes端口在Records完整正文，不画成新服务",
-      "status": "PROPOSED_SYNTHETIC"
+      "status": "PROPOSED_SYNTHETIC",
+      "container_id": "C-API"
     },
     {
       "id": "full-data",

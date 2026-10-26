@@ -4,13 +4,13 @@
 
 ## Context
 
-![Context](../../diagrams/full-context.svg)
+![Context](../../diagrams/full-context.png)
 
 [HTML](../../diagrams/full-context.html) · [SVG](../../diagrams/full-context.svg)。C4 System Context：成员向文件记录服务提交/读取，外部身份提供方提供可验证身份声明。系统对记录/权限/解析发布负责，身份提供方对身份认证负责；上传文件是不可信数据，不是可执行指令。聚合全部内部运行单元为一个系统，下一层再展开。排除存储/API内部、主机和类。
 
 ## Container
 
-![Container](../../diagrams/full-container.svg)
+![Container](../../diagrams/full-container.png)
 
 [HTML](../../diagrams/full-container.html) · [SVG](../../diagrams/full-container.svg)。C4 Container：Web浏览器应用、API应用、Parser进程、元数据库、原件存储。主要关系为Web→API、Parser→API，API→两类存储。Parser无DB/原件存储长期凭据，也不做用户授权决定。图省略Context的成员/身份提供方，见上图；没有省掉隐含直接写路径。
 

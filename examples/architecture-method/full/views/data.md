@@ -2,7 +2,7 @@
 
 PROPOSED；概念ER，不是物理DDL或完整字段Schema。权威字段/不变量在[Records](../modules/records.md)和[Parsing](../modules/parsing.md)，关系投影来自[model](../../model.json)。
 
-![Conceptual ER](../../diagrams/full-data.svg)
+![Conceptual ER](../../diagrams/full-data.png)
 
 [HTML](../../diagrams/full-data.html) · [SVG](../../diagrams/full-data.svg)。Record拥有一个或多个SourceRevision，每个修订可有零到多个ParseGeneration；箭头方向为包含/来源关联，端点标1与1..*/0..*，不是跨模块写权限。重要关系是派生代次绑定精确原始修订，不能替换原件权威。
 

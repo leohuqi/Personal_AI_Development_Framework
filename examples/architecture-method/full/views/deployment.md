@@ -2,7 +2,7 @@
 
 PROPOSED，仅示例环境，非已部署事实。抽象为Container实例到主机/信任环境；权威模型[model](../../model.json)。
 
-![Deployment](../../diagrams/full-deployment.svg)
+![Deployment](../../diagrams/full-deployment.png)
 
 [HTML](../../diagrams/full-deployment.html) · [SVG](../../diagrams/full-deployment.svg)。展示Browser主机、可信应用主机、隔离解析主机三个环境及其候选工件。重要关系：Parser仅以任务身份经TLS访问API，不能进入元数据/原件管理面。Browser经HTTPS入口，外部身份校验由Context说明。应用主机内API、元数据与受管字节实例为候选同环境放置，不代表它们同进程或同一事务。
 

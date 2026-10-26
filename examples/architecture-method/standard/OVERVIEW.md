@@ -4,7 +4,7 @@
 
 目标是让团队维护有权限的短记录目录。Web负责输入/展示，API负责Catalog和授权，关系数据存储负责持久化。当前无二进制文件、异步计算、离线副本或跨资源恢复需求；一个模块化API比拆服务更易维护，代价是应用同版本部署。技术选择候选为现有团队Web栈、类型化HTTP API和关系数据库；具体版本/运行环境未选，本稿不伪造已部署平台。
 
-![Standard Container](../diagrams/standard-container.svg)
+![Standard Container](../diagrams/standard-container.png)
 
 [HTML](../diagrams/standard-container.html) · [SVG放大](../diagrams/standard-container.svg)。图是C4 Container，展示浏览器Web、API和数据库三个运行边界；最重要的关系是Web经API访问受权威权限约束的数据，不直连数据库。API内部Catalog/Policy是逻辑模块，详见[Module与完整局部契约](MODULE.md)。
 

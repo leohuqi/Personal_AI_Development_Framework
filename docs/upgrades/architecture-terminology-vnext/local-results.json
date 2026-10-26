@@ -314,7 +314,7 @@
     "lib/orchestration-evidence.mjs": "ead6076068979799d0a46c0ebb7c430a318a892b7ef1d27f5d6b6c39bd583162",
     "lib/skill-delivery-quality.mjs": "2056b09167c5ade58713d36c77f2baf31b6715956338f9b0b0681aaf83368d33",
     "lib/terminology.mjs": "ce85beb51ee84de308fbf58a64bf7fb82a0a5e250b5614cac2d4c3e799940d6b",
-    "tests/vnext/run-diagram-source-tests.py": "bd4126e05f6e5f9a7599d75548b152d8a314f86f3aea27e8c814aaa9e8260bc7",
+    "tests/vnext/run-diagram-source-tests.py": "e6df941c0b1a5e49dae359facdbe3583bf65bba33a1f95c850530f05c964af94",
     "tests/vnext/run-profile-tests.mjs": "4a62035924b708d60b97b9aeaa83595f9000571d74920b1c049cd20dcfcf7c0e",
     "tests/vnext/run-terminology-tests.mjs": "b2d502135ff5f55569061b9cba17d6230d326e34a3f18eb0551bec40305fa983"
   },
@@ -328,5 +328,157 @@
     "governance/approval-policy.md": true,
     ".agents/skills/ui-ux-designer/SKILL.md": true
   },
-  "scope": "Local behavioral/static/skill checks only; no visual/semantic/approval/CI claim; original baseline compare supplied via PADF_PROFILE_BASELINE"
+  "scope": "Local behavioral/static/skill checks only; no visual/semantic/approval/CI claim; original baseline compare supplied via PADF_PROFILE_BASELINE",
+  "affected_reruns": {
+    "observed_at": "2026-10-26T05:58:36.228726+00:00",
+    "reason": "Component owner model/display correction and new four negative cases; core libraries/old suites/Skills unchanged since full run",
+    "results": [
+      {
+        "command": [
+          "node",
+          "scripts/validate-cacf.mjs"
+        ],
+        "exit_code": 0,
+        "output_sha256": "2e364b781f7a7df552318e2314f98923dbb292885f8f94ec983b9232b4e61eb4",
+        "output": "PASS PADF CACF V0.2 + V0.3 design structural validation (95 framework files and local links)\n"
+      },
+      {
+        "command": [
+          "python3",
+          "examples/architecture-method/tools/check.py"
+        ],
+        "exit_code": 0,
+        "output_sha256": "9fd708da27da36bc1d62bb62212f427f45267cbe9ee0f50ced387fb4b54dc10a",
+        "result": {
+          "scope": "source/model/static links only; browser/visual/product tests not included",
+          "model_sha256": "bde3dd16fd1a6e413e180ef39c83fe68a3a3c4a41789a7f522cdfae004a3187a",
+          "views": [
+            {
+              "id": "standard-container",
+              "nodes": 3,
+              "relations": 2,
+              "status": "PASS"
+            },
+            {
+              "id": "standard-component",
+              "nodes": 3,
+              "relations": 2,
+              "status": "PASS"
+            },
+            {
+              "id": "full-context",
+              "nodes": 3,
+              "relations": 2,
+              "status": "PASS"
+            },
+            {
+              "id": "full-container",
+              "nodes": 5,
+              "relations": 4,
+              "status": "PASS"
+            },
+            {
+              "id": "full-deployment",
+              "nodes": 3,
+              "relations": 2,
+              "status": "PASS"
+            },
+            {
+              "id": "full-component",
+              "nodes": 4,
+              "relations": 3,
+              "status": "PASS"
+            },
+            {
+              "id": "full-data",
+              "nodes": 3,
+              "relations": 2,
+              "status": "PASS"
+            },
+            {
+              "id": "full-runtime",
+              "nodes": 5,
+              "relations": 8,
+              "status": "PASS"
+            }
+          ],
+          "issues": [],
+          "status": "PASS"
+        }
+      },
+      {
+        "command": [
+          "python3",
+          "tests/vnext/run-diagram-source-tests.py"
+        ],
+        "exit_code": 0,
+        "output_sha256": "e28787ad10b79dc8a44aaf124ea7515fb53e2e55670c06230dbfd720581ad3f7",
+        "result": {
+          "scope": "Static mutation detection; browser rendering/visual review NOT RUN",
+          "results": [
+            {
+              "case": "baseline",
+              "status": "PASS",
+              "checker_exit": 0
+            },
+            {
+              "case": "node label",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "inline HTML label",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "node kind",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "relation direction",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "relation label",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "runtime guard",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "deployment instance",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "component SVG boundary owner",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "component HTML boundary owner",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "component SVG boundary label",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "component HTML boundary label",
+              "status": "PASS",
+              "checker_exit": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

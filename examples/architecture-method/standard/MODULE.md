@@ -14,6 +14,6 @@ Record={record_id,title,revision,owner_id}，record_id稳定且不可由title推
 
 测试设计NOT RUN：并发同revision（一成功一冲突）；重复同key同载荷（同结果）；同key异载荷（冲突）；未认证/撤权（拒绝且不泄露对象）；提交后丢响应（不重复）；空title（明确校验失败且保留输入）。具体HTTP schema/状态码和字段长度、技术版本仍UNKNOWN，需批准系统后由MA深化，不由Coder猜测。本例不增加Deployment/Sequence/ER图；原scope模块必需图由下方有效系统内组件图满足，而非因Standard被省略。
 
-![Catalog Component](../diagrams/standard-component.svg)
+![Catalog Component](../diagrams/standard-component.png)
 
 [HTML](../diagrams/standard-component.html) · [SVG](../diagrams/standard-component.svg)。C4 Component在API边界内仅展开当前Catalog的用例入口、规则和存储端口；非三项新服务，Policy作为外部模块依赖在正文定义。图不承担完整接口Schema，以上正文是权威。

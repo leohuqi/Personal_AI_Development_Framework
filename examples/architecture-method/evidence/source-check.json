@@ -1,6 +1,6 @@
 {
   "scope": "source/model/static links only; browser/visual/product tests not included",
-  "model_sha256": "781d0a8610d902db0fff8f9844691a4029b103665d397d12921538fabad55d03",
+  "model_sha256": "bde3dd16fd1a6e413e180ef39c83fe68a3a3c4a41789a7f522cdfae004a3187a",
   "views": [
     {
       "id": "standard-container",

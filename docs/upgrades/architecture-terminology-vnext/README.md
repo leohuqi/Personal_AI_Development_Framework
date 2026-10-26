@@ -1,6 +1,6 @@
 # 架构设计与术语治理能力升级候选
 
-**候选已实现，保持Draft；尚未满足完整验收。** [PR25](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/25)独立交付，不自动合并/发布。当前剩余：准确提交的独立Review，以及因审批服务403未执行的浏览器渲染/实看。状态以本文、[验证](VALIDATION.md)及PR准确HEAD为准。
+**候选已实现，保持Draft；尚未满足完整验收。** [PR25](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/25)独立交付，不自动合并/发布。浏览器8图实际渲染与实看已补齐，当前剩余：准确提交的独立Review及其发现处理。状态以本文、[验证](VALIDATION.md)及PR准确HEAD为准。
 
 ## 先看成果
 
@@ -9,7 +9,7 @@
 | 小改不重做架构 | [Lite列表/卡片](../../../examples/architecture-method/lite/DESIGN.md)，scope none复用基线，无新C4 |
 | 普通Web/API技术方案 | [Standard Overview](../../../examples/architecture-method/standard/OVERVIEW.md)，只补Container及当前模块/接口 |
 | 复杂系统按问题查设计 | [Full长期入口](../../../examples/architecture-method/full/README.md)，系统/模块/运行/数据/未批决定各有完整权威 |
-| 架构图 | [Standard Container SVG](../../../examples/architecture-method/diagrams/standard-container.svg)、[Full图入口](../../../examples/architecture-method/full/views/structure.md)。8份HTML/SVG真实生成导出；**实际浏览器/PNG/实看仍BLOCKED** |
+| 架构图 | [Standard Container SVG](../../../examples/architecture-method/diagrams/standard-container.svg)、[Full图入口](../../../examples/architecture-method/full/views/structure.md)。8份HTML/SVG真实生成导出；[8图实际渲染与实看](../../../examples/architecture-method/evidence/RESULTS.md)已完成 |
 | 文字优化效果 | [术语Before/After](../../../standards/terminology/BEFORE-AFTER.md)及[生成词表](../../../standards/terminology/GLOSSARY.md)，正确专业词保留，全部通用词条PROPOSED |
 | Skill/Contract变化与兼容 | [变更矩阵](CHANGES.md)，9角色+1共享能力，原门禁/授权代码未改 |
 | 实际验证及遗漏 | [验证包](VALIDATION.md)、[两位独立Reader原始结果](../../../examples/architecture-method/validation/README.md)及[真实分派/收件](EXECUTION.md) |
@@ -22,9 +22,11 @@
 
 ## 待决定及限制
 
-1. 完整图表视觉验证尚未完成，不能把SVG存在当看图通过；恢复工具执行后补真实证据。
+1. 图表真实渲染和实看已补齐；仍需Independent Reviewer对新SHA独立核验，不用Master实看替代其判断。
 2. 独立准确版本Review完成并处理发现后，才提交最终Owner验收；本入口不预填APPROVE。
 3. 本PR显式复用未合并PR24的接续文档，Owner决定合并顺序；不由Master代替合并或发布。
 4. 未来若允许有实质module设计却无原必需图，须另行兼容分析及决定；本轮保留旧阻断，不夹带放宽。
 
 输入PADF main/v0.3.5均为b0c2bb06…；PKMS原Architecture源f222867…、Terminology head343a3ec…；最新核验PKMS PR7已合并main23c40d4…，与固定术语head无文件差异。历史来源/真实状态见执行记录，项目术语接受不升级为PADF接受或系统技术批准。本轮授权限框架设计、修改、验证和Draft PR；不执行项目升级、业务编码、生产、历史tag或审批改写。
+
+![Standard Container预览](../../../examples/architecture-method/diagrams/standard-container.png)

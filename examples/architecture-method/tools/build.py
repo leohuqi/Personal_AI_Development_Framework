@@ -52,8 +52,10 @@ for v in M['views']:
   if v['type']=='deployment':
    for x,title in [(64,'CLIENT'),(464,'TRUSTED APP'),(864,'ISOLATED COMPUTE')]:
     parts.append(f'<rect x="{x}" y="184" width="312" height="304" rx="8" fill="#ececec" fill-opacity="0.35" stroke="{MUTED}" stroke-dasharray="4,4"/>'+txt(x+16,216,title,'tag','start'))
-  elif 'component' in i:
-   parts.append(f'<rect x="40" y="172" width="1200" height="396" rx="8" fill="#ececec" fill-opacity="0.3" stroke="{MUTED}" stroke-dasharray="4,4"/>'+txt(64,204,'C-API / COMPONENTS / SAME APPLICATION','tag','start'))
+  elif v.get('container_id'):
+   container_id=v['container_id']
+   assert M['nodes'][container_id]['kind']=='CONTAINER','Component boundary must reference a Container'
+   parts.append(f'<g data-container-id="{esc(container_id)}"><rect x="40" y="172" width="1200" height="396" rx="8" fill="#ececec" fill-opacity="0.3" stroke="{MUTED}" stroke-dasharray="4,4"/>'+txt(64,204,container_id+' / COMPONENTS / SAME APPLICATION','tag','start',**{'data-role':'container-label'})+'</g>')
   for rid in v['relation_ids']:
    r=M['relations'][rid];e=lay['edges'][rid]
    parts.append(f'<g data-edge-id="{rid}" data-from="{r["from"]}" data-to="{r["to"]}"><path d="{e["path"]}" fill="none" stroke="{MUTED}" stroke-width="1.5" marker-end="url(#{i}-arrow)"/></g>')

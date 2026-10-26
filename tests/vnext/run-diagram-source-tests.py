@@ -13,6 +13,10 @@ cases=[
  ('relation label','diagrams/standard-container.svg','data-label="HTTPS"','data-label="任意直写"',False),
  ('runtime guard','diagrams/full-runtime.svg','data-guard="valid"','data-guard="invalid"',False),
  ('deployment instance','diagrams/full-deployment.svg','data-instance-of="C-API"','data-instance-of="C-PARSER"',False),
+ ('component SVG boundary owner','diagrams/standard-component.svg','data-container-id="S-API"','data-container-id="C-API"',False),
+ ('component HTML boundary owner','diagrams/standard-component.html','data-container-id="S-API"','data-container-id="C-API"',False),
+ ('component SVG boundary label','diagrams/standard-component.svg','S-API / COMPONENTS / SAME APPLICATION','C-API / COMPONENTS / SAME APPLICATION',False),
+ ('component HTML boundary label','diagrams/standard-component.html','S-API / COMPONENTS / SAME APPLICATION','C-API / COMPONENTS / SAME APPLICATION',False),
 ]
 results=[]
 with tempfile.TemporaryDirectory(prefix='padf-diagram-mutations-') as tmp:

@@ -2,7 +2,7 @@
 
 SYN-FULL-B1，PROPOSED，system_approval_ref=null；[长期入口](README.md)提供按角色导航。当前目标是在小团队可维护的结构内可靠接管文件和发布派生文本，优先一个API中的Records/Policy/Task模块加一个隔离Parser进程，避免为了逻辑职责拆成许多服务。Parser单独运行是为限制不可信文件处理的资源与权限，代价是租约/迟到结果及重试协议。
 
-![Full Container](../diagrams/full-container.svg)
+![Full Container](../diagrams/full-container.png)
 
 [HTML](../diagrams/full-container.html) · [SVG](../diagrams/full-container.svg)。这张C4 Container图展示运行软件/数据边界。重要关系是Parser经API领取固定版本任务并提交候选，不能直接写数据库或原件；API才拥有最终发布权。职责详见[结构](views/structure.md)，位置见[部署](views/deployment.md)。
 

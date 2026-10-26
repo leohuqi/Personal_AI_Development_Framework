@@ -23,6 +23,16 @@ for v in m['views']:
  # Compare display semantics in both HTML's inline SVG and its exported SVG.
  # This catches label/guard/kind changes that retain apparently correct stable IDs.
  for format_name,projection in [('SVG',tree),('HTML',ET.fromstring(re.search(r'<svg\b[\s\S]*?</svg>',html).group()))]:
+  boundaries=projection.findall('.//s:g[@data-container-id]',ns)
+  expected_container=v.get('container_id')
+  if expected_container:
+   if m['nodes'].get(expected_container,{}).get('kind')!='CONTAINER':issues.append([i,'component container reference'])
+   if len(boundaries)!=1 or boundaries[0].attrib.get('data-container-id')!=expected_container:
+    issues.append([i,format_name+' component boundary identity'])
+   else:
+    boundary_labels=[''.join(t.itertext()) for t in boundaries[0].findall('s:text[@data-role="container-label"]',ns)]
+    if boundary_labels!=[expected_container+' / COMPONENTS / SAME APPLICATION']:issues.append([i,format_name+' component boundary label'])
+  elif boundaries:issues.append([i,format_name+' unexpected component boundary'])
   projected_nodes=projection.findall('.//s:g[@data-node-id]',ns)
   if sorted(g.attrib['data-node-id'] for g in projected_nodes)!=sorted(v['node_ids']):issues.append([i,format_name+' node identities'])
   for g in projected_nodes:
