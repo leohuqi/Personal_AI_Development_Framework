@@ -77,3 +77,7 @@ V0.2 不引入后台编排、自动唤醒或分派、新存储服务或 A2A 运�
 ## V0.3 编排证据
 
 按[Agent Dispatch 契约](../../../contracts/agent-dispatch.md)管理 dispatch_id、execution_id、Handoff 和 Master 协调引用。记录真实执行模式和来源，不制造运行 ID，也不声称 TASK_REQUEST 自动唤醒接收方。同一会话同时产出所有设计和 Master 决策时仍为 ROLE_SIMULATION。恢复时先核对前序 Handoff、现有授权与产物 SHA，再允许后续依赖任务。只转交最小上下文与精确 Skill@SHA，不复制其他 Agent 私有对话。
+
+## 架构资料与术语的最小使用
+
+从当前架构入口按[角色阅读路径](../../../standards/architecture/README.md)只取本任务的批准规格、相关模块/接口、数据/权限不变量、异常恢复与验收；版本不符或决定未批时停止依赖动作。依[术语规范](../../../standards/terminology/README.md)沿用当前概念和必要定义；不重画全套架构图、不维护完整词表、不执行全仓文字替换。机器标识及状态保持原样，冲突交负责角色处理。

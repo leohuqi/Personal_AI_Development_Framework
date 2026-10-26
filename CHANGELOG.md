@@ -4,6 +4,8 @@
 
 ## 未发布
 
+- 架构/术语升级候选：C4、轻量 arc42、ADR、Lite/Standard/Full 与按问题阅读；共享术语 Skill、六领域单源词表及保护检查。只读 Profile 建议保留原门禁和授权，样例及真实验证状态见[交付入口](docs/upgrades/architecture-terminology-vnext/README.md)。
+
 - 同一项目、职责及授权范围内优先接续已有Agent；新会话从准确成果恢复并增量工作，保留独立审查、当前版本核验与执行证据要求。
 
 ## 版本总览

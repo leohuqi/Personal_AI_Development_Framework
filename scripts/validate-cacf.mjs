@@ -10,6 +10,28 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const required = [
+  "standards/architecture/README.md",
+  "standards/architecture/sources.md",
+  "standards/terminology/README.md",
+  "standards/terminology/GLOSSARY.yaml",
+  "standards/terminology/GLOSSARY.md",
+  "standards/terminology/SOURCES.md",
+  "standards/terminology/BEFORE-AFTER.md",
+  ".agents/skills/terminology-governance/SKILL.md",
+  "lib/architecture-profile.mjs",
+  "lib/terminology.mjs",
+  "scripts/recommend-architecture.mjs",
+  "scripts/check-terminology.mjs",
+  "scripts/build-glossary.mjs",
+  "tests/vnext/run-profile-tests.mjs",
+  "tests/vnext/run-terminology-tests.mjs",
+  "templates/architecture-overview.md",
+  "templates/architecture-view.md",
+  "templates/module-design.md",
+  "templates/adr.md",
+  "examples/architecture-method/README.md",
+  "examples/architecture-method/model.json",
+  "docs/upgrades/architecture-terminology-vnext/README.md",
   "integrations/impeccable.md",
   "workflow/small-team-collaboration.md",
   "tests/v0.3/run-concept-mockup-tests.mjs",
@@ -116,6 +138,8 @@ for (const rel of required) {
     errors.push("Missing schema marker in " + rel);
   }
   // Check Markdown inline links. Ignore external URLs, anchors and non-file schemes.
+  // Source-code string templates are not Markdown documents; generated output is checked separately.
+  if (!rel.endsWith('.md')) continue;
   for (const match of markdown.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) {
     const raw = match[1].trim().replace(/^<|>$/g, "");
     const dest = raw.split("#", 1)[0];

@@ -44,3 +44,9 @@ description: 基于高层产品规格初评技术可行性与逐 Feature 实现�
 关键输入缺失、契约冲突、重大决定未批准、基线漂移或必需证据缺失时，经 Master 发 CLARIFICATION_REQUEST/BLOCKER，停止依赖动作，其余获授权草稿可继续。Module 不得自行替换系统技术栈。
 
 L/XL 与风险触发 S/M 仍须精确版本的独立 DESIGN 审查；按[角色成果标准](../../../contracts/role-deliverables.md)及[质量评价](../../../contracts/skill-delivery-evaluation.md) SA-Q1–SA-Q5 收件。完成、Master DESIGN_READY、Owner 重大设计批准及单独编码授权分别核验；不自审、不授权编码/合并/部署，审计放附录。
+
+## 可裁剪架构方法与资料路由
+
+执行[共用架构方法](../../../standards/architecture/README.md)：Master的Lite/Standard/Full建议与原architecture_scope独立；复用有效基线，先L0 Overview及必要L1系统视图，再按阶段交MA深化L2/L3。C4 Container不等于Docker，逻辑模块不冒充运行单元；按轻量arc42检查关键问题，重大取舍用ADR，未批决定保留PROPOSED。来源复杂时逐事实区分MIGRATED/NORMATIVE_REUSE/HISTORICAL_ONLY，摘要不替代完整规范；不要求每项目建立大型Source Map。
+
+按[Overview模板](../../../templates/architecture-overview.md)组织短主文、问题导航和下游最短资料。模型稳定ID/关系独立于Diagram-Design呈现，图给如何读及下钻；真实渲染/实看与语义核对分别记录。术语只检查当前架构语境，不改技术标识符或权限/错误/恢复语义。原scope已触发的图、基线、Review、Owner批准与编码权限不随Profile降低；示例[Lite/Standard/Full](../../../examples/architecture-method/README.md)均为文档练习，不是业务实施批准。

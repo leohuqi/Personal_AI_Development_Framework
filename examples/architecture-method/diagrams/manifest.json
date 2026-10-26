@@ -1,0 +1,233 @@
+[
+  {
+    "id": "standard-container",
+    "title": "Standard · 三个运行边界",
+    "type": "architecture",
+    "node_ids": [
+      "S-WEB",
+      "S-API",
+      "S-DB"
+    ],
+    "relation_ids": [
+      "S1",
+      "S2"
+    ],
+    "authoritative_source": "standard/OVERVIEW.md",
+    "purpose": "说明Web/API/数据存储责任",
+    "cuts": "API内模块下钻MODULE；无独立部署或异步风险，不补Full全部图",
+    "status": "PROPOSED_SYNTHETIC",
+    "html_path": "diagrams/standard-container.html",
+    "svg_path": "diagrams/standard-container.svg",
+    "png_path": "diagrams/standard-container.png",
+    "generator": "diagram-design instructions + tools/build.py",
+    "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+    "skill_content_sha256": "1b30bb3c0da29a05e5b05c0a4510ce6f286a0d0f1da97b9aa6aaf03c92e98618",
+    "project_style_profile_ref": "VISUAL-STYLE.md"
+  },
+  {
+    "id": "standard-component",
+    "title": "Standard · Catalog组件",
+    "type": "architecture",
+    "node_ids": [
+      "SC-USE",
+      "SC-RULE",
+      "SC-REPO"
+    ],
+    "relation_ids": [
+      "SC1",
+      "SC2"
+    ],
+    "authoritative_source": "standard/MODULE.md",
+    "purpose": "当前Catalog在API内的依赖",
+    "cuts": "Policy外部模块接口在正文，非新服务",
+    "status": "PROPOSED_SYNTHETIC",
+    "html_path": "diagrams/standard-component.html",
+    "svg_path": "diagrams/standard-component.svg",
+    "png_path": "diagrams/standard-component.png",
+    "generator": "diagram-design instructions + tools/build.py",
+    "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+    "skill_content_sha256": "1b30bb3c0da29a05e5b05c0a4510ce6f286a0d0f1da97b9aa6aaf03c92e98618",
+    "project_style_profile_ref": "VISUAL-STYLE.md"
+  },
+  {
+    "id": "full-context",
+    "title": "Context · 系统外部边界",
+    "type": "architecture",
+    "node_ids": [
+      "P-MEMBER",
+      "S-RECORDS",
+      "S-IDP"
+    ],
+    "relation_ids": [
+      "X1",
+      "X2"
+    ],
+    "authoritative_source": "full/views/structure.md#context",
+    "purpose": "系统整体、成员与外部身份系统",
+    "cuts": "内部软件聚合为系统，下钻Container",
+    "status": "PROPOSED_SYNTHETIC",
+    "html_path": "diagrams/full-context.html",
+    "svg_path": "diagrams/full-context.svg",
+    "png_path": "diagrams/full-context.png",
+    "generator": "diagram-design instructions + tools/build.py",
+    "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+    "skill_content_sha256": "1b30bb3c0da29a05e5b05c0a4510ce6f286a0d0f1da97b9aa6aaf03c92e98618",
+    "project_style_profile_ref": "VISUAL-STYLE.md"
+  },
+  {
+    "id": "full-container",
+    "title": "Container · 发布权威在API",
+    "type": "architecture",
+    "node_ids": [
+      "C-WEB",
+      "C-API",
+      "C-META",
+      "C-PARSER",
+      "C-BYTES"
+    ],
+    "relation_ids": [
+      "C1",
+      "C2",
+      "C3",
+      "C4"
+    ],
+    "authoritative_source": "full/views/structure.md#container",
+    "purpose": "Parser无直写权，API负责发布",
+    "cuts": "Context身份边界在上层；无隐藏Parser存储路径",
+    "status": "PROPOSED_SYNTHETIC",
+    "html_path": "diagrams/full-container.html",
+    "svg_path": "diagrams/full-container.svg",
+    "png_path": "diagrams/full-container.png",
+    "generator": "diagram-design instructions + tools/build.py",
+    "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+    "skill_content_sha256": "1b30bb3c0da29a05e5b05c0a4510ce6f286a0d0f1da97b9aa6aaf03c92e98618",
+    "project_style_profile_ref": "VISUAL-STYLE.md"
+  },
+  {
+    "id": "full-deployment",
+    "title": "Deployment · 隔离计算与权威主机",
+    "type": "deployment",
+    "node_ids": [
+      "D-BROWSER",
+      "D-APP",
+      "D-PARSER"
+    ],
+    "relation_ids": [
+      "D1",
+      "D2"
+    ],
+    "authoritative_source": "full/views/deployment.md",
+    "purpose": "Container实例的候选放置与信任环境",
+    "cuts": "主机内存储关系按Container，端口与版本待决",
+    "status": "PROPOSED_SYNTHETIC",
+    "instances": {
+      "D-BROWSER": [
+        "C-WEB"
+      ],
+      "D-APP": [
+        "C-API",
+        "C-META",
+        "C-BYTES"
+      ],
+      "D-PARSER": [
+        "C-PARSER"
+      ]
+    },
+    "html_path": "diagrams/full-deployment.html",
+    "svg_path": "diagrams/full-deployment.svg",
+    "png_path": "diagrams/full-deployment.png",
+    "generator": "diagram-design instructions + tools/build.py",
+    "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+    "skill_content_sha256": "1b30bb3c0da29a05e5b05c0a4510ce6f286a0d0f1da97b9aa6aaf03c92e98618",
+    "project_style_profile_ref": "VISUAL-STYLE.md"
+  },
+  {
+    "id": "full-component",
+    "title": "Component · Records有界深化",
+    "type": "architecture",
+    "node_ids": [
+      "RC-USE",
+      "RC-RULE",
+      "RC-REPO",
+      "RC-RECOVER"
+    ],
+    "relation_ids": [
+      "RC1",
+      "RC2",
+      "RC3"
+    ],
+    "authoritative_source": "full/modules/records.md",
+    "purpose": "同一API内组件职责与恢复接缝",
+    "cuts": "外部Policy/Tasks/Bytes端口在Records完整正文，不画成新服务",
+    "status": "PROPOSED_SYNTHETIC",
+    "html_path": "diagrams/full-component.html",
+    "svg_path": "diagrams/full-component.svg",
+    "png_path": "diagrams/full-component.png",
+    "generator": "diagram-design instructions + tools/build.py",
+    "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+    "skill_content_sha256": "1b30bb3c0da29a05e5b05c0a4510ce6f286a0d0f1da97b9aa6aaf03c92e98618",
+    "project_style_profile_ref": "VISUAL-STYLE.md"
+  },
+  {
+    "id": "full-data",
+    "title": "Data · 源修订与派生代次",
+    "type": "er",
+    "node_ids": [
+      "E-RECORD",
+      "E-REV",
+      "E-GEN"
+    ],
+    "relation_ids": [
+      "ER1",
+      "ER2"
+    ],
+    "authoritative_source": "full/views/data.md",
+    "purpose": "概念实体归属与精确源绑定",
+    "cuts": "非物理Schema；Operation/Task/Policy控制域在契约",
+    "status": "PROPOSED_SYNTHETIC",
+    "html_path": "diagrams/full-data.html",
+    "svg_path": "diagrams/full-data.svg",
+    "png_path": "diagrams/full-data.png",
+    "generator": "diagram-design instructions + tools/build.py",
+    "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+    "skill_content_sha256": "1b30bb3c0da29a05e5b05c0a4510ce6f286a0d0f1da97b9aa6aaf03c92e98618",
+    "project_style_profile_ref": "VISUAL-STYLE.md"
+  },
+  {
+    "id": "full-runtime",
+    "title": "Runtime · 解析发布与拒绝",
+    "type": "sequence",
+    "node_ids": [
+      "C-WEB",
+      "C-API",
+      "C-BYTES",
+      "C-META",
+      "C-PARSER"
+    ],
+    "relation_ids": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08"
+    ],
+    "authoritative_source": "full/views/runtime.md",
+    "purpose": "先接管后解析；所有检查满足才切发布",
+    "cuts": "分块和崩溃点在Records；完整校验在Parsing",
+    "status": "PROPOSED_SYNTHETIC",
+    "guards": {
+      "valid": "lease有效、源current且ACTIVE、当前授权、完整结果",
+      "invalid": "任一校验失败：旧epoch/换源/撤权/缺块"
+    },
+    "html_path": "diagrams/full-runtime.html",
+    "svg_path": "diagrams/full-runtime.svg",
+    "png_path": "diagrams/full-runtime.png",
+    "generator": "diagram-design instructions + tools/build.py",
+    "external_skill_sha": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+    "skill_content_sha256": "1b30bb3c0da29a05e5b05c0a4510ce6f286a0d0f1da97b9aa6aaf03c92e98618",
+    "project_style_profile_ref": "VISUAL-STYLE.md"
+  }
+]

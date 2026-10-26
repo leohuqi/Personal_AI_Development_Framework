@@ -31,3 +31,9 @@ Master 检查[主成果](../contracts/role-deliverables.md)、跨角色一致性
 Context Coordinator 默认是当前角色的共享能力，只有复杂跨会话/冲突整理确需独立任务时分派。Shared Task Context 只放最小来源；消息和 Handoff 遵循[共用协议](agent-protocol.md)。fresh-context Reviewer 只读批准来源、精确 diff 与证据，不继承 Coder 自审。
 
 默认单一 Coder；并行实现须明确互不重叠的范围、隔离工作树与适用授权。已批准范围内 Master 优先真实运行时分派/接续，不逐次重批；缺能力才 HUMAN_RELAY，不新建调度器或后台服务。
+
+## Profile 与职责范围独立
+
+Master先依据[架构方法](../standards/architecture/README.md)选设计深度，再按原architecture_scope决定角色；不要把Full等同both，或把Lite等同无风险。可运行 node scripts/recommend-architecture.mjs task.json 获取[只读建议](../lib/architecture-profile.mjs)；它使用现有路由并额外读取当前变化复杂度/基线/受影响运行节点与变更外部依赖，不修改旧消息、Gate字段或返回授权。
+
+未知或冲突先补必要输入，不能默认Lite。S权限、删除/恢复或同步需专门考虑运行/数据/安全与Review；方法建议的review_recommended不改变既有independent_review_required。新风险应由Master按实际语义归到现有风险分类并安排适用审查，不靠未知字符串绕过。给下游只路由当前相关资料，完整规范有唯一维护位置；详细方法和复用/迁移边界见上文链接。

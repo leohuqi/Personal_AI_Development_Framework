@@ -55,3 +55,7 @@ The pure [design-gate evaluator](../lib/design-gate.mjs) supports offline checks
 ## V0.3 prove Master coordination instead of role-labeled output
 For Owner-requested orchestration acceptance, route via [auditable Dispatch Chain](../contracts/agent-dispatch.md) and [independent session runbook](master-orchestration-validation.md). A Master-produced planning markdown, apparent SYSTEM/MODULE Handoff comments and two commits **in the same assistant session** prove only role-scoped simulation. Require a specialist's own execution receipt (fresh session/task ref), actual Handoff, live Master reconciliation **before** any dependent next dispatch, with HUMAN_RELAY distinguished from actual RUNTIME_DISPATCH. Cross-session verification does not assert parallel development.
 Owner applies [applicable independent Skill quality rubrics (including PA where routed)](../contracts/skill-delivery-evaluation.md) on actual professional artifacts. Master and metadata validator cannot grade design for the Owner.
+
+## 可裁剪架构与术语检查
+
+Master按[架构方法](../standards/architecture/README.md)确定设计深度及最小阅读资料，SA解释系统边界与重要决定，MA在批准基线下细化当前模块；Profile不替代architecture_scope或原必需产物。系统/模块图、接口/数据与[术语规范](../standards/terminology/README.md)在本轮已有Independent Reviewer审查中一并核对，不再增加专用审批。未批准的基线、缺少当前渲染或强制Review仍保持原阻断；UI概念确认→前端Mockup/Impeccable及两阶段规格流程不变。

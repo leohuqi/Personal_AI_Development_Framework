@@ -1,0 +1,56 @@
+{
+  "scope": "source/model/static links only; browser/visual/product tests not included",
+  "model_sha256": "781d0a8610d902db0fff8f9844691a4029b103665d397d12921538fabad55d03",
+  "views": [
+    {
+      "id": "standard-container",
+      "nodes": 3,
+      "relations": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "standard-component",
+      "nodes": 3,
+      "relations": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "full-context",
+      "nodes": 3,
+      "relations": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "full-container",
+      "nodes": 5,
+      "relations": 4,
+      "status": "PASS"
+    },
+    {
+      "id": "full-deployment",
+      "nodes": 3,
+      "relations": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "full-component",
+      "nodes": 4,
+      "relations": 3,
+      "status": "PASS"
+    },
+    {
+      "id": "full-data",
+      "nodes": 3,
+      "relations": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "full-runtime",
+      "nodes": 5,
+      "relations": 8,
+      "status": "PASS"
+    }
+  ],
+  "issues": [],
+  "status": "PASS"
+}

@@ -48,3 +48,9 @@ COMPLETED 模块设计须包含 system_baseline_ref、代码结构、公共接�
 即使未路由 Solution Architect，L/XL 与风险触发的 S/M 仍需精确源版本的独立 DESIGN 审查；之后由 Master 检查依赖和门禁，并单独取得有边界的 Owner 编码授权。
 
 首次真实执行/交接按共用协议核验 Dispatch、基线、执行 ID 和产物源版本，不能从 PROPOSED 基线完成正式模块设计；收件参见[角色成果标准](../../../contracts/role-deliverables.md)。
+
+## 分层消费与单一权威
+
+按[共用架构方法](../../../standards/architecture/README.md)读取目标模块入口、完整契约、精确批准系统基线和相关公共接口/已确认UI；只有当前问题需要才下钻Context/Component/Runtime/Data。不复制整套系统设计，不用Overview摘要代替完整接口或恢复约束。按[模块模板](../../../templates/module-design.md)说明职责/非职责、提供与消费接口、数据归属/权限不变量、事务/CAS/幂等、错误恢复与测试，按当前模块渐进深化。
+
+Profile只建议文档深度；即使Lite且scope module，仍保留原必需组件图/精确基线/Review和Owner权限。既有有效图仅依原门禁的版本与证据要求复用。规范迁移时逐事实标明唯一当前位置和仍需消费的固定旧来源；术语与系统一致且不改ID/Schema/状态/权限或恢复含义。PROPOSED系统可供明确授权的文档试验草案参考，不能因此完成正式Module Design或放行Coder。
