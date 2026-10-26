@@ -1,6 +1,6 @@
 # 个人 AI 开发框架（PADF）
 
-**当前版本：v0.3.5（V0.3 系列）。** 本版简化小团队协作和全部角色的设计、文档与评审，UI 改为概念图确认后直接前端交互 Mockup，并用 Impeccable 审查。参见[v0.3.5 版本说明](docs/releases/v0.3.5.md)与[GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.5)。
+**当前版本：v0.3.6（V0.3 系列）。** 本版新增可裁剪架构设计、通用术语治理和 Agent 接续规则，保留原设计门禁、授权及项目独立采用边界。参见[v0.3.6 版本说明](docs/releases/v0.3.6.md)与[GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.6)。
 
 [完整更新历史](CHANGELOG.md)汇总各正式版本及 V0.1 历史基线；发布后同步维护，详细证据保留在各版本说明和 Release 中。
 
@@ -18,13 +18,13 @@ Owner / PM 保留最终决定，1–2 名技术成员可兼技术、开发、接
 
 协作方式参考 BMAD，复用现有工具，不新增插件安装或服务部署。接入项目仍须批准并固定所采用的版本，不随 PADF 发布自动升级。
 
-## 架构与术语能力升级（未发布候选）
+## v0.3.6：可裁剪架构、术语治理与 Agent 接续
 
-从[本轮交付入口](docs/upgrades/architecture-terminology-vnext/README.md)查看状态、样例、验证和待决项。架构采用[可裁剪统一方法](standards/architecture/README.md)，Lite/Standard/Full 与 scope 独立，按问题读取分层设计；[术语标准](standards/terminology/README.md)与[共享 Skill](.agents/skills/terminology-governance/SKILL.md)按需检查六领域用词。Profile 只读建议与术语检查均不改变既有门禁、授权或项目采用版本。
+架构采用[可裁剪统一方法](standards/architecture/README.md)：Master按当前范围、复杂度与风险选择Lite/Standard/Full，SA与Module按C4、轻量arc42和ADR组织设计，各角色从单一权威入口按问题读取。[架构样例与8张实绘图](examples/architecture-method/full/README.md)保留源模型、HTML、SVG、PNG及真实渲染证据。
 
-## Agent 工作接续（未发布）
+[术语标准](standards/terminology/README.md)和[共享Skill](.agents/skills/terminology-governance/SKILL.md)按需检查Business、Architecture、Engineering、AI、PADF Governance及项目术语。词条状态与证据强度显式保留；辅助器不自动替换、不把文字检查当语义验证。
 
-同一项目与职责优先继续已有Agent处理后续变化；原会话不可用或独立性要求不满足时再新建，并从准确成果恢复。接续同样核对当前授权与版本，不默认重做方案、不增加台账或服务。详见[共用接续规则](workflow/agent-protocol.md#优先接续已有-agent)。
+同一项目与职责优先继续已有Agent处理后续变化；无法接续或独立性不满足时，从准确成果恢复并只补变化。接续仍核对当前授权、Task Contract、版本、真实执行和独立审查，详见[共用接续规则](workflow/agent-protocol.md#优先接续已有-agent)。Profile建议、术语检查和会话接续均不能绕过原Design Gate、G-01或Owner权限。
 
 ## v0.3.4：设计证据与执行依赖完整性
 

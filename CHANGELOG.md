@@ -4,14 +4,13 @@
 
 ## 未发布
 
-- 架构/术语升级候选：C4、轻量 arc42、ADR、Lite/Standard/Full 与按问题阅读；共享术语 Skill、六领域单源词表及保护检查。只读 Profile 建议保留原门禁和授权，样例及真实验证状态见[交付入口](docs/upgrades/architecture-terminology-vnext/README.md)。
-
-- 同一项目、职责及授权范围内优先接续已有Agent；新会话从准确成果恢复并增量工作，保留独立审查、当前版本核验与执行证据要求。
+暂无待发布条目。
 
 ## 版本总览
 
 | 版本 | 发布日期（北京时间） | 主题 | 发布提交 |
 | --- | --- | --- | --- |
+| [v0.3.6](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.6) | 2026-10-26 | 可裁剪架构、术语治理与 Agent 接续 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.6) |
 | [v0.3.5](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.5) | 2026-10-24 | 小团队简化、概念 Mockup 与文档评审 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.5) |
 | [v0.3.4](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.4) | 2026-10-23 | 设计证据与执行依赖完整性 | [3afcb5b4](https://github.com/leohuqi/Personal_AI_Development_Framework/commit/3afcb5b4b038656f50bab57f4722b4a3f3accda7) |
 | [v0.3.3](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.3) | 2026-10-21 | 角色成果优化与 Master 主动门禁 | [8a1fa814](https://github.com/leohuqi/Personal_AI_Development_Framework/commit/8a1fa8142c2a7304f8c5f2978fa557437a8942f6) |
@@ -21,6 +20,16 @@
 | [v0.2.0](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.2.0) | 2026-10-13 | 共享上下文与 Agent 通信（CACF） | [c2caac0a](https://github.com/leohuqi/Personal_AI_Development_Framework/commit/c2caac0a6eac220f65667b7fe7cd5e6943dbe807) |
 
 V0.1 是发布前的历史基线，见文末；仓库没有独立的 V0.1 tag 或 Release，不将其补记为正式发布。
+
+## v0.3.6 — 2026-10-26
+
+- **架构设计：**新增按范围、复杂度与风险选择 Lite/Standard/Full 的统一方法，以 C4、轻量 arc42 和 ADR 组织系统、模块、运行、数据与决策；角色按问题读取单一权威来源。
+- **可视化证据：**提交 8 张架构图的源模型、HTML、SVG 与 PNG；真实浏览器渲染、逐图实看和独立复渲染均已完成，修复 Standard 组件图父容器标注问题。
+- **术语治理：**新增六领域单源词表、共享 Terminology Governance Skill、生成与保护检查；通用词条保持 `PROPOSED`，辅助器只提供有界提示，不自动替换或宣称语义等价。
+- **Agent 接续：**同一项目、职责与有效授权范围优先继续已有 Agent；不可接续时从准确成果恢复，只补变化，同时保留当前授权、版本、真实执行及独立审查要求。
+- **兼容性：**原机器协议、Design Gate、G-01、UI 流程和 Owner 授权边界保持；Profile 只读建议不能提供缺失角色、批准、图表或审查。
+
+接入项目须阅读[版本说明](docs/releases/v0.3.6.md)，批准并固定采用版本；PADF 发布不会自动升级 PKMS、PQA 或其他项目。来源：[PR #24](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/24)、[PR #25](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/25)及[Owner评审中心](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/14)。准确发布提交由不可变 tag 解析。
 
 ## v0.3.5 — 2026-10-24
 
