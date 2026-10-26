@@ -1,0 +1,193 @@
+{
+  "suite": "Master progress reconciliation: controlled history and injected integration",
+  "scope": "MOCK_ONLY_NO_LIVE_LINEAR",
+  "count": 37,
+  "passed": 1,
+  "failed": 36,
+  "tests": [
+    {
+      "name": "new Linear profile cannot silently pass existing ACK/CONTINUE without Receipt",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n\ntrue !== false\n"
+    },
+    {
+      "name": "unextended historical chain remains compatible",
+      "status": "PASS"
+    },
+    {
+      "name": "W1 updates only LEO-202 and persists read-back evidence",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "W2 APPROVE with Draft PR is In Review",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "W3 conditional approval keeps all open conditions",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "W4 real DESIGN rework maps In Progress",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "review rejection without real rework cannot claim started rework",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "parent does not become blockedBy",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "completed old prerequisite removed with evidence; unrelated retained",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "integration dependency does not regress real implementation to Backlog",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "already correct status performs no write but still reads and persists",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "duplicate Handoff retries without repeated writes",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "write failure cannot report synchronization success",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "read failure cannot report synchronization success",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "receipt persistence failure cannot report synchronization success",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "receipt read failure cannot report synchronization success",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "write/read mismatch cannot report synchronization success",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "persisted receipt tampering cannot report synchronization success",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "pre-write concurrent change blocks rather than overwrites",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "same timestamp semantic relation drift is detected",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "late old start cannot regress In Review",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "missing execution Issue never falls back to parent",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "parent Issue cannot stand in for execution task",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "wrong ACK execution binding blocks",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "wrong live team/status mapping blocks",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "Done does not follow from APPROVE/CI/merged PR",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "exact execution acceptance still requires original G-01",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "Done rejects parent acceptance scope",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "Done rejects context acceptance scope",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "Done rejects missing acceptance scope",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "Done rejects owner acceptance scope",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "Done rejects fake acceptance scope",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "old unbound Contract remains readable but cannot synchronize child",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "explicit GitHub-only task is N/A without Linear calls",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "failed Receipt cannot let existing chain CONTINUE",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n\ntrue !== false\n"
+    },
+    {
+      "name": "invalid evidence source is blocked without mutation",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    },
+    {
+      "name": "planner does not mutate caller input",
+      "status": "FAIL",
+      "error": "progress-reconciliation module must exist"
+    }
+  ]
+}

@@ -4,7 +4,7 @@
 
 ## 未发布
 
-暂无待发布条目。
+- Master进度协调修复：准确区分父CR与执行Issue，在有意义节点核对状态、依赖、实际写入和回读，并保存可验证同步回执；新执行入口阻断缺失/失败回执，旧合同兼容及原G-01/Owner Done边界保留。见[修复与验证入口](docs/enhancements/progress-reconciliation/README.md)。
 
 ## 版本总览
 

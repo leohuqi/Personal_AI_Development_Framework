@@ -1,0 +1,54 @@
+{
+  "suite": "PROGRESS-QA-01 independent reproduction of implementation Review findings",
+  "scope": "CONTROLLED_MOCK_ONLY_NO_LIVE_LINEAR_MUTATION",
+  "source_revision": "8d6e98c (frozen Independent Reviewer snapshot)",
+  "observed_at": "2026-10-26T16:18:19.517Z",
+  "source_sha256": {
+    "lib/progress-reconciliation.mjs": "fd22b5ee47694f967051f9fceefa1fb9ef5f1d75a788880d0197091e1cda75ed",
+    "lib/orchestration-evidence.mjs": "e33c8c6da08903910ac45fccad7c0d97beade2178aad62d1eec26440fd80a441",
+    "lib/design-gate.mjs": "2e66a04053b0431bcef77e90d83b5c04795c7b4d33c438b5a080e21ba3c6aae7"
+  },
+  "findings": [
+    {
+      "id": "REVIEW-QA-R01",
+      "requirement": "Known current integration dependencies must block Done even when old G-01 blockers is empty",
+      "expected": "BLOCKED with zero writes",
+      "actual": {
+        "result": "SYNCED",
+        "state": "done",
+        "blocked_by": [
+          "UNMET-INTEGRATION"
+        ],
+        "writes": 1
+      },
+      "reproduced": true
+    },
+    {
+      "id": "REVIEW-QA-R02",
+      "requirement": "A pre-execution READY receipt cannot prove post-Handoff verified progress",
+      "expected": "eligible=false",
+      "actual": {
+        "receipt_result": "SYNCED",
+        "event": "READY",
+        "stage": "READY",
+        "state": "todo",
+        "eligible": true,
+        "errors": []
+      },
+      "reproduced": true
+    },
+    {
+      "id": "REVIEW-QA-R03",
+      "requirement": "Final read-back must be fresh and ordered after the original observation",
+      "expected": "PROGRESS_SYNC_FAILED and no verified Receipt",
+      "actual": {
+        "result": "SYNCED",
+        "readback_observed_at": "2026-10-26T11:45:00.000Z",
+        "receipt_observed_at": "2026-10-26T12:00:00.000Z",
+        "synced_at": "2026-10-26T12:00:00.000Z",
+        "valid": true
+      },
+      "reproduced": true
+    }
+  ]
+}

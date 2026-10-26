@@ -1,0 +1,59 @@
+{
+  "scope": "CONTROLLED_MOCK_ONLY_NO_LIVE_LINEAR_MUTATION",
+  "observed_at": "2026-10-26T13:50:09.216Z",
+  "source_revision": "LOCAL_CANDIDATE",
+  "binding_note": "Local pre-fix candidate, not a published Git SHA; implementation/fixture hashes were captured at execution, runner hash was not captured.",
+  "source_sha256": {
+    "lib/progress-reconciliation.mjs": "3fc9bb64dd50e1ddd163873c95c867a022765f5e8577a39d0c397e2123330b5b",
+    "lib/orchestration-evidence.mjs": "0d330ac4f5f2f8a1170e5220dfb5b3aeaf29d2ff624425fb2508d09224f6e70d",
+    "lib/action-preflight.mjs": "2432f5217a8befd7e67d5232e6c7ac91390984e1eb9a09440cba9d06298870ff",
+    "tests/v0.3/progress-fixture.mjs": "9ec3a8f42d961440b8587db510d1376f1c63539b99efc6ea70c11bcecb61a07a"
+  },
+  "count": 47,
+  "passed": 40,
+  "failed": 7,
+  "failures": [
+    {
+      "id": "QA-P18-unresolved-current-review",
+      "name": "Done blocks unresolved-current-review instead of borrowing another READY snapshot",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'SYNCED'\n- 'BLOCKED'\n"
+    },
+    {
+      "id": "QA-P18-current-rejected",
+      "name": "Done blocks current-rejected instead of borrowing another READY snapshot",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'SYNCED'\n- 'BLOCKED'\n"
+    },
+    {
+      "id": "QA-P18-current-P1",
+      "name": "Done blocks current-P1 instead of borrowing another READY snapshot",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'SYNCED'\n- 'BLOCKED'\n"
+    },
+    {
+      "id": "QA-P26-unknown-event",
+      "name": "Receipt consistency rejects unknown-event even with a fresh storage checksum",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n\ntrue !== false\n"
+    },
+    {
+      "id": "QA-P26-lost-conditions",
+      "name": "Receipt consistency rejects lost-conditions even with a fresh storage checksum",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n\ntrue !== false\n"
+    },
+    {
+      "id": "QA-P26-wrong-write-patch",
+      "name": "Receipt consistency rejects wrong-write-patch even with a fresh storage checksum",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n\ntrue !== false\n"
+    },
+    {
+      "id": "QA-P26-wrong-stage",
+      "name": "Receipt consistency rejects wrong-stage even with a fresh storage checksum",
+      "status": "FAIL",
+      "error": "Expected values to be strictly equal:\n\ntrue !== false\n"
+    }
+  ]
+}

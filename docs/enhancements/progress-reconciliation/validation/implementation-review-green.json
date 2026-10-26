@@ -1,0 +1,317 @@
+{
+  "observed_at": "2026-10-26T16:23:29.365Z",
+  "scope": "IMPLEMENTATION_REVIEW_BOUNDED_FIXTURES_NO_LIVE_LINEAR",
+  "status": "PASS",
+  "results": [
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-progress-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "a71a1b825f889fb4019df74dcac5ca19bd2127287ac8d1303b6f0e249d7b844b",
+      "summary": {
+        "suite": "Master progress reconciliation: controlled history and injected integration",
+        "scope": "MOCK_ONLY_NO_LIVE_LINEAR",
+        "count": 45,
+        "passed": 45,
+        "failed": 0
+      }
+    },
+    {
+      "command": [
+        "node",
+        "scripts/validate-cacf.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "366726a4e9a81966e5fe596aa8940f509bfc24d1d7d16863cd846580b308dfa9",
+      "summary": "PASS PADF CACF V0.2 + V0.3 design structural validation (99 framework files and local links)"
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-preflight-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "a6763cf9ad2f10b8523b95e1a20138f89ad63cf22966949c55f6797839a2d513",
+      "summary": {
+        "suite": "PADF G-01 Action Preflight contract regression (synthetic snapshots only)",
+        "status": "PASS",
+        "count": 340,
+        "verification_boundary": "DECISION_LOGIC_ONLY_NOT_LIVE_APPROVAL_AGENT_IDENTITY_OR_PLATFORM_CONFIGURATION"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-orchestration-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "6745ba92a1b78ece9637e0a158b5ff02f51d1ae4ab5e168d35100bb346660a34",
+      "summary": {
+        "suite": "Master Orchestration evidence (synthetic metadata ONLY)",
+        "status": "PASS",
+        "count": 36,
+        "external_sessions_executed": "NOT_RUN",
+        "actual_runtime_dispatch": "NOT_RUN"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "857c21b19506fc9cb623c7e0e5370a6975d453ce26f4ec5b26553050fa0af8eb",
+      "summary": {
+        "suite": "PADF V0.3 system/module architecture routing, design dependency and gate simulation",
+        "status": "PASS",
+        "count": 72
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-review-integrity-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "02d2df609dabbd62016eef0d774ee3a206b9be994095711de333e79206e81c86",
+      "summary": {
+        "suite": "Issue18 independent Design Gate integrity / G01 regression",
+        "status": "PASS",
+        "count": 320,
+        "passed": 320,
+        "failed": 0,
+        "verification_boundary": "SYNTHETIC_METADATA_ONLY",
+        "source_baseline": "8a1fa8142c2a7304f8c5f2978fa557437a8942f6",
+        "real_runtime_dispatch": "NOT_RUN",
+        "real_figma_execution": "NOT_RUN",
+        "owner_acceptance": "NOT_RUN"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/cacf/run-validation.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "b95c6281125647c1ca70f7da5e1e2593bd874b75da88aa1bd7d7885158962bc3",
+      "summary": {
+        "suite": "PADF V0.2 CACF fixture-level cross-process protocol simulation",
+        "result": "PASS",
+        "count": 7,
+        "boundary": "Simulated persisted store and isolated Node processes; NOT live AI agents or Linear/GitHub connector delivery"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/cacf/run-regressions.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "04fe863570cc354ee55dbfaf9463ea0d170355bb80e0cbc5efc30623e404d86b",
+      "summary": {
+        "suite": "CACF review regressions",
+        "result": "PASS",
+        "count": 8
+      }
+    }
+  ],
+  "protected_path": "lib/action-preflight.mjs",
+  "protected_unchanged": true,
+  "protected_sha256": "2432f5217a8befd7e67d5232e6c7ac91390984e1eb9a09440cba9d06298870ff",
+  "source_sha256": {
+    "lib/progress-reconciliation.mjs": "ccce406dcf44aa67556b6802a7d7ff9d0e2555de24076f7b98b8f28352e218f6",
+    "lib/orchestration-evidence.mjs": "efa3325f2a78f9a4ccd6232b50706827567e832672372fb18bf877d3db51bf08",
+    "lib/design-gate.mjs": "2e66a04053b0431bcef77e90d83b5c04795c7b4d33c438b5a080e21ba3c6aae7"
+  },
+  "tdd_green": {
+    "suite": "Master progress reconciliation: controlled history and injected integration",
+    "scope": "MOCK_ONLY_NO_LIVE_LINEAR",
+    "count": 45,
+    "passed": 45,
+    "failed": 0,
+    "tests": [
+      {
+        "name": "new Linear profile cannot silently pass existing ACK/CONTINUE without Receipt",
+        "status": "PASS"
+      },
+      {
+        "name": "unextended historical chain remains compatible",
+        "status": "PASS"
+      },
+      {
+        "name": "W1 updates only LEO-202 and persists read-back evidence",
+        "status": "PASS"
+      },
+      {
+        "name": "W2 APPROVE with Draft PR is In Review",
+        "status": "PASS"
+      },
+      {
+        "name": "W3 conditional approval keeps all open conditions",
+        "status": "PASS"
+      },
+      {
+        "name": "W4 real DESIGN rework maps In Progress",
+        "status": "PASS"
+      },
+      {
+        "name": "review rejection without real rework cannot claim started rework",
+        "status": "PASS"
+      },
+      {
+        "name": "parent does not become blockedBy",
+        "status": "PASS"
+      },
+      {
+        "name": "completed old prerequisite removed with evidence; unrelated retained",
+        "status": "PASS"
+      },
+      {
+        "name": "integration dependency does not regress real implementation to Backlog",
+        "status": "PASS"
+      },
+      {
+        "name": "already correct status performs no write but still reads and persists",
+        "status": "PASS"
+      },
+      {
+        "name": "duplicate Handoff retries without repeated writes",
+        "status": "PASS"
+      },
+      {
+        "name": "write failure cannot report synchronization success",
+        "status": "PASS"
+      },
+      {
+        "name": "read failure cannot report synchronization success",
+        "status": "PASS"
+      },
+      {
+        "name": "receipt persistence failure cannot report synchronization success",
+        "status": "PASS"
+      },
+      {
+        "name": "receipt read failure cannot report synchronization success",
+        "status": "PASS"
+      },
+      {
+        "name": "write/read mismatch cannot report synchronization success",
+        "status": "PASS"
+      },
+      {
+        "name": "persisted receipt tampering cannot report synchronization success",
+        "status": "PASS"
+      },
+      {
+        "name": "pre-write concurrent change blocks rather than overwrites",
+        "status": "PASS"
+      },
+      {
+        "name": "same timestamp semantic relation drift is detected",
+        "status": "PASS"
+      },
+      {
+        "name": "late old start cannot regress In Review",
+        "status": "PASS"
+      },
+      {
+        "name": "missing execution Issue never falls back to parent",
+        "status": "PASS"
+      },
+      {
+        "name": "parent Issue cannot stand in for execution task",
+        "status": "PASS"
+      },
+      {
+        "name": "wrong ACK execution binding blocks",
+        "status": "PASS"
+      },
+      {
+        "name": "wrong live team/status mapping blocks",
+        "status": "PASS"
+      },
+      {
+        "name": "Done does not follow from APPROVE/CI/merged PR",
+        "status": "PASS"
+      },
+      {
+        "name": "exact execution acceptance still requires original G-01",
+        "status": "PASS"
+      },
+      {
+        "name": "Done rejects parent acceptance scope",
+        "status": "PASS"
+      },
+      {
+        "name": "Done rejects context acceptance scope",
+        "status": "PASS"
+      },
+      {
+        "name": "Done rejects missing acceptance scope",
+        "status": "PASS"
+      },
+      {
+        "name": "Done rejects owner acceptance scope",
+        "status": "PASS"
+      },
+      {
+        "name": "Done rejects fake acceptance scope",
+        "status": "PASS"
+      },
+      {
+        "name": "old unbound Contract remains readable but cannot synchronize child",
+        "status": "PASS"
+      },
+      {
+        "name": "explicit GitHub-only task is N/A without Linear calls",
+        "status": "PASS"
+      },
+      {
+        "name": "failed Receipt cannot let existing chain CONTINUE",
+        "status": "PASS"
+      },
+      {
+        "name": "accurate verified Receipt allows the new final-stage entry",
+        "status": "PASS"
+      },
+      {
+        "name": "new stage identity cannot disable Receipt checking with false old flag",
+        "status": "PASS"
+      },
+      {
+        "name": "explicit progress requirement cannot be disabled by old Design Gate switch",
+        "status": "PASS"
+      },
+      {
+        "name": "invalid evidence source is blocked without mutation",
+        "status": "PASS"
+      },
+      {
+        "name": "planner does not mutate caller input",
+        "status": "PASS"
+      },
+      {
+        "name": "implementation review: Done blocks known unmet start prerequisite",
+        "status": "PASS"
+      },
+      {
+        "name": "implementation review: Done blocks known unmet integration prerequisite",
+        "status": "PASS"
+      },
+      {
+        "name": "implementation review: unexplained live blockedBy cannot be silently dropped from Done scope",
+        "status": "PASS"
+      },
+      {
+        "name": "implementation review: pre-Handoff READY Receipt cannot prove completed stage coordination",
+        "status": "PASS"
+      },
+      {
+        "name": "implementation review: stale final readback cannot report verified synchronization",
+        "status": "PASS"
+      }
+    ]
+  }
+}

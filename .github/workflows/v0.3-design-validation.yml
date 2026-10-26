@@ -56,6 +56,11 @@ jobs:
         run: node tests/v0.3/run-concept-mockup-tests.mjs
       - name: G-01 action preflight and lifecycle regressions
         run: node tests/v0.3/run-preflight-tests.mjs
+      - name: Master progress reconciliation and independent QA regressions
+        run: |
+          node --check lib/progress-reconciliation.mjs
+          node tests/v0.3/run-progress-tests.mjs
+          node tests/v0.3/run-progress-qa-tests.mjs
       - name: Review, multi-stage, orchestration binding and UI integrity regressions
         run: node tests/v0.3/run-review-integrity-tests.mjs
       - name: Master-led expense pilot dependency and artifact checks

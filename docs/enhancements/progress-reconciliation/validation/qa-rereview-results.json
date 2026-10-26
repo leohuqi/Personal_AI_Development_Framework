@@ -1,0 +1,1013 @@
+{
+  "suite": "PROGRESS-QA-01 independent requirement probes",
+  "scope": "CONTROLLED_MOCK_ONLY_NO_LIVE_LINEAR_MUTATION",
+  "observed_at": "2026-10-26T16:23:55.890Z",
+  "source_revision": "LOCAL_CANDIDATE",
+  "source_sha256": {
+    "lib/progress-reconciliation.mjs": "ccce406dcf44aa67556b6802a7d7ff9d0e2555de24076f7b98b8f28352e218f6",
+    "lib/orchestration-evidence.mjs": "efa3325f2a78f9a4ccd6232b50706827567e832672372fb18bf877d3db51bf08",
+    "lib/action-preflight.mjs": "2432f5217a8befd7e67d5232e6c7ac91390984e1eb9a09440cba9d06298870ff",
+    "lib/design-gate.mjs": "2e66a04053b0431bcef77e90d83b5c04795c7b4d33c438b5a080e21ba3c6aae7",
+    "tests/v0.3/progress-fixture.mjs": "9ec3a8f42d961440b8587db510d1376f1c63539b99efc6ea70c11bcecb61a07a",
+    "tests/v0.3/run-progress-qa-tests.mjs": "a9d91283bf1e6ff6644349603c71cc2e2a28dfbf5eca3142390ea14ecb1deef0"
+  },
+  "count": 66,
+  "passed": 66,
+  "failed": 0,
+  "tests": [
+    {
+      "id": "QA-P01",
+      "name": "W1 produces an exact child Handoff→ACK→write→readback→stored Receipt trace",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P02",
+      "name": "Draft reviewed W2 remains In Review even with unmerged integration predecessor",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P03",
+      "name": "W3 conditional review retains every open condition",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P04",
+      "name": "Rejected design requires a real started rework event to claim DESIGN_REWORK",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P05",
+      "name": "Parent relation alone never produces a blocking dependency",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P06",
+      "name": "Only evidenced satisfied blocker is removed and unknown blockers stay",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P07",
+      "name": "Already-correct replay still reads and verifies storage without status writes",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P08",
+      "name": "Dependency-only repair sends no unrelated status write",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P09",
+      "name": "A timed-out write that applied is not blindly repeated on retry",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P10-initial-read",
+      "name": "initial-read failure cannot report verified synchronization",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P10-status-list",
+      "name": "status-list failure cannot report verified synchronization",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P10-permission-write",
+      "name": "permission-write failure cannot report verified synchronization",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P10-readback",
+      "name": "readback failure cannot report verified synchronization",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P10-storage",
+      "name": "storage failure cannot report verified synchronization",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P10-stored-read",
+      "name": "stored-read failure cannot report verified synchronization",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P11",
+      "name": "API success with old state is a failed synchronization",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P12",
+      "name": "A stored Receipt from another issue cannot make synchronization succeed",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P13",
+      "name": "Semantic pre-write drift is detected even when updatedAt stays unchanged",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P14",
+      "name": "Unplanned post-write relation drift remains visible as a failure",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P15",
+      "name": "Two same-issue attempts cannot overlap writes or cause replay writes",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P16-missing-child",
+      "name": "missing-child never writes the wrong execution task",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P16-parent-as-child",
+      "name": "parent-as-child never writes the wrong execution task",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P16-wrong-context",
+      "name": "wrong-context never writes the wrong execution task",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P16-wrong-handoff-sha",
+      "name": "wrong-handoff-sha never writes the wrong execution task",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P16-wrong-evidence-sha",
+      "name": "wrong-evidence-sha never writes the wrong execution task",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P17",
+      "name": "A live read of a different issue/team cannot target the original task",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P18-acceptance-parent",
+      "name": "Done blocks acceptance-parent instead of borrowing another READY snapshot",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P18-subject-parent",
+      "name": "Done blocks subject-parent instead of borrowing another READY snapshot",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P18-other-action",
+      "name": "Done blocks other-action instead of borrowing another READY snapshot",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P18-old-sha",
+      "name": "Done blocks old-sha instead of borrowing another READY snapshot",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P18-no-owner",
+      "name": "Done blocks no-owner instead of borrowing another READY snapshot",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P18-unresolved-current-review",
+      "name": "Done blocks unresolved-current-review instead of borrowing another READY snapshot",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P18-current-rejected",
+      "name": "Done blocks current-rejected instead of borrowing another READY snapshot",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P18-current-P1",
+      "name": "Done blocks current-P1 instead of borrowing another READY snapshot",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P19",
+      "name": "Accurate child acceptance plus original G-01 can reach Done",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P20",
+      "name": "Expired original G-01 verification is rechecked at actual attempt time",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P21",
+      "name": "Duplicate team semantics and conflicting completed/canceled status block ordinary events",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P22",
+      "name": "GitHub-only explicit N/A does not require or invoke Linear",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P23",
+      "name": "Unextended legacy record cannot silently become a child synchronization",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P24",
+      "name": "Late old event cannot overtake a newer stored review receipt",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P25",
+      "name": "Planner leaves frozen caller input unchanged",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P27",
+      "name": "An ordinary Linear task without a parent reconciles its own exact issue",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P28",
+      "name": "Unstarted and real design/coding-start facts map to the existing five-status workflow",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P29",
+      "name": "Async tool observations advance the clock instead of becoming falsely future-dated",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P30",
+      "name": "Done authorization expiring during asynchronous reads blocks before any write",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P31",
+      "name": "New event time cannot relabel an old execution as newly started rework",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P32",
+      "name": "Actual Team status IDs are passed through a controlled mapper rather than hardcoded fixture IDs",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P33",
+      "name": "Missing event with an otherwise valid previous receipt returns BLOCKED rather than throwing",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P34",
+      "name": "A received upstream work package can unblock the next exact issue using its own receipt",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-R01-start",
+      "name": "Done cannot hide a current unsatisfied start prerequisite behind empty old G-01 blockers",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-R01-integration",
+      "name": "Done cannot hide a current unsatisfied integration prerequisite behind empty old G-01 blockers",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-R01-unresolved-existing",
+      "name": "A live unresolved blockedBy relation prevents Done without invented removal evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-R01-satisfied-control",
+      "name": "An evidenced completed prerequisite may be removed before exact accepted Done",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-R02-READY",
+      "name": "A valid READY Receipt cannot prove that a later Handoff was reconciled",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-R02-EXECUTION_STARTED",
+      "name": "A valid EXECUTION_STARTED Receipt cannot prove that a later Handoff was reconciled",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-R02-handoff-control",
+      "name": "An exact post-Handoff ACK Receipt still proves verified progress for its chain",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-R03-stale",
+      "name": "A stale final observation cannot produce verified synchronization",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-R03-future",
+      "name": "A future final observation cannot produce verified synchronization",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-R03-regressed-revision",
+      "name": "A regressed-revision final observation cannot produce verified synchronization",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-R03-validator",
+      "name": "Receipt consistency rejects a stale read-back even when storage checksum is recomputed",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P26-unknown-event",
+      "name": "Receipt consistency rejects unknown-event even with a fresh storage checksum",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P26-lost-conditions",
+      "name": "Receipt consistency rejects lost-conditions even with a fresh storage checksum",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P26-wrong-write-patch",
+      "name": "Receipt consistency rejects wrong-write-patch even with a fresh storage checksum",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P26-missing-ack",
+      "name": "Receipt consistency rejects missing-ack even with a fresh storage checksum",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P26-wrong-stage",
+      "name": "Receipt consistency rejects wrong-stage even with a fresh storage checksum",
+      "status": "PASS"
+    },
+    {
+      "id": "QA-P26-source-mismatch",
+      "name": "Receipt consistency rejects source-mismatch even with a fresh storage checksum",
+      "status": "PASS"
+    }
+  ],
+  "sample_handoff_ack_sync_chain": {
+    "input": {
+      "identity": {
+        "tracker": "linear",
+        "context_id": "PQA-CR002",
+        "execution_context_id": "PQA-LEO-202",
+        "repository": "example/padf",
+        "task_contract_ref": "https://github.com/example/padf/issues/27",
+        "parent_cr_id": "LEO-197",
+        "execution_issue_id": "LEO-202",
+        "binding_ref": "https://github.com/example/padf/issues/27#binding"
+      },
+      "event": {
+        "event_id": "EVENT-LEO-202",
+        "type": "HANDOFF_ACKNOWLEDGED",
+        "occurred_at": "2026-10-26T11:45:00.000Z",
+        "work_kind": "coding"
+      },
+      "handoff": {
+        "handoff_id": "HAND-LEO-202",
+        "handoff_ref": "https://github.com/example/padf/issues/27#handoff-LEO-202",
+        "execution_context_id": "PQA-LEO-202",
+        "execution_issue_id": "LEO-202",
+        "source_head_sha": "8e60da55149243bba8ee23e886193fb1b22ed008",
+        "evidence_ref": "https://github.com/example/padf/blob/8e60da55149243bba8ee23e886193fb1b22ed008/result.md",
+        "submitted_at": "2026-10-26T11:40:00.000Z"
+      },
+      "master_ack": {
+        "handoff_id": "HAND-LEO-202",
+        "handoff_ref": "https://github.com/example/padf/issues/27#handoff-LEO-202",
+        "execution_context_id": "PQA-LEO-202",
+        "execution_issue_id": "LEO-202",
+        "ack_ref": "https://github.com/example/padf/issues/27#ack-LEO-202",
+        "observed_at": "2026-10-26T11:45:00.000Z"
+      },
+      "evidence": {
+        "source_head_sha": "8e60da55149243bba8ee23e886193fb1b22ed008",
+        "evidence_ref": "https://github.com/example/padf/blob/8e60da55149243bba8ee23e886193fb1b22ed008/result.md",
+        "implementation_ready": true,
+        "pr_ref": "https://github.com/example/padf/pull/13",
+        "pr_draft": true,
+        "review": {
+          "decision": "APPROVE",
+          "conditions": []
+        }
+      }
+    },
+    "calls": [
+      {
+        "step": "readIssue",
+        "id": "LEO-202",
+        "read": 1
+      },
+      {
+        "step": "readStatuses",
+        "team": "team"
+      },
+      {
+        "step": "readIssue",
+        "id": "LEO-202",
+        "read": 2
+      },
+      {
+        "step": "updateIssue",
+        "id": "LEO-202",
+        "patch": {
+          "state_id": "review",
+          "add_blocked_by": [],
+          "remove_blocked_by": []
+        },
+        "meta": {
+          "expected_updated_at": "2026-10-26T11:30:00.000Z",
+          "operation_key": "fa49c33defc162ed9bccfc8f1e6576ffba92abab70be10398df115b6596aba50"
+        }
+      },
+      {
+        "step": "readIssue",
+        "id": "LEO-202",
+        "read": 3
+      },
+      {
+        "step": "persistReceipt",
+        "result": "SYNCED",
+        "issue": "LEO-202"
+      },
+      {
+        "step": "readReceipt",
+        "key": "https://github.com/example/padf/issues/27#qa-LEO-202-receipt-1"
+      }
+    ],
+    "receipt": {
+      "schema_version": "padf.progress-sync-receipt/v1",
+      "receipt_id": "PROGRESS-130b6199-da01-42df-9816-a9bbd5d2429b",
+      "attempt_id": "4e0dad0c-e64d-444b-b56b-8628c152548e",
+      "operation_key": "fa49c33defc162ed9bccfc8f1e6576ffba92abab70be10398df115b6596aba50",
+      "identity": {
+        "tracker": "linear",
+        "context_id": "PQA-CR002",
+        "execution_context_id": "PQA-LEO-202",
+        "repository": "example/padf",
+        "task_contract_ref": "https://github.com/example/padf/issues/27",
+        "parent_cr_id": "LEO-197",
+        "execution_issue_id": "LEO-202",
+        "binding_ref": "https://github.com/example/padf/issues/27#binding"
+      },
+      "event": {
+        "event_id": "EVENT-LEO-202",
+        "type": "HANDOFF_ACKNOWLEDGED",
+        "occurred_at": "2026-10-26T11:45:00.000Z",
+        "work_kind": "coding"
+      },
+      "stage": "IMPLEMENTATION_READY",
+      "applicability": "LINEAR",
+      "handoff": {
+        "handoff_id": "HAND-LEO-202",
+        "handoff_ref": "https://github.com/example/padf/issues/27#handoff-LEO-202",
+        "execution_context_id": "PQA-LEO-202",
+        "execution_issue_id": "LEO-202",
+        "source_head_sha": "8e60da55149243bba8ee23e886193fb1b22ed008",
+        "evidence_ref": "https://github.com/example/padf/blob/8e60da55149243bba8ee23e886193fb1b22ed008/result.md",
+        "submitted_at": "2026-10-26T11:40:00.000Z"
+      },
+      "master_ack": {
+        "handoff_id": "HAND-LEO-202",
+        "handoff_ref": "https://github.com/example/padf/issues/27#handoff-LEO-202",
+        "execution_context_id": "PQA-LEO-202",
+        "execution_issue_id": "LEO-202",
+        "ack_ref": "https://github.com/example/padf/issues/27#ack-LEO-202",
+        "observed_at": "2026-10-26T11:45:00.000Z"
+      },
+      "source_head_sha": "8e60da55149243bba8ee23e886193fb1b22ed008",
+      "evidence": {
+        "source_head_sha": "8e60da55149243bba8ee23e886193fb1b22ed008",
+        "evidence_ref": "https://github.com/example/padf/blob/8e60da55149243bba8ee23e886193fb1b22ed008/result.md",
+        "implementation_ready": true,
+        "pr_ref": "https://github.com/example/padf/pull/13",
+        "pr_draft": true,
+        "review": {
+          "decision": "APPROVE",
+          "conditions": []
+        }
+      },
+      "review": {
+        "decision": "APPROVE",
+        "conditions": []
+      },
+      "authorization_ref": "https://github.com/example/padf/issues/27#scope",
+      "previous_receipt_ref": null,
+      "statuses": [
+        {
+          "id": "backlog",
+          "name": "Backlog",
+          "type": "backlog"
+        },
+        {
+          "id": "todo",
+          "name": "Todo",
+          "type": "unstarted"
+        },
+        {
+          "id": "progress",
+          "name": "In Progress",
+          "type": "started"
+        },
+        {
+          "id": "review",
+          "name": "In Review",
+          "type": "started"
+        },
+        {
+          "id": "done",
+          "name": "Done",
+          "type": "completed"
+        },
+        {
+          "id": "canceled",
+          "name": "Canceled",
+          "type": "canceled"
+        }
+      ],
+      "original_issue": {
+        "id": "LEO-202",
+        "uuid": "controlled-LEO-202",
+        "team_id": "team",
+        "parent_id": "LEO-197",
+        "state_id": "backlog",
+        "blocked_by": [],
+        "updated_at": "2026-10-26T11:30:00.000Z",
+        "evidence_ref": "https://github.com/example/padf/issues/27#read",
+        "observed_at": "2026-10-26T12:00:00.000Z"
+      },
+      "pre_write_issue": {
+        "id": "LEO-202",
+        "uuid": "controlled-LEO-202",
+        "team_id": "team",
+        "parent_id": "LEO-197",
+        "state_id": "backlog",
+        "blocked_by": [],
+        "updated_at": "2026-10-26T11:30:00.000Z",
+        "evidence_ref": "https://github.com/example/padf/issues/27#read",
+        "observed_at": "2026-10-26T12:00:00.000Z"
+      },
+      "target_state": {
+        "id": "review",
+        "name": "In Review",
+        "type": "started"
+      },
+      "dependencies": [],
+      "dependency_changes": [],
+      "write_results": [
+        {
+          "status": "SUCCESS",
+          "issue_id": "LEO-202",
+          "patch": {
+            "state_id": "review",
+            "add_blocked_by": [],
+            "remove_blocked_by": []
+          },
+          "response": {
+            "success": true,
+            "evidence_ref": "https://github.com/example/padf/issues/27#qa-write-1"
+          }
+        }
+      ],
+      "readback": {
+        "id": "LEO-202",
+        "uuid": "controlled-LEO-202",
+        "team_id": "team",
+        "parent_id": "LEO-197",
+        "state_id": "review",
+        "blocked_by": [],
+        "updated_at": "2026-10-26T11:59:00.000Z",
+        "evidence_ref": "https://github.com/example/padf/issues/27#read",
+        "observed_at": "2026-10-26T12:00:00.000Z"
+      },
+      "observed_at": "2026-10-26T12:00:00.000Z",
+      "synced_at": "2026-10-26T12:00:00.000Z",
+      "result": "SYNCED",
+      "reasons": [],
+      "failure_items": [],
+      "verification_boundary": "READ_BACK_OBSERVED_NOT_ATOMIC",
+      "done_verification": null,
+      "receipt_ref": "https://github.com/example/padf/issues/27#qa-LEO-202-receipt-1",
+      "persistence": {
+        "verified": true,
+        "core_sha256": "fc00c957a60fd032eaf19a2f6d6301cd4390be9702c331af38db5a6036cf615f"
+      }
+    }
+  },
+  "sample_next_stage_dependency_chain": {
+    "upstream_receipt": {
+      "schema_version": "padf.progress-sync-receipt/v1",
+      "receipt_id": "PROGRESS-a1434162-6a3e-4527-8c25-acee358693f2",
+      "attempt_id": "53df63e6-0f1b-46de-9100-5365ce480e11",
+      "operation_key": "fa49c33defc162ed9bccfc8f1e6576ffba92abab70be10398df115b6596aba50",
+      "identity": {
+        "tracker": "linear",
+        "context_id": "PQA-CR002",
+        "execution_context_id": "PQA-LEO-202",
+        "repository": "example/padf",
+        "task_contract_ref": "https://github.com/example/padf/issues/27",
+        "parent_cr_id": "LEO-197",
+        "execution_issue_id": "LEO-202",
+        "binding_ref": "https://github.com/example/padf/issues/27#binding"
+      },
+      "event": {
+        "event_id": "EVENT-LEO-202",
+        "type": "HANDOFF_ACKNOWLEDGED",
+        "occurred_at": "2026-10-26T11:45:00.000Z",
+        "work_kind": "coding"
+      },
+      "stage": "IMPLEMENTATION_READY",
+      "applicability": "LINEAR",
+      "handoff": {
+        "handoff_id": "HAND-LEO-202",
+        "handoff_ref": "https://github.com/example/padf/issues/27#handoff-LEO-202",
+        "execution_context_id": "PQA-LEO-202",
+        "execution_issue_id": "LEO-202",
+        "source_head_sha": "8e60da55149243bba8ee23e886193fb1b22ed008",
+        "evidence_ref": "https://github.com/example/padf/blob/8e60da55149243bba8ee23e886193fb1b22ed008/result.md",
+        "submitted_at": "2026-10-26T11:40:00.000Z"
+      },
+      "master_ack": {
+        "handoff_id": "HAND-LEO-202",
+        "handoff_ref": "https://github.com/example/padf/issues/27#handoff-LEO-202",
+        "execution_context_id": "PQA-LEO-202",
+        "execution_issue_id": "LEO-202",
+        "ack_ref": "https://github.com/example/padf/issues/27#ack-LEO-202",
+        "observed_at": "2026-10-26T11:45:00.000Z"
+      },
+      "source_head_sha": "8e60da55149243bba8ee23e886193fb1b22ed008",
+      "evidence": {
+        "source_head_sha": "8e60da55149243bba8ee23e886193fb1b22ed008",
+        "evidence_ref": "https://github.com/example/padf/blob/8e60da55149243bba8ee23e886193fb1b22ed008/result.md",
+        "implementation_ready": true,
+        "pr_ref": "https://github.com/example/padf/pull/13",
+        "pr_draft": true,
+        "review": {
+          "decision": "APPROVE",
+          "conditions": []
+        }
+      },
+      "review": {
+        "decision": "APPROVE",
+        "conditions": []
+      },
+      "authorization_ref": "https://github.com/example/padf/issues/27#scope",
+      "previous_receipt_ref": null,
+      "statuses": [
+        {
+          "id": "backlog",
+          "name": "Backlog",
+          "type": "backlog"
+        },
+        {
+          "id": "todo",
+          "name": "Todo",
+          "type": "unstarted"
+        },
+        {
+          "id": "progress",
+          "name": "In Progress",
+          "type": "started"
+        },
+        {
+          "id": "review",
+          "name": "In Review",
+          "type": "started"
+        },
+        {
+          "id": "done",
+          "name": "Done",
+          "type": "completed"
+        },
+        {
+          "id": "canceled",
+          "name": "Canceled",
+          "type": "canceled"
+        }
+      ],
+      "original_issue": {
+        "id": "LEO-202",
+        "uuid": "controlled-LEO-202",
+        "team_id": "team",
+        "parent_id": "LEO-197",
+        "state_id": "backlog",
+        "blocked_by": [],
+        "updated_at": "2026-10-26T11:30:00.000Z",
+        "evidence_ref": "https://github.com/example/padf/issues/27#read",
+        "observed_at": "2026-10-26T12:00:00.000Z"
+      },
+      "pre_write_issue": {
+        "id": "LEO-202",
+        "uuid": "controlled-LEO-202",
+        "team_id": "team",
+        "parent_id": "LEO-197",
+        "state_id": "backlog",
+        "blocked_by": [],
+        "updated_at": "2026-10-26T11:30:00.000Z",
+        "evidence_ref": "https://github.com/example/padf/issues/27#read",
+        "observed_at": "2026-10-26T12:00:00.000Z"
+      },
+      "target_state": {
+        "id": "review",
+        "name": "In Review",
+        "type": "started"
+      },
+      "dependencies": [],
+      "dependency_changes": [],
+      "write_results": [
+        {
+          "status": "SUCCESS",
+          "issue_id": "LEO-202",
+          "patch": {
+            "state_id": "review",
+            "add_blocked_by": [],
+            "remove_blocked_by": []
+          },
+          "response": {
+            "success": true,
+            "evidence_ref": "https://github.com/example/padf/issues/27#qa-write-1"
+          }
+        }
+      ],
+      "readback": {
+        "id": "LEO-202",
+        "uuid": "controlled-LEO-202",
+        "team_id": "team",
+        "parent_id": "LEO-197",
+        "state_id": "review",
+        "blocked_by": [],
+        "updated_at": "2026-10-26T11:59:00.000Z",
+        "evidence_ref": "https://github.com/example/padf/issues/27#read",
+        "observed_at": "2026-10-26T12:00:00.000Z"
+      },
+      "observed_at": "2026-10-26T12:00:00.000Z",
+      "synced_at": "2026-10-26T12:00:00.000Z",
+      "result": "SYNCED",
+      "reasons": [],
+      "failure_items": [],
+      "verification_boundary": "READ_BACK_OBSERVED_NOT_ATOMIC",
+      "done_verification": null,
+      "receipt_ref": "https://github.com/example/padf/issues/27#qa-LEO-202-receipt-1",
+      "persistence": {
+        "verified": true,
+        "core_sha256": "6bdaeb4de24a463a09b9ff51333b074997050a99e72c01821549c6be48865b52"
+      }
+    },
+    "downstream_identity": {
+      "tracker": "linear",
+      "context_id": "PQA-CR002",
+      "execution_context_id": "PQA-LEO-203",
+      "repository": "example/padf",
+      "task_contract_ref": "https://github.com/example/padf/issues/27",
+      "parent_cr_id": "LEO-197",
+      "execution_issue_id": "LEO-203",
+      "binding_ref": "https://github.com/example/padf/issues/27#binding"
+    },
+    "downstream_authorization": {
+      "status": "APPROVED",
+      "identity": {
+        "tracker": "linear",
+        "context_id": "PQA-CR002",
+        "execution_context_id": "PQA-LEO-203",
+        "repository": "example/padf",
+        "task_contract_ref": "https://github.com/example/padf/issues/27",
+        "parent_cr_id": "LEO-197",
+        "execution_issue_id": "LEO-203",
+        "binding_ref": "https://github.com/example/padf/issues/27#binding"
+      },
+      "evidence_ref": "https://github.com/example/padf/issues/27#scope"
+    },
+    "dependency_facts": [
+      {
+        "issue_id": "LEO-202",
+        "phase": "start",
+        "satisfied": true,
+        "evidence_ref": "https://github.com/example/padf/blob/8e60da55149243bba8ee23e886193fb1b22ed008/result.md"
+      }
+    ],
+    "downstream_calls": [
+      {
+        "step": "readIssue",
+        "id": "LEO-203",
+        "read": 1
+      },
+      {
+        "step": "readStatuses",
+        "team": "team"
+      },
+      {
+        "step": "readIssue",
+        "id": "LEO-203",
+        "read": 2
+      },
+      {
+        "step": "updateIssue",
+        "id": "LEO-203",
+        "patch": {
+          "state_id": "todo",
+          "add_blocked_by": [],
+          "remove_blocked_by": [
+            "LEO-202"
+          ]
+        },
+        "meta": {
+          "expected_updated_at": "2026-10-26T11:30:00.000Z",
+          "operation_key": "6a2cc11fe0c2d688eea173249723e30978ac8e3d66ea4a91778d878e8e84b0b1"
+        }
+      },
+      {
+        "step": "readIssue",
+        "id": "LEO-203",
+        "read": 3
+      },
+      {
+        "step": "persistReceipt",
+        "result": "SYNCED",
+        "issue": "LEO-203"
+      },
+      {
+        "step": "readReceipt",
+        "key": "https://github.com/example/padf/issues/27#qa-LEO-203-receipt-1"
+      }
+    ],
+    "downstream_receipt": {
+      "schema_version": "padf.progress-sync-receipt/v1",
+      "receipt_id": "PROGRESS-fe3a559b-5683-466f-97e8-bcf831b1bda0",
+      "attempt_id": "c9c18798-da16-4fce-80be-21199b5efa81",
+      "operation_key": "6a2cc11fe0c2d688eea173249723e30978ac8e3d66ea4a91778d878e8e84b0b1",
+      "identity": {
+        "tracker": "linear",
+        "context_id": "PQA-CR002",
+        "execution_context_id": "PQA-LEO-203",
+        "repository": "example/padf",
+        "task_contract_ref": "https://github.com/example/padf/issues/27",
+        "parent_cr_id": "LEO-197",
+        "execution_issue_id": "LEO-203",
+        "binding_ref": "https://github.com/example/padf/issues/27#binding"
+      },
+      "event": {
+        "event_id": "EVENT-LEO-203",
+        "type": "READY",
+        "occurred_at": "2026-10-26T11:45:00.000Z",
+        "work_kind": "coding"
+      },
+      "stage": "READY",
+      "applicability": "LINEAR",
+      "handoff": {
+        "handoff_id": "HAND-LEO-203",
+        "handoff_ref": "https://github.com/example/padf/issues/27#handoff-LEO-203",
+        "execution_context_id": "PQA-LEO-203",
+        "execution_issue_id": "LEO-203",
+        "source_head_sha": "8e60da55149243bba8ee23e886193fb1b22ed008",
+        "evidence_ref": "https://github.com/example/padf/blob/8e60da55149243bba8ee23e886193fb1b22ed008/result.md",
+        "submitted_at": "2026-10-26T11:40:00.000Z"
+      },
+      "master_ack": {
+        "handoff_id": "HAND-LEO-203",
+        "handoff_ref": "https://github.com/example/padf/issues/27#handoff-LEO-203",
+        "execution_context_id": "PQA-LEO-203",
+        "execution_issue_id": "LEO-203",
+        "ack_ref": "https://github.com/example/padf/issues/27#ack-LEO-203",
+        "observed_at": "2026-10-26T11:45:00.000Z"
+      },
+      "source_head_sha": "8e60da55149243bba8ee23e886193fb1b22ed008",
+      "evidence": {
+        "source_head_sha": "8e60da55149243bba8ee23e886193fb1b22ed008",
+        "evidence_ref": "https://github.com/example/padf/blob/8e60da55149243bba8ee23e886193fb1b22ed008/result.md",
+        "implementation_ready": false,
+        "pr_ref": "https://github.com/example/padf/pull/13",
+        "pr_draft": true
+      },
+      "review": null,
+      "authorization_ref": "https://github.com/example/padf/issues/27#scope",
+      "previous_receipt_ref": null,
+      "statuses": [
+        {
+          "id": "backlog",
+          "name": "Backlog",
+          "type": "backlog"
+        },
+        {
+          "id": "todo",
+          "name": "Todo",
+          "type": "unstarted"
+        },
+        {
+          "id": "progress",
+          "name": "In Progress",
+          "type": "started"
+        },
+        {
+          "id": "review",
+          "name": "In Review",
+          "type": "started"
+        },
+        {
+          "id": "done",
+          "name": "Done",
+          "type": "completed"
+        },
+        {
+          "id": "canceled",
+          "name": "Canceled",
+          "type": "canceled"
+        }
+      ],
+      "original_issue": {
+        "id": "LEO-203",
+        "uuid": "controlled-LEO-203",
+        "team_id": "team",
+        "parent_id": "LEO-197",
+        "state_id": "backlog",
+        "blocked_by": [
+          "LEO-202"
+        ],
+        "updated_at": "2026-10-26T11:30:00.000Z",
+        "evidence_ref": "https://github.com/example/padf/issues/27#read",
+        "observed_at": "2026-10-26T12:00:00.000Z"
+      },
+      "pre_write_issue": {
+        "id": "LEO-203",
+        "uuid": "controlled-LEO-203",
+        "team_id": "team",
+        "parent_id": "LEO-197",
+        "state_id": "backlog",
+        "blocked_by": [
+          "LEO-202"
+        ],
+        "updated_at": "2026-10-26T11:30:00.000Z",
+        "evidence_ref": "https://github.com/example/padf/issues/27#read",
+        "observed_at": "2026-10-26T12:00:00.000Z"
+      },
+      "target_state": {
+        "id": "todo",
+        "name": "Todo",
+        "type": "unstarted"
+      },
+      "dependencies": [
+        {
+          "issue_id": "LEO-202",
+          "phase": "start",
+          "satisfied": true,
+          "evidence_ref": "https://github.com/example/padf/blob/8e60da55149243bba8ee23e886193fb1b22ed008/result.md"
+        }
+      ],
+      "dependency_changes": [
+        {
+          "issue_id": "LEO-202",
+          "phase": "start",
+          "satisfied": true,
+          "evidence_ref": "https://github.com/example/padf/blob/8e60da55149243bba8ee23e886193fb1b22ed008/result.md",
+          "action": "REMOVE"
+        }
+      ],
+      "write_results": [
+        {
+          "status": "SUCCESS",
+          "issue_id": "LEO-203",
+          "patch": {
+            "state_id": "todo",
+            "add_blocked_by": [],
+            "remove_blocked_by": [
+              "LEO-202"
+            ]
+          },
+          "response": {
+            "success": true,
+            "evidence_ref": "https://github.com/example/padf/issues/27#qa-write-1"
+          }
+        }
+      ],
+      "readback": {
+        "id": "LEO-203",
+        "uuid": "controlled-LEO-203",
+        "team_id": "team",
+        "parent_id": "LEO-197",
+        "state_id": "todo",
+        "blocked_by": [],
+        "updated_at": "2026-10-26T11:59:00.000Z",
+        "evidence_ref": "https://github.com/example/padf/issues/27#read",
+        "observed_at": "2026-10-26T12:00:00.000Z"
+      },
+      "observed_at": "2026-10-26T12:00:00.000Z",
+      "synced_at": "2026-10-26T12:00:00.000Z",
+      "result": "SYNCED",
+      "reasons": [],
+      "failure_items": [],
+      "verification_boundary": "READ_BACK_OBSERVED_NOT_ATOMIC",
+      "done_verification": null,
+      "receipt_ref": "https://github.com/example/padf/issues/27#qa-LEO-203-receipt-1",
+      "persistence": {
+        "verified": true,
+        "core_sha256": "353c13d961ea921ee00e9beb0f81c14f39dc9bbaaa787485f6729bdaf5f3f05f"
+      }
+    }
+  },
+  "not_run": [
+    "Live Linear writes or connector integration",
+    "Actual PQA/PKMS adoption",
+    "Cross-process atomicity/CAS (tool does not provide CAS)",
+    "Product/browser/database tests unrelated to this helper"
+  ]
+}

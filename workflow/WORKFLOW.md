@@ -15,12 +15,14 @@
 | --- | --- | --- |
 | Backlog | Not yet ready / deferred / blocked | Feature scope and blockers documented |
 | Todo | Ready | Definition of Ready + owner authorization |
-| In Progress | Coding | Authorized Task Contract, dedicated branch |
+| In Progress | Real design/coding/rework has started | Authorized Task Contract and actual execution evidence |
 | In Review | CI, QA, independent review, owner acceptance pending | PR at exact SHA, test evidence, findings |
-| Done | Accepted | Owner decision and Delivery Report |
+| Done | Accepted | Exact execution Issue/context Owner Acceptance and G-01 MARK_ISSUE_DONE |
 | Canceled / Duplicate | Not proceeding | Reason and links |
 
 Imported historical Done may signify implementation archival only. Preserve the consuming project's legacy status semantics.
+
+新执行必须按[进度协调契约](../contracts/progress-reconciliation.md)把父CR与执行Issue分别绑定，在真实启动、阶段Handoff/Master ACK、Review/Gate或依赖变化时同步并回读。细分工程阶段保存在Receipt，复用已有Team状态；不因Draft PR或父子关系将已进行的任务退Backlog。当前状态正确返回NO_CHANGE_REQUIRED；写入、回读或Receipt持久化失败明确PROGRESS_SYNC_FAILED。Verified State必须有成功证据，不能由ACK、CI或PR合并推导。
 
 ## Feature Loop — explicitly started
 1. Owner/Master classify S bug, M feature, L cross-module or XL product. Reconcile PRD/UI/Architecture/Feature Spec with Linear ID and original Feature ID.

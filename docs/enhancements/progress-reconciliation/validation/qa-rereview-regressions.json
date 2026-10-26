@@ -1,0 +1,240 @@
+{
+  "suite": "PROGRESS-QA-01 affected existing regressions",
+  "scope": "FRAMEWORK_FIXTURES_AND_STRUCTURAL_CHECKS_NO_LIVE_MUTATION",
+  "observed_at": "2026-10-26T16:24:49.644Z",
+  "source_revision": "LOCAL_CANDIDATE",
+  "results": [
+    {
+      "command": [
+        "node",
+        "scripts/validate-cacf.mjs"
+      ],
+      "source_sha256": "fd69c461c43a9e9aa63b599cfc6563bd6a69f97a5b4ec0d66a93a25e5f8bb4ac",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "366726a4e9a81966e5fe596aa8940f509bfc24d1d7d16863cd846580b308dfa9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "tail": "PASS PADF CACF V0.2 + V0.3 design structural validation (99 framework files and local links)"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/cacf/run-validation.mjs"
+      ],
+      "source_sha256": "e7ba502ab40966f10db41260a2ba316dc8450a9c00aad58872f58445c1e3cf87",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "b95c6281125647c1ca70f7da5e1e2593bd874b75da88aa1bd7d7885158962bc3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "suite": "PADF V0.2 CACF fixture-level cross-process protocol simulation",
+        "result": "PASS",
+        "count": 7,
+        "boundary": "Simulated persisted store and isolated Node processes; NOT live AI agents or Linear/GitHub connector delivery"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/cacf/run-regressions.mjs"
+      ],
+      "source_sha256": "79626528d8dbbc9d2f9e2774a66c078b75db7fe43f575c3867424cd564de6276",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "04fe863570cc354ee55dbfaf9463ea0d170355bb80e0cbc5efc30623e404d86b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "suite": "CACF review regressions",
+        "result": "PASS",
+        "count": 8
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-tests.mjs"
+      ],
+      "source_sha256": "9b9420350912c84bbb51b56d3b365b00209332343e1c960e05709068814e4dbe",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "857c21b19506fc9cb623c7e0e5370a6975d453ce26f4ec5b26553050fa0af8eb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "suite": "PADF V0.3 system/module architecture routing, design dependency and gate simulation",
+        "status": "PASS",
+        "count": 72
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-orchestration-tests.mjs"
+      ],
+      "source_sha256": "3d008bb71e715f4d513032c27f694369036451829cead8df4a03e699d3af65c0",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "6745ba92a1b78ece9637e0a158b5ff02f51d1ae4ab5e168d35100bb346660a34",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "suite": "Master Orchestration evidence (synthetic metadata ONLY)",
+        "status": "PASS",
+        "count": 36,
+        "external_sessions_executed": "NOT_RUN",
+        "actual_runtime_dispatch": "NOT_RUN"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-preflight-tests.mjs"
+      ],
+      "source_sha256": "0f5b7059f31b1703bd5aa11b07a612cb0c9e28a56371d05686fc2c6242933efa",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "a6763cf9ad2f10b8523b95e1a20138f89ad63cf22966949c55f6797839a2d513",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "suite": "PADF G-01 Action Preflight contract regression (synthetic snapshots only)",
+        "status": "PASS",
+        "count": 340
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-product-tests.mjs"
+      ],
+      "source_sha256": "2cd9beb51729f64250fcdc59c6b3f845838517eb09fe2b3a22c58f8b6970c001",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "7a5316bfca7900f013c6c0192ee67f361757c6242964ecad70603f56ff65c434",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "suite": "Product outcomes and shared protocol (synthetic metadata only)",
+        "status": "PASS",
+        "count": 24,
+        "actual_product_usability": "NOT_RUN",
+        "real_agent_dispatch": "NOT_RUN"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-feedback-tests.mjs"
+      ],
+      "source_sha256": "511311d95d192535b46808d1f711fff1a2c4252c79b7f888f24cba2ca05e497c",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "12f6a9541b44da2c6e1def72d94d34882c027bf9d9473b47f35210a3b615b054",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "suite": "Two-phase specs and concept-confirmation/frontend Mockup",
+        "status": "PASS",
+        "count": 16,
+        "real_frontend_execution": "NOT_RUN",
+        "real_impeccable_execution": "NOT_RUN",
+        "owner_acceptance": "NOT_RUN"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-concept-mockup-tests.mjs"
+      ],
+      "source_sha256": "9731950907d4c35261ae12d11e9776888b64691e40cc99ce797faab2f8c762a1",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "818144d8a01b65ef85ca079d280d273f2fc878c3366dd1290efa68c9a24dd17f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "tail": "Concept/Mockup synthetic metadata regressions: 399/399 PASS; 0 FAIL.\nActual UI/browser/Impeccable execution/Owner acceptance: NOT_RUN."
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-review-integrity-tests.mjs"
+      ],
+      "source_sha256": "eaacff837a097e2e0f12ad66d6215b830eb7c06ae5d414ca3fd796bf42711464",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "02d2df609dabbd62016eef0d774ee3a206b9be994095711de333e79206e81c86",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "suite": "Issue18 independent Design Gate integrity / G01 regression",
+        "status": "PASS",
+        "count": 320,
+        "passed": 320,
+        "failed": 0,
+        "source_baseline": "8a1fa8142c2a7304f8c5f2978fa557437a8942f6",
+        "real_runtime_dispatch": "NOT_RUN",
+        "real_figma_execution": "NOT_RUN",
+        "owner_acceptance": "NOT_RUN"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/verify-expense-pilot.mjs"
+      ],
+      "source_sha256": "d4410d6b23006611e076ba61bf68059df406b7c89fe69f345258f7cc46fe763f",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "0263c808fc5b994406e4d92e6fc4c9a0114a4e7839bd472b16ace98083b50470",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "suite": "PADF V0.3 Master-led two-Architect expense pilot",
+        "status": "PASS",
+        "scope": "both",
+        "checked_artifacts": 9,
+        "gate_result": "BLOCKED",
+        "coding_authorized": false,
+        "real_agent_sessions": "NOT_RUN",
+        "external_diagram_skill": "NOT_RUN"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-progress-tests.mjs"
+      ],
+      "source_sha256": "e4d91dd6a5d8671c5638afdb3ee0614e2b756a4b6b1f39d7bcc49f8edfe2742f",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "a71a1b825f889fb4019df74dcac5ca19bd2127287ac8d1303b6f0e249d7b844b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "suite": "Master progress reconciliation: controlled history and injected integration",
+        "scope": "MOCK_ONLY_NO_LIVE_LINEAR",
+        "count": 45,
+        "passed": 45,
+        "failed": 0
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/vnext/run-profile-tests.mjs"
+      ],
+      "source_sha256": "4a62035924b708d60b97b9aeaa83595f9000571d74920b1c049cd20dcfcf7c0e",
+      "exit_code": 0,
+      "signal": null,
+      "stdout_sha256": "dea97c1db8f9d0addccd114133034de484b2b43bd4a8d2991614d3ecc674e754",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "suite": "PADF vNext independent Profile behavior and legacy Gate compatibility",
+        "fixture_kind": "SYNTHETIC_METADATA_ONLY",
+        "baseline_comparison": "NOT_RUN (set PADF_PROFILE_BASELINE)",
+        "status": "PASS",
+        "count": 25,
+        "passed": 25,
+        "failed": 0
+      }
+    }
+  ],
+  "count": 13,
+  "passed": 13,
+  "failed": 0
+}

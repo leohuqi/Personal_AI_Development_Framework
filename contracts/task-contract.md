@@ -19,6 +19,8 @@
 
 ## Agent 维护的来源信息
 
+新执行按[进度协调契约](progress-reconciliation.md)设置`progress_reconciliation_required:true`，分别维护`parent_cr_id`、准确`execution_issue_id`、`execution_context_id`及绑定来源；有Work Package时父CR不能代替执行子任务。无父CR使用null；无Linear任务显式tracker=none。旧合同仍可读取，启用新同步前增量补准确绑定，不改写历史。
+
 在同一任务的附录/现有记录里维护 context_id、仓库、任务 URL/ID、不可变 Feature ID、base/head SHA、Task Contract 永久引用、真实批准引用及当前状态。无 Linear 或 Feature ID 时写 N/A 并保留真实任务引用，不发明 ID。仅在有待处理消息、并行工作或恢复时引用对应 thread、工作区归属或检查点；不重复建立 STC、消息与交接正文。
 
 每次执行前核对实时授权、来源和依赖，陈旧/冲突只阻断受影响动作。机器字段只能从已核验事实整理，缺失的授权、身份或测试证据不能自动生成。正式 Agent Message 的 envelope 仍按[共用协议](../workflow/agent-protocol.md)及原 schema 完整记录；上面的六项是阅读/填写入口，不是替代机器契约的新 schema。
