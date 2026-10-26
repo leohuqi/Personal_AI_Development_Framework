@@ -1,0 +1,1627 @@
+{
+  "schema_version": "padf.terminology/v1",
+  "status": "PROPOSED",
+  "definition_authority": "terms; generated reading views are not independently maintained",
+  "domains": [
+    "ProductAndRequirements",
+    "ProjectManagement",
+    "Architecture",
+    "Engineering",
+    "AI",
+    "PADF_Governance"
+  ],
+  "sources": [
+    {
+      "reference_id": "PMI-LEXICON",
+      "title": "PMI Lexicon v5.0",
+      "url": "https://www.pmi.org/standards/lexicon",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "本轮官方域检索可读v5.0介绍及PDF第23页requirement条目；用于需求概念。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "入口超时，PDF直接403；未读取全文或PMP教材，不据此给其他词条虚构正式定义。"
+    },
+    {
+      "reference_id": "PMI-AC",
+      "title": "PMI Benefits Realization Management Framework glossary",
+      "url": "https://www.pmi.org/-/media/pmi/documents/public/pdf/learning/thought-leadership/benefits-realization-management-framework.pdf?rev=18728b10d12a4cbdaee43bb2f663739b",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "本轮官方域检索可读Glossary中的acceptance criteria短条目。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "仅官方检索可读范围；未通读该出版物，不称PMBOK全文。"
+    },
+    {
+      "reference_id": "PMI-MILESTONE",
+      "title": "PMI: Establishing a PMO Using Agile",
+      "url": "https://www.pmi.org/learning/library/establishing-project-management-office-agile-6121",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "本轮官方域检索可读Milestone段：重要项目点或事件；采用其概念，未采用文章新造词。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "会议文章/实践说明，不是本轮读取PMBOK或统一官方中文。"
+    },
+    {
+      "reference_id": "TOGAF-SCOPE",
+      "title": "The Open Group: TOGAF",
+      "url": "https://www.opengroup.org/togaf",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "官方域检索可读TOGAF为企业架构方法和框架的介绍。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "官网直接403，definitions正文登录重定向；仅范围参考，不支撑具体正式术语定义。"
+    },
+    {
+      "reference_id": "ISO-42010",
+      "title": "ISO/IEC/IEEE 42010:2022 abstract",
+      "url": "https://www.iso.org/standard/74393.html",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "公开Abstract：区分架构与表达它的架构描述，规定描述结构/表达要求，不规定创建方法或工具。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "未读取全文或官方中文；不声称PADF符合标准。"
+    },
+    {
+      "reference_id": "ISO-22989",
+      "title": "ISO/IEC 22989:2022 abstract",
+      "url": "https://www.iso.org/standard/74296.html",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "公开Abstract：AI概念与术语标准的适用范围。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "仅摘要，未读取完整术语条目；不将Agent/LLM等本地释义标为ISO定义。"
+    },
+    {
+      "reference_id": "SWEBOK-SCOPE",
+      "title": "IEEE Computer Society SWEBOK",
+      "url": "https://www.computer.org/education/bodies-of-knowledge/software-engineering",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "本轮官方域检索可读知识体系目的、18知识领域、软件架构领域及v4.0a更新说明。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "资源页及v4入口直接403；仅介绍/目录范围，不冒充Guide正文或认证。"
+    },
+    {
+      "reference_id": "C4-CONTAINER",
+      "title": "C4 Container",
+      "url": "https://c4model.com/abstractions/container",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "正文Container定义与例子：应用或数据存储、运行时边界；明确不等同Docker。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "未核验官方中文；简明中文为PADF建议。"
+    },
+    {
+      "reference_id": "C4-COMPONENT",
+      "title": "C4 Component",
+      "url": "https://c4model.com/abstractions/component",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "正文：明确接口封装相关功能；C4组件不单独部署，同Container进程空间；类/包是实现。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "未核验官方中文；简明中文为PADF建议。"
+    },
+    {
+      "reference_id": "ARC42-BLOCKS",
+      "title": "arc42 §5 Building Block View",
+      "url": "https://docs.arc42.org/section-5/",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "Content、Motivation、Form：静态分解、职责及依赖，按层级选择性展开。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "PADF裁剪使用；未照搬该页对每份架构文档的mandatory要求。中文为PADF建议。"
+    },
+    {
+      "reference_id": "ARC42-ADR",
+      "title": "arc42 §9 Architecture Decisions",
+      "url": "https://docs.arc42.org/section-9/",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "Content：重要/昂贵/大范围/有风险的决策及理由、备选选择。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "未核验官方中文；简明中文为PADF建议。"
+    },
+    {
+      "reference_id": "DDD-CONTEXT",
+      "title": "Martin Fowler: Bounded Context",
+      "url": "https://martinfowler.com/bliki/BoundedContext.html",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "正文：领域模型/统一语言的适用边界及跨上下文关系；行业作者实践。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "作者说明，不是本轮读取Evans书全文；中文为PADF建议。"
+    },
+    {
+      "reference_id": "MS-WRITING",
+      "title": "Microsoft Style Guide: Use simple words, concise sentences",
+      "url": "https://learn.microsoft.com/en-us/style-guide/word-choice/use-simple-words-concise-sentences",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "正文31–62行：精确简单词、避免歧义、一个概念一致用词。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "页头有authorization提示但所述正文实际可读；非中文标准词典。"
+    },
+    {
+      "reference_id": "ANTHROPIC-AGENTS",
+      "title": "Anthropic: Building effective agents (2024)",
+      "url": "https://www.anthropic.com/research/building-effective-agents",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "What are agents、Building blocks及Orchestrator-workers段：预设流程、动态决定和分派协调的工程区别。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "厂商工程分类，文章明确Agent定义有多种；不称全行业唯一分类。"
+    },
+    {
+      "reference_id": "AGENT-SKILLS",
+      "title": "Agent Skills Overview",
+      "url": "https://agentskills.io/home",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "正文：SKILL.md、可选资源/脚本及按需发现/加载。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "开放格式；读取Skill不等于工具已运行、安装成功或授予权限。"
+    },
+    {
+      "reference_id": "ANTHROPIC-TOOLS",
+      "title": "Anthropic: Tool use overview",
+      "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "Client/server tools及tool_use→执行→tool_result流程。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "仅核对调用/执行机制，不推荐厂商、模型版本或权限配置。"
+    },
+    {
+      "reference_id": "GOOGLE-ML",
+      "title": "Google Machine Learning Glossary",
+      "url": "https://developers.google.com/machine-learning/glossary",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "本轮读取model、embedding vector、large language model、inference、prompt及human in the loop对应条目；未通读整个词表。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "各条为精简释义；不采用厂商全部分类、未核验其中文页面。"
+    },
+    {
+      "reference_id": "MS-SLM",
+      "title": "Microsoft: small/large language model comparison",
+      "url": "https://www.microsoft.com/en-us/microsoft-cloud/blog/2024/11/11/explore-ai-models-key-differences-between-small-language-models-and-large-language-models/",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "本轮读取公开比较文章的features/use cases/limitations段：相对规模、资源和任务取舍；不采用其参数分档为全行业标准。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "厂商文章不是统一参数阈值标准，不据此选择模型。"
+    },
+    {
+      "reference_id": "RAG-PAPER",
+      "title": "Lewis et al.: Retrieval-Augmented Generation",
+      "url": "https://arxiv.org/abs/2005.11401",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "作者论文摘要：参数记忆与外部检索记忆结合用于生成。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "仅读摘要，未重现论文或声称所有现代RAG实现均采用该原架构。"
+    },
+    {
+      "reference_id": "MS-VECTOR",
+      "title": "Microsoft: Vector search overview",
+      "url": "https://learn.microsoft.com/en-us/azure/search/vector-search-overview",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "正文：向量编码、查询向量、相似度与k近邻；用于机制区分。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "未运行服务，不采用产品价格/部署或全部特性。"
+    },
+    {
+      "reference_id": "ELASTIC-SEMANTIC",
+      "title": "Elastic: Semantic search",
+      "url": "https://www.elastic.co/what-is/semantic-search",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "Definition及vs keyword段：根据含义、意图、语境匹配，向量是常见实现。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "厂商公开工程说明，不将其特定实现当唯一算法。"
+    },
+    {
+      "reference_id": "GOOGLE-KG",
+      "title": "Google: Introducing the Knowledge Graph",
+      "url": "https://blog.google/products-and-platforms/products/search/introducing-knowledge-graph-things-not/",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "作者工程说明中实体与关系建模段；不只是对象目录。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "仅概念参考，不推广Google实现/规模或要求图数据库。"
+    },
+    {
+      "reference_id": "W3C-ANNOTATION",
+      "title": "W3C Web Annotation Data Model",
+      "url": "https://www.w3.org/TR/annotation-model/",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "Abstract及模型入口：资源、批注和资源关联；辅助说明内容片段须区分原文与附加解释。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "未据此定义跨行业统一Knowledge Fragment；该词条明确为PADF工作定义，不要求fragment_id或某个项目Schema。"
+    },
+    {
+      "reference_id": "HF-EVALUATE",
+      "title": "Hugging Face: Evaluate on the Hub",
+      "url": "https://huggingface.co/docs/evaluate/index",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "Model Cards及Libraries段：任务评估、指标、可复现方法与局限。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "未执行模型评测或采用排行榜作为产品验收。"
+    },
+    {
+      "reference_id": "MATH-PAPER",
+      "title": "Hendrycks et al.: MATH dataset",
+      "url": "https://arxiv.org/abs/2103.03874",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "作者摘要：约定数学问题数据集用于测量能力；作为benchmark实例。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "仅读摘要，非所有基准的通用标准定义；未重现分数。"
+    },
+    {
+      "reference_id": "RFC9110",
+      "title": "IETF RFC 9110 §9.2.2",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html#name-idempotent-methods",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "§9.2.2：重复相同请求的预期服务器效果与单次相同。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "未声称响应字节必然相同；项目重试/保存结果规则需另查契约。"
+    },
+    {
+      "reference_id": "OUTBOX",
+      "title": "Chris Richardson: Transactional outbox",
+      "url": "https://microservices.io/patterns/data/transactional-outbox.html",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "模式正文：同事务保存业务变更与待发送消息、异步投递可能重复、消费者须处理重复。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "行业模式，不强制微服务或声称自动exactly-once。"
+    },
+    {
+      "reference_id": "MDN-CLOSURE",
+      "title": "MDN JavaScript: Closures",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "闭包例子及解释：函数与其词法环境结合、保留环境引用。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "程序设计语境；不把文档齐全或治理链称为程序闭包。"
+    },
+    {
+      "reference_id": "MS-DRIFT",
+      "title": "Microsoft: Model monitoring in production",
+      "url": "https://learn.microsoft.com/en-us/azure/machine-learning/concept-model-monitoring?view=azureml-api-2",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "正文Monitoring signals与Best practices：分别监测数据、预测及性能，相对于明确参考数据。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "不把各信号统称同一种漂移，不把文档版本不一致当ML漂移。"
+    },
+    {
+      "reference_id": "MS-AUTOMATION",
+      "title": "Microsoft: Power Automate getting started",
+      "url": "https://learn.microsoft.com/en-us/power-automate/getting-started",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "公开正文31–34行：自动完成重复任务、在应用之间创建工作流；AI能力另行启用。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "未操作产品；通用释义只说明自动执行机制，不采纳产品专有功能。"
+    },
+    {
+      "reference_id": "NIST-GLOSSARY",
+      "title": "NIST CSRC Glossary",
+      "url": "https://csrc.nist.gov/glossary",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "公开入口及聚合词表使用说明；提醒定义须回到具体出版物语境。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "未将聚合词表视为全行业唯一首选定义，本轮未据未读NIST条目定义Agent。"
+    },
+    {
+      "reference_id": "PADF-PRODUCT",
+      "title": "PADF 两阶段规格",
+      "url": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/b0c2bb06ea5f612b2ea372e3d24c3a68644938df/contracts/product-definition.md",
+      "source_class": "FRAMEWORK_SOURCE",
+      "verified_scope": "完整读取：PA高层、SA/UI、Module实施级规格的责任与裁剪；不新增阶段。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "既有PADF框架约定，仅解释术语；本词条状态不改变既有契约效力。"
+    },
+    {
+      "reference_id": "PADF-PLAN",
+      "title": "PADF 实施计划与Catalog",
+      "url": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/b0c2bb06ea5f612b2ea372e3d24c3a68644938df/templates/implementation-plan.md",
+      "source_class": "FRAMEWORK_SOURCE",
+      "verified_scope": "完整读取，并读取templates/feature-catalog.md和contracts/solution-architecture.md技术复杂度段；计划/依赖/复杂度不是工期。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "既有PADF框架约定，仅解释术语；本词条状态不改变既有契约效力。"
+    },
+    {
+      "reference_id": "PADF-TASK",
+      "title": "PADF Task Contract",
+      "url": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/b0c2bb06ea5f612b2ea372e3d24c3a68644938df/contracts/task-contract.md",
+      "source_class": "FRAMEWORK_SOURCE",
+      "verified_scope": "完整读取，任务范围、版本、角色、授权和停止条件。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "既有PADF框架约定，仅解释术语；本词条状态不改变既有契约效力。"
+    },
+    {
+      "reference_id": "PADF-HANDOFF",
+      "title": "PADF Agent Handoff",
+      "url": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/b0c2bb06ea5f612b2ea372e3d24c3a68644938df/contracts/agent-handoff.md",
+      "source_class": "FRAMEWORK_SOURCE",
+      "verified_scope": "完整读取，交接/ACK不等于批准。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "既有PADF框架约定，仅解释术语；本词条状态不改变既有契约效力。"
+    },
+    {
+      "reference_id": "PADF-GATE",
+      "title": "PADF Design Gate",
+      "url": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/b0c2bb06ea5f612b2ea372e3d24c3a68644938df/contracts/design-gate.md",
+      "source_class": "FRAMEWORK_SOURCE",
+      "verified_scope": "读取现有门禁、风险审查、基线/Owner分工、两阶段绑定。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "既有PADF框架约定，仅解释术语；本词条状态不改变既有契约效力。"
+    },
+    {
+      "reference_id": "PADF-APPROVAL",
+      "title": "PADF 审批策略",
+      "url": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/b0c2bb06ea5f612b2ea372e3d24c3a68644938df/governance/approval-policy.md",
+      "source_class": "FRAMEWORK_SOURCE",
+      "verified_scope": "完整读取，批准范围及CI/Review/验收/合并/部署分离。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "既有PADF框架约定，仅解释术语；本词条状态不改变既有契约效力。"
+    },
+    {
+      "reference_id": "PADF-DISPATCH",
+      "title": "PADF Agent Dispatch",
+      "url": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/b0c2bb06ea5f612b2ea372e3d24c3a68644938df/contracts/agent-dispatch.md",
+      "source_class": "FRAMEWORK_SOURCE",
+      "verified_scope": "完整读取，真实四阶段证据；消息不是运行时或授权。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "既有PADF框架约定，仅解释术语；本词条状态不改变既有契约效力。"
+    },
+    {
+      "reference_id": "PADF-METHOD",
+      "title": "PADF 共用工作方法",
+      "url": "https://github.com/leohuqi/Personal_AI_Development_Framework/blob/b0c2bb06ea5f612b2ea372e3d24c3a68644938df/workflow/role-work-method.md",
+      "source_class": "FRAMEWORK_SOURCE",
+      "verified_scope": "完整读取，按任务加载/来源证据/研究限制与最小充分。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "既有PADF框架约定，仅解释术语；本词条状态不改变既有契约效力。"
+    },
+    {
+      "reference_id": "GOOGLE-SYSTEM",
+      "title": "Google Gemini API: System instructions",
+      "url": "https://ai.google.dev/gemini-api/docs/text-generation#system-instructions-and-other-configurations",
+      "source_class": "OFFICIAL_SOURCE",
+      "verified_scope": "本轮读取System instructions段：通过system_instruction配置模型行为；未运行API或采纳其模型版本。",
+      "observed_at": "2026-10-26",
+      "access_limitations": "平台示例仅说明机制；优先级依平台，不能替代应用权限。中文为PADF建议。"
+    }
+  ],
+  "terms": [
+    {
+      "term_id": "PADF-TERM-PR-001",
+      "english_term": "Requirement",
+      "preferred_zh": "需求",
+      "definition": "为满足业务需要必须具备的条件或能力；需求陈述与实现方案、候选建议和批准事实分别说明。",
+      "domain": "ProductAndRequirements",
+      "allowed_aliases": [
+        "产品需求",
+        "业务需求（明确范围时）"
+      ],
+      "discouraged_terms": [
+        "技术方案（代称需求时）"
+      ],
+      "usage_example": "“用户能撤销本次筛选”描述需求；选择状态管理库属于设计。",
+      "reference": [
+        "PMI-LEXICON",
+        "PADF-PRODUCT"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-PR-002",
+      "english_term": "Acceptance Criteria",
+      "preferred_zh": "验收条件",
+      "definition": "用于判断交付结果能否被接受的条件；在规格中写出可观察结果及重要失败边界，列出条件不等于已验收。",
+      "domain": "ProductAndRequirements",
+      "allowed_aliases": [
+        "验收标准（不暗示正式标准文件时）",
+        "AC（首次写全称后）"
+      ],
+      "discouraged_terms": [
+        "测试通过（指尚未执行的条件时）"
+      ],
+      "usage_example": "AC要求切换后保留筛选；执行结果另记NOT RUN或实际结果。",
+      "reference": [
+        "PMI-AC",
+        "PADF-PRODUCT"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-PR-003",
+      "english_term": "Feature",
+      "preferred_zh": "功能项",
+      "definition": "围绕可辨识用户结果组织的一组产品能力；PADF以稳定Feature ID关联规格与任务，Feature ID和工作跟踪Issue ID分别保留。",
+      "domain": "ProductAndRequirements",
+      "allowed_aliases": [
+        "功能"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "功能项“列表/卡片切换”关联其规格和实施任务。",
+      "reference": [
+        "PADF-PRODUCT"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-PR-004",
+      "english_term": "High Level Specification",
+      "preferred_zh": "高层规格",
+      "definition": "PA说明问题、用户场景、范围、关键规则与业务验收的产品级规格；足以供SA/UI设计，不预先规定全部API或数据结构。",
+      "domain": "ProductAndRequirements",
+      "allowed_aliases": [
+        "High Level Spec",
+        "High Level Specs",
+        "产品级规格"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "高层规格说明切换结果和异常，Module随后细化实施行为。",
+      "reference": [
+        "PADF-PRODUCT"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "padf_governance",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-PR-005",
+      "english_term": "Feature Catalog",
+      "preferred_zh": "功能目录",
+      "definition": "索引当前功能、价值/优先级、关系依赖和规格版本；SA补实现复杂度，Master维护实施顺序，目录不能替代行为规格。",
+      "domain": "ProductAndRequirements",
+      "allowed_aliases": [
+        "Catalog"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "Catalog链接高层与实施级规格，不复制两份正文。",
+      "reference": [
+        "PADF-PRODUCT",
+        "PADF-PLAN"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "padf_governance",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-PR-006",
+      "english_term": "Feature Specification",
+      "preferred_zh": "功能规格",
+      "definition": "PADF实施级规格，结合产品输入和适用的批准设计，明确输入输出、状态、异常、接口约束与可执行验收；不能仅凭标题认定就绪。",
+      "domain": "ProductAndRequirements",
+      "allowed_aliases": [
+        "Feature Spec",
+        "实施级规格"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "Feature Spec规定切换失败时保留原视图及提示。",
+      "reference": [
+        "PADF-PRODUCT"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "padf_governance",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-PM-001",
+      "english_term": "Scope",
+      "preferred_zh": "范围",
+      "definition": "当前任务或交付覆盖的工作、结果与排除项；范围不等于全部产品愿景，也不等于架构Profile或执行权限。",
+      "domain": "ProjectManagement",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "本次范围仅为既有页面视图切换。",
+      "reference": [
+        "PADF-TASK",
+        "PADF-PLAN"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-PM-002",
+      "english_term": "Milestone",
+      "preferred_zh": "里程碑",
+      "definition": "项目中有意义的检查点或事件，用于计划和判断阶段结果；里程碑名称不证明结果已经交付或获得接受。",
+      "domain": "ProjectManagement",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "“完成可评审设计”是计划里程碑，状态依实际证据更新。",
+      "reference": [
+        "PMI-MILESTONE",
+        "PADF-PLAN"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-PM-003",
+      "english_term": "Iteration",
+      "preferred_zh": "迭代",
+      "definition": "围绕一段有界目标安排的一轮工作与反馈；PADF由Master结合价值、依赖、风险和容量规划，不从复杂度等级直接换算固定时长。",
+      "domain": "ProjectManagement",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "本迭代先验证检索质量，再决定是否接入生成。",
+      "reference": [
+        "PADF-PLAN"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-PM-004",
+      "english_term": "Dependency",
+      "preferred_zh": "依赖",
+      "definition": "某项工作或结果继续推进所需的前置输入、条件或协作关系；区分计划依赖与已满足依赖的证据。",
+      "domain": "ProjectManagement",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "Module细化依赖精确批准的系统基线。",
+      "reference": [
+        "PADF-TASK",
+        "PADF-DISPATCH"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-PM-005",
+      "english_term": "Risk",
+      "preferred_zh": "风险",
+      "definition": "可能影响当前目标、质量或安全的尚不确定情况及其影响；已发生的问题另记问题/阻塞，风险接受必须有适用决定。",
+      "domain": "ProjectManagement",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "接口响应含义尚不清楚，是实施前需处理的风险。",
+      "reference": [
+        "PADF-TASK",
+        "PADF-GATE",
+        "PADF-APPROVAL"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-PM-006",
+      "english_term": "Progressive Elaboration",
+      "preferred_zh": "渐进细化",
+      "definition": "随着当前输入、决定和实施需要明确，逐步补足下一步必需的规格与设计；不预先穷举全部模块，也不省略当前关键约束。",
+      "domain": "ProjectManagement",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "先明确系统边界，再细化当前实施模块。",
+      "reference": [
+        "PADF-PRODUCT",
+        "PADF-METHOD"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AR-001",
+      "english_term": "Software Architecture",
+      "preferred_zh": "软件架构",
+      "definition": "软件系统的重要结构、职责、协作及约束；用架构描述表达，文档或图不是系统本身。",
+      "domain": "Architecture",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "系统职责和数据边界由正文与模型共同说明。",
+      "reference": [
+        "ISO-42010",
+        "ARC42-BLOCKS"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AR-002",
+      "english_term": "Architecture Description",
+      "preferred_zh": "架构描述",
+      "definition": "表达所关注对象架构的信息，可由正文、模型与视图共同组成；与被描述的架构有别。",
+      "domain": "Architecture",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "Overview和必要视图组成可查阅的架构描述。",
+      "reference": [
+        "ISO-42010"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "依据ISO公开摘要的区分进行精简释义；未读取全文定义或声称符合标准。"
+    },
+    {
+      "term_id": "PADF-TERM-AR-003",
+      "english_term": "Architecture View",
+      "preferred_zh": "架构视图",
+      "definition": "针对明确关注问题呈现架构的某一部分；需说明对象、层级和来源，不能把不同视图中的同一节点误当新服务。",
+      "domain": "Architecture",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "部署视图回答应用和存储部署在哪里。",
+      "reference": [
+        "ARC42-BLOCKS",
+        "C4-CONTAINER"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AR-004",
+      "english_term": "Container (C4)",
+      "preferred_zh": "容器（C4）",
+      "definition": "C4中表示应用或数据存储的运行时边界；例如Web应用、API、数据库或文件存储，不专指Docker，也不等于单一操作系统进程。",
+      "domain": "Architecture",
+      "allowed_aliases": [
+        "C4 Container",
+        "C4容器"
+      ],
+      "discouraged_terms": [
+        "Docker容器（代称全部C4 Container时）"
+      ],
+      "usage_example": "本地文件存储可作为C4 Container，未因此新增Docker部署。",
+      "reference": [
+        "C4-CONTAINER"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AR-005",
+      "english_term": "Component (C4)",
+      "preferred_zh": "组件（C4）",
+      "definition": "C4中通过明确接口封装相关功能、位于一个Container内的单元；组件不作为独立部署单元。",
+      "domain": "Architecture",
+      "allowed_aliases": [
+        "C4 Component"
+      ],
+      "discouraged_terms": [
+        "独立服务（代称同Container组件时）"
+      ],
+      "usage_example": "同一API内的两个组件通过内部接口协作。",
+      "reference": [
+        "C4-COMPONENT"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AR-006",
+      "english_term": "Module",
+      "preferred_zh": "模块",
+      "definition": "按职责组织的软件单元，可对应逻辑边界或代码组织；不能只凭名称推断独立进程、部署单元或DDD限界上下文。",
+      "domain": "Architecture",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "模块设计说明职责和依赖，不自动拆成服务。",
+      "reference": [
+        "ARC42-BLOCKS",
+        "C4-COMPONENT"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AR-007",
+      "english_term": "Bounded Context",
+      "preferred_zh": "限界上下文",
+      "definition": "DDD中一个领域模型及其统一语言保持一致的明确适用范围；不同上下文之间需明确关系。",
+      "domain": "Architecture",
+      "allowed_aliases": [
+        "有界上下文"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "两个上下文对“客户”含义不同时，分别定义并说明映射。",
+      "reference": [
+        "DDD-CONTEXT"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AR-008",
+      "english_term": "Architecture Decision Record",
+      "preferred_zh": "架构决策记录",
+      "definition": "记录重要架构选择的背景、候选方案、选择理由及影响；记录存在不等于决定已获批准，历史记录不以语言整理重写。",
+      "domain": "Architecture",
+      "allowed_aliases": [
+        "ADR"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "ADR记录采用模块化单体的理由和适用条件。",
+      "reference": [
+        "ARC42-ADR",
+        "PADF-APPROVAL"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AR-009",
+      "english_term": "Single Source of Truth",
+      "preferred_zh": "单一权威来源",
+      "definition": "对某一事实范围承担当前维护责任的来源；须说明适用范围、版本和冲突处理，不要求所有事实集中到一个文件。",
+      "domain": "Architecture",
+      "allowed_aliases": [
+        "SSOT",
+        "权威信息来源"
+      ],
+      "discouraged_terms": [
+        "唯一真相源（面向普通读者且含义不清时）"
+      ],
+      "usage_example": "接口行为由对应契约维护，架构入口只导航。",
+      "reference": [
+        "PADF-METHOD"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-EN-001",
+      "english_term": "Interface Contract",
+      "preferred_zh": "接口契约",
+      "definition": "参与方对调用、输入输出、权限、错误和兼容行为的约定；接口签名只是其中一部分。",
+      "domain": "Engineering",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "调用方必须按契约处理拒绝和重试，不能只看方法名。",
+      "reference": [
+        "PADF-GATE",
+        "PADF-PRODUCT"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-EN-002",
+      "english_term": "Idempotency",
+      "preferred_zh": "幂等性",
+      "definition": "重复相同请求的预期效果与单次执行相同；不因此保证每次响应字节相同，重试识别及结果保存规则另查项目契约。",
+      "domain": "Engineering",
+      "allowed_aliases": [
+        "幂等"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "幂等重试避免额外业务效果；实际返回规则由API契约确定。",
+      "reference": [
+        "RFC9110"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-EN-003",
+      "english_term": "Transactional Outbox",
+      "preferred_zh": "事务发件箱",
+      "definition": "在保存业务变更的同一事务中保存待投递消息，再异步发送的模式；发送可能重复，接收方仍须处理重复。",
+      "domain": "Engineering",
+      "allowed_aliases": [
+        "outbox"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "同事务登记事件后异步发送，消费者按事件标识去重。",
+      "reference": [
+        "OUTBOX"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-EN-004",
+      "english_term": "Message Consumer",
+      "preferred_zh": "消息消费者",
+      "definition": "接收并处理消息的一方；需说明消息语义、投递和重复处理约束，不能因“消费者”一词较抽象就删除。",
+      "domain": "Engineering",
+      "allowed_aliases": [
+        "消费者（消息语境）"
+      ],
+      "discouraged_terms": [
+        "文档消费者（仅指阅读者且未解释时）"
+      ],
+      "usage_example": "消费者重复收到同一事件时按约定去重。",
+      "reference": [
+        "OUTBOX"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-EN-005",
+      "english_term": "Closure",
+      "preferred_zh": "闭包",
+      "definition": "程序设计中函数与其可访问的词法环境的结合；具体语义依语言。普通文档完整性或工作收尾不自动具有此含义。",
+      "domain": "Engineering",
+      "allowed_aliases": [
+        "程序闭包"
+      ],
+      "discouraged_terms": [
+        "规范消费闭包（无明确形式定义的文档语境）"
+      ],
+      "usage_example": "JavaScript闭包中的函数可访问创建时环境中的变量。",
+      "reference": [
+        "MDN-CLOSURE"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-001",
+      "english_term": "AI Agent",
+      "preferred_zh": "AI智能体",
+      "definition": "在本词表的LLM工程语境中，依据目标、上下文与反馈选择后续步骤及工具的软件执行体；自主程度、工具和权限须另述。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "Agent",
+        "智能体"
+      ],
+      "discouraged_terms": [
+        "模型（代称完整Agent时）"
+      ],
+      "usage_example": "Agent选择检索工具后，应用仍检查访问权限。",
+      "reference": [
+        "ANTHROPIC-AGENTS"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-002",
+      "english_term": "Development Agent",
+      "preferred_zh": "开发智能体",
+      "definition": "参与需求、设计、编码、测试或协调等软件交付工作的Agent；PADF角色描述责任，不自动授予产品数据、编码或生产权限。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "开发Agent",
+        "PADF开发Agent"
+      ],
+      "discouraged_terms": [
+        "产品Agent（代称开发角色时）"
+      ],
+      "usage_example": "PA和SA在开发协作中执行有界任务。",
+      "reference": [
+        "PADF-DISPATCH",
+        "ANTHROPIC-AGENTS"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "padf_governance",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-003",
+      "english_term": "Product Agent",
+      "preferred_zh": "产品内智能体",
+      "definition": "作为产品能力为最终用户执行有界任务的Agent；其数据访问、动作和人工确认由具体产品定义，不继承开发Agent权限。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "产品Agent"
+      ],
+      "discouraged_terms": [
+        "开发Agent（代称产品能力时）"
+      ],
+      "usage_example": "客服产品内Agent提出回复草稿，是否发送由该产品规则决定。",
+      "reference": [
+        "ANTHROPIC-AGENTS",
+        "PADF-PRODUCT"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "PADF为区分开发协作与产品能力的通用工作定义；不复用PKMS草稿权限或实现状态。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-004",
+      "english_term": "Machine Learning Model",
+      "preferred_zh": "机器学习模型",
+      "definition": "通过训练得到、用于对输入产生预测或生成结果的计算模型；模型本身不等于带任务状态、工具执行与权限控制的完整Agent。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "Model（AI语境）",
+        "模型（AI语境）"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "同一模型可支持不同产品内Agent。",
+      "reference": [
+        "GOOGLE-ML",
+        "ANTHROPIC-AGENTS"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-005",
+      "english_term": "Tool",
+      "preferred_zh": "工具",
+      "definition": "运行环境提供、具有明确输入输出的可执行能力；能否执行及访问什么由工具和应用权限决定。",
+      "domain": "AI",
+      "allowed_aliases": [],
+      "discouraged_terms": [
+        "Skill（代称可执行工具时）"
+      ],
+      "usage_example": "文件读取工具返回结果，Skill指导如何使用结果。",
+      "reference": [
+        "ANTHROPIC-TOOLS"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-006",
+      "english_term": "Tool Calling",
+      "preferred_zh": "工具调用",
+      "definition": "模型或Agent给出工具名称与参数，由运行环境执行能力并返回结果的交互；调用请求不证明执行成功。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "Function Calling（模型工具语境）"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "收到工具执行结果后才报告已完成对应动作。",
+      "reference": [
+        "ANTHROPIC-TOOLS"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-007",
+      "english_term": "Agent Skill",
+      "preferred_zh": "智能体技能包",
+      "definition": "可按需发现和加载的任务指令、资源与可选脚本包；Skill描述做法，文件本身不是运行中的Agent或已经完成的工具动作。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "Skill",
+        "技能包"
+      ],
+      "discouraged_terms": [
+        "Agent（代称Skill文件时）"
+      ],
+      "usage_example": "术语Skill指导逐句检查；是否运行检查脚本另记。",
+      "reference": [
+        "AGENT-SKILLS"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-008",
+      "english_term": "Workflow",
+      "preferred_zh": "工作流",
+      "definition": "按步骤、条件和依赖组织任务的过程，可包含人、工具和Agent；预设流程不意味着每步都自主决定。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "工作流程"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "工作流先检索再生成，并在提交前请求指定人员确认。",
+      "reference": [
+        "ANTHROPIC-AGENTS",
+        "PADF-DISPATCH"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-009",
+      "english_term": "Automation",
+      "preferred_zh": "自动化",
+      "definition": "由触发条件或计划启动并自动执行任务的机制；可执行单个动作或工作流，不要求使用AI或Agent。",
+      "domain": "AI",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "定时备份是自动化，是否含Agent需另述。",
+      "reference": [
+        "MS-AUTOMATION",
+        "PADF-DISPATCH"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-010",
+      "english_term": "Agent Orchestration",
+      "preferred_zh": "智能体编排",
+      "definition": "协调Agent任务、依赖、工具与结果交接的过程或机制；可结合预设工作流和动态分派，编排不等于批准。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "Agent编排"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "Master协调PA与SA，独立Reviewer仍自行审查。",
+      "reference": [
+        "ANTHROPIC-AGENTS",
+        "PADF-DISPATCH"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-011",
+      "english_term": "Large Language Model",
+      "preferred_zh": "大语言模型",
+      "definition": "参数规模通常较大的语言模型类别；实际能力与资源需求按具体模型说明和任务评估，LLM不是Agent的同义词。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "LLM",
+        "大型语言模型"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "选择LLM后仍需定义工具、任务和权限。",
+      "reference": [
+        "GOOGLE-ML",
+        "MS-SLM"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-012",
+      "english_term": "Small Language Model",
+      "preferred_zh": "小语言模型",
+      "definition": "相对较小、常着重资源效率的语言模型类别；相对谁、适用任务及规模须具体说明，不设跨厂商统一参数阈值。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "SLM",
+        "小型语言模型"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "比较SLM与候选模型在同一任务的数据和资源表现。",
+      "reference": [
+        "MS-SLM"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-013",
+      "english_term": "Retrieval-Augmented Generation",
+      "preferred_zh": "检索增强生成",
+      "definition": "将检索取得的外部信息用作生成依据的方法；单独全文检索、向量检索或展示结果列表不等于RAG。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "RAG"
+      ],
+      "discouraged_terms": [
+        "检索（无条件代称RAG时）"
+      ],
+      "usage_example": "先检索获准资料，再据此生成带出处的回答。",
+      "reference": [
+        "RAG-PAPER"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-014",
+      "english_term": "Embedding",
+      "preferred_zh": "嵌入表示",
+      "definition": "把内容映射为可计算的数值表示，常用向量承载；表示相似性不证明事实相同或来源可靠。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "向量嵌入",
+        "Embedding"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "相同嵌入空间中的查询向量用于检索相关内容。",
+      "reference": [
+        "GOOGLE-ML",
+        "MS-VECTOR"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-015",
+      "english_term": "Vector Search",
+      "preferred_zh": "向量检索",
+      "definition": "按查询与候选向量的距离或相似度查找结果的技术；受表示、距离函数和索引方法影响。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "向量搜索"
+      ],
+      "discouraged_terms": [
+        "语义检索（当作完全同义词时）"
+      ],
+      "usage_example": "向量检索可以支持语义检索目标，仍须评估相关性。",
+      "reference": [
+        "MS-VECTOR"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-016",
+      "english_term": "Semantic Search",
+      "preferred_zh": "语义检索",
+      "definition": "以查询与内容的含义、意图或语境匹配为目标的检索能力；向量检索是常见实现机制，二者描述层面不同。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "语义搜索"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "同义问法能否找到相关资料是语义检索的评估问题。",
+      "reference": [
+        "ELASTIC-SEMANTIC",
+        "MS-VECTOR"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-017",
+      "english_term": "Knowledge Graph",
+      "preferred_zh": "知识图谱",
+      "definition": "以实体及其明确关系组织知识的图结构；普通链接清单或相似度连线不足以说明已形成一致领域模型。",
+      "domain": "AI",
+      "allowed_aliases": [],
+      "discouraged_terms": [
+        "向量索引（无条件代称知识图谱时）"
+      ],
+      "usage_example": "图中关系“作者撰写文档”需有明确含义和依据。",
+      "reference": [
+        "GOOGLE-KG"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-018",
+      "english_term": "Knowledge Fragment",
+      "preferred_zh": "知识片段",
+      "definition": "为引用、检索或知识处理选取的有界内容单元；使用时说明来源、上下文及其为原文、解释还是生成内容。稳定身份、粒度与生命周期由项目定义。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "内容片段（含义明确时）"
+      ],
+      "discouraged_terms": [
+        "AI摘要（无条件代称原文证据时）"
+      ],
+      "usage_example": "引用一段报告内容时同时说明出处和是否为原文摘录。",
+      "reference": [
+        "W3C-ANNOTATION",
+        "PADF-METHOD"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "通用工作定义；无统一行业Schema，未将PKMS原文证据实体、fragment_id或权限规则纳为PADF要求。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-019",
+      "english_term": "AI Evaluation",
+      "preferred_zh": "AI评估",
+      "definition": "依据明确任务、数据、方法与指标检查模型或AI系统表现的过程；记录准确版本和限制，一次示例不能替代充分评估或验收。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "Evaluation（AI语境）",
+        "AI评测"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "分别评估检索相关性与生成答案的依据。",
+      "reference": [
+        "HF-EVALUATE"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-020",
+      "english_term": "Benchmark",
+      "preferred_zh": "基准测试",
+      "definition": "使用约定任务、数据和评价方法作可比较测量；基准集或得分只反映覆盖范围，不能代替整个产品验收。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "评测基准",
+        "基准测试集（仅指数据时）"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "固定基准后比较版本，另检查当前真实用户任务。",
+      "reference": [
+        "MATH-PAPER",
+        "HF-EVALUATE"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-021",
+      "english_term": "Prompt",
+      "preferred_zh": "提示词",
+      "definition": "提供给生成模型以引导输出的输入，可包含任务、上下文和示例；不只指单词，也不自动等于系统级指令。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "提示（模型语境）"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "提示词要求列出处，事实与权限仍需独立核验。",
+      "reference": [
+        "GOOGLE-ML"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-022",
+      "english_term": "Model Inference",
+      "preferred_zh": "模型推理",
+      "definition": "把训练后的模型应用于输入以产生预测或生成结果的计算过程；与训练有别，也不保证逻辑判断正确。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "Inference",
+        "推理（模型语境）"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "推理产出草稿后按任务指标评估。",
+      "reference": [
+        "GOOGLE-ML"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-023",
+      "english_term": "Model Drift",
+      "preferred_zh": "模型漂移",
+      "definition": "模型投入使用后，相对于明确参考数据或评估基线观察到的数据、预测或表现变化的概括表达；须进一步指明具体信号及方法，不等于模型文件版本变化。",
+      "domain": "AI",
+      "allowed_aliases": [],
+      "discouraged_terms": [
+        "来源漂移（实际只指文档版本不一致时）"
+      ],
+      "usage_example": "报告先注明是输入分布变化、预测分布变化还是性能下降。",
+      "reference": [
+        "MS-DRIFT"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "概括性行业表达；引用来源分别列data/prediction drift与performance，不能合并这些具体信号或断言原因。"
+    },
+    {
+      "term_id": "PADF-TERM-GV-001",
+      "english_term": "Task",
+      "preferred_zh": "任务",
+      "definition": "有目标、范围、输入、责任、预期交付和停止条件的有界工作；任务说明不自动启动运行时或授予额外权限。",
+      "domain": "PADF_Governance",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "任务契约说明本次允许改哪些文档。",
+      "reference": [
+        "PADF-TASK"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "padf_governance",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-GV-002",
+      "english_term": "Handoff",
+      "preferred_zh": "交接记录",
+      "definition": "传递任务责任、可核验产物版本、结果、未决项和下一步的记录；收到或ACK不等于批准。",
+      "domain": "PADF_Governance",
+      "allowed_aliases": [
+        "交接",
+        "Agent Handoff"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "SA交候选稿，Master实际读取后ACK或退修。",
+      "reference": [
+        "PADF-HANDOFF"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "padf_governance",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-GV-003",
+      "english_term": "Design Gate",
+      "preferred_zh": "设计就绪检查",
+      "definition": "Master按既有契约核对设计内容、依赖、版本、必要独立审查和批准；检查结果与专业审查、Owner决定及编码授权分别记录。",
+      "domain": "PADF_Governance",
+      "allowed_aliases": [
+        "设计关口"
+      ],
+      "discouraged_terms": [
+        "设计审批通过（代称任意检查完成时）"
+      ],
+      "usage_example": "DESIGN_READY后仍需有界编码授权。",
+      "reference": [
+        "PADF-GATE"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "padf_governance",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-GV-004",
+      "english_term": "Independent Review",
+      "preferred_zh": "独立审查",
+      "definition": "未参与被审实现/设计的Reviewer依据原需求、精确版本和实际差异作判断；APPROVE是审查结论，不授予Owner权限。",
+      "domain": "PADF_Governance",
+      "allowed_aliases": [
+        "Review（语境已明确独立性时）"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "Reviewer核验受审SHA，修订后按受影响差异复审。",
+      "reference": [
+        "PADF-GATE",
+        "PADF-APPROVAL"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "padf_governance",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-GV-005",
+      "english_term": "Approval",
+      "preferred_zh": "批准",
+      "definition": "有权人员对明确动作、范围、条件及版本作出的许可或决定；不得从CI、ACK、合并或专业质量结论推定另一项批准。",
+      "domain": "PADF_Governance",
+      "allowed_aliases": [],
+      "discouraged_terms": [],
+      "usage_example": "设计批准与合并授权分别引用准确证据。",
+      "reference": [
+        "PADF-APPROVAL"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "padf_governance",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-GV-006",
+      "english_term": "Baseline",
+      "preferred_zh": "基线",
+      "definition": "用于后续工作的明确版本化依据；是否获批、适用范围及批准引用须分别核验，固定SHA本身不等于批准。",
+      "domain": "PADF_Governance",
+      "allowed_aliases": [
+        "设计基线（明确类型时）"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "Module读取system_baseline_ref指向的精确批准版本。",
+      "reference": [
+        "PADF-GATE"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "padf_governance",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-GV-007",
+      "english_term": "Owner Acceptance",
+      "preferred_zh": "Owner验收",
+      "definition": "Owner针对明确交付范围和准确版本作出的接受决定；文档接受、技术设计批准、编码、合并和部署各有边界。",
+      "domain": "PADF_Governance",
+      "allowed_aliases": [
+        "Owner接受（对应实际接受记录时）"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "Owner接受文档表达，不自动批准其技术提案。",
+      "reference": [
+        "PADF-APPROVAL"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "padf_governance",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-GV-008",
+      "english_term": "Dispatch",
+      "preferred_zh": "任务分派",
+      "definition": "Master在有效授权内给实际执行角色的有界安排；保留分派、实际执行、交接和依赖协调的证据，消息持久化不证明已执行。",
+      "domain": "PADF_Governance",
+      "allowed_aliases": [
+        "Agent Dispatch"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "工具返回真实任务ID后记录RUNTIME_DISPATCH。",
+      "reference": [
+        "PADF-DISPATCH"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "padf_governance",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "精简中文释义；只采用所引sources的verified_scope，不构成全文标准定义、产品实现或批准。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-024",
+      "english_term": "System Instructions",
+      "preferred_zh": "系统指令",
+      "definition": "由应用在系统级配置以引导模型角色和行为的指令；具体层级与优先级依平台，不能代替服务端权限控制。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "系统提示（明确指令层时）"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "系统指令要求生成草稿，应用仍检查写入权限。",
+      "reference": [
+        "GOOGLE-SYSTEM",
+        "PADF-APPROVAL"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "简明工作释义，所引来源只支持其实际verified_scope；无已运行、官方中文或批准推定。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-025",
+      "english_term": "Human-in-the-loop",
+      "preferred_zh": "人在回路中",
+      "definition": "在人机过程的明确环节让人参与判断、评估或确认；需写明谁在何时处理什么，不能只凭此标签声称所有动作均受人工控制。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "HITL",
+        "人工参与"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "审核者确认草稿后才允许执行获准动作。",
+      "reference": [
+        "GOOGLE-ML",
+        "PADF-APPROVAL"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "industry_usage",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "简明工作释义，所引来源只支持其实际verified_scope；无已运行、官方中文或批准推定。"
+    },
+    {
+      "term_id": "PADF-TERM-AI-026",
+      "english_term": "AI-generated Content",
+      "preferred_zh": "AI生成内容",
+      "definition": "由生成式AI产生的文字、图像等内容；PADF要求区分生成建议、原始证据和真实确认，不能把生成内容直接当已核实事实。",
+      "domain": "AI",
+      "allowed_aliases": [
+        "AI生成结果"
+      ],
+      "discouraged_terms": [],
+      "usage_example": "生成的调研摘要标记来源和未验证项。",
+      "reference": [
+        "PADF-METHOD",
+        "GOOGLE-SYSTEM"
+      ],
+      "status": "PROPOSED",
+      "term_kind": "general",
+      "definition_basis": "framework_definition",
+      "zh_translation_status": "padf_recommended",
+      "verified_scope": "简明工作释义，所引来源只支持其实际verified_scope；无已运行、官方中文或批准推定。"
+    }
+  ]
+}

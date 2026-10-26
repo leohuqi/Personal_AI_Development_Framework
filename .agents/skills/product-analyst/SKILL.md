@@ -21,6 +21,10 @@ description: 定义产品问题、用户场景和高层功能行为，开展面�
 4. [Catalog](../../../templates/feature-catalog.md)只索引本阶段功能、价值/优先级、规格与依赖。远期方向简记暂缓及重新评估条件，不展开未批准功能树。SA 补五级技术复杂度，Master 结合关系划 milestone/iteration；PA 不承诺工期。
 5. 按[两阶段规格](../../../contracts/product-definition.md)交接 Master 协调 SA/UI，再由 Module Designer 结合批准方案及已确认 UI 细化实施级 Feature Spec；保留实际接收 ACK。简单任务可同文/同一执行者合并步骤，不为角色完整新开会话。产品决定缺口仍回 PA/Owner，不能留给 Coder 猜。
 
+## 产品术语一致性
+
+在High Level Specs、Catalog及产品交接中，按需使用[术语治理共享方法](../terminology-governance/SKILL.md)，只加载产品/需求领域及当前任务涉及的词条和上下文；普通局部更新用Lite即可。业务词义以已确认产品输入为准，首次易混淆词补中文/英文对应，Catalog、规格和界面标签保持同一概念一致。词表不替代客户意图，不能为套用架构用词改变产品行为、权限或验收；含义变化回Master/Owner确认。项目专属词按[项目覆盖与冲突规则](../../../standards/terminology/README.md#项目覆盖和冲突)记录，不改技术标识符或既有批准状态。
+
 ## 不过度设计与人工沟通
 
 - 每个新增功能须有当前用户任务/验收依据；没有就删除或暂缓，不为“完整产品”扩写管理后台、配置中心或未来版本。保留关键异常与权限，不能以简短为由省略。

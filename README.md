@@ -18,6 +18,10 @@ Owner / PM 保留最终决定，1–2 名技术成员可兼技术、开发、接
 
 协作方式参考 BMAD，复用现有工具，不新增插件安装或服务部署。接入项目仍须批准并固定所采用的版本，不随 PADF 发布自动升级。
 
+## 架构与术语能力升级（未发布候选）
+
+从[本轮交付入口](docs/upgrades/architecture-terminology-vnext/README.md)查看状态、样例、验证和待决项。架构采用[可裁剪统一方法](standards/architecture/README.md)，Lite/Standard/Full 与 scope 独立，按问题读取分层设计；[术语标准](standards/terminology/README.md)与[共享 Skill](.agents/skills/terminology-governance/SKILL.md)按需检查六领域用词。Profile 只读建议与术语检查均不改变既有门禁、授权或项目采用版本。
+
 ## Agent 工作接续（未发布）
 
 同一项目与职责优先继续已有Agent处理后续变化；原会话不可用或独立性要求不满足时再新建，并从准确成果恢复。接续同样核对当前授权与版本，不默认重做方案、不增加台账或服务。详见[共用接续规则](workflow/agent-protocol.md#优先接续已有-agent)。
@@ -40,7 +44,7 @@ v0.3.3 包含以下能力：PA负责High Level Specs/Catalog；SA技术初评、
 
 ## 文档语言
 
-核心入口与全部 9 个 Skill 以中文说明为主，便于需求确认、审查与日常维护。Skill 名称、角色英文术语、文件路径、命令、YAML/JSON 字段、schema 标识及状态枚举保留英文，以保持工具兼容和协议可验证性。后续更新沿用同一份正文，不默认维护重复的中英文版本；技术契约中的既有标识与历史证据不因翻译而改版。
+核心入口、9 个角色 Skill 与术语共享 Skill 以中文说明为主，便于需求确认、审查与日常维护。Skill 名称、角色英文术语、文件路径、命令、YAML/JSON 字段、schema 标识及状态枚举保留英文，以保持工具兼容和协议可验证性。后续更新沿用同一份正文，不默认维护重复的中英文版本；技术契约中的既有标识与历史证据不因翻译而改版。
 
 ## 核心流程
 
@@ -108,7 +112,7 @@ node tests/v0.3/run-concept-mockup-tests.mjs
 
 这些脚本通过不等于实际跨会话执行、外部工具调用、独立 DESIGN 审查或 Owner 评分；真实结果以精确证据和批准记录为准。
 
-## 全部 9 个核心 Skill
+## 9 个角色 Skill 与共享能力
 
 | Skill | 主要职责 |
 | --- | --- |
@@ -122,7 +126,9 @@ node tests/v0.3/run-concept-mockup-tests.mjs
 | [qa-tester](.agents/skills/qa-tester/SKILL.md) | 验收用例、集成/E2E 验证与测试证据 |
 | [independent-reviewer](.agents/skills/independent-reviewer/SKILL.md) | 独立新上下文、精确 PR diff 与风险审查 |
 
-九个 Skill 共享同一份 Agent Message 模板与草稿生成器，首次相关动作前必须读取共用协议；字段沿用 `padf.agent-message/v1`。
+另有 [terminology-governance](.agents/skills/terminology-governance/SKILL.md) 共享能力，按需使用，不增加角色或审批。
+
+九个角色 Skill 共享同一份 Agent Message 模板与草稿生成器，首次相关动作前必须读取共用协议；字段沿用 `padf.agent-message/v1`。
 
 - [开发工作流与质量门禁](workflow/WORKFLOW.md)
 - [Task Contract](contracts/task-contract.md)与[Delivery Report](contracts/delivery-report.md)
@@ -137,6 +143,11 @@ node tests/v0.3/run-concept-mockup-tests.mjs
 
 ```bash
 node scripts/validate-cacf.mjs
+node scripts/build-glossary.mjs --check
+node tests/vnext/run-profile-tests.mjs
+node tests/vnext/run-terminology-tests.mjs
+python3 examples/architecture-method/tools/check.py
+python3 tests/vnext/run-diagram-source-tests.py
 node tests/cacf/run-validation.mjs
 node tests/cacf/run-regressions.mjs
 node tests/v0.3/run-tests.mjs

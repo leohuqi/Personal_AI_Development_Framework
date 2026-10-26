@@ -29,6 +29,11 @@
 - Master依据SA复杂度、功能关系/依赖、价值与风险规划milestone/iteration和进度；Context Coordinator只提供共享上下文/恢复能力。QA交付可追溯Test Cases与逐版本Test Results。Owner评审统一入口为[评审中心 #14](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/14)，接受入口评论或当前对话原话，Master同步并保留结论/适用版本。
 - 共用消息/执行/Handoff 规则集中在[Agent 协议](workflow/agent-protocol.md)，首次相关动作前必须读取；机器字段可用本地草稿生成器，不以文档重复代替实际证据。Context Coordinator 默认作为共享能力，按需独立启用。
 
+## 可裁剪架构与术语能力（候选）
+
+- 架构深度按[统一方法](standards/architecture/README.md)选择Lite/Standard/Full，与architecture_scope独立；现有强制图、系统基线、Review和Owner权限不因裁剪取消。Profile选择器只给建议，不修改旧机器协议或门禁。
+- 术语按[通用规范](standards/terminology/README.md)及项目定义解释，按需使用共享Skill，不新增角色/审批。保护标识符、数据权威、权限/恢复与原始批准状态；结构检查不代替语义审查。
+
 ## CACF V0.2：共享上下文与通信
 
 - 用分配的 Linear 任务与不可变原始 Feature ID 确定稳定 `context_id`，保留两类 ID 的区别。

@@ -59,3 +59,7 @@ Master 接收高层规格、技术评估和功能内在关系，负责 milestone
 Solution Architect 按既有 V0.2 [Agent Handoff](agent-handoff.md)交给 Master，及适用的 Module Architect/UI Designer，说明主要决定、公共契约、待决问题和下一步。Master 协调依赖；L/XL 与风险触发的 S/M 需要独立 DESIGN 审查，重大决定由 Owner 批准。DESIGN_READY 不授予编码、合并或部署权。
 
 Module Architect 消费精确批准的不可变系统基线，可提出变更，不能替换系统技术决定。系统基线变化使受影响模块设计及对应 DESIGN 审查失效，须重新验证。已有产品优先复用未改变的批准基线并提交影响差异；无有效基线时由 Master 路由 Solution Architect（或 Owner 先授权建立基线）。小型非架构缺陷不默认新增两类架构设计。
+
+## 分层与Profile裁剪
+
+按[统一架构方法](../standards/architecture/README.md)提供长期Architecture入口和L0 Overview，L1系统视图按问题下钻；C4结构层级、Deployment实例、Runtime交互和Data权威分清。arc42是关注点检查，不强制十二章；重要决定ADR，当前完整事实只维护一处。Lite/Standard/Full是独立方法建议，不修改原scope和机器字段，不取消本契约的必需产物、图或Review。仅复用原Gate允许的精确有效基线/图；局部简单无架构变更由Master按scope none路由。交接只提供受影响模块、权威接口/不变量、验收及未批决定；不要求下游通读全部包。

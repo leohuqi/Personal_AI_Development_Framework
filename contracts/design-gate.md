@@ -104,3 +104,9 @@ L3 另需固定 frontend_stack_ref、有边界原型授权、runtime=frontend/fi
 - 每个绑定阶段必须实际 COMPLETED，全部必需 artifact.ref（含准确 SHA）被该项 Handoff.artifact_refs 覆盖。角色齐全、链内部自洽或 Owner 已读链接都不能替代任务与产物匹配。
 
 这只检查调用方已核验元数据的交叉一致性，不认证链接、Owner 或远端运行时；已有真实 Execution/Handoff、授权与源核验仍不可省略。G-01 START_CODING 重新调用此 Gate，不能因外层 findings 为空而忽略内层已有拒绝/发现。
+
+## 架构 Profile 与术语检查的兼容边界
+
+Lite/Standard/Full只表示[架构方法](../standards/architecture/README.md)的设计深度，与architecture_scope独立；不新增本协议必填字段，不修改evaluateDesignGate/routeAgents的判定。新增selectArchitectureProfile的输出是方法建议，不能映射成DESIGN_READY/CODING_AUTHORIZED或作为waiver。Lite可无新图只在原Gate允许的scope none或有效复用情形；已触发的SA/MA必需图、基线/Owner批准及独立DESIGN Review仍逐项核验。希望进一步省略原必需产物时另提兼容性与门禁决策，不在本轮实现。
+
+内容收件和现有独立Review同时检查：层级/职责正确、模型/图/技术源一致，当前完整规范单份维护，角色能定位实现必需约束，术语清楚且没有改变ID/Schema/API/状态或权限/恢复语义。术语结构/保护检查和方法建议PASS不证明真实语义、渲染或批准，不能遮盖任何既有阻断。

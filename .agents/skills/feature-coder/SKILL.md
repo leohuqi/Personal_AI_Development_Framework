@@ -60,3 +60,7 @@ description: 依据已批准的功能规格、架构和 UI 约束，实现一个
 ## 当前 UI 原型输入
 
 按[UI 契约](../../../contracts/ui-design.md)消费概念图确认和前端交互 Mockup，不要求 Figma。核对准确概念/确认、批准前端栈、原型授权、实际交互与绑定当前 Mockup/Profile/Skill 的[Impeccable报告](../../../integrations/impeccable.md)；发现、降级/未测如实报告。Impeccable审查不替代独立Review或实现QA，Mockup不证明真实后端/联测；概念确认不授予业务编码/生产权限。
+
+## 架构资料与术语的最小使用
+
+从当前架构入口按[角色阅读路径](../../../standards/architecture/README.md)只取本任务的批准规格、相关模块/接口、数据/权限不变量、异常恢复与验收；版本不符或决定未批时停止依赖动作。依[术语规范](../../../standards/terminology/README.md)沿用当前概念和必要定义；不重画全套架构图、不维护完整词表、不执行全仓文字替换。机器标识及状态保持原样，冲突交负责角色处理。

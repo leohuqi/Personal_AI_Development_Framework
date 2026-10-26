@@ -1,0 +1,484 @@
+{
+  "observed_at": "2026-10-26T05:27:59.878962+00:00",
+  "environment": {
+    "node": "v26.12.1",
+    "platform": "macOS",
+    "ci_node_target": "22 (remote CI pending)"
+  },
+  "status": "PASS",
+  "results": [
+    {
+      "command": [
+        "node",
+        "scripts/validate-cacf.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "2e364b781f7a7df552318e2314f98923dbb292885f8f94ec983b9232b4e61eb4",
+      "output_tail": "PASS PADF CACF V0.2 + V0.3 design structural validation (95 framework files and local links)\n"
+    },
+    {
+      "command": [
+        "node",
+        "tests/cacf/run-validation.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "b95c6281125647c1ca70f7da5e1e2593bd874b75da88aa1bd7d7885158962bc3",
+      "summary": {
+        "suite": "PADF V0.2 CACF fixture-level cross-process protocol simulation",
+        "count": 7
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/cacf/run-regressions.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "04fe863570cc354ee55dbfaf9463ea0d170355bb80e0cbc5efc30623e404d86b",
+      "summary": {
+        "suite": "CACF review regressions",
+        "count": 8
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-concept-mockup-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "818144d8a01b65ef85ca079d280d273f2fc878c3366dd1290efa68c9a24dd17f",
+      "output_tail": "Concept/Mockup synthetic metadata regressions: 399/399 PASS; 0 FAIL.\nActual UI/browser/Impeccable execution/Owner acceptance: NOT_RUN.\n"
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-feedback-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "12f6a9541b44da2c6e1def72d94d34882c027bf9d9473b47f35210a3b615b054",
+      "summary": {
+        "suite": "Two-phase specs and concept-confirmation/frontend Mockup",
+        "status": "PASS",
+        "count": 16
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-orchestration-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "6745ba92a1b78ece9637e0a158b5ff02f51d1ae4ab5e168d35100bb346660a34",
+      "summary": {
+        "suite": "Master Orchestration evidence (synthetic metadata ONLY)",
+        "status": "PASS",
+        "count": 36
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-preflight-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "a6763cf9ad2f10b8523b95e1a20138f89ad63cf22966949c55f6797839a2d513",
+      "summary": {
+        "suite": "PADF G-01 Action Preflight contract regression (synthetic snapshots only)",
+        "status": "PASS",
+        "count": 340
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-product-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "7a5316bfca7900f013c6c0192ee67f361757c6242964ecad70603f56ff65c434",
+      "summary": {
+        "suite": "Product outcomes and shared protocol (synthetic metadata only)",
+        "status": "PASS",
+        "count": 24
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-review-integrity-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "02d2df609dabbd62016eef0d774ee3a206b9be994095711de333e79206e81c86",
+      "summary": {
+        "suite": "Issue18 independent Design Gate integrity / G01 regression",
+        "status": "PASS",
+        "count": 320,
+        "passed": 320,
+        "failed": 0
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-skill-quality-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "08904e129769d44b8e1c1edcf14d068e696fbde8cd9ca5cdb47505bcf935f466",
+      "summary": {
+        "suite": "Owner-rated Specialist Skill delivery quality METADATA ONLY",
+        "status": "PASS",
+        "count": 14
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/run-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "857c21b19506fc9cb623c7e0e5370a6975d453ce26f4ec5b26553050fa0af8eb",
+      "summary": {
+        "suite": "PADF V0.3 system/module architecture routing, design dependency and gate simulation",
+        "status": "PASS",
+        "count": 72
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/v0.3/verify-expense-pilot.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "0263c808fc5b994406e4d92e6fc4c9a0114a4e7839bd472b16ace98083b50470",
+      "summary": {
+        "suite": "PADF V0.3 Master-led two-Architect expense pilot",
+        "status": "PASS"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "scripts/build-glossary.mjs",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output_sha256": "061f1268ffba4e84df1fea8a0740c67123d596281c7205a64f8996f328e4f5bb",
+      "output_tail": "PASS generated glossary matches its single source\n"
+    },
+    {
+      "command": [
+        "node",
+        "tests/vnext/run-profile-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "79aad7175c10932f096c95bf9d2ae28d921fd9a58ec3eed41ca42cbbe29c4a5b",
+      "summary": {
+        "suite": "PADF vNext independent Profile behavior and legacy Gate compatibility",
+        "status": "PASS",
+        "count": 25,
+        "passed": 25,
+        "failed": 0,
+        "baseline_comparison": "RUN"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tests/vnext/run-terminology-tests.mjs"
+      ],
+      "exit_code": 0,
+      "output_sha256": "a0728b091150e0193fca2dee3652727636304576ee0c1f968a0f1035f680e0e0",
+      "summary": {
+        "suite": "PADF vNext independent advisory terminology and protected-text behavior",
+        "status": "PASS",
+        "count": 16,
+        "passed": 16,
+        "failed": 0,
+        "semantic_verification": "NOT_VERIFIED"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "examples/architecture-method/tools/check.py"
+      ],
+      "exit_code": 0,
+      "output_sha256": "a57bfa6d25721086216e3f53d19de1b5f5a45b47a475e7dd97a7102869bd7224",
+      "summary": {
+        "status": "PASS"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "tests/vnext/run-diagram-source-tests.py"
+      ],
+      "exit_code": 0,
+      "output_sha256": "f456019f6a84fde24e97079d92028a2d788a15e4c76c29e1d34fa800bb6d1aae",
+      "summary": {}
+    },
+    {
+      "command": [
+        "python3",
+        "quick_validate.py",
+        ".agents/skills/context-coordinator"
+      ],
+      "exit_code": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "command": [
+        "python3",
+        "quick_validate.py",
+        ".agents/skills/feature-coder"
+      ],
+      "exit_code": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "command": [
+        "python3",
+        "quick_validate.py",
+        ".agents/skills/independent-reviewer"
+      ],
+      "exit_code": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "command": [
+        "python3",
+        "quick_validate.py",
+        ".agents/skills/master-orchestrator"
+      ],
+      "exit_code": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "command": [
+        "python3",
+        "quick_validate.py",
+        ".agents/skills/module-architect"
+      ],
+      "exit_code": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "command": [
+        "python3",
+        "quick_validate.py",
+        ".agents/skills/product-analyst"
+      ],
+      "exit_code": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "command": [
+        "python3",
+        "quick_validate.py",
+        ".agents/skills/qa-tester"
+      ],
+      "exit_code": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "command": [
+        "python3",
+        "quick_validate.py",
+        ".agents/skills/solution-architect"
+      ],
+      "exit_code": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "command": [
+        "python3",
+        "quick_validate.py",
+        ".agents/skills/terminology-governance"
+      ],
+      "exit_code": 0,
+      "output": "Skill is valid!\n"
+    },
+    {
+      "command": [
+        "python3",
+        "quick_validate.py",
+        ".agents/skills/ui-ux-designer"
+      ],
+      "exit_code": 0,
+      "output": "Skill is valid!\n"
+    }
+  ],
+  "bindings_sha256": {
+    "lib/action-preflight.mjs": "2432f5217a8befd7e67d5232e6c7ac91390984e1eb9a09440cba9d06298870ff",
+    "lib/architecture-profile.mjs": "9fdc49c56207fac0364fd86c05a9642da145a43a2f96ef143e0d4e0a406b16ef",
+    "lib/design-gate.mjs": "ddd69d3f2e2cd4397b7a9c8d09a28dee46decdeb829a919c2488a1b28528716d",
+    "lib/orchestration-evidence.mjs": "ead6076068979799d0a46c0ebb7c430a318a892b7ef1d27f5d6b6c39bd583162",
+    "lib/skill-delivery-quality.mjs": "2056b09167c5ade58713d36c77f2baf31b6715956338f9b0b0681aaf83368d33",
+    "lib/terminology.mjs": "ce85beb51ee84de308fbf58a64bf7fb82a0a5e250b5614cac2d4c3e799940d6b",
+    "tests/vnext/run-diagram-source-tests.py": "e6df941c0b1a5e49dae359facdbe3583bf65bba33a1f95c850530f05c964af94",
+    "tests/vnext/run-profile-tests.mjs": "4a62035924b708d60b97b9aeaa83595f9000571d74920b1c049cd20dcfcf7c0e",
+    "tests/vnext/run-terminology-tests.mjs": "b2d502135ff5f55569061b9cba17d6230d326e34a3f18eb0551bec40305fa983"
+  },
+  "protected_paths_unchanged_from_main": {
+    "lib/design-gate.mjs": true,
+    "lib/action-preflight.mjs": true,
+    "lib/orchestration-evidence.mjs": true,
+    "lib/skill-delivery-quality.mjs": true,
+    "contracts/ui-design.md": true,
+    "integrations/diagram-design.lock.json": true,
+    "governance/approval-policy.md": true,
+    ".agents/skills/ui-ux-designer/SKILL.md": true
+  },
+  "scope": "Local behavioral/static/skill checks only; no visual/semantic/approval/CI claim; original baseline compare supplied via PADF_PROFILE_BASELINE",
+  "affected_reruns": {
+    "observed_at": "2026-10-26T05:58:36.228726+00:00",
+    "reason": "Component owner model/display correction and new four negative cases; core libraries/old suites/Skills unchanged since full run",
+    "results": [
+      {
+        "command": [
+          "node",
+          "scripts/validate-cacf.mjs"
+        ],
+        "exit_code": 0,
+        "output_sha256": "2e364b781f7a7df552318e2314f98923dbb292885f8f94ec983b9232b4e61eb4",
+        "output": "PASS PADF CACF V0.2 + V0.3 design structural validation (95 framework files and local links)\n"
+      },
+      {
+        "command": [
+          "python3",
+          "examples/architecture-method/tools/check.py"
+        ],
+        "exit_code": 0,
+        "output_sha256": "9fd708da27da36bc1d62bb62212f427f45267cbe9ee0f50ced387fb4b54dc10a",
+        "result": {
+          "scope": "source/model/static links only; browser/visual/product tests not included",
+          "model_sha256": "bde3dd16fd1a6e413e180ef39c83fe68a3a3c4a41789a7f522cdfae004a3187a",
+          "views": [
+            {
+              "id": "standard-container",
+              "nodes": 3,
+              "relations": 2,
+              "status": "PASS"
+            },
+            {
+              "id": "standard-component",
+              "nodes": 3,
+              "relations": 2,
+              "status": "PASS"
+            },
+            {
+              "id": "full-context",
+              "nodes": 3,
+              "relations": 2,
+              "status": "PASS"
+            },
+            {
+              "id": "full-container",
+              "nodes": 5,
+              "relations": 4,
+              "status": "PASS"
+            },
+            {
+              "id": "full-deployment",
+              "nodes": 3,
+              "relations": 2,
+              "status": "PASS"
+            },
+            {
+              "id": "full-component",
+              "nodes": 4,
+              "relations": 3,
+              "status": "PASS"
+            },
+            {
+              "id": "full-data",
+              "nodes": 3,
+              "relations": 2,
+              "status": "PASS"
+            },
+            {
+              "id": "full-runtime",
+              "nodes": 5,
+              "relations": 8,
+              "status": "PASS"
+            }
+          ],
+          "issues": [],
+          "status": "PASS"
+        }
+      },
+      {
+        "command": [
+          "python3",
+          "tests/vnext/run-diagram-source-tests.py"
+        ],
+        "exit_code": 0,
+        "output_sha256": "e28787ad10b79dc8a44aaf124ea7515fb53e2e55670c06230dbfd720581ad3f7",
+        "result": {
+          "scope": "Static mutation detection; browser rendering/visual review NOT RUN",
+          "results": [
+            {
+              "case": "baseline",
+              "status": "PASS",
+              "checker_exit": 0
+            },
+            {
+              "case": "node label",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "inline HTML label",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "node kind",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "relation direction",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "relation label",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "runtime guard",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "deployment instance",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "component SVG boundary owner",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "component HTML boundary owner",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "component SVG boundary label",
+              "status": "PASS",
+              "checker_exit": 1
+            },
+            {
+              "case": "component HTML boundary label",
+              "status": "PASS",
+              "checker_exit": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

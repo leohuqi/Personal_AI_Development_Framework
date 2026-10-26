@@ -1,0 +1,141 @@
+{
+  "skill_content_sha256": "1b30bb3c0da29a05e5b05c0a4510ce6f286a0d0f1da97b9aa6aaf03c92e98618",
+  "results": [
+    {
+      "diagram": "full-component",
+      "steps": [
+        {
+          "tool": "self_check.py",
+          "exit_code": 0,
+          "stdout": "OK /private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/full-component.html",
+          "stderr": ""
+        },
+        {
+          "tool": "export_svg.py",
+          "exit_code": 0,
+          "stdout": "/private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/full-component.svg",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "diagram": "full-container",
+      "steps": [
+        {
+          "tool": "self_check.py",
+          "exit_code": 0,
+          "stdout": "OK /private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/full-container.html",
+          "stderr": ""
+        },
+        {
+          "tool": "export_svg.py",
+          "exit_code": 0,
+          "stdout": "/private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/full-container.svg",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "diagram": "full-context",
+      "steps": [
+        {
+          "tool": "self_check.py",
+          "exit_code": 0,
+          "stdout": "OK /private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/full-context.html",
+          "stderr": ""
+        },
+        {
+          "tool": "export_svg.py",
+          "exit_code": 0,
+          "stdout": "/private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/full-context.svg",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "diagram": "full-data",
+      "steps": [
+        {
+          "tool": "self_check.py",
+          "exit_code": 0,
+          "stdout": "OK /private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/full-data.html",
+          "stderr": ""
+        },
+        {
+          "tool": "export_svg.py",
+          "exit_code": 0,
+          "stdout": "/private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/full-data.svg",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "diagram": "full-deployment",
+      "steps": [
+        {
+          "tool": "self_check.py",
+          "exit_code": 0,
+          "stdout": "OK /private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/full-deployment.html",
+          "stderr": ""
+        },
+        {
+          "tool": "export_svg.py",
+          "exit_code": 0,
+          "stdout": "/private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/full-deployment.svg",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "diagram": "full-runtime",
+      "steps": [
+        {
+          "tool": "self_check.py",
+          "exit_code": 0,
+          "stdout": "OK /private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/full-runtime.html",
+          "stderr": ""
+        },
+        {
+          "tool": "export_svg.py",
+          "exit_code": 0,
+          "stdout": "/private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/full-runtime.svg",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "diagram": "standard-component",
+      "steps": [
+        {
+          "tool": "self_check.py",
+          "exit_code": 0,
+          "stdout": "OK /private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/standard-component.html",
+          "stderr": ""
+        },
+        {
+          "tool": "export_svg.py",
+          "exit_code": 0,
+          "stdout": "/private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/standard-component.svg",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "diagram": "standard-container",
+      "steps": [
+        {
+          "tool": "self_check.py",
+          "exit_code": 0,
+          "stdout": "OK /private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/standard-container.html",
+          "stderr": ""
+        },
+        {
+          "tool": "export_svg.py",
+          "exit_code": 0,
+          "stdout": "/private/var/folders/30/jy5nz3h16sq7h58y6j6m0dqh0000gn/T/padf-vnext-20261026-josnttmm/padf/examples/architecture-method/diagrams/standard-container.svg",
+          "stderr": ""
+        }
+      ]
+    }
+  ]
+}

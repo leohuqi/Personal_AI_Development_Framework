@@ -1,0 +1,20 @@
+{
+  "feature": "SYN-FULL-F01",
+  "question": "为可靠接管文件找出准确设计基线与批准实施状态、模块职责与关键接口、数据版本权限、失败并发恢复、验收与未测、未批决定；给路径行号与未知，不猜新行为或编码。",
+  "controls": {
+    "maximum_requests": 10,
+    "maximum_returned_characters": 24000,
+    "initial_document": "README.md",
+    "allowed_access": "reader.py <own arm> list OR read relative_path first_line last_line",
+    "external_network": "disallowed",
+    "source_corpus": "INPUT-CORPUS.txt (each SOURCE section exactly preserves original body)",
+    "answers": "1500字以内中文，最多六项",
+    "runtime_tasks": {
+      "old": "/root/vnext_read_old",
+      "new": "/root/vnext_read_new"
+    }
+  },
+  "dispatch_ref": "https://github.com/leohuqi/Personal_AI_Development_Framework/pull/25#issuecomment-6408744768",
+  "execution_receipt": "https://github.com/leohuqi/Personal_AI_Development_Framework/pull/25#issuecomment-6408767741",
+  "limitations": "Independent fresh real Agents; instruction-bounded helper, not OS isolation; copied from same synthetic facts, not historical product implementations. No token/time/effect-size inference."
+}

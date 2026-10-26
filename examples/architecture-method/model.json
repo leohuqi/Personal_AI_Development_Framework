@@ -1,0 +1,468 @@
+{
+  "model_id": "SYN-ARCH-METHOD-B1",
+  "status": "PROPOSED_SYNTHETIC",
+  "nodes": {
+    "S-WEB": {
+      "name": "Web应用",
+      "kind": "CONTAINER",
+      "detail": "Browser",
+      "owner": ""
+    },
+    "S-API": {
+      "name": "目录API",
+      "kind": "CONTAINER",
+      "detail": "Catalog / Policy",
+      "owner": ""
+    },
+    "S-DB": {
+      "name": "记录存储",
+      "kind": "STORE",
+      "detail": "Record / Revision",
+      "owner": ""
+    },
+    "SC-USE": {
+      "name": "用例入口",
+      "kind": "COMPONENT",
+      "detail": "CatalogApplication",
+      "owner": ""
+    },
+    "SC-RULE": {
+      "name": "目录规则",
+      "kind": "COMPONENT",
+      "detail": "CatalogRules",
+      "owner": ""
+    },
+    "SC-REPO": {
+      "name": "存储端口",
+      "kind": "COMPONENT",
+      "detail": "CatalogRepository",
+      "owner": ""
+    },
+    "P-MEMBER": {
+      "name": "成员",
+      "kind": "PERSON",
+      "detail": "Authenticated user",
+      "owner": ""
+    },
+    "S-RECORDS": {
+      "name": "文件记录服务",
+      "kind": "SYSTEM",
+      "detail": "Records / Parse / Policy",
+      "owner": ""
+    },
+    "S-IDP": {
+      "name": "身份提供方",
+      "kind": "EXTERNAL",
+      "detail": "Identity assertions",
+      "owner": ""
+    },
+    "C-WEB": {
+      "name": "Web应用",
+      "kind": "CONTAINER",
+      "detail": "Browser",
+      "owner": ""
+    },
+    "C-API": {
+      "name": "记录API",
+      "kind": "CONTAINER",
+      "detail": "Records / Policy / Tasks",
+      "owner": ""
+    },
+    "C-META": {
+      "name": "元数据库",
+      "kind": "STORE",
+      "detail": "Authoritative metadata",
+      "owner": ""
+    },
+    "C-BYTES": {
+      "name": "原件存储",
+      "kind": "STORE",
+      "detail": "Immutable source bytes",
+      "owner": ""
+    },
+    "C-PARSER": {
+      "name": "解析进程",
+      "kind": "CONTAINER",
+      "detail": "Scoped / isolated",
+      "owner": ""
+    },
+    "D-BROWSER": {
+      "name": "浏览器主机",
+      "kind": "HOST",
+      "detail": "C-WEB · SYN-B1",
+      "owner": ""
+    },
+    "D-APP": {
+      "name": "可信应用主机",
+      "kind": "HOST",
+      "detail": "API + META + BYTES · SYN-B1",
+      "owner": ""
+    },
+    "D-PARSER": {
+      "name": "隔离解析主机",
+      "kind": "HOST",
+      "detail": "C-PARSER · SYN-B1",
+      "owner": ""
+    },
+    "RC-USE": {
+      "name": "接管用例",
+      "kind": "COMPONENT",
+      "detail": "ImportUseCase",
+      "owner": ""
+    },
+    "RC-RULE": {
+      "name": "身份与版本规则",
+      "kind": "COMPONENT",
+      "detail": "RecordRules",
+      "owner": ""
+    },
+    "RC-REPO": {
+      "name": "元数据端口",
+      "kind": "COMPONENT",
+      "detail": "RecordRepository",
+      "owner": ""
+    },
+    "RC-RECOVER": {
+      "name": "操作恢复",
+      "kind": "COMPONENT",
+      "detail": "OperationRecovery",
+      "owner": ""
+    },
+    "E-RECORD": {
+      "name": "Record",
+      "kind": "ENTITY",
+      "detail": "record_id / row_revision",
+      "owner": "Records"
+    },
+    "E-REV": {
+      "name": "SourceRevision",
+      "kind": "ENTITY",
+      "detail": "source_revision / hash",
+      "owner": "Records"
+    },
+    "E-GEN": {
+      "name": "ParseGeneration",
+      "kind": "ENTITY",
+      "detail": "generation_id / source_revision",
+      "owner": "Tasks"
+    }
+  },
+  "relations": {
+    "S1": {
+      "from": "S-WEB",
+      "to": "S-API",
+      "label": "HTTPS"
+    },
+    "S2": {
+      "from": "S-API",
+      "to": "S-DB",
+      "label": "READ / WRITE"
+    },
+    "SC1": {
+      "from": "SC-USE",
+      "to": "SC-RULE",
+      "label": "CHECK"
+    },
+    "SC2": {
+      "from": "SC-USE",
+      "to": "SC-REPO",
+      "label": "COMMIT"
+    },
+    "X1": {
+      "from": "P-MEMBER",
+      "to": "S-RECORDS",
+      "label": "USE"
+    },
+    "X2": {
+      "from": "S-RECORDS",
+      "to": "S-IDP",
+      "label": "VERIFY"
+    },
+    "C1": {
+      "from": "C-WEB",
+      "to": "C-API",
+      "label": "HTTPS"
+    },
+    "C2": {
+      "from": "C-API",
+      "to": "C-META",
+      "label": "COMMIT"
+    },
+    "C3": {
+      "from": "C-API",
+      "to": "C-BYTES",
+      "label": "VERIFY / PUT"
+    },
+    "C4": {
+      "from": "C-PARSER",
+      "to": "C-API",
+      "label": "TASK"
+    },
+    "D1": {
+      "from": "D-BROWSER",
+      "to": "D-APP",
+      "label": "HTTPS"
+    },
+    "D2": {
+      "from": "D-PARSER",
+      "to": "D-APP",
+      "label": "TLS"
+    },
+    "RC1": {
+      "from": "RC-USE",
+      "to": "RC-RULE",
+      "label": "CHECK"
+    },
+    "RC2": {
+      "from": "RC-USE",
+      "to": "RC-REPO",
+      "label": "COMMIT"
+    },
+    "RC3": {
+      "from": "RC-RECOVER",
+      "to": "RC-REPO",
+      "label": "RESUME"
+    },
+    "ER1": {
+      "from": "E-RECORD",
+      "to": "E-REV",
+      "label": "HAS",
+      "cardinality": [
+        "1",
+        "1..*"
+      ]
+    },
+    "ER2": {
+      "from": "E-REV",
+      "to": "E-GEN",
+      "label": "DERIVES",
+      "cardinality": [
+        "1",
+        "0..*"
+      ]
+    },
+    "M01": {
+      "from": "C-WEB",
+      "to": "C-API",
+      "label": "IMPORT"
+    },
+    "M02": {
+      "from": "C-API",
+      "to": "C-BYTES",
+      "label": "VERIFY / PUT"
+    },
+    "M03": {
+      "from": "C-API",
+      "to": "C-META",
+      "label": "RECORD + TASK"
+    },
+    "M04": {
+      "from": "C-PARSER",
+      "to": "C-API",
+      "label": "CLAIM"
+    },
+    "M05": {
+      "from": "C-API",
+      "to": "C-PARSER",
+      "label": "LEASE + INPUT",
+      "return": true
+    },
+    "M06": {
+      "from": "C-PARSER",
+      "to": "C-API",
+      "label": "SUBMIT"
+    },
+    "M07": {
+      "from": "C-API",
+      "to": "C-META",
+      "label": "PUBLISH",
+      "guard": "valid"
+    },
+    "M08": {
+      "from": "C-API",
+      "to": "C-PARSER",
+      "label": "REJECT",
+      "guard": "invalid",
+      "return": true
+    }
+  },
+  "views": [
+    {
+      "id": "standard-container",
+      "title": "Standard · 三个运行边界",
+      "type": "architecture",
+      "node_ids": [
+        "S-WEB",
+        "S-API",
+        "S-DB"
+      ],
+      "relation_ids": [
+        "S1",
+        "S2"
+      ],
+      "authoritative_source": "standard/OVERVIEW.md",
+      "purpose": "说明Web/API/数据存储责任",
+      "cuts": "API内模块下钻MODULE；无独立部署或异步风险，不补Full全部图",
+      "status": "PROPOSED_SYNTHETIC"
+    },
+    {
+      "id": "standard-component",
+      "title": "Standard · Catalog组件",
+      "type": "architecture",
+      "node_ids": [
+        "SC-USE",
+        "SC-RULE",
+        "SC-REPO"
+      ],
+      "relation_ids": [
+        "SC1",
+        "SC2"
+      ],
+      "authoritative_source": "standard/MODULE.md",
+      "purpose": "当前Catalog在API内的依赖",
+      "cuts": "Policy外部模块接口在正文，非新服务",
+      "status": "PROPOSED_SYNTHETIC",
+      "container_id": "S-API"
+    },
+    {
+      "id": "full-context",
+      "title": "Context · 系统外部边界",
+      "type": "architecture",
+      "node_ids": [
+        "P-MEMBER",
+        "S-RECORDS",
+        "S-IDP"
+      ],
+      "relation_ids": [
+        "X1",
+        "X2"
+      ],
+      "authoritative_source": "full/views/structure.md#context",
+      "purpose": "系统整体、成员与外部身份系统",
+      "cuts": "内部软件聚合为系统，下钻Container",
+      "status": "PROPOSED_SYNTHETIC"
+    },
+    {
+      "id": "full-container",
+      "title": "Container · 发布权威在API",
+      "type": "architecture",
+      "node_ids": [
+        "C-WEB",
+        "C-API",
+        "C-META",
+        "C-PARSER",
+        "C-BYTES"
+      ],
+      "relation_ids": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "authoritative_source": "full/views/structure.md#container",
+      "purpose": "Parser无直写权，API负责发布",
+      "cuts": "Context身份边界在上层；无隐藏Parser存储路径",
+      "status": "PROPOSED_SYNTHETIC"
+    },
+    {
+      "id": "full-deployment",
+      "title": "Deployment · 隔离计算与权威主机",
+      "type": "deployment",
+      "node_ids": [
+        "D-BROWSER",
+        "D-APP",
+        "D-PARSER"
+      ],
+      "relation_ids": [
+        "D1",
+        "D2"
+      ],
+      "authoritative_source": "full/views/deployment.md",
+      "purpose": "Container实例的候选放置与信任环境",
+      "cuts": "主机内存储关系按Container，端口与版本待决",
+      "status": "PROPOSED_SYNTHETIC",
+      "instances": {
+        "D-BROWSER": [
+          "C-WEB"
+        ],
+        "D-APP": [
+          "C-API",
+          "C-META",
+          "C-BYTES"
+        ],
+        "D-PARSER": [
+          "C-PARSER"
+        ]
+      }
+    },
+    {
+      "id": "full-component",
+      "title": "Component · Records有界深化",
+      "type": "architecture",
+      "node_ids": [
+        "RC-USE",
+        "RC-RULE",
+        "RC-REPO",
+        "RC-RECOVER"
+      ],
+      "relation_ids": [
+        "RC1",
+        "RC2",
+        "RC3"
+      ],
+      "authoritative_source": "full/modules/records.md",
+      "purpose": "同一API内组件职责与恢复接缝",
+      "cuts": "外部Policy/Tasks/Bytes端口在Records完整正文，不画成新服务",
+      "status": "PROPOSED_SYNTHETIC",
+      "container_id": "C-API"
+    },
+    {
+      "id": "full-data",
+      "title": "Data · 源修订与派生代次",
+      "type": "er",
+      "node_ids": [
+        "E-RECORD",
+        "E-REV",
+        "E-GEN"
+      ],
+      "relation_ids": [
+        "ER1",
+        "ER2"
+      ],
+      "authoritative_source": "full/views/data.md",
+      "purpose": "概念实体归属与精确源绑定",
+      "cuts": "非物理Schema；Operation/Task/Policy控制域在契约",
+      "status": "PROPOSED_SYNTHETIC"
+    },
+    {
+      "id": "full-runtime",
+      "title": "Runtime · 解析发布与拒绝",
+      "type": "sequence",
+      "node_ids": [
+        "C-WEB",
+        "C-API",
+        "C-BYTES",
+        "C-META",
+        "C-PARSER"
+      ],
+      "relation_ids": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06",
+        "M07",
+        "M08"
+      ],
+      "authoritative_source": "full/views/runtime.md",
+      "purpose": "先接管后解析；所有检查满足才切发布",
+      "cuts": "分块和崩溃点在Records；完整校验在Parsing",
+      "status": "PROPOSED_SYNTHETIC",
+      "guards": {
+        "valid": "lease有效、源current且ACTIVE、当前授权、完整结果",
+        "invalid": "任一校验失败：旧epoch/换源/撤权/缺块"
+      }
+    }
+  ]
+}

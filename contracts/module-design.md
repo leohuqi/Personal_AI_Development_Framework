@@ -28,3 +28,9 @@ The **Solution Architect** approved system may use Vue 3/FastAPI/PostgreSQL and 
 
 ## Manifest/handoff
 Per artifact: `kind | path@SHA | source_ref@SHA | verified | evidence_ref | render_status/generator_sha if diagram`. Master matches `module_stage.system_baseline_ref` with top-level `system_baseline_ref` and checks stale source revisions. Producer publishes existing [Agent Handoff](agent-handoff.md), Reviewer independently checks module design against the approved system baseline when required, then Owner separately authorizes Coder.
+
+## Progressive elaboration and bounded reading
+
+Apply the shared [architecture method](../standards/architecture/README.md) and [module template](../templates/module-design.md). L2 module design consumes the exact approved L1 baseline and public contracts, then elaborates only current L3 Features. A short responsibility summary is not the complete contract: link the single normative definition of interfaces, authority, permission, transaction/error/recovery and acceptance rules. For complex migrations distinguish MIGRATED / NORMATIVE_REUSE / HISTORICAL_ONLY per fact.
+
+Profile is advisory and independent of architecture_scope. Lite does not remove the required component diagram, approved baseline, independent DESIGN Review or Owner authorization triggered by the existing rules. Valid existing diagrams may be reused only under the original evidence/version requirements. An explicitly authorized documentation experiment may reference a proposed system, but remains a draft experiment and cannot be declared formal Module Ready or coding authority.

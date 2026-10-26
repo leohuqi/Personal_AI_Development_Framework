@@ -12,6 +12,9 @@ on:
       - 'integrations/**'
       - 'lib/**'
       - 'tests/v0.3/**'
+      - 'tests/vnext/**'
+      - 'standards/**'
+      - 'docs/upgrades/**'
       - 'scripts/**'
       - 'templates/**'
       - 'examples/**'
@@ -57,3 +60,13 @@ jobs:
         run: node tests/v0.3/run-review-integrity-tests.mjs
       - name: Master-led expense pilot dependency and artifact checks
         run: node tests/v0.3/verify-expense-pilot.mjs
+      - name: Architecture Profile behavior and unchanged Gate controls
+        run: node tests/vnext/run-profile-tests.mjs
+      - name: Terminology source, contextual hints and protected content
+        run: |
+          node scripts/build-glossary.mjs --check
+          node tests/vnext/run-terminology-tests.mjs
+      - name: Architecture sample model and source consistency
+        run: |
+          python3 examples/architecture-method/tools/check.py
+          python3 tests/vnext/run-diagram-source-tests.py

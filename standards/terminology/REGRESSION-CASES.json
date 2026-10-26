@@ -1,0 +1,337 @@
+{
+  "schema_version": "padf.terminology-cases/v1",
+  "status": "PROPOSED",
+  "purpose": "有界语境与保护回归输入；expected_action为专家期望，不是词面自动替换表。",
+  "cases": [
+    {
+      "case_id": "REAL-READ",
+      "origin": "REAL_SOURCE",
+      "before": "本轮只验证架构文档的分层与可消费性。",
+      "after": "本轮只检查架构文档的分层是否清楚、是否便于各角色查阅并使用。",
+      "expected_action": "SUGGEST",
+      "concept": "文档可读/可用",
+      "reason": "将普通阅读动作说清楚，不改验证对象或声称系统测试通过。",
+      "reference": [
+        "MS-WRITING"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": true,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。",
+      "source": {
+        "repository": "leohuqi/Personal-Knowledge-Library",
+        "commit": "f22286701db4f4946922972eb116ef893beef430",
+        "path": "docs/architecture/pilot-v0.1/modules/document-management/DESIGN.md",
+        "line": 17,
+        "url": "https://github.com/leohuqi/Personal-Knowledge-Library/blob/f22286701db4f4946922972eb116ef893beef430/docs/architecture/pilot-v0.1/modules/document-management/DESIGN.md#L17",
+        "quote_scope": "所引行中的精确短句/短语；未复制整段项目约束。"
+      }
+    },
+    {
+      "case_id": "REAL-PATH",
+      "origin": "REAL_SOURCE",
+      "before": "Coder 的最短消费路径：",
+      "after": "Coder 的最短阅读路径：",
+      "expected_action": "SUGGEST",
+      "concept": "文档阅读入口",
+      "reason": "保留读者、路径和其余前置条件；只对短语提出语言候选。",
+      "reference": [
+        "MS-WRITING",
+        "PADF-GATE"
+      ],
+      "protected_tokens": [
+        "Coder"
+      ],
+      "meaning_preserved": true,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。",
+      "source": {
+        "repository": "leohuqi/Personal-Knowledge-Library",
+        "commit": "f22286701db4f4946922972eb116ef893beef430",
+        "path": "docs/architecture/pilot-v0.1/modules/document-management/DESIGN.md",
+        "line": 148,
+        "url": "https://github.com/leohuqi/Personal-Knowledge-Library/blob/f22286701db4f4946922972eb116ef893beef430/docs/architecture/pilot-v0.1/modules/document-management/DESIGN.md#L148",
+        "quote_scope": "所引行中的精确短句/短语；未复制整段项目约束。"
+      }
+    },
+    {
+      "case_id": "REAL-C4",
+      "origin": "REAL_SOURCE",
+      "before": "这张图展示独立运行单元。",
+      "after": "这张图展示应用和数据存储及其通信关系。",
+      "expected_action": "SUGGEST",
+      "concept": "C4 Container",
+      "reason": "上下文是Container图，应用与存储都应包括；不改变节点、关系或部署。",
+      "reference": [
+        "C4-CONTAINER"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": true,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。",
+      "source": {
+        "repository": "leohuqi/Personal-Knowledge-Library",
+        "commit": "f22286701db4f4946922972eb116ef893beef430",
+        "path": "docs/architecture/README.md",
+        "line": 11,
+        "url": "https://github.com/leohuqi/Personal-Knowledge-Library/blob/f22286701db4f4946922972eb116ef893beef430/docs/architecture/README.md#L11",
+        "quote_scope": "所引行中的精确短句/短语；未复制整段项目约束。"
+      }
+    },
+    {
+      "case_id": "REAL-VERSION",
+      "origin": "REAL_SOURCE",
+      "before": "若发现源/模型漂移、",
+      "after": "若发现来源文档或模型版本与固定输入不一致、",
+      "expected_action": "SUGGEST",
+      "concept": "固定输入版本不一致",
+      "reason": "这里指文档/架构模型版本，不是ML漂移；只改短语，原停止条件和后续职责保留。",
+      "reference": [
+        "MS-WRITING",
+        "PADF-METHOD"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": true,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。",
+      "source": {
+        "repository": "leohuqi/Personal-Knowledge-Library",
+        "commit": "f22286701db4f4946922972eb116ef893beef430",
+        "path": "docs/architecture/modules/document-management/README.md",
+        "line": 125,
+        "url": "https://github.com/leohuqi/Personal-Knowledge-Library/blob/f22286701db4f4946922972eb116ef893beef430/docs/architecture/modules/document-management/README.md#L125",
+        "quote_scope": "所引行中的精确短句/短语；未复制整段项目约束。"
+      }
+    },
+    {
+      "case_id": "REAL-CONSUMER",
+      "origin": "REAL_SOURCE",
+      "before": "消费者保存 inbox 去重",
+      "after": "消费者保存 inbox 去重",
+      "expected_action": "KEEP",
+      "concept": "消息消费者",
+      "reason": "实际事件投递语境，用词准确；不改消费变更与标记的事务约束。",
+      "reference": [
+        "OUTBOX"
+      ],
+      "protected_tokens": [
+        "inbox"
+      ],
+      "meaning_preserved": true,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。",
+      "source": {
+        "repository": "leohuqi/Personal-Knowledge-Library",
+        "commit": "f22286701db4f4946922972eb116ef893beef430",
+        "path": "docs/architecture/modules/document-management/CONTRACT.md",
+        "line": 53,
+        "url": "https://github.com/leohuqi/Personal-Knowledge-Library/blob/f22286701db4f4946922972eb116ef893beef430/docs/architecture/modules/document-management/CONTRACT.md#L53",
+        "quote_scope": "所引行中的精确短句/短语；未复制整段项目约束。"
+      }
+    },
+    {
+      "case_id": "SYN-CLOSURE",
+      "origin": "SYNTHETIC",
+      "before": "此JavaScript闭包中的函数保留对词法环境的访问。",
+      "after": "此JavaScript闭包中的函数保留对词法环境的访问。",
+      "expected_action": "KEEP",
+      "concept": "程序闭包",
+      "reason": "程序设计术语准确，应保留。",
+      "reference": [
+        "MDN-CLOSURE"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": true,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
+    },
+    {
+      "case_id": "SYN-DOC-CLOSURE",
+      "origin": "SYNTHETIC",
+      "before": "完成规范消费闭包。",
+      "after": "列明实施所需规范，并核对其版本与未决项。",
+      "expected_action": "SUGGEST",
+      "concept": "普通规范查阅",
+      "reason": "原文缺少具体动作；新句仍需作者核对是否完整表达意图，不声称在真实语料发现。",
+      "reference": [
+        "MS-WRITING",
+        "PADF-METHOD"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": true,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
+    },
+    {
+      "case_id": "SYN-DRIFT",
+      "origin": "SYNTHETIC",
+      "before": "模型漂移监测应分别报告输入分布、预测分布和性能相对基线的变化。",
+      "after": "模型漂移监测应分别报告输入分布、预测分布和性能相对基线的变化。",
+      "expected_action": "KEEP",
+      "concept": "ML监测",
+      "reason": "已限定具体信号及参考基线，不按“漂移”词面删除。",
+      "reference": [
+        "MS-DRIFT"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": true,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
+    },
+    {
+      "case_id": "SYN-C4-DOCKER",
+      "origin": "SYNTHETIC",
+      "before": "把所有C4 Container都改名为Docker容器。",
+      "after": "按C4应用/数据存储含义保留Container；Docker部署单独说明。",
+      "expected_action": "REJECT_CONCEPT_CONFLATION",
+      "concept": "C4与Docker",
+      "reason": "把抽象对象等同部署技术会改变含义。",
+      "reference": [
+        "C4-CONTAINER"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": false,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
+    },
+    {
+      "case_id": "SYN-AGENT-MODEL",
+      "origin": "SYNTHETIC",
+      "before": "一次LLM调用就是完整Agent，自动拥有写入权限。",
+      "after": "分别说明模型调用、Agent的后续选择与工具执行，写入权限按应用规则核验。",
+      "expected_action": "REJECT_CONCEPT_CONFLATION",
+      "concept": "Agent/Model/权限",
+      "reason": "模型输出不证明完整Agent，更不授予访问或写入权限。",
+      "reference": [
+        "ANTHROPIC-AGENTS",
+        "ANTHROPIC-TOOLS",
+        "PADF-APPROVAL"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": false,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
+    },
+    {
+      "case_id": "SYN-PROTECTED",
+      "origin": "SYNTHETIC",
+      "before": "`POST /api/items` 接收 `source_version`；类名 `KnowledgeFragment`，状态 `PROPOSED`，Feature `DEMO-F001`，ADR `ADR-0001`，SHA `b0c2bb06ea5f612b2ea372e3d24c3a68644938df`。",
+      "after": "`POST /api/items` 接收 `source_version`；类名 `KnowledgeFragment`，状态 `PROPOSED`，Feature `DEMO-F001`，ADR `ADR-0001`，SHA `b0c2bb06ea5f612b2ea372e3d24c3a68644938df`。",
+      "expected_action": "KEEP_PROTECTED",
+      "concept": "技术标识符",
+      "reason": "如需中文，在旁解释；不能把Schema字段、API、类、状态或ID翻译/改号。",
+      "reference": [
+        "PADF-GATE",
+        "PADF-APPROVAL"
+      ],
+      "protected_tokens": [
+        "POST /api/items",
+        "source_version",
+        "KnowledgeFragment",
+        "PROPOSED",
+        "DEMO-F001",
+        "ADR-0001",
+        "b0c2bb06ea5f612b2ea372e3d24c3a68644938df"
+      ],
+      "meaning_preserved": true,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
+    },
+    {
+      "case_id": "SYN-STATE",
+      "origin": "SYNTHETIC",
+      "before": "词条已获项目Owner接受，系统技术仍为PROPOSED。",
+      "after": "词条已获项目Owner接受，系统技术仍为PROPOSED。",
+      "expected_action": "KEEP_PROTECTED",
+      "concept": "接受与批准",
+      "reason": "不能把“表达已接受”改成“系统已批准”。",
+      "reference": [
+        "PADF-APPROVAL"
+      ],
+      "protected_tokens": [
+        "PROPOSED"
+      ],
+      "meaning_preserved": true,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
+    },
+    {
+      "case_id": "SYN-ROLE",
+      "origin": "SYNTHETIC",
+      "before": "开发Agent负责本次设计，产品Agent为最终用户提出任务建议。",
+      "after": "开发Agent负责本次设计，产品Agent为最终用户提出任务建议。",
+      "expected_action": "KEEP",
+      "concept": "Development/Product Agent",
+      "reason": "执行环境、职责与权限不同，不能合并词义。",
+      "reference": [
+        "PADF-DISPATCH",
+        "ANTHROPIC-AGENTS"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": true,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
+    },
+    {
+      "case_id": "SYN-RAG",
+      "origin": "SYNTHETIC",
+      "before": "只展示向量近邻列表即完成RAG。",
+      "after": "当前完成向量检索；若要称RAG，还需说明如何用检索信息支持生成。",
+      "expected_action": "REJECT_CONCEPT_CONFLATION",
+      "concept": "RAG/检索",
+      "reason": "检索结果展示不包含生成步骤。",
+      "reference": [
+        "RAG-PAPER",
+        "MS-VECTOR"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": false,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
+    },
+    {
+      "case_id": "SYN-FRAGMENT",
+      "origin": "SYNTHETIC",
+      "before": "所有项目的知识片段都必须有fragment_id并绑定原件修订。",
+      "after": "通用词条只说明有界内容单元；身份、来源、粒度和生命周期由项目明确定义。",
+      "expected_action": "REJECT_PROJECT_LEAKAGE",
+      "concept": "通用/项目定义",
+      "reason": "不得把某个项目的技术字段和业务约束强加给其他项目。",
+      "reference": [
+        "PADF-PRODUCT",
+        "W3C-ANNOTATION"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": false,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
+    },
+    {
+      "case_id": "SYN-PERMISSION",
+      "origin": "SYNTHETIC",
+      "before": "只有获授权角色可删除；失败保留可恢复输入，先验证副本再切换引用。",
+      "after": "只有获授权角色可删除；失败保留可恢复输入，先验证副本再切换引用。",
+      "expected_action": "KEEP_PROTECTED",
+      "concept": "权限/恢复",
+      "reason": "不能缩成“删除后自动恢复”或省略授权、顺序和输入保留。",
+      "reference": [
+        "PADF-APPROVAL",
+        "PADF-GATE"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": true,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
+    },
+    {
+      "case_id": "SYN-EVAL",
+      "origin": "SYNTHETIC",
+      "before": "基准测试得分高，所以整个产品已验收。",
+      "after": "基准测试仅反映约定任务与数据；产品验收仍按适用条件和Owner决定。",
+      "expected_action": "REJECT_CONCEPT_CONFLATION",
+      "concept": "Evaluation/Benchmark/Acceptance",
+      "reason": "评估证据不是验收或权限。",
+      "reference": [
+        "HF-EVALUATE",
+        "MATH-PAPER",
+        "PADF-APPROVAL"
+      ],
+      "protected_tokens": [],
+      "meaning_preserved": false,
+      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
+    }
+  ],
+  "not_observed": {
+    "candidates": [
+      "规范消费闭包",
+      "源接缝",
+      "来源漂移"
+    ],
+    "scope": "PKMS main f222867 的九个当前架构页面：README/OVERVIEW/SOURCE-MAP、views/container+deployment、contracts/README+COMMON-API、modules/document-management/README+CONTRACT。",
+    "result": "本轮精确短语搜索均未发现；不能认定全仓不存在。SYN-DOC-CLOSURE是合成负例。"
+  }
+}

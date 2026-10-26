@@ -21,3 +21,9 @@ Schema: `padf.architecture-design/v1`. Umbrella **versioned design manifest**; o
 
 ## Responsibility and approval
 Designers produce and self-check versioned packages and existing V0.2 Handoff; recipients ACK. Independent Reviewer checks DESIGN quality when L/XL or high-risk S/M. Master checks exact dependencies, `system_baseline_ref`, Review status and Design Gate. Material changes require Owner approval; DESIGN_READY is **not** coding authorization.
+
+## Architecture Profiles and layered navigation (method only)
+
+Use the shared [architecture method](../standards/architecture/README.md) for risk-based Lite/Standard/Full tailoring, L0–L3 navigation, single authority, and minimal role reading. The profile is a separate advisory choice, **not** a new value or replacement for `architecture_scope`, schema, artifact requirements, approval, or readiness. Preserve all existing machine fields and required types above. Scope module still requires its checked component diagram even when the method suggests Lite; scope system/both preserves its required diagrams. Only scope none or valid reuse permitted by the existing Gate can omit a new drawing. Material risks add necessary explanation and review recommendations; no existing independent DESIGN Review or Owner decision is removed. Requests to relax the old Gate remain separate pending decisions, not implemented exceptions.
+
+A project's Architecture README routes readers to L0 Overview, affected L1 system views, L2 module contract, and L3 Feature/API/schema details. These document layers are not the C4 diagram levels. Complex migration may use fact-level MIGRATED / NORMATIVE_REUSE / HISTORICAL_ONLY; optional source status never changes approval. Stable model IDs and ordered/guarded relations define semantics; Diagram-Design only presents them. Cite exact sources and report actual rendering, visual inspection and semantic checks separately.

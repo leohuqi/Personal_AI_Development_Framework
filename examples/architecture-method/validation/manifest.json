@@ -1,0 +1,71 @@
+{
+  "case": "SYN-FULL-F01",
+  "source_files": [
+    {
+      "path": "CONTRACTS.md",
+      "sha256": "6af3df0b7b35c6bbbb2db53cab479a30d1e748143e801965d68854e1bdcc2b1f",
+      "characters": 1630
+    },
+    {
+      "path": "OVERVIEW.md",
+      "sha256": "e203fc63bfbaf8ce5cff58f0e38812fe436de42cd9d41949c11d7ca668a7e55a",
+      "characters": 1013
+    },
+    {
+      "path": "README.md",
+      "sha256": "7b6a7e8019001aeeb47cceaeb5988a0a6f8095d8c45210fbd3a284c8b43abe8e",
+      "characters": 1379
+    },
+    {
+      "path": "SOURCE-MAP.md",
+      "sha256": "644a42a052dbe4a5107a4d90837eebd06d0100535cc2e7ea22e361bc3b99c958",
+      "characters": 676
+    },
+    {
+      "path": "adr/ADR-001.md",
+      "sha256": "f11057e99fc12003b32568aeae241b7bfa089ef30e0d10dc39ed6706b17f6951",
+      "characters": 502
+    },
+    {
+      "path": "modules/parsing.md",
+      "sha256": "eaeb158d0057ff5591826f11b6360d354e917ab6a65960e9edd7b697093abe7c",
+      "characters": 1087
+    },
+    {
+      "path": "modules/records.md",
+      "sha256": "75af266ac4216030255e8d03e21f46618591965dc92ca381682716ac15536c85",
+      "characters": 3100
+    },
+    {
+      "path": "views/data.md",
+      "sha256": "1da5f929ebba4aebafb3c94300f16a6622b6cadcfb9143915dc43ddc6a06c76a",
+      "characters": 698
+    },
+    {
+      "path": "views/deployment.md",
+      "sha256": "a3fb3566119f2e72a0074da4a3c7ff9be998821ecca04e1e050b626fc45e47ee",
+      "characters": 661
+    },
+    {
+      "path": "views/runtime.md",
+      "sha256": "8a6dfee8fb504d06cabe7580ed7dc299e2fd4ea85084fca9613952f7fceb2b9b",
+      "characters": 675
+    },
+    {
+      "path": "views/security-quality.md",
+      "sha256": "3819c43c225771016f1c4823b4b7030a0a9e5a043f402ba3ea1f3e66b569c2b7",
+      "characters": 785
+    },
+    {
+      "path": "views/structure.md",
+      "sha256": "b45833554a629b1df2369042dfbfe58e4037ee6ec91f106be63ba793c518ab37",
+      "characters": 1352
+    }
+  ],
+  "scope": "Same synthetic document bodies, concatenated versus layered. Does not represent a historical PADF product implementation.",
+  "budget": {
+    "requests": 10,
+    "returned_characters": 24000
+  },
+  "model_and_diagrams": "Outside reading task; validated separately"
+}
