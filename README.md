@@ -22,7 +22,7 @@ Owner / PM 保留最终决定，1–2 名技术成员可兼技术、开发、接
 
 架构采用[可裁剪统一方法](standards/architecture/README.md)：Master按当前范围、复杂度与风险选择Lite/Standard/Full，SA与Module按C4、轻量arc42和ADR组织设计，各角色从单一权威入口按问题读取。[架构样例与8张实绘图](examples/architecture-method/full/README.md)保留源模型、HTML、SVG、PNG及真实渲染证据。
 
-[术语标准](standards/terminology/README.md)和[共享Skill](.agents/skills/terminology-governance/SKILL.md)按需检查Business、Architecture、Engineering、AI、PADF Governance及项目术语。词条状态与证据强度显式保留；辅助器不自动替换、不把文字检查当语义验证。
+[术语标准](standards/terminology/README.md)和[共享Skill](.agents/skills/terminology-governance/SKILL.md)按需检查产品与需求、项目管理、架构、工程、AI及PADF治理六个领域，并单独标识项目专属词汇。词条状态与证据强度显式保留；辅助器不自动替换、不把文字检查当语义验证。
 
 同一项目与职责优先继续已有Agent处理后续变化；无法接续或独立性不满足时，从准确成果恢复并只补变化。接续仍核对当前授权、Task Contract、版本、真实执行和独立审查，详见[共用接续规则](workflow/agent-protocol.md#优先接续已有-agent)。Profile建议、术语检查和会话接续均不能绕过原Design Gate、G-01或Owner权限。
 
