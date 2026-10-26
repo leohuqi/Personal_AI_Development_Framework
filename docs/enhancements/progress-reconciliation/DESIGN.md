@@ -12,7 +12,8 @@
 | --- | --- |
 | `contracts/task-contract.md`、`agent-dispatch.md`、`agent-handoff.md` | 链接统一进度契约；明确父CR/执行Issue/执行上下文/交接/不可变证据身份，保持现有v1 schema与旧记录可读 |
 | `contracts/progress-reconciliation.md` | 唯一当前语义：输入、阶段映射、计划/执行/回读、Receipt、失败恢复与兼容；其他文档只给短引用 |
-| `lib/progress-reconciliation.mjs` | 纯计划器、一次有界执行器与收据校验；注入工具，无Linear凭据/SDK/网络客户端，无自动Agent调度 |
+| `lib/progress-reconciliation.mjs` | 纯计划器与一次有界执行器，复用既有模块中的纯收据校验；注入工具，无Linear凭据/SDK/网络客户端，无自动Agent调度 |
+| `lib/orchestration-evidence.mjs`、`lib/design-gate.mjs` | 在现有阶段完成入口强制检查新合同的进度收据；仅显式启用的扩展受影响，旧记录兼容 |
 | Master Skill、`workflow/agent-protocol.md`、`WORKFLOW.md`、`context-communication.md` | 有意义节点执行 `Dispatch → Execution → Handoff → Master ACK → Progress Reconciliation → Verified State`；失败保留ACK但不宣称协调完成 |
 | 现有结构validator与CI、一个测试入口 | 加入新契约/模块/回归；不改原G-01或Design Gate判定 |
 
@@ -43,13 +44,21 @@ master_ack = {handoff_id, handoff_ref, execution_context_id, execution_issue_id,
 
 ## API、工具边界与状态
 
-建议公开三个函数，无类/插件注册或长期状态：
+建议公开三个函数，无类/插件注册或长期状态。前两者位于新增helper；纯 `validateProgressSyncReceipt` 放在现有 `orchestration-evidence.mjs` 内并由helper复用（可重导出）：
 
 ```text
 planProgressReconciliation(input) -> ProgressPlan
 reconcileProgress(input, adapter) -> Promise<ProgressSyncReceipt>
 validateProgressSyncReceipt(receipt) -> {valid, errors[]}
 ```
+
+### 接入既有编排入口，防止漏调用后继续
+
+新Task Contract显式采用 `progress_reconciliation_required:true`，并向每个新Dispatch提供 `progress_identity`（上述identity）。`evaluateOrchestrationChain` 遇到链级要求或任一阶段存在该扩展时，要求所有阶段明确 `tracker:'linear'|'none'`；缺适用性或身份不能被当成旧格式自动跳过。Linear阶段的 `reconciliation.progress_receipt` 必须经本模块内纯validator通过，且结果只能为 `SYNCED` 或真正核验的 `NO_CHANGE_REQUIRED`；Receipt必须绑定该阶段Dispatch/Handoff/ACK、执行Issue/上下文、源SHA与实际持久化/回读。缺Receipt、FAILED/BLOCKED Receipt或绑定不符都使 `eligible:false`；即使原Master结论为ACK/CONTINUE、或该阶段是链末尾，也不能通过。
+
+`evaluateDesignGate` 将当前任务的显式要求传入既有 `evaluateOrchestrationChain`；该要求为true时，不能被旧 `orchestration_validation_required:false` 关闭。后续分派仍引用前序Handoff和协调结论，前序进度收据未通过不得声明Verified State/解阻。GitHub-only显式 `tracker:'none'` 且无Linear身份时记录NOT_APPLICABLE，不要求不适用的Linear调用；若提供N/A Receipt仍核对其适用性。没有采用扩展、也没有任何新progress身份的历史v1记录沿用原检查，不回写旧Handoff。
+
+保持单向依赖：`progress-reconciliation → action-preflight → design-gate → orchestration-evidence`，同时helper直接复用 `orchestration-evidence` 的纯validator；**现有orchestration模块不得导入progress helper或action-preflight**。收据validator只校验已观察事实与绑定，不发工具、不调用G-01；Done完整复核在helper中执行。这样不产生 `progress→action→design→orchestration→progress` 导入环。组件图中的计划器/一次执行器边界与既有工具调用不变，细粒度校验复用归属以本段为准。
 
 `input`包含：`schema_version:'padf.progress-reconciliation/v1'`、上述identity、`event`、handoff与master_ack（阶段交接节点）、已核验`evidence`、实际team状态表、当前Issue快照、显式依赖事实、当前有限写入授权、`now`与来源观察时间；存在前次协调时另传 `previous_receipt_ref`，由 `readReceipt` 读取其准确事件/来源/上下文。可读纯计划器便于Master先审查；执行器必须重新读取当前权威状态，不能把旧计划当令牌。未知事件、未知/重复/缺必要Team状态、错team/issue/context、畸形证据或越界授权均BLOCKED且零写入。GitHub-only适用性分支先核对其显式无Linear绑定，不要求不适用的Linear状态表或适配器。
 
@@ -89,7 +98,7 @@ readReceipt(receipt_ref) -> receipt
 
 依赖事实仅描述本Issue明确的当前工作前置：`{issue_id, phase:'start'|'integration', satisfied, evidence_ref}`。新增blockedBy必须有未满足的真实依据；解除必须有已满足/不再适用的明确证据。parent不是依赖；PR Draft/unmerged不是“启动前置未满足”的充分事实。未在本次已核验范围内的现有关系原样保留。只产生 `add_blocked_by` / `remove_blocked_by` delta，保留每个增删依据；下一阶段真实依赖与当前执行进度分别记录。不能删除来源未知的旧关系，也不能因为前置变成Done就忽略其实际验收条件。
 
-`DONE_REQUESTED`必须携带当前完整 `done_input`，直接调用既有 `evaluateActionPreflight`，执行前重读后再调用 `revalidateActionPreflight`，二者均READY才允许Done写入。另核对action为MARK_ISSUE_DONE、仓库/Task Contract/source head/context与当前identity/evidence一致，并将 `subject.execution_issue_id` 绑定准确执行Issue（authorization.subject同样完整一致）；原G-01的Owner Acceptance、CI/QA/Review/发现/授权保持。不得只接受调用方给出的字符串READY、CI布尔值或父CR验收。Done门禁失败时BLOCKED、零写入，不降级伪装为成功。
+`DONE_REQUESTED`必须携带当前完整 `done_input`，直接调用既有 `evaluateActionPreflight`，执行前重读后再调用 `revalidateActionPreflight`，二者均READY才允许Done写入。除核对action为MARK_ISSUE_DONE、仓库/Task Contract/source head/context一致外，helper必须把 `done_input.subject.execution_issue_id` **和** `done_input.acceptance.execution_issue_id` 同时与当前执行Issue精确匹配，并把subject/acceptance的 `execution_context_id` 与当前执行上下文精确匹配；authorization.subject仍与完整subject一致。父CR验收、其他子任务验收或缺少执行绑定的旧acceptance不能自动批准新工作包Done，即使原G-01对该旧结构返回READY也须由wrapper先BLOCKED。原G-01的Owner Acceptance、CI/QA/Review/发现/授权保持，不更改原判定或把字符串READY当证据。Done门禁失败时BLOCKED、零写入，不降级伪装为成功。
 
 一次执行的有界顺序：
 
@@ -128,6 +137,8 @@ readReceipt(receipt_ref) -> receipt
 | 两次并发、前读漂移、写后并发关系变化 | 同进程串行；跨调用冲突可见，不声称CAS或吞掉他人关系 |
 | 迟到开始/Handoff、顺序未知、真实新返工 | 旧事件不能覆盖较新Review；无可验证顺序BLOCKED，真实新返工才可回In Progress |
 | Done门禁 | 完整准确G-01+Owner验收可Done；仅CI/PR/APPROVE/父验收/旧SHA/伪READY均零写入 |
+| 编排漏调用/失步收据 | 新Linear阶段缺Receipt、FAILED、错执行Issue/源SHA、链末尾缺Receipt均使既有入口不eligible；原ACK/CONTINUE不能覆盖；旧未采用扩展记录保持原结果 |
+| 父/子Done验收混用 | subject/授权是执行子任务，但acceptance为父CR、其他子任务、错执行上下文或无绑定时均BLOCKED；只有全部精确匹配才继续原G-01 |
 | GitHub-only #27 | 显式N/A、NO_CHANGE_REQUIRED、零Linear调用；无虚构执行Issue |
 
 PQA历史fixture是Owner给出的失步事实；只读观察显示当前LEO-202/203/204已In Review，LEO-207为In Progress，不能称本次修复了真实项目。Team状态来自实际只读list：LEO的Backlog/Todo/In Progress/In Review/Done分别已有独立ID；fixture可固定这些观察，通用实现按传入Team表处理。此次不改真实PQA/PKMS任务、业务或采用版本。
@@ -138,4 +149,6 @@ PQA历史fixture是Owner给出的失步事实；只读观察显示当前LEO-202/
 
 图表manifest：`diagram_type:architecture/component`，用途为Master→计划器/执行器→工具/收据的模块调用关系；权威源为本设计，主任务精确Git源SHA由Master提交后绑定。`generator:diagram-design`；固定外部Skill commit `11b08eade8049c441ed3df1895e3b527c26c0fbe`，实际入口SHA256 `1b30bb3c0da29a05e5b05c0a4510ce6f286a0d0f1da97b9aa6aaf03c92e98618`。已实际读取Skill、Architecture/output/style/profiles/primitives必要指导；复用Owner已选默认风格，离线系统字体，无个人配置改写。
 
-实际验证见[diagram-validation.json](diagram-validation.json)：静态`self_check.py --offline` PASS；Chrome155.0.8059.85 / Playwright1.62.1经获批非受限执行，用独立临时profile实际渲染。5组件/6关系方向逐一实看；文字越界/节点溢出/标签碰撞/远程请求/页面错误均为空，390px页面不溢出、图内可横向滚动，实际中文字体PingFang SC。Module Architect实际查看临时PNG（SHA256 `a9e86832c2784757b43d52d8dc318d67710006e4a97d381d0fe3492772956169`），线条/文字与设计一致；仅提交HTML源和验证结果，不增加多格式导出。此PASS只证明本图的生成、渲染与实看，不证明Linear同步、产品行为或DESIGN_READY。
+实际验证见[diagram-validation.json](diagram-validation.json)：静态`self_check.py --offline` PASS；Chrome155.0.8059.85 / Playwright1.62.1经获批非受限执行，用独立临时profile实际渲染。5组件/6关系方向逐一实看；文字越界/节点溢出/标签碰撞/远程请求/页面错误均为空，390px页面不溢出、图内可横向滚动，实际中文字体PingFang SC。Module Architect实际查看[同图PNG](progress-components.png)（SHA256 `a9e86832c2784757b43d52d8dc318d67710006e4a97d381d0fe3492772956169`），线条/文字与设计一致；PNG是已实看临时截图的逐字节复制，没有另行重渲染。后续入口门禁与Done绑定修订只改变校验细节，图中5个组件/6个调用关系未变。此PASS只证明本图的生成、渲染与实看，不证明Linear同步、产品行为或DESIGN_READY。
+
+![Master进度协调组件图](progress-components.png)
