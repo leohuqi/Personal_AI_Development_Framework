@@ -4,12 +4,13 @@
 
 ## 未发布
 
-- [候选方法调整 PR #30](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/30)：只读评估PKMS工程实践，调整七角色/测试策略/追溯与报告，补充任务对象和参考项目隔离。撤回本候选早期新增的通用工具、合成工程及专用CI，保留原有框架门禁；未验收、合并或发布，正式版本未指定。
+暂无待发布条目。
 
 ## 版本总览
 
 | 版本 | 发布日期（北京时间） | 主题 | 发布提交 |
 | --- | --- | --- | --- |
+| [v0.3.7](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.7) | 2026-10-27 | 工程方法与跨项目上下文边界 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.7) |
 | [v0.3.6](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.6) | 2026-10-26 | 可裁剪架构、术语治理与 Agent 接续 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.6) |
 | [v0.3.5](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.5) | 2026-10-24 | 小团队简化、概念 Mockup 与文档评审 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.5) |
 | [v0.3.4](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.4) | 2026-10-23 | 设计证据与执行依赖完整性 | [3afcb5b4](https://github.com/leohuqi/Personal_AI_Development_Framework/commit/3afcb5b4b038656f50bab57f4722b4a3f3accda7) |
@@ -20,6 +21,14 @@
 | [v0.2.0](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.2.0) | 2026-10-13 | 共享上下文与 Agent 通信（CACF） | [c2caac0a](https://github.com/leohuqi/Personal_AI_Development_Framework/commit/c2caac0a6eac220f65667b7fe7cd5e6943dbe807) |
 
 V0.1 是发布前的历史基线，见文末；仓库没有独立的 V0.1 tag 或 Release，不将其补记为正式发布。
+
+## v0.3.7 — 2026-10-27
+
+- **工程方法：**根据PKMS已有实践完善七角色的测试策略、渐进功能用例、TDD、调试、追溯与交付报告；项目沿用自己的测试工具和报告。
+- **任务范围：**区分框架方法升级、项目工程建设与业务实施；参考项目的命令、历史批准和交接不自动成为当前任务授权，最新Owner澄清优先。
+- **验证与边界：**PKMS已有记录显示测试边界和追溯有作用；产品开发效率及TDD长期收益尚未证明。原Gate及项目独立采用边界保持，未引入新的框架测试工具或专用CI。
+
+接入、证据边界与回退见[v0.3.7版本说明](docs/releases/v0.3.7.md)；来源为[PR #30](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/30)和[Owner评审入口](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/14)。准确发布提交由不可变tag解析，发布不会自动升级PKMS或其他项目。
 
 ## v0.3.6 — 2026-10-26
 

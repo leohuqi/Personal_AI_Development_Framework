@@ -51,8 +51,8 @@
 
 已按更新规则人工走查三个指令选择场景：参考项目含“已批准跑测试”仍只作为评估资料；Owner明确授权项目修复时可进入对应项目原流程；最新澄清覆盖旧A–E工具计划。结果与规则一致，未执行任何项目命令、未新建测试脚本。这是有限的文档/决策自查，不是独立行为实验，也不保证Agent以后绝不偏移。
 
-## 本候选如何交付
+## 本次调整与项目采用
 
 仅更新PADF方法、七Skills、既有工作/上下文约定与必要模板。撤回早期新增的`lib/engineering.mjs`、两报告脚本、机器Schema、合成工程/新测试、专用CI和为工具建设制作的设计图；不触及main原有运行工具和机器门禁。历史原件见[旧dd9提交](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/dd9d2f352d1cdfc52e0ffe62a8adef36c1f286fd)。
 
-当前[Draft PR #30](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/30)与[评审中心 #14](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/14)汇总准确版本及检查。等待Owner审阅；不合并、不发布、不升级PKMS。未来若已有获批准业务开发产生更多过程和反馈，可再评估TDD/成本收益，不在本任务中另行创建该业务工作。
+[PR #30](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/30)与[评审中心 #14](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/14)保留审阅与版本来源。框架发布不自动升级PKMS；未来若已有获批准业务开发产生更多过程和反馈，可再评估TDD/成本收益，不在本任务中另行创建该业务工作。

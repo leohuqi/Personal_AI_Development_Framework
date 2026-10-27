@@ -35,7 +35,7 @@
 - 架构深度按[统一方法](standards/architecture/README.md)选择Lite/Standard/Full，与architecture_scope独立；现有强制图、系统基线、Review和Owner权限不因裁剪取消。Profile选择器只给建议，不修改旧机器协议或门禁。
 - 术语按[通用规范](standards/terminology/README.md)及项目定义解释，按需使用共享Skill，不新增角色/审批。保护标识符、数据权威、权限/恢复与原始批准状态；结构检查不代替语义审查。
 
-## 工程测试与交付（候选增量）
+## 工程测试与交付
 
 - 按[共享工程标准](standards/engineering/README.md)区分框架方法升级、项目工程建设与业务功能实施；角色流程按实际任务启用。项目实施时SA确定测试策略，PA/QA渐进形成AC/场景/TC，MA细化可测试边界，Coder执行适用方法，QA/Reviewer独立验证。
 - 项目自主选栈，统一追溯与报告语义，不新增执行引擎、服务或第二门禁。三版本/环境/原始报告可核验，五状态、line/branch与AC覆盖分别报告；Unit绿不推导功能完成或Owner验收，候选需求不能自动变批准。
