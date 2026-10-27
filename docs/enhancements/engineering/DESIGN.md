@@ -1,6 +1,6 @@
 # Engineering Capability Enhancement — 设计提案
 
-建议在现有角色、契约及 Node 薄工具中增量纳入工程测试能力：统一证据语义，由项目选择测试框架。无新服务、执行引擎、角色或审批。本文为 ENG-SA-01 的 `DESIGN_PROPOSAL / PROPOSED`，不是 Owner 架构批准或编码授权。
+建议在现有角色、契约及 Node 薄工具中增量纳入工程测试能力：统一证据语义，由项目选择测试框架。无新服务、执行引擎、角色或审批。本文为 ENG-SA-01 与 ENG-MA-01 的 `DESIGN_PROPOSAL / PROPOSED`，不是 Owner 架构批准或编码授权。
 
 - 任务：[Issue #29](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/29)，事前分派 comment `6433041920`；Owner 原始指令由 Master 固定引用。
 - `system_baseline_ref`：PADF main/v0.3.6 `6469aba08b4a3c31d4c8030aeeda26d93d493b2e`；本工作目录是该版本源快照，无 `.git`，不可声称本地 Git 核验通过。
@@ -104,3 +104,116 @@ PKMS只读观察基线：`leohuqi/Personal-Knowledge-Library` PR#10 head `efd0aa
 | H Review/Migration | §6增量opt-in、独立DESIGN/实现审查与原Owner边界 |
 
 下一步由Master收件并协调MA增量细化，独立DESIGN审查与适用Owner决定仍待完成。本文不发出START_CODING许可；最终目标仍为IMPLEMENTED→TESTED→INDEPENDENTLY_REVIEWED→PENDING_OWNER_ACCEPTANCE，合并/发布另行授权。
+
+## 8. ENG-MA-01：报告与追溯模块增量草案
+
+本节为真实 Module Architect 的 `DESIGN_PROPOSAL / PROPOSED`，复用§1–7，不把SA提议视作新批准系统。本次仅在`6469aba08b4a3c31d4c8030aeeda26d93d493b2e`既有Node离线工具边界内细化规范化报告；不构成正式Module Design COMPLETED、Design Gate或Coder启动依据。任务分派为[ENG-MA-01](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/29#issuecomment-6433308867)；PR30分支`enhancement/engineering-formal-integration`输入head为`1193931f64f7dfac82c249b589da21f589e2dc52`。原MA会话不可用，本会话恢复SA同份方案及QA准备资料后只补接口。Business Feature IDs为空（框架任务N/A），无需UI/API服务/数据库迁移。
+
+### 8.1 最小文件职责与依赖
+
+现有`lib/terminology.mjs`、`lib/architecture-profile.mjs`采用纯函数和小CLI，CI以Node22验证；新增工具沿用ESM/Node内置依赖，不要求Node26专属功能。仓库尚无`schemas/`，因此三个轻量JSON schema放`contracts/engineering/`，避免创建无必要的新顶层目录；§3的`schemas/`仅为候选，以下为本提案确定位置。
+
+| 拟变更位置 | 职责与边界 |
+| --- | --- |
+| `standards/engineering/README.md` | 唯一共享语义；七角色Skill各加职责与此入口链接，PA/SA/MA/Coder/QA/Reviewer/Master按§1执行，不复制整套标准 |
+| `contracts/testing-architecture.md`、`requirements-traceability.md`、`test-reporting.md` | 三份人读契约；对应`contracts/engineering/{testing-architecture,traceability,test-run}.schema.json`，机器结构仅校验形状；跨对象/版本不变量由下述函数校验 |
+| `lib/engineering.mjs` | 三契约验证、版本/关系一致性和聚合纯函数；不读文件、不调用runner、不访问网络、不写批准 |
+| `scripts/engineering-report.mjs` | 路径/大小边界、读取JSON和原始XML、以固定参数调用Python解析桥、输出JSON/可选HTML；仅数据文件路径，不接收shell/测试命令 |
+| `scripts/engineering-junit.py` | Python标准库XML解析薄桥；只读stdin受限XML，stdout结构化suite/case和诊断；不执行XML或读取文件/远程实体 |
+| `tests/engineering/`、`examples/engineering/` | Node负例/兼容测试及独立Python/Java合成项目；runner由明确本地/CI步骤执行，报告CLI只消费结果 |
+
+依赖方向：CLI→XML桥/纯函数；纯函数→三个契约数据；摘要→标准JSON。旧Design Gate、G-01/action-preflight机器文件和输入schema不依赖新模块。无需registry、插件接口、数据库、常驻进程或测试执行引擎；将来已有格式确有需求再扩展适配器，本轮只支持JUnit规范化。普通Markdown模板/契约增量引用共享入口；Engineering深度只建议范围，不新增强制审批。
+
+### 8.2 三种输入契约与稳定身份
+
+所有结构含`schema_version`、`context_id`和项目自定稳定ID；引用类型为`{path|url, revision, sha256?}`，仓库源码固定commit，未提交合成版本固定文件内容摘要。工具不得将字段存在等同批准；`approval_ref`是待人工核验来源。如下为最低字段，具体schema须与实现一同提交并由QA用负例核验，不把伪代码当现有API。
+
+| 契约 | 必需字段及约束 |
+| --- | --- |
+| `padf.testing-architecture/v1` | `strategy_id, project, source_ref, status(PROPOSED/APPROVED), approval_ref|null, stack[{name,version,basis_ref}], profile(Lite/Standard/Full), test_types, test_layers, boundaries[{subject,real_dependencies,mock_boundary,isolation}], commands[{id,argv,purpose}], ci_ref, coverage_policy{metrics,include,exclude,denominator,risk_basis}, reporting, tdd_scope, data_privacy`；命令仅记录，不由本工具执行；旧批准策略只引用精确版本 |
+| `padf.traceability/v1` | `trace_id, requirements_revision, test_definition_revision, requirements[{id,feature_ids,kind,approval(candidate/approved),approval_ref,source_ref,required_tc_ids}], test_cases[{id,source_ref,types[],layer,selector?,required_assertions[],preconditions_ref,steps_ref}], nodes[{id,kind(design/implementation),source_ref}], links[{id,from,to,relation,evidence_scope(NONE/PARTIAL/FULL),required_assertion_ids[]}]`；design/implementation节点以固定`source_ref`引用，节点ID和边ID唯一；不得复制原需求/用例正文；同名不是同ID |
+| `padf.test-run/v1` | `run_id, repository, source_revision, dirty_tree_digest|null, requirements_revision, test_definition_revision, strategy_ref, runner{name,version}, environment, command{argv,exit_code}, started_at, finished_at, ci_ref|null, raw_reports[{path,sha256}], tests[{result_id,selector,tc_ids,types[],layer,status,attempt,assertion_ids[],evidence_refs[],details}], tc_evidence[], coverage[], diagnostics[]`；状态仅`PASS/FAIL/SKIPPED/BLOCKED/NOT_RUN`，`types`与`layer`独立；coverage每项保留tool/version/metric/covered/total/include/exclude/source_revision/raw_ref，不平均异口径百分比 |
+
+`selector`保留完整框架身份：Python原nodeid（含参数），Java至少engine/class/method及参数或框架uniqueId；JUnit缺完整ID时用报告sha256+suite ancestry+classname+name+ordinal形成**报告局部身份**，不能凭basename/子串自动匹配TC。自动映射只接受manifest中精确的一对一selector对应；歧义必须报错等待显式映射。参数化调用各有result_id；同一次结果关联多TC仍只算一次执行。result_id在一个run唯一；同run重复导入是冲突，不能悄悄overwrite或当两次执行。重试通过`attempt`保留每次原事实，首失败可见；本轮保守以任一失败阻止完整通过，不实现“最终绿覆盖失败”策略。
+
+`source_revision`（被测实现）、`test_definition_revision`（用例/测试代码）、`requirements_revision`（需求/AC）分别匹配。一个git SHA不足以代替三者；无用例代码摘要或所需版本不匹配的结果可展示为历史事实，但不得进入当前覆盖/完整通过分子。脏树以manifest中实际摘要标明，不伪装commit运行；读取JSON不能证明记录是真实运行，原始runner和CI证据仍由QA/Reviewer核验。
+
+### 8.3 最小公共函数与CLI
+
+纯函数输入均不可变，返回新对象；验证统一返回`{valid:boolean, errors:[{code,path,message}], warnings:[]}`，不抛出不透明的首错丢失其余诊断。可预期坏输入产出诊断；CLI文件读取/子进程错误捕获为明确报告错误。
+
+```text
+validateTestingArchitecture(strategy) -> Validation
+validateTraceability(trace) -> Validation
+validateTestRun(run) -> Validation
+normalizeJUnit(parsedSuites, manifest) -> {run, diagnostics, valid}
+validateEvidence(trace, runs, targetVersions) -> Validation
+summarizeEngineering(trace, runs, targetVersions) -> Summary
+renderEngineeringHtml(summary) -> string
+```
+
+接口数据形状在本提案冻结如下（七个公共函数，不增通用扩展层）：
+
+```text
+RunManifest = 除 tests/diagnostics 外的 TestRun 必需元数据
+  + selector_map[{report_case_key, selector, tc_ids, types[], layer,
+                  assertion_ids[], evidence_refs[]}]
+  + tc_evidence[{tc_id,scope(NONE/PARTIAL/FULL),preconditions_verified:boolean,
+                 steps_verified:boolean,assertion_ids[],evidence_refs[]}]
+ParsedSuites = {suites:[{path:[string], declared_counts:{tests?,failures?,errors?,skipped?},
+  cases:[{report_case_key, classname, name, time_seconds?,
+          outcome(PASS/FAIL/SKIPPED), details, ordinal}]}], diagnostics:[]}
+TargetVersions = {repository, source_revision, dirty_tree_digest|null,
+  requirements_revision, test_definition_revision,
+  strategy_ref:{id,revision}, environment_id}
+```
+
+Python桥输出`ParsedSuites`，`report_case_key`是原始XML SHA256+suite path+case ordinal的精确串；manifest映射以该键匹配并提供原runner稳定selector，不能凭name推测。没有映射的case仍保留原事实及报告局部selector，`tc_ids=[]`/`types=[]`、`layer`由manifest默认层级给定，产生UNMAPPED警告，不能用于任何AC完整覆盖。manifest的`tc_evidence`只记录本次实际执行TC的完整性事实，原样进入run；缺失或无前置/步骤及全部必要断言证据时只能PARTIAL，不能由JUnit case PASS生成FULL。manifest另含`default_layer`与实际`environment.id`，与run环境一致；`assertion_ids`为实际证据声明并由QA核验，不能从空JUnit推定。`raw_reports`必须恰好对应实际输入文件SHA，runner退出码/时间均不可省略。Python桥只输出叶case，一份XML同一报告局部键重复为错误。
+
+例如某case映射`{report_case_key:"sha256:…/suiteA/0",selector:"tests/test_store.py::test_owner[alice]",tc_ids:["TC-1"],types:["functional"],layer:"integration",assertion_ids:["owns-record"],evidence_refs:["raw.xml#case-0"]}`，只提供该实际断言证据；它未涵盖TC其余步骤时仍为PARTIAL。
+
+`Traceability.nodes`只放design/implementation引用节点；requirements与test_cases本身就是可连节点，三集合ID全局唯一；每条`links.from/to`必须精确指向其一，relation为`refines/implements/tests`，方向分别是需求→设计、设计或需求→实现、TC→需求/设计/实现，拒绝不存在节点和反向关系。需求kind可为requirement/ac，feature_ids是项目已有稳定Feature身份引用（不在工具中重建Catalog）。
+
+`TargetVersions`精确限定一次摘要证据组；`source_revision/dirty_tree_digest`、两个定义版本、strategy id+revision、environment_id全部相同才可合并。不同环境/策略的run分组独立显示，禁止求并集凑全FULL；若调用者指定target而输入不符，`validateEvidence`列VERSION_MISMATCH/INCOMPATIBLE_GROUP，CLI退出2，保留历史诊断列表。未给target不自动选“最新”。同组同selector不同run仍保留历史失败，不能PASS覆盖；若失败已修，必须以新源码版本的新target重跑。
+
+`normalizeJUnit`只做格式及显式manifest关联，不接受未解析XML、不臆造批准/需求/coverage。`summarizeEngineering`必须先校验；非法输入输出`valid:false`及诊断，禁止给“全部通过”横幅；有效输入允许未充分验证、FAIL等结果。HTML函数只渲染标准摘要且转义全部动态文本、属性及失败详情，链接仅相对受控报告路径或`https:`，拒绝`javascript:/data:/file:`等协议；源码/CI HTTPS链接须固定版本。长错误正文可截断展示但原artifact保留。
+
+```text
+node scripts/engineering-report.mjs normalize --manifest run-manifest.json --junit results.xml --report-root artifacts --out normalized.json
+node scripts/engineering-report.mjs summary --trace trace.json --run normalized.json [--run another.json] --versions target-versions.json --report-root artifacts --out summary.json [--html summary.html]
+```
+
+固定参数解析拒绝未知/重复单值参数；无shell解释和项目命令执行。`--out/--html`限制报告根内，已有输出拒绝覆盖（调用者选择新run目录）。CLI退出码：0=有效结构且本命令无已知失败/证据错误；1=结构有效但runner退出非0或有FAIL/BLOCKED；2=CLI/解析/契约/版本/路径错误。SKIPPED/NOT_RUN会在摘要显式标为不充分，即使进程0也不代表功能完成。CI必须保留runner原退出状态，并在always步骤上传报告；报告步骤0不能覆盖runner失败。工具无OwnerAcceptance参数或写批准动作。
+
+### 8.4 聚合算法与失败语义
+
+1. 先校验唯一ID、引用存在和枚举；`required_tc_ids`不得空集自动全通过，空需求分母显示`N/A(no approved current scope)`。candidate独立列表，不进入批准当前需求分母；批准来源缺失为契约错误。
+2. 当前执行以`(run_id,result_id)`去重，关系以稳定边ID去重；重复键冲突是错误，不能通过Set静默隐藏。执行计数是唯一结果数；TC计数是唯一TC数；AC覆盖分母是唯一当前批准AC数，均不能按多对多边数累加。
+3. 确定准确三版本后，按每TC要求的前置/步骤/断言和证据完整性评价。执行PASS仅是已运行原事实；TC `FULL`必须明确覆盖全部必要断言/步骤且关联边标FULL、运行及原始证据有效。PARTIAL PASS可展示技术证据，不能升级FULL。测试关联到多个AC时分别核查该AC全部必需TC，不能把单一技术PASS分摊成完整AC。
+4. TC执行/验证状态分开保留。当前有效证据任一FAIL→FAIL；无FAIL但有必要BLOCKED→BLOCKED；全部必要范围有FULL有效PASS才给完整PASS；其余列SKIPPED或NOT_RUN并显示缺口（同时保留已执行的局部PASS）。所有原结果及数量仍可见，优先级不是丢弃其他事实的依据。
+5. AC只有全部必要TC完整通过且无未解决失败/阻塞才计完整验证；分别输出`designCoverage, automationCoverage, executionCoverage, partialPass, fullPass, gaps, candidateScope`。自动化是存在可定位测试，不等于已执行；执行覆盖分子仅实际有效PASS/FAIL结果，SKIPPED/BLOCKED/NOT_RUN另列，不冒充运行覆盖。
+6. `owner_acceptance`始终为外部事实`NOT_ASSESSED`或固定Owner来源的引用，绝不由测试计算。Feature摘要标“验证充分/不充分”和已知失败，不输出自动ACCEPTED/DONE。同一目标不同版本不混合；多次运行即使同版本也不能跨不同环境/策略凑齐不兼容的证据。
+
+JUnit解析接受`testsuites/testsuite`嵌套与`testsuite`根并递归保留ancestry，仅叶`testcase`生成结果；failure/error→FAIL，skipped→SKIPPED，其余仅在有效case及manifest运行证据下PASS。suite计数仅交叉核验，不能相加重复算子suite。无case、空文件、缺文件、错误XML、截断、suite计数矛盾、重复输入XML/重复case身份均生成可定位诊断并非0，不生成空绿run；有非0runner而无失败case也必须保留运行失败诊断，不能全PASS。
+
+XML读取最大10MiB、最多100000个case、最大suite深度64；超限报INPUT_LIMIT不解析部分当成功。解析前拒绝DOCTYPE/ENTITY（含编码变体；仅允许UTF-8/UTF-8 BOM输入），Python `xml.etree.ElementTree`不启用外部实体/XInclude，不进行网络/DTD读取，捕获ParseError。用固定Python可执行路径/argv和有界stdin/stdout/超时调用，不拼shell；桥不可用为BLOCKED/非0。诊断不回显密钥或整个XML。所有输入/输出artifact路径先`realpath`检查在`report-root`之内，拒绝绝对外部路径、`..`逃逸、symlink逃逸；不跟随不可信外链或打开源码中的任意路径。无数据库事务：每次运行独立目录，输出先同目录临时文件、完整写入后原子发布；并发同名拒绝，失败清理仅自己创建的临时文件。
+
+### 8.5 实测接缝与兼容执行要求
+
+本节与QA独立准备的`qa-work/TEST-CASES.md`（工作区外待Master归档）逐项对齐，未代QA执行。新增用例应验证公开行为，不只镜像实现；原始报告、标准JSON、摘要和失败详情可由同一入口回查。
+
+| 验证 | 实现者必须留下的可观察证据 |
+| --- | --- |
+| Python | 实际Python3.12.0隔离venv；pytest + sqlite3真实临时数据库（事务/跨owner隔离），unit与functional/integration正交；覆盖包含零命中文件和line/branch分母；先实际断言RED再GREEN，命令、退出码、每阶段文件摘要固定 |
+| Java | 实际JDK17编译；JUnit Jupiter console standalone1.11.4；真实临时目录写入/读取/隔离的filesystemIntegration及JaCoCo0.8.12 agent+cli line/branch统计；XML→标准JSON/RTM复用；不声称Maven、Spring或数据库集成已执行。jar来源/实际sha256在实现报告锁定 |
+| 高风险 | 合成权限/完整性规则：只有同owner可读写记录；未授权请求不改变记录，授权合法操作成功，失败事务保持原值。weakfix如“一律拒绝”必须被真实合法操作断言击穿，或只检caller不检record-owner被跨主体断言击穿；保存实际FAIL，修正后同独立探针PASS。QA探针及结论不由Coder代写 |
+| 不完整覆盖/安全 | unit绿但Functional NOT_RUN、PARTIAL映射、candidate、FAIL+PASS、SKIPPED、BLOCKED、错三版本、多对多、重复ID/参数化、未知TC、空/坏/嵌套JUnit、DTD/ENTITY、HTML注入、路径/symlink逃逸；分别核对非绿诊断及完整AC分子 |
+| 兼容 | 运行现有CI所列结构、CACF、v0.3全部入口、profile/terminology及diagram source检查；旧门禁字节/哈希对比baseline；既有输入无opt-in不增加字段要求；新模块/新tests加CI步骤，不把报告摘要接入G-01硬阻断 |
+
+Python/Java依赖由Master已准备的`python-env/`、`dependencies/`固定来源消费，不由本任务安装服务。具体可执行版本和jar hash必须实测，不从可读取文件推定测试已运行。Superpowers三方法按§5就地轻量引用；本轮只需代表性RED/GREEN/根因与完成核验记录，不为每次微循环新建Agent、报告、审批或commit。
+
+### 8.6 必要模块图与交付状态
+
+必要图为Architecture/Component、`doc-wide`、6节点：项目外部runner报告+显式manifest → 受限CLI/XML桥 → 规范化JSON → 校验/追溯聚合 → HTML/JSON阅读入口，需求/TC关系源输入聚合。图仅表达报告数据流，不画成自动测试/批准执行引擎；三版本、失败与缺口由边标签/说明保留。图语义源`engineering-report.model.json`与本节同版本；固定diagram-design根Skill SHA256已核验`1b30bb3c0da29a05e5b05c0a4510ce6f286a0d0f1da97b9aa6aaf03c92e98618`（对应lock commit）。图已按Master转达的Owner历史原话“批准 system 提案，采用默认风格”复用默认light及`examples/architecture-method/VISUAL-STYLE.md` tokens，未修改已安装Skill/Profile。实际HTML/模型/PNG为`engineering-report.{html,model.json,png}`，验证记录`diagram-validation.json`。锁定Skill self_check与六节点/五边一致性检查PASS；Master使用窄授权、独立临时profile实际Chrome156.0.8078.48 / Playwright1.62.1渲染，04:06:28Z宽viewport重跑PASS（零远程请求/页面错误/文字溢出/标签节点碰撞；390px页面无横向溢出且局部滚动）。实际名称字体为系统PingFang SC，未假称加载Geist。MA实际打开最终PNG核对六组件完整可见、五条方向与职责相符、无执行/批准含义；首次PNG因viewport裁切被拒绝，修正导出后复验。图生成/渲染/内容检查均PASS，仅验证设计资产，不验证产品测试。
+
+本MA只交设计草案：工具代码、三schema、新案例运行、旧回归、独立DESIGN review、Master依赖协调及Owner适用决定均未由本会话执行。若必需图未真实渲染，模块图状态NOT_RUN，正式Module Design仍不完成；Master可据草案继续已授权的设计补齐/审查，不由本节放行Coder。

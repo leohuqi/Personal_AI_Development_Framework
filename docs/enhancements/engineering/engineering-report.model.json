@@ -1,0 +1,94 @@
+{
+  "diagram_type": "Architecture/Component",
+  "purpose": "规范化报告组件边界与数据流，不执行测试或批准",
+  "authoritative_source_ref": "DESIGN.md §8, same delivery content hash recorded in Handoff",
+  "generator": "diagram-design",
+  "external_skill_sha": "1b30bb3c0da29a05e5b05c0a4510ce6f286a0d0f1da97b9aa6aaf03c92e98618",
+  "external_skill_commit": "11b08eade8049c441ed3df1895e3b527c26c0fbe",
+  "project_style_profile_ref": "examples/architecture-method/VISUAL-STYLE.md tokens; Master relayed prior Owner conversation: 批准 system 提案，采用默认风格",
+  "style_scope": "Reuse explicit Owner default choice for PADF framework; offline system font extension only; no installed skill/profile changes",
+  "html_path": "engineering-report.html",
+  "png_path": "engineering-report.png",
+  "render_test_status": "PASS",
+  "size": "doc-wide 1280x720",
+  "nodes": [
+    {
+      "id": "runner",
+      "responsibility": "项目测试报告",
+      "detail": [
+        "XML + manifest",
+        "外部 runner 实际执行"
+      ]
+    },
+    {
+      "id": "boundary",
+      "responsibility": "受限格式适配",
+      "detail": [
+        "CLI + XML bridge",
+        "路径 / XML 安全"
+      ]
+    },
+    {
+      "id": "normalized",
+      "responsibility": "标准运行事实",
+      "detail": [
+        "test-run JSON",
+        "三版本 / 五状态"
+      ]
+    },
+    {
+      "id": "aggregate",
+      "responsibility": "证据与追溯",
+      "detail": [
+        "engineering.mjs",
+        "FULL / PARTIAL / 缺口"
+      ]
+    },
+    {
+      "id": "report",
+      "responsibility": "质量阅读入口",
+      "detail": [
+        "JSON + HTML",
+        "原始证据可回查"
+      ]
+    },
+    {
+      "id": "trace",
+      "responsibility": "需求与用例关系",
+      "detail": [
+        "traceability JSON",
+        "批准身份 / 必要断言"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "runner",
+      "to": "boundary"
+    },
+    {
+      "id": "e2",
+      "from": "boundary",
+      "to": "normalized"
+    },
+    {
+      "id": "e3",
+      "from": "normalized",
+      "to": "aggregate"
+    },
+    {
+      "id": "e4",
+      "from": "aggregate",
+      "to": "report"
+    },
+    {
+      "id": "e5",
+      "from": "trace",
+      "to": "aggregate"
+    }
+  ],
+  "content_review": "MA actual view_image inspection after Master approved Chrome rerender: all six components and five directed edges visible; runner remains external, trace feeds aggregator, no test execution/approval arrow. First clipped PNG rejected; final wide-viewport PNG inspected.",
+  "cuts": "Public function fields/state/security details remain authoritative in DESIGN §8; no execution or approval arrows",
+  "render_evidence_ref": "diagram-validation.json (2026-10-27T04:06:28.763Z)"
+}
