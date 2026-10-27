@@ -1,19 +1,16 @@
 # 更新日志
 
-按版本记录 PADF 的主要能力、修复和接入变化，最新版本在前。正式发布以不可变 tag 和 GitHub Release 为准；日期采用 `published_at` 转换后的北京时间（Asia/Shanghai），不是 PR 合并时间。v0.3.7日期按本次预计发布日期准备，Release实际创建前该条目仅为发布准备；如实际日期不同，以Release为准并更正。各版本的完整发布说明、精确审查和验收证据继续保留在原始来源中。
+按版本记录 PADF 的主要能力、修复和接入变化，最新版本在前。正式发布以不可变 tag 和 GitHub Release 为准；日期采用 `published_at` 转换后的北京时间（Asia/Shanghai），不是 PR 合并时间。待发布版本的条目随发布准备，正式状态及日期以实际Release为准。各版本的完整发布说明、精确审查和验收证据继续保留在原始来源中。
 
 ## 未发布
 
-- 项目文档与追溯候选能力：集中维护通用标准、按需共享Skill和角色增量责任；Markdown小项目可直接采用，引用式RTM与来源/派生版本检查复用项目工具，不新增门户平台或批准流程。
-
-- 清理正式 Skill、通用规范、模板和门禁中的接入项目依赖；实际项目接入与评估文件移出当前框架，原始记录通过固定历史版本追溯。术语回归改用新编写的合成案例，数据库验证按接入项目实际引擎选择。
-
-待发布事项以未合并PR和Owner评审入口为准；v0.3.7的正式状态以GitHub Release为准。
+待发布事项以未合并PR和Owner评审入口为准；正式版本以GitHub Release为准。
 
 ## 版本总览
 
 | 版本 | 发布日期（北京时间） | 主题 | 发布提交 |
 | --- | --- | --- | --- |
+| [v0.3.8](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.8) | 2026-10-27 | 项目独立性、通用文档入口与引用式追溯 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.8) |
 | [v0.3.7](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.7) | 2026-10-27 | 工程方法与跨项目上下文边界 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.7) |
 | [v0.3.6](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.6) | 2026-10-26 | 可裁剪架构、术语治理与 Agent 接续 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.6) |
 | [v0.3.5](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.5) | 2026-10-24 | 小团队简化、概念 Mockup 与文档评审 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.5) |
@@ -25,6 +22,15 @@
 | [v0.2.0](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.2.0) | 2026-10-13 | 共享上下文与 Agent 通信（CACF） | [c2caac0a](https://github.com/leohuqi/Personal_AI_Development_Framework/commit/c2caac0a6eac220f65667b7fe7cd5e6943dbe807) |
 
 V0.1 是发布前的历史基线，见文末；仓库没有独立的 V0.1 tag 或 Release，不将其补记为正式发布。
+
+## v0.3.8 — 2026-10-27
+
+- **项目独立性：**清理正式Skill、标准、契约、工作流、模板和门禁中的具体项目依赖；7份实际接入/评估资料移出当前树，通过固定历史版本追溯。技术要求按接入项目实际栈确定，术语演练采用新编写的合成案例。
+- **文档与追溯：**集中维护通用文档标准，新增按需共享Skill；默认Lite，复用原README、Catalog、规格、TC/Run与报告，支持引用式多对多和双向查证，不重算业务验收。
+- **持续维护与来源：**现有角色只补本次文档影响；来源修订、观察时间和生成时间分开，派生页先检查过期再重建，历史批准不迁移到新版本。
+- **验证：**两个合成场景、独立文件阅读与实际隔离维护、精确版本独立审查及现有CI；发现的局部实现证据范围、关系导航和历史v1定位问题已修正。不以这些结果宣称真实产品或真人效率验收。
+
+[版本说明与接入/回退](docs/releases/v0.3.8.md)；来源为[PR #31](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/31)、[PR #32](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/32)及[Owner评审入口](https://github.com/leohuqi/Personal_AI_Development_Framework/issues/14)。发布不会自动升级接入项目。
 
 ## v0.3.7 — 2026-10-27
 

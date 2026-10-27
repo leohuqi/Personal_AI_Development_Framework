@@ -1,6 +1,6 @@
 # 个人 AI 开发框架（PADF）
 
-**正式版本以 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases) 为准。** [v0.3.7 版本说明](docs/releases/v0.3.7.md)完善通用工程方法，并明确当前任务与参考项目的边界；正式发布记录见[v0.3.7 Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.7)。
+**正式版本以 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases) 为准。** [v0.3.8 版本说明](docs/releases/v0.3.8.md)介绍项目独立性清理、通用文档入口与引用式追溯；正式发布记录见[v0.3.8 Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.8)。
 
 [完整更新历史](CHANGELOG.md)汇总各正式版本及 V0.1 历史基线；发布后同步维护，详细证据保留在各版本说明和 Release 中。
 
@@ -183,6 +183,6 @@ node tests/v0.3/verify-expense-pilot.mjs
 
 只读评估器不认证远端权限、不执行操作或提供服务器强制拦截；本地验证：`node tests/v0.3/run-preflight-tests.mjs`。G-01 已经独立 PR、Review 和 Owner 验收，与角色成果优化一并纳入 v0.3.3；后续 Release 仍须单独授权。
 
-## 项目文档与追溯（待审）
+## 项目文档与追溯（v0.3.8）
 
 [通用文档标准](standards/documentation/README.md)提供按阅读目的组织的统一入口、Catalog导航、引用式RTM、版本/快照及随交付维护方法。默认Lite，已有README与项目工具即可接入，不强制Linear或门户服务；固定采用版本，从当前切片开始。需要整理时由Master按需调用[project-documentation-curator](.agents/skills/project-documentation-curator/SKILL.md)共享能力，不新增角色或前置阶段。兼容范围与验证见[合成演练](tests/documentation/README.md)。
