@@ -139,6 +139,8 @@ node tests/v0.3/run-concept-mockup-tests.mjs
 
 ## 验证
 
+本轮候选[工程测试与交付标准](standards/engineering/README.md)统一测试策略、Functional/层级、轻量TDD/调试/完成核验、多对多追溯和跨语言报告；七角色复用共享内容。项目自主选栈，旧项目增量接入，原门禁/Owner权限保留；[设计与验证](docs/enhancements/engineering/DESIGN.md)及[真实合成示例](examples/engineering/README.md)供审阅，不代表已发布新版本。
+
 克隆仓库后可运行无需第三方依赖的结构和回归检查：
 
 ```bash

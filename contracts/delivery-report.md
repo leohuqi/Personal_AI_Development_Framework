@@ -45,7 +45,7 @@ Do not infer that a visual prototype, simulated stage evaluation or designer sel
 - Known risks, technical debt and deferred work:
 
 ## Test evidence (QA)
-| Acceptance case | Expected | Actual | Status (PASS/FAIL/BLOCKED/NOT RUN) | Environment / evidence URL |
+| Acceptance case | Expected | Actual | Status (PASS/FAIL/SKIPPED/BLOCKED/NOT_RUN) | Environment / evidence URL |
 | --- | --- | --- | --- | --- |
 | AC-1 | | | NOT RUN | |
 
@@ -55,6 +55,8 @@ Do not infer that a visual prototype, simulated stage evaluation or designer sel
 - Isolated PostgreSQL migration/real-data proof if applicable:
 - Explicitly skipped/unavailable checks and reasons:
 - Defects with reproducible steps / assigned issues:
+
+适用的工程摘要按[报告契约](test-reporting.md)引用一份现有报告：唯一测试数/五状态，line/branch各自分母，批准AC设计/自动化/执行/完整验证及PARTIAL缺口，三版本/环境/策略，原TC、测试源码、逐项结果/失败、Coverage和CI入口。Designed/Automated/Executed/Passed/AC verified与Owner accepted分别报告，Unit全绿不代表Feature验收；候选需求单列。复用已有CI/报告，不手工复制执行结果。适用TDD的代表性RED/GREEN、调试复现/根因/回归与当前完成核验只给准确引用及限项，不给历史代码补造过程。
 
 ## Independent Review
 - Decision: PENDING / APPROVE / APPROVE WITH CONDITIONS / REQUEST CHANGES; blockers / requested action first.

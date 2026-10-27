@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:padf:engineering:traceability:v1",
+  "title": "Requirements and Test Traceability",
+  "type": "object",
+  "properties": {
+    "schema_version": {"const": "padf.traceability/v1"},
+    "context_id": {"type": "string", "minLength": 1},
+    "trace_id": {"type": "string", "minLength": 1},
+    "requirements_revision": {"type": "string", "minLength": 1},
+    "test_definition_revision": {"type": "string", "minLength": 1},
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "feature_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "minItems": 1},
+          "kind": {"enum": ["requirement", "ac"]},
+          "approval": {"enum": ["candidate", "approved"]},
+          "approval_ref": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "path": {"type": "string", "minLength": 1},
+                  "url": {"type": "string", "minLength": 1},
+                  "revision": {"type": "string", "minLength": 1},
+                  "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+                },
+                "required": ["revision"],
+                "anyOf": [{"required": ["path"]}, {"required": ["url"]}]
+              },
+              {"type": "null"}
+            ]
+          },
+          "source_ref": {
+            "type": "object",
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "url": {"type": "string", "minLength": 1},
+              "revision": {"type": "string", "minLength": 1},
+              "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+            },
+            "required": ["revision"],
+            "anyOf": [{"required": ["path"]}, {"required": ["url"]}]
+          },
+          "required_tc_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+        },
+        "required": ["id", "feature_ids", "kind", "approval", "approval_ref", "source_ref", "required_tc_ids"],
+        "allOf": [
+          {
+            "if": {"properties": {"approval": {"const": "approved"}}},
+            "then": {
+              "properties": {
+                "approval_ref": {
+                  "type": "object",
+                  "properties": {
+                    "path": {"type": "string", "minLength": 1},
+                    "url": {"type": "string", "minLength": 1},
+                    "revision": {"type": "string", "minLength": 1},
+                    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+                  },
+                  "required": ["revision"],
+                  "anyOf": [{"required": ["path"]}, {"required": ["url"]}]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "test_cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "source_ref": {
+            "type": "object",
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "url": {"type": "string", "minLength": 1},
+              "revision": {"type": "string", "minLength": 1},
+              "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+            },
+            "required": ["revision"],
+            "anyOf": [{"required": ["path"]}, {"required": ["url"]}]
+          },
+          "types": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "minItems": 1},
+          "layer": {"enum": ["unit", "component", "api", "integration", "e2e"]},
+          "selector": {"type": "string", "minLength": 1},
+          "required_assertions": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true, "minItems": 1},
+          "preconditions_ref": {
+            "type": "object",
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "url": {"type": "string", "minLength": 1},
+              "revision": {"type": "string", "minLength": 1},
+              "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+            },
+            "required": ["revision"],
+            "anyOf": [{"required": ["path"]}, {"required": ["url"]}]
+          },
+          "steps_ref": {
+            "type": "object",
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "url": {"type": "string", "minLength": 1},
+              "revision": {"type": "string", "minLength": 1},
+              "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+            },
+            "required": ["revision"],
+            "anyOf": [{"required": ["path"]}, {"required": ["url"]}]
+          }
+        },
+        "required": ["id", "source_ref", "types", "layer", "required_assertions", "preconditions_ref", "steps_ref"]
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "kind": {"enum": ["design", "implementation"]},
+          "source_ref": {
+            "type": "object",
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "url": {"type": "string", "minLength": 1},
+              "revision": {"type": "string", "minLength": 1},
+              "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+            },
+            "required": ["revision"],
+            "anyOf": [{"required": ["path"]}, {"required": ["url"]}]
+          }
+        },
+        "required": ["id", "kind", "source_ref"]
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "from": {"type": "string", "minLength": 1},
+          "to": {"type": "string", "minLength": 1},
+          "relation": {"enum": ["refines", "implements", "tests"]},
+          "evidence_scope": {"enum": ["NONE", "PARTIAL", "FULL"]},
+          "required_assertion_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+        },
+        "required": ["id", "from", "to", "relation", "evidence_scope", "required_assertion_ids"]
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "context_id",
+    "trace_id",
+    "requirements_revision",
+    "test_definition_revision",
+    "requirements",
+    "test_cases",
+    "nodes",
+    "links"
+  ]
+}

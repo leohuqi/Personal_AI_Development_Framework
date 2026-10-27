@@ -2,7 +2,9 @@
 
 责任：QA Tester。来源：High Level/实施级规格与AC、批准系统/UI、Task Contract。用Markdown表格起步，规模大时可用同字段CSV/测试管理工具；稳定TC-ID可关联多次运行，不为每次运行复制用例。
 
-| TC-ID | Feature / AC-ID | 场景/风险/层级 | 前置条件/测试数据与隔离 | 步骤/操作/输入 | 预期结果（可观察断言） | 优先级/自动化引用 |
+| TC-ID | Feature / AC-ID及版本 | 类型 / 层级 / 风险 | 前置条件/测试数据与隔离 | 步骤/操作/输入 | 预期结果（可观察断言/稳定ID） | 优先级/精确自动化selector引用 |
 | --- | --- | --- | --- | --- | --- | --- |
 
 覆盖本次核心任务及重要正常/异常、权限、边界、恢复/回归；按风险选择层级。无法测量的预期先回对应设计角色，不自行补业务规则。测试计划不是执行证据；未跑的用例不标PASS。执行记录用[Test Results](qa-test-results.md)。
+
+Functional是类型，可在Unit/Component/API/Integration/E2E不同层级验证；Non-functional按风险采用。需求形成时先做必要场景，当前切片才细化步骤，未来不穷举。关联见[RTM](../contracts/requirements-traceability.md)，多对多引用不复制正文/步骤；候选与批准分开，不要求每个Unit人工填全链。

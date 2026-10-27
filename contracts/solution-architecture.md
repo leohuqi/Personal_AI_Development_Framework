@@ -49,6 +49,8 @@ Master 接收高层规格、技术评估和功能内在关系，负责 milestone
 
 ## 身份、产物与证据兼容
 
+新系统或涉及测试技术架构变化时，主方案包含[Testing Architecture & Quality Strategy](testing-architecture.md)，明确十项策略、选择依据和适用范围；既有批准策略只固定引用并补差异。项目自主选择语言/框架与成熟报告格式，不强加pytest或部署报告服务。策略与模块、测试数据/隐私、CI、coverage分母、TDD/独立验证风险一致，按[模板](../templates/testing-architecture.md)同文维护即可，不新建一套批准体系。
+
 - 保留 `context_id`、不可变 Feature ID(s)、版本化 baseline ref、状态 PROPOSED/COMPLETED/APPROVED 和真实 Owner approval。上游高层规格用 `product_spec_ref` 固定 PA 来源；`feature_spec_ref` 仍表示 Module 实施级规格，在其完成后供下游引用，已有任务仅提供有效获批 `feature_spec_ref` 的路径保持兼容。不得为消除输入循环而伪造尚未完成的详细规格或批准。完成不等于批准。
 - 保留现有产物类型：`solution-architecture`（连贯逻辑/技术方案）、`technology-stack`（技术决策）、`application-code-structure`（应用级结构）、`architecture-diagram`（支持图）。可在一个主文档中组织内容，通过[架构设计包](architecture-design.md)清单定位，不要求为每一项新建文件或新 schema。
 - 必需的系统/技术边界图和适用的部署、集成、数据图使用[锁定 diagram-design](../integrations/diagram-design.md)，绑定权威技术源、Skill SHA、项目 Profile 与真实渲染/一致性证据。图不是 SQL/API/行为的权威源；缺少安装、版本匹配或渲染证据标记 BLOCKED/NOT RUN。

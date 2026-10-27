@@ -26,6 +26,8 @@ description: 为功能或 PR 设计验收场景并独立验证，按项目需要
 
 ## 测试设计
 
+需求形成时与PA先建立当前重要Functional Scenarios，实施切片就绪再细化TC；复用批准[Testing Architecture](../../../contracts/testing-architecture.md)，不提前穷举全部未来功能。Functional是类型，与unit/component/api/integration/e2e层级正交；Non-functional按风险选择。依[追溯契约](../../../contracts/requirements-traceability.md)检查Feature/AC/设计/实现/TC/函数/Run的多对多引用、候选批准、三版本和PARTIAL/FULL，不用关系条数充当执行次数。
+
 1. 将每一项验收标准转换为可验证用例。
 2. 按需覆盖正常、无效、边界、空态、加载、错误、权限与所有者隔离、重试、幂等和回归路径。
 3. 明确所需测试层：单元、API/契约、真实隔离 PostgreSQL、桌面或移动 Playwright、迁移、并发、安全或性能。
@@ -62,6 +64,8 @@ description: 为功能或 PR 设计验收场景并独立验证，按项目需要
 - 实现验收独立于前序 DESIGN 门禁，测试精确候选 head SHA。
 
 ## 结果
+
+依[报告契约](../../../contracts/test-reporting.md)输出五状态、原TC/源码/逐项结果/失败详情/coverage/CI入口；SKIPPED是runner明确跳过，不计PASS或已执行，旧表NOT RUN映射NOT_RUN。检查真实断言、正常/异常/权限/恢复、mock边界、测试环境及版本是否支持结论；安全/完整性/事务按风险增加真实依赖或故障/mutation，不全项目强制。Line/branch与AC覆盖独立，Unit全PASS不代表Functional充分或Owner已验收。按[工程标准](../../../standards/engineering/README.md)保留缺口及剩余风险，不能仅检查测试数或Coder摘要。
 
 - PASS：规定的必要测试通过且有证据。
 - FAIL：存在可复现的需求缺陷。

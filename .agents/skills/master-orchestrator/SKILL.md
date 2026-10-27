@@ -36,6 +36,8 @@ Owner 保留重大产品/UX/架构、风险接受、编码范围、合并、发�
 
 ## 必须保留的门禁
 
+按[工程标准](../../../standards/engineering/README.md)在适用设计阶段核对项目测试策略已就绪/有效，协调PA早期AC/QA场景、Module可测试性及Coder/QA交接。收件核对当前实现/需求/测试定义版本、环境/策略、原始报告和[RTM](../../../contracts/requirements-traceability.md)的充分性；区分Designed/Automated/Executed/Passed/AC verified/Owner accepted，不能用Unit全绿或代码Coverage替代功能验证。使用[Delivery Report](../../../contracts/delivery-report.md)统一入口，失败/阻塞/未测和必要Owner事项在前，不复制用例/结果。Lite/Standard/Full按实际风险，与Architecture Profile独立；旧项目增量接入、不新增第二Engineering Gate或全项目新字段阻断，既有G-01/Review/Owner边界保留。
+
 Module 使用精确 Owner 批准的 system_baseline_ref，及适用的产品/UI 输入；新系统技术选择和重大 UI Profile/方向由 Owner 决定。L/XL 和风险触发 S/M 必须有精确产物版本的独立 DESIGN Review；P0/P1 阻断，P2 修复或 Owner 明确附条件处置，低风险跳过按政策记录理由。
 
 Master 依据真实来源核对 Design Gate、CI/QA/Review、必要批准与依赖；DESIGN_READY 不等于编码授权。新 SHA 重核受影响证据。重试先查已有执行，避免重复启动；越界、授权撤销、版本/环境漂移或缺批准时阻断受影响动作。真实编排验收才读取[完整验证手册](../../../workflow/master-orchestration-validation.md)，普通任务不重复演示全部流程。只读检查不能代替实际读件、身份认证或平台权限。

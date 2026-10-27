@@ -16,6 +16,8 @@
 
 ## 各角色共同的停止标准
 
+工程收件沿用[共享标准](../standards/engineering/README.md)：PA提供稳定目标/规则/AC/场景，SA确定适用测试策略，MA细化可测试性，Coder提供实际适用TDD/调试/完成核验，QA提供独立TC和分层执行，Reviewer评价测试/证据质量，Master整合当前版本与缺口。主成果引用[测试架构](testing-architecture.md)、[RTM](requirements-traceability.md)和[报告](test-reporting.md)，不复制全套规范。测试已设计/自动化/执行/通过、AC充分验证及Owner验收分别判断，代码Coverage不替AC覆盖；旧项目按当前变更接入，不因历史缺字段自动失败。
+
 当前验收所需行为、接口/边界、必要失败处理和待决项已清楚，接收方无需猜测即可继续时停止细化。新增功能、抽象、基础设施和文档没有当前依据时删除或暂缓；不按章节/图表/用例数量验收。PA 不扩未来功能树，SA 不预建平台，Module 不穷举类，UI 不先铺全站，Coder 不夹带重构，QA 不堆重复用例，Reviewer 不强推个人偏好，Context 不复制台账，Master 不为流程增加角色。
 
 项目文档、日常沟通及评审同样按[最小充分规则](../workflow/role-work-method.md#文档评审与沟通同样最小充分)收件：结论/请求是否在前、必要信息是否清楚、重复内容是否改为来源链接；不为缩短而省略关键缺口或要求增建一份合规报告。

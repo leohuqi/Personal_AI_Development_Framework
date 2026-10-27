@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:padf:engineering:test-run:v1",
+  "title": "Cross-language Test Run",
+  "type": "object",
+  "properties": {
+    "schema_version": {"const": "padf.test-run/v1"},
+    "context_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "repository": {"type": "string", "minLength": 1},
+    "source_revision": {"type": "string", "minLength": 1},
+    "dirty_tree_digest": {"anyOf": [{"type": "string", "pattern": "^[a-f0-9]{64}$"}, {"type": "null"}]},
+    "requirements_revision": {"type": "string", "minLength": 1},
+    "test_definition_revision": {"type": "string", "minLength": 1},
+    "strategy_ref": {
+      "type": "object",
+      "properties": {"id": {"type": "string", "minLength": 1}, "revision": {"type": "string", "minLength": 1}},
+      "required": ["id", "revision"]
+    },
+    "runner": {
+      "type": "object",
+      "properties": {"name": {"type": "string", "minLength": 1}, "version": {"type": "string", "minLength": 1}},
+      "required": ["name", "version"]
+    },
+    "environment": {"type": "object", "properties": {"id": {"type": "string", "minLength": 1}}, "required": ["id"]},
+    "command": {
+      "type": "object",
+      "properties": {
+        "argv": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1},
+        "exit_code": {"type": "integer"}
+      },
+      "required": ["argv", "exit_code"]
+    },
+    "started_at": {"type": "string", "format": "date-time"},
+    "finished_at": {"type": "string", "format": "date-time"},
+    "ci_ref": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {"type": "string", "minLength": 1},
+            {
+              "type": "object",
+              "properties": {
+                "path": {"type": "string", "minLength": 1},
+                "url": {"type": "string", "minLength": 1},
+                "revision": {"type": "string", "minLength": 1},
+                "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+              },
+              "required": ["revision"],
+              "anyOf": [{"required": ["path"]}, {"required": ["url"]}]
+            }
+          ]
+        },
+        {"type": "null"}
+      ]
+    },
+    "raw_reports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+        "required": ["path", "sha256"]
+      },
+      "minItems": 1
+    },
+    "tests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "result_id": {"type": "string", "minLength": 1},
+          "selector": {"type": "string", "minLength": 1},
+          "tc_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "types": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "layer": {"enum": ["unit", "component", "api", "integration", "e2e"]},
+          "status": {"enum": ["PASS", "FAIL", "SKIPPED", "BLOCKED", "NOT_RUN"]},
+          "attempt": {"type": "integer", "minimum": 1},
+          "assertion_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "evidence_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "details": {"type": "string"}
+        },
+        "required": [
+          "result_id",
+          "selector",
+          "tc_ids",
+          "types",
+          "layer",
+          "status",
+          "attempt",
+          "assertion_ids",
+          "evidence_refs",
+          "details"
+        ]
+      },
+      "minItems": 1
+    },
+    "tc_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tc_id": {"type": "string", "minLength": 1},
+          "scope": {"enum": ["NONE", "PARTIAL", "FULL"]},
+          "preconditions_verified": {"type": "boolean"},
+          "steps_verified": {"type": "boolean"},
+          "assertion_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "evidence_refs": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+        },
+        "required": ["tc_id", "scope", "preconditions_verified", "steps_verified", "assertion_ids", "evidence_refs"]
+      }
+    },
+    "coverage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tool": {"type": "string", "minLength": 1},
+          "version": {"type": "string", "minLength": 1},
+          "metric": {"type": "string", "minLength": 1},
+          "covered": {"type": "number", "minimum": 0},
+          "total": {"type": "number", "minimum": 0},
+          "include": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "exclude": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "source_revision": {"type": "string", "minLength": 1},
+          "raw_ref": {
+            "anyOf": [
+              {"type": "string", "minLength": 1},
+              {
+                "type": "object",
+                "properties": {
+                  "path": {"type": "string", "minLength": 1},
+                  "url": {"type": "string", "minLength": 1},
+                  "revision": {"type": "string", "minLength": 1},
+                  "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+                },
+                "required": ["revision"],
+                "anyOf": [{"required": ["path"]}, {"required": ["url"]}]
+              }
+            ]
+          }
+        },
+        "required": ["tool", "version", "metric", "covered", "total", "include", "exclude", "source_revision", "raw_ref"]
+      }
+    },
+    "diagnostics": {"type": "array", "items": {"type": "object"}}
+  },
+  "required": [
+    "schema_version",
+    "context_id",
+    "run_id",
+    "repository",
+    "source_revision",
+    "dirty_tree_digest",
+    "requirements_revision",
+    "test_definition_revision",
+    "strategy_ref",
+    "runner",
+    "environment",
+    "command",
+    "started_at",
+    "finished_at",
+    "ci_ref",
+    "raw_reports",
+    "tests",
+    "tc_evidence",
+    "coverage",
+    "diagnostics"
+  ]
+}

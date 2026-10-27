@@ -1,0 +1,168 @@
+{
+  "schema_version": "padf.testing-architecture/v1",
+  "context_id": "PADF-ENGINEERING-FORMAL",
+  "strategy_id": "python-strategy",
+  "project": "PADF synthetic python engineering fixture",
+  "source_ref": {
+    "path": "docs/enhancements/engineering/DESIGN.md",
+    "revision": "sha256:7e00ee5fceb46be628a667cc86761d8a2be7a56f10811ea8df775046009007c5",
+    "sha256": "7e00ee5fceb46be628a667cc86761d8a2be7a56f10811ea8df775046009007c5"
+  },
+  "status": "PROPOSED",
+  "approval_ref": null,
+  "stack": [
+    {
+      "name": "Python",
+      "version": "3.12",
+      "basis_ref": {
+        "path": "examples/engineering/python/requirements.txt",
+        "revision": "sha256:6869900287dc384f62ffa65b1393a787d51c8edc02a85aa09c53d1fccce588ad",
+        "sha256": "6869900287dc384f62ffa65b1393a787d51c8edc02a85aa09c53d1fccce588ad"
+      }
+    },
+    {
+      "name": "pytest",
+      "version": "8.4.2",
+      "basis_ref": {
+        "path": "examples/engineering/python/requirements.txt",
+        "revision": "sha256:6869900287dc384f62ffa65b1393a787d51c8edc02a85aa09c53d1fccce588ad",
+        "sha256": "6869900287dc384f62ffa65b1393a787d51c8edc02a85aa09c53d1fccce588ad"
+      }
+    },
+    {
+      "name": "pytest-cov",
+      "version": "6.2.1",
+      "basis_ref": {
+        "path": "examples/engineering/python/requirements.txt",
+        "revision": "sha256:6869900287dc384f62ffa65b1393a787d51c8edc02a85aa09c53d1fccce588ad",
+        "sha256": "6869900287dc384f62ffa65b1393a787d51c8edc02a85aa09c53d1fccce588ad"
+      }
+    },
+    {
+      "name": "coverage.py",
+      "version": "7.10.7",
+      "basis_ref": {
+        "path": "examples/engineering/python/requirements.txt",
+        "revision": "sha256:6869900287dc384f62ffa65b1393a787d51c8edc02a85aa09c53d1fccce588ad",
+        "sha256": "6869900287dc384f62ffa65b1393a787d51c8edc02a85aa09c53d1fccce588ad"
+      }
+    },
+    {
+      "name": "SQLite",
+      "version": "runtime sqlite3.sqlite_version recorded per run",
+      "basis_ref": {
+        "path": "examples/engineering/python/requirements.txt",
+        "revision": "sha256:6869900287dc384f62ffa65b1393a787d51c8edc02a85aa09c53d1fccce588ad",
+        "sha256": "6869900287dc384f62ffa65b1393a787d51c8edc02a85aa09c53d1fccce588ad"
+      }
+    }
+  ],
+  "profile": "Standard",
+  "test_types": [
+    "functional",
+    "non-functional: security and data integrity"
+  ],
+  "test_layers": [
+    "unit",
+    "integration"
+  ],
+  "boundaries": [
+    {
+      "subject": "unit: nonnegative value rule; does not prove complete functional AC",
+      "real_dependencies": [
+        "production value validation"
+      ],
+      "mock_boundary": "No mocks; assert independent concrete expected values.",
+      "isolation": "pytest parameter cases"
+    },
+    {
+      "subject": "functional/integration: authorized update/read and rejected cross-owner write; injected transaction failure rollback and subsequent recovery",
+      "real_dependencies": [
+        "SQLite database",
+        "local filesystem"
+      ],
+      "mock_boundary": "No database/filesystem mocks. Python fail_after_write is bounded fault injection, not process kill.",
+      "isolation": "pytest tmp_path: new database per test; cleanup only fixture-owned temporary data"
+    }
+  ],
+  "commands": [
+    {
+      "id": "fixed-pilots",
+      "argv": [
+        "python",
+        "examples/engineering/run-pilots.py",
+        "/absolute/new-artifacts",
+        "/absolute/dependencies"
+      ],
+      "purpose": "From repository root, using the pinned Python environment. Replace both absolute paths with an absent output directory and verified dependency directory. Fixed script runs both stacks, captures actual commands/times/exit/environment; weakfix expected failure is a control, not a passing product test."
+    },
+    {
+      "id": "prepare-reports",
+      "argv": [
+        "python",
+        "examples/engineering/prepare-reports.py",
+        "/absolute/new-artifacts"
+      ],
+      "purpose": "After fixed pilots, collect actual raw results into manifests/RTM; never substitutes for execution."
+    }
+  ],
+  "ci_ref": {
+    "path": "examples/engineering/run-pilots.py",
+    "revision": "sha256:f056c52e75c68a11c3148dc3c9cfab030aa7aee5ac7831df8f8c7d55f1fc3830",
+    "sha256": "f056c52e75c68a11c3148dc3c9cfab030aa7aee5ac7831df8f8c7d55f1fc3830"
+  },
+  "coverage_policy": {
+    "metrics": [
+      "line",
+      "branch"
+    ],
+    "include": [
+      "examples/engineering/python/store.py",
+      "examples/engineering/python/untouched.py"
+    ],
+    "exclude": [
+      "test_*.py (test code)",
+      "weakfix.py (deliberately inadequate negative control, not target implementation)",
+      "coverage-generated reports"
+    ],
+    "denominator": "coverage.py --cov=. --cov-branch from the python fixture directory, using .coveragerc source=. and omit=test_*.py,weakfix.py. Target production modules store.py and uncalled untouched.py remain in denominator; report measured line/branch totals separately.",
+    "risk_basis": "No arbitrary percentage gate. Keep zero-hit code visible; exercise legitimate updates and rejected cross-owner changes, real SQLite rollback/recovery. Code coverage never implies AC coverage."
+  },
+  "reporting": {
+    "contract_ref": {
+      "path": "contracts/test-reporting.md",
+      "revision": "sha256:f2bd14986f61f85fce7f286b7d5f69cd802e8d18bf6932d23bd7c73f60a852b2",
+      "sha256": "f2bd14986f61f85fce7f286b7d5f69cd802e8d18bf6932d23bd7c73f60a852b2"
+    },
+    "runner_ref": {
+      "path": "examples/engineering/run-pilots.py",
+      "revision": "sha256:f056c52e75c68a11c3148dc3c9cfab030aa7aee5ac7831df8f8c7d55f1fc3830",
+      "sha256": "f056c52e75c68a11c3148dc3c9cfab030aa7aee5ac7831df8f8c7d55f1fc3830"
+    },
+    "collector_ref": {
+      "path": "examples/engineering/prepare-reports.py",
+      "revision": "sha256:07ce4514a184ea6e18cf731d2c34f92f243bf99f03d959b70f9024b5ebe7f223",
+      "sha256": "07ce4514a184ea6e18cf731d2c34f92f243bf99f03d959b70f9024b5ebe7f223"
+    },
+    "raw_outputs": "python.xml, python-coverage.xml, python-coverage-html/, python.log, python-receipt.json, weakfix.xml/log/receipt",
+    "policy": "Output names are prospective under the caller-selected artifact directory, not claims that artifacts already exist. Preserve exact source/test/strategy content revisions, selectors, environment, exits, failure details and raw evidence. Same-target collection only; PARTIAL technical results do not make full functional TC/AC PASS or Owner acceptance.",
+    "scope": "No API/component/E2E assertions in this fixture. No Spring/Maven/.NET/Go validation claim.",
+    "coverage_config_ref": {
+      "path": "examples/engineering/python/.coveragerc",
+      "revision": "sha256:d183a3bf5895660d11122fd0cbe7a49543448873511f047d1ecc9db6d6664f9c",
+      "sha256": "d183a3bf5895660d11122fd0cbe7a49543448873511f047d1ecc9db6d6664f9c"
+    }
+  },
+  "tdd_scope": {
+    "applicability": "New authorized fixture behavior or behavioral defect uses RED from expected missing behavior, minimal GREEN, relevant regression; preserve actual receipts and code/test revisions. Do not manufacture historical RED.",
+    "historical_status": "NOT_VERIFIED until actual representative RED/GREEN evidence is linked; strategy itself is not evidence.",
+    "non_applicable": "Prose/config changes need appropriate structural checks, not invented behavior tests; fixed Java fixture alone is not a claim of Java TDD."
+  },
+  "data_privacy": {
+    "data": "Only synthetic alice/bob/r1 and numeric values; isolated temporary database/files.",
+    "forbidden": "No PKMS business code/data, NAS, production databases, private files, credentials, daily browser profiles, merge/deploy/release actions.",
+    "retention": "Keep only fixture-owned sanitized reports/logs; cleanup only own temporary paths. Never upload database files or secrets."
+  },
+  "selection_basis": "Reuse installed pinned pytest and sqlite3 standard library: minimal cost and real SQLite boundary; unittest is possible but would discard existing parametrized fixture/report setup. Final framework choice remains project SA responsibility.",
+  "ci_policy": "Synthetic experiment scope only, authorized by Issue29#6433745571 and bounded START_CODING evidence #6433602312; PROPOSED strategy is not Owner production architecture approval. CI should invoke the same fixed commands with Python3.12/JDK17 and verified dependencies, propagate unexpected runner failures and upload available diagnostics even on failure. No CI success claimed by this file; actual CI URL/status must come from run receipt. weakfix expected nonzero control must remain explicit."
+}
