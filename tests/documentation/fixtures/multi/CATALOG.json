@@ -1,0 +1,23 @@
+[
+  {
+    "id": "EX-F101",
+    "name": "创建工作项",
+    "milestone": "Iteration A",
+    "state": "进行中",
+    "ref": "SPEC.md#create-item"
+  },
+  {
+    "id": "EX-F102",
+    "name": "分配负责人",
+    "milestone": "Iteration A",
+    "state": "待实施",
+    "ref": "SPEC.md#assign-owner"
+  },
+  {
+    "id": "EX-F103",
+    "name": "保存筛选条件",
+    "milestone": "Iteration B",
+    "state": "未来",
+    "ref": null
+  }
+]

@@ -62,3 +62,7 @@ Mock/fixture服务于隔离，不能冒充真实数据库/网络/设备行为。
 Lite复用策略、做针对性验证；Standard明确当前AC、必要Functional TC、适用TDD或有理由的等效方式和报告；Full按实际风险增加真实依赖、并发/恢复或故障验证。工程深度与Architecture Profile独立，不免除已触发的安全、授权、QA或Review。
 
 旧项目在批准采用版本后，从当前切片映射已有资料；缺历史字段记未采集/NOT_VERIFIED，不自动FAIL，不补造TDD。无需换报告平台、迁移全部测试或重新审批未变内容。原Design Gate、G-01及Owner权限保持；未来如确需改变机器门禁，另按原政策说明兼容、迁移和回退。
+
+## 文档是交付的一部分
+
+依[文档标准](../documentation/README.md)增量维护权威来源、Catalog导航、RTM引用与实际质量结论。生成视图在重建前检查已提交结果及来源版本；静态Markdown不强制构建。角色只核对当前影响，真实测试结果仍以原TC/Run/QA报告为准。

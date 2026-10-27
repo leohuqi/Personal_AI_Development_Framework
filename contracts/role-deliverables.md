@@ -35,3 +35,7 @@
 ## 架构与术语的收件补充
 
 按[架构方法](../standards/architecture/README.md)检查本次范围的Overview/系统/模块/实施契约是否能按问题定位，视图是否表达真实层级，图是否忠于稳定模型，当前完整规则是否只有一个权威位置；不以全模板/全模块或图数验收。PA负责业务词义，SA/MA负责技术概念，Reviewer在原Review中结合[术语规范](../standards/terminology/README.md)核对语言、术语和语义保持；Master整合冲突，不冒充专业结论。Coder/QA/Context只取必要资料，不承担全词表或全包重生成。
+
+## 文档与导航的增量责任
+
+按[文档标准](../standards/documentation/README.md#每次交付只维护受影响内容)收件：PA维护需求/Catalog，SA/MA维护设计契约，Coder说明文档影响，QA固定TC/Run与被测版本，Master协调入口与局部状态观测，Reviewer检查一致性/过期/项目隔离。沿用原角色，不新增文档管理员。

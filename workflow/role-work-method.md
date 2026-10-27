@@ -75,3 +75,7 @@
 [NN/g 竞品评估](https://www.nngroup.com/articles/competitive-usability-evaluations/)区分专家比较与真实用户测试，并围绕关键任务支持设计选择；本框架不把 Agent 资料分析称为用户研究。
 
 [arc42 模块视图](https://docs.arc42.org/section-5/)与[运行视图](https://docs.arc42.org/section-6/)分别帮助解释职责依赖与代表性协作场景；[Google 审查实践](https://google.github.io/eng-practices/review/reviewer/looking-for.html)提供整体设计、功能适用性与不必要复杂度的审查依据。这些是参考实践，不是项目已完成实测的证据。
+
+## 文档随交付维护
+
+按[文档标准](../standards/documentation/README.md)只更新当前变更涉及的权威正文、功能关系、导航和质量引用；无影响简述理由。阅读入口先讲用途和结论，当前决定与历史分开。默认Lite，可复用已有README/文档工具，按需调用共享整理Skill，不让每个角色预加载门户资料。

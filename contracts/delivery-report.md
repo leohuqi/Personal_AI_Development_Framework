@@ -86,3 +86,7 @@ Never represent CI green as independent business acceptance; never imply a merge
 - Master orchestration outcome: ROLE_SIMULATION / METADATA_ELIGIBLE_HUMAN_RELAY / METADATA_ELIGIBLE_RUNTIME_DISPATCH / VERIFIED_HUMAN_RELAY / VERIFIED_RUNTIME_DISPATCH / BLOCKED, with **independent external evidence and its limitations**. Never promote metadata-only into verified.
 - Quality sheets: SA-Q1–5, MA-Q1–5, UI-Q1–5 from [Owner Evaluation](skill-delivery-evaluation.md), each tied to its Skill/dispatch/execution/artifact SHA, Owner score/evidence/decision.
 - Independent design review and Owner coding authorization remain separate. A successful orchestration process does **not** imply good Skill output.
+
+## 适用的文档影响
+
+按[文档标准](../standards/documentation/README.md)引用本次更新的权威正文、Feature关联/导航及版本检查；无影响简述理由。外部状态带来源和实际观察时间，派生页另记生成时间。只报受影响部分，不复制完整库或重复QA结果。

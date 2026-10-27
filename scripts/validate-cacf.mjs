@@ -10,6 +10,10 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const required = [
+  "standards/documentation/README.md",
+  ".agents/skills/project-documentation-curator/SKILL.md",
+  "templates/documentation-entry.md",
+  "tests/documentation/README.md",
   "standards/architecture/README.md",
   "standards/architecture/sources.md",
   "standards/terminology/README.md",

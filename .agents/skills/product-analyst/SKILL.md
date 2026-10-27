@@ -35,3 +35,5 @@ description: 定义产品问题、用户场景和高层功能行为，开展面�
 ## 完成与边界
 
 交付本次产品建议、High Level Specs/Catalog、关键研究来源及真实待决项；Master 按[角色成果标准](../../../contracts/role-deliverables.md)收件。不得虚构用户证据、将提案写成已批准、自批架构/UX 或风险接受、进入未授权业务编码/合并/部署。必要输入/批准缺失时说明具体缺口和 NEEDS_REFINEMENT/BLOCKED；完成不等于 DESIGN_READY 或编码授权。
+
+文档影响：需求变化时维护原高层规格/Catalog及稳定引用；导航从原Catalog取功能，不另造一份可编辑需求库。按[共用文档标准](../../../standards/documentation/README.md)仅处理当前变更；不新增独立维护阶段。

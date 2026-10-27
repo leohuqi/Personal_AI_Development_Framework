@@ -70,3 +70,7 @@ Handoff 给出问题→路径/章节→版本→状态，及未知/停止点。�
 ## 自动建议的调用
 
 `node scripts/recommend-architecture.mjs assessment.json` 调用[只读选择器](../../lib/architecture-profile.mjs)。输入沿用当前任务分类、scope、impacts与risk_flags，并补本轮复杂度、基线状态、受影响运行单元/依赖数量及来源冲突线索；缺证据时保守建议Standard，严重复杂度建议Full。数量阈值是可说明的默认启发，不是新协议或所有项目的硬性标准。输出理由、建议视图及原路由的Review要求；Master核对实际风险和范围后使用，不能把建议冒充设计就绪或授权。
+
+## 项目统一入口
+
+系统概览、视图、模块设计、接口/数据和ADR按阅读用途分组，保持原目录和权威正文；项目导航与Feature关系沿[文档标准](../documentation/README.md)增量维护，架构图不替代完整技术约束。
