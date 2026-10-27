@@ -1,6 +1,6 @@
 # 个人 AI 开发框架（PADF）
 
-**当前版本：v0.3.7（V0.3 系列）。** 本版结合PKMS已有实践完善工程方法，并明确当前任务与参考项目的边界。参见[v0.3.7 版本说明](docs/releases/v0.3.7.md)与[GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.7)。
+**正式版本以 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases) 为准。** [v0.3.7 版本说明](docs/releases/v0.3.7.md)结合PKMS已有实践完善工程方法，并明确当前任务与参考项目的边界；正式发布记录见[v0.3.7 Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.7)。
 
 [完整更新历史](CHANGELOG.md)汇总各正式版本及 V0.1 历史基线；发布后同步维护，详细证据保留在各版本说明和 Release 中。
 
