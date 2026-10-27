@@ -33,7 +33,7 @@ ui_profile_approval_ref: "<verified-owner-decision-permalink>"
 
 门禁是只读元数据检查器，无法认证远程批准内容。Master/Reviewer 须核验真实批准、权限、范围和被批准版本。协议 schema 仍为 `padf.ui-profile/v1`，不因新增门禁字段改名。
 
-## Sample schema fragment (illustrative, no actual PQA approval)
+## Sample schema fragment (synthetic, not project approval)
 ```yaml
 schema_version: padf.ui-profile/v1
 project_id: EXAMPLE

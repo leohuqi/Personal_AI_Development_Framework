@@ -103,7 +103,7 @@ check('T06','D4/E','Selected entries, references and aliases are independent cop
   assert.deepEqual(selectTerms(glossary,['Engineering']),before.terms.filter(t=>t.domain==='Engineering'));
 });
 check('T07','D3/G6','Correct consumer, programming closure and specific ML drift are retained',()=>{
-  for(const [id,domains] of [['REAL-CONSUMER',['Engineering']],['SYN-CLOSURE',['Engineering']],['SYN-DRIFT',['AI']]]){
+  for(const [id,domains] of [['EXAMPLE-CONSUMER',['Engineering']],['SYN-CLOSURE',['Engineering']],['SYN-DRIFT',['AI']]]){
     const c=cases.find(x=>x.case_id===id);assert(c,'Missing contextual fixture '+id);
     assert.deepEqual(hints(c.before,domains).hints,[],id+': correct professional language must not be a lexical ban');
     assert.equal(c.before,c.after,id+': source fixture should preserve the correct professional phrase');
@@ -160,13 +160,13 @@ check('T13','D5/G6','Unchanged tokens do not prove original intent, permissions 
     const out=protect(before,after);assert.equal(out.protection_status,'NO_DETECTED_CHANGE');assert.deepEqual(out.changed,[]);
   }
 });
-check('T14','D3/D5/G6','All 17 bounded real/synthetic cases retain advisory and unverified semantics',()=>{
+check('T14','D3/D5/G6','All 17 bounded synthetic cases retain advisory and unverified semantics',()=>{
   assert.equal(cases.length,17,'This run is scoped to the provided 17-case version');
   const before=clone(cases);
   // Mapping expresses QA's selected field context, independent of expected_action.
   const selectedDomains={
-    'REAL-READ':['Architecture'],'REAL-PATH':['Architecture','PADF_Governance'],
-    'REAL-C4':['Architecture'],'REAL-VERSION':['Architecture'],'REAL-CONSUMER':['Engineering'],
+    'EXAMPLE-READ':['Architecture'],'EXAMPLE-PATH':['Architecture','PADF_Governance'],
+    'EXAMPLE-C4':['Architecture'],'EXAMPLE-VERSION':['Architecture'],'EXAMPLE-CONSUMER':['Engineering'],
     'SYN-CLOSURE':['Engineering'],'SYN-DOC-CLOSURE':['Engineering'],'SYN-DRIFT':['AI'],
     'SYN-C4-DOCKER':['Architecture'],'SYN-AGENT-MODEL':['AI','PADF_Governance'],
     'SYN-PROTECTED':['Engineering'],'SYN-STATE':['PADF_Governance'],'SYN-ROLE':['AI'],
@@ -204,6 +204,6 @@ check('T16','Read-only API','No shared state or caller-protected arrays change b
 
 const failed=tests.filter(t=>t.status==='FAIL').length;
 console.log(JSON.stringify({suite:'PADF vNext independent advisory terminology and protected-text behavior',
-  source_kind:'REAL_SOURCE_AND_SYNTHETIC_BOUNDED_CASES',semantic_verification:'NOT_VERIFIED',
+  source_kind:'SYNTHETIC_BOUNDED_CASES',semantic_verification:'NOT_VERIFIED',
   status:failed?'FAIL':'PASS',count:tests.length,passed:tests.length-failed,failed,tests,contextualObservations},null,2));
 if(failed)process.exitCode=1;

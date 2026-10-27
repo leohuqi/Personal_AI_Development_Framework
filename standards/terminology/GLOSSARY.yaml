@@ -974,7 +974,7 @@
       "term_kind": "general",
       "definition_basis": "framework_definition",
       "zh_translation_status": "padf_recommended",
-      "verified_scope": "PADF为区分开发协作与产品能力的通用工作定义；不复用PKMS草稿权限或实现状态。"
+      "verified_scope": "PADF为区分开发协作与产品能力的通用工作定义；不继承接入项目的权限或实现状态。"
     },
     {
       "term_id": "PADF-TERM-AI-004",
@@ -1293,7 +1293,7 @@
       "term_kind": "general",
       "definition_basis": "framework_definition",
       "zh_translation_status": "padf_recommended",
-      "verified_scope": "通用工作定义；无统一行业Schema，未将PKMS原文证据实体、fragment_id或权限规则纳为PADF要求。"
+      "verified_scope": "通用工作定义；无统一行业Schema，不规定接入项目的证据实体、标识符或权限规则。"
     },
     {
       "term_id": "PADF-TERM-AI-019",

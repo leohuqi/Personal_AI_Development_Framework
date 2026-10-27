@@ -4,10 +4,10 @@
   "purpose": "有界语境与保护回归输入；expected_action为专家期望，不是词面自动替换表。",
   "cases": [
     {
-      "case_id": "REAL-READ",
-      "origin": "REAL_SOURCE",
-      "before": "本轮只验证架构文档的分层与可消费性。",
-      "after": "本轮只检查架构文档的分层是否清楚、是否便于各角色查阅并使用。",
+      "case_id": "EXAMPLE-READ",
+      "origin": "SYNTHETIC",
+      "before": "架构资料的可消费性需要核对。",
+      "after": "需要核对架构资料是否便于查阅和使用。",
       "expected_action": "SUGGEST",
       "concept": "文档可读/可用",
       "reason": "将普通阅读动作说清楚，不改验证对象或声称系统测试通过。",
@@ -16,21 +16,13 @@
       ],
       "protected_tokens": [],
       "meaning_preserved": true,
-      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。",
-      "source": {
-        "repository": "leohuqi/Personal-Knowledge-Library",
-        "commit": "f22286701db4f4946922972eb116ef893beef430",
-        "path": "docs/architecture/pilot-v0.1/modules/document-management/DESIGN.md",
-        "line": 17,
-        "url": "https://github.com/leohuqi/Personal-Knowledge-Library/blob/f22286701db4f4946922972eb116ef893beef430/docs/architecture/pilot-v0.1/modules/document-management/DESIGN.md#L17",
-        "quote_scope": "所引行中的精确短句/短语；未复制整段项目约束。"
-      }
+      "limitations": "框架编写的合成案例；不是项目发现或用户研究。"
     },
     {
-      "case_id": "REAL-PATH",
-      "origin": "REAL_SOURCE",
-      "before": "Coder 的最短消费路径：",
-      "after": "Coder 的最短阅读路径：",
+      "case_id": "EXAMPLE-PATH",
+      "origin": "SYNTHETIC",
+      "before": "Coder 请按规范消费路径查阅接口定义。",
+      "after": "Coder 请按阅读路径查阅接口定义。",
       "expected_action": "SUGGEST",
       "concept": "文档阅读入口",
       "reason": "保留读者、路径和其余前置条件；只对短语提出语言候选。",
@@ -42,44 +34,28 @@
         "Coder"
       ],
       "meaning_preserved": true,
-      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。",
-      "source": {
-        "repository": "leohuqi/Personal-Knowledge-Library",
-        "commit": "f22286701db4f4946922972eb116ef893beef430",
-        "path": "docs/architecture/pilot-v0.1/modules/document-management/DESIGN.md",
-        "line": 148,
-        "url": "https://github.com/leohuqi/Personal-Knowledge-Library/blob/f22286701db4f4946922972eb116ef893beef430/docs/architecture/pilot-v0.1/modules/document-management/DESIGN.md#L148",
-        "quote_scope": "所引行中的精确短句/短语；未复制整段项目约束。"
-      }
+      "limitations": "框架编写的合成案例；不是项目发现或用户研究。"
     },
     {
-      "case_id": "REAL-C4",
-      "origin": "REAL_SOURCE",
-      "before": "这张图展示独立运行单元。",
-      "after": "这张图展示应用和数据存储及其通信关系。",
-      "expected_action": "SUGGEST",
+      "case_id": "EXAMPLE-C4",
+      "origin": "SYNTHETIC",
+      "before": "本例用 C4 Container 展示所有代码类。",
+      "after": "本例用 C4 Container 展示应用和数据存储。",
+      "expected_action": "REJECT_CONCEPT_CONFLATION",
       "concept": "C4 Container",
-      "reason": "上下文是Container图，应用与存储都应包括；不改变节点、关系或部署。",
+      "reason": "指出层级混淆；技术纠错可能改变原意，需要单独确认。",
       "reference": [
         "C4-CONTAINER"
       ],
       "protected_tokens": [],
-      "meaning_preserved": true,
-      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。",
-      "source": {
-        "repository": "leohuqi/Personal-Knowledge-Library",
-        "commit": "f22286701db4f4946922972eb116ef893beef430",
-        "path": "docs/architecture/README.md",
-        "line": 11,
-        "url": "https://github.com/leohuqi/Personal-Knowledge-Library/blob/f22286701db4f4946922972eb116ef893beef430/docs/architecture/README.md#L11",
-        "quote_scope": "所引行中的精确短句/短语；未复制整段项目约束。"
-      }
+      "meaning_preserved": false,
+      "limitations": "框架编写的合成案例；不是项目发现或用户研究。"
     },
     {
-      "case_id": "REAL-VERSION",
-      "origin": "REAL_SOURCE",
-      "before": "若发现源/模型漂移、",
-      "after": "若发现来源文档或模型版本与固定输入不一致、",
+      "case_id": "EXAMPLE-VERSION",
+      "origin": "SYNTHETIC",
+      "before": "若配置文档出现版本漂移，请核对固定版本。",
+      "after": "若配置文档与固定版本不一致，请核对固定版本。",
       "expected_action": "SUGGEST",
       "concept": "固定输入版本不一致",
       "reason": "这里指文档/架构模型版本，不是ML漂移；只改短语，原停止条件和后续职责保留。",
@@ -89,40 +65,22 @@
       ],
       "protected_tokens": [],
       "meaning_preserved": true,
-      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。",
-      "source": {
-        "repository": "leohuqi/Personal-Knowledge-Library",
-        "commit": "f22286701db4f4946922972eb116ef893beef430",
-        "path": "docs/architecture/modules/document-management/README.md",
-        "line": 125,
-        "url": "https://github.com/leohuqi/Personal-Knowledge-Library/blob/f22286701db4f4946922972eb116ef893beef430/docs/architecture/modules/document-management/README.md#L125",
-        "quote_scope": "所引行中的精确短句/短语；未复制整段项目约束。"
-      }
+      "limitations": "框架编写的合成案例；不是项目发现或用户研究。"
     },
     {
-      "case_id": "REAL-CONSUMER",
-      "origin": "REAL_SOURCE",
-      "before": "消费者保存 inbox 去重",
-      "after": "消费者保存 inbox 去重",
+      "case_id": "EXAMPLE-CONSUMER",
+      "origin": "SYNTHETIC",
+      "before": "消息消费者按事件标识去重。",
+      "after": "消息消费者按事件标识去重。",
       "expected_action": "KEEP",
       "concept": "消息消费者",
       "reason": "实际事件投递语境，用词准确；不改消费变更与标记的事务约束。",
       "reference": [
         "OUTBOX"
       ],
-      "protected_tokens": [
-        "inbox"
-      ],
+      "protected_tokens": [],
       "meaning_preserved": true,
-      "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。",
-      "source": {
-        "repository": "leohuqi/Personal-Knowledge-Library",
-        "commit": "f22286701db4f4946922972eb116ef893beef430",
-        "path": "docs/architecture/modules/document-management/CONTRACT.md",
-        "line": 53,
-        "url": "https://github.com/leohuqi/Personal-Knowledge-Library/blob/f22286701db4f4946922972eb116ef893beef430/docs/architecture/modules/document-management/CONTRACT.md#L53",
-        "quote_scope": "所引行中的精确短句/短语；未复制整段项目约束。"
-      }
+      "limitations": "框架编写的合成案例；不是项目发现或用户研究。"
     },
     {
       "case_id": "SYN-CLOSURE",
@@ -324,14 +282,5 @@
       "meaning_preserved": false,
       "limitations": "专家语境判断；未做真实用户理解测试，不是自动语义证明。"
     }
-  ],
-  "not_observed": {
-    "candidates": [
-      "规范消费闭包",
-      "源接缝",
-      "来源漂移"
-    ],
-    "scope": "PKMS main f222867 的九个当前架构页面：README/OVERVIEW/SOURCE-MAP、views/container+deployment、contracts/README+COMMON-API、modules/document-management/README+CONTRACT。",
-    "result": "本轮精确短语搜索均未发现；不能认定全仓不存在。SYN-DOC-CLOSURE是合成负例。"
-  }
+  ]
 }

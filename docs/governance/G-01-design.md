@@ -4,7 +4,7 @@
 
 基线固定 PADF v0.3.2@15866db0cf09c5ac5d44b5bdb5c62e311c553ee2，当前main相同。已读取Master/Independent Reviewer Skills、Approval Policy、Task Contract、Design Gate、Dispatch契约与orchestration-evidence。已有设计就绪、分派范围和四阶段真实执行检查；分派评估器明确不允许从ANALYZE/REVIEW等权限继承编码/合并。现有工作流要求独立审查与Owner验收，却没有统一的合并/发布/部署/Done前操作预检或执行前快照复核。
 
-PQA历史记录证明问题是流程控制：PR7合并前CI成功、真实独立审查NOT RUN，合并后LEO-157曾短暂Done。此事实不能直接推导业务代码有错或需要回滚，详见[历史例外](PQA-PR7-process-exception.md)。本任务不修改PQA或Linear状态，也不把事后审查重写为合并前通过。
+PQA历史记录证明问题是流程控制：PR7合并前CI成功、真实独立审查NOT RUN，合并后LEO-157曾短暂Done。此事实不能直接推导业务代码有错或需要回滚，详见[历史例外](https://github.com/leohuqi/Personal_AI_Development_Framework/blob/v0.3.7/docs/governance/PQA-PR7-process-exception.md)。本任务不修改PQA或Linear状态，也不把事后审查重写为合并前通过。
 
 ## 风险与最小方案
 

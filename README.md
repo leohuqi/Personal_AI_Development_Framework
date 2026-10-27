@@ -1,6 +1,6 @@
 # 个人 AI 开发框架（PADF）
 
-**正式版本以 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases) 为准。** [v0.3.7 版本说明](docs/releases/v0.3.7.md)结合PKMS已有实践完善工程方法，并明确当前任务与参考项目的边界；正式发布记录见[v0.3.7 Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.7)。
+**正式版本以 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases) 为准。** [v0.3.7 版本说明](docs/releases/v0.3.7.md)完善通用工程方法，并明确当前任务与参考项目的边界；正式发布记录见[v0.3.7 Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.7)。
 
 [完整更新历史](CHANGELOG.md)汇总各正式版本及 V0.1 历史基线；发布后同步维护，详细证据保留在各版本说明和 Release 中。
 
@@ -70,7 +70,6 @@ Linear Done / 下一项人工授权的功能
 - [检查点与恢复契约](contracts/context-checkpoint.md)
 - [Agent Handoff 契约](contracts/agent-handoff.md)
 - [上下文治理](governance/context-governance.md)
-- [PQA 接入示例](examples/pqa/CONTEXT-COLLABORATION.md)
 
 **能力边界：** V0.2 提供 Skill、消息契约及由人工或实际运行时启动的流程；不随仓库启用 A2A 服务、消息代理、常驻调度器、新数据库、自动分派或实时通知。真实集成与送达依赖已连接工具及获授权任务。
 
@@ -135,11 +134,10 @@ node tests/v0.3/run-concept-mockup-tests.mjs
 - [审批策略](governance/approval-policy.md)与[上下文加载策略](governance/context-loading.md)
 - [角色路由](workflow/agent-routing.md)
 - [PR 模板](templates/pull_request_template.md)
-- [PQA 接入示例](examples/pqa/ADOPTION.md)
 
 ## 验证
 
-v0.3.7的[工程方法规范](standards/engineering/README.md)依据[PKMS已有应用效果评估](docs/enhancements/engineering/README.md)调整七角色、测试策略、渐进追溯及报告，补充任务/参考项目隔离。项目复用自身工具，方法收益与证据不足分别说明；采用版本由各项目决定。
+v0.3.7的[工程方法规范](standards/engineering/README.md)明确七角色职责、测试策略、渐进追溯及报告，补充任务/参考项目隔离。项目复用自身工具，方法收益与证据不足分别说明；采用版本由各项目决定。
 
 克隆仓库后可运行无需第三方依赖的结构和回归检查：
 
@@ -175,12 +173,12 @@ node tests/v0.3/verify-expense-pilot.mjs
 6. 重要跨角色沟通保留类型化消息与永久链接，跨会话/角色前建立检查点，恢复时核对实时来源。
 7. Skill 不提供循环调度服务，Linear Free 不会持续分派 Codex 任务；此流程无需自建常驻服务。
 
-框架维护不自动修改其他项目。PQA 的领域规则与既有 PR 边界位于 [PQA 专属规则](examples/pqa/AGENTS.md)，接入或更改须另获授权。
+项目专属规则、实际配置和接入记录维护在项目自己的仓库。PADF仅提供通用方法、契约和合成示例；历史试点资料见[历史入口](docs/history/project-pilots.md)，新项目接入无需读取。
 
 **不在 V0.3 范围内：** Feature Planner/Designer、Iteration Manager 专属 Skill，以及任何并行执行运行时。
 
 ## G-01：Master主动治理（v0.3.3）
 
-操作前预检覆盖合并、编码、发布、生产部署、Owner验收和Issue Done；Owner请求不隐式豁免必要门禁。见[设计与现状分析](docs/governance/G-01-design.md)、[契约](contracts/action-preflight.md)、[操作手册/平台限制](workflow/action-preflight.md)、[历史流程例外](docs/governance/PQA-PR7-process-exception.md)及[验收模板](templates/action-preflight.md)。
+操作前预检覆盖合并、编码、发布、生产部署、Owner验收和Issue Done；Owner请求不隐式豁免必要门禁。见[设计与现状分析](docs/governance/G-01-design.md)、[契约](contracts/action-preflight.md)、[操作手册/平台限制](workflow/action-preflight.md)及[验收模板](templates/action-preflight.md)。
 
 只读评估器不认证远端权限、不执行操作或提供服务器强制拦截；本地验证：`node tests/v0.3/run-preflight-tests.mjs`。G-01 已经独立 PR、Review 和 Owner 验收，与角色成果优化一并纳入 v0.3.3；后续 Release 仍须单独授权。

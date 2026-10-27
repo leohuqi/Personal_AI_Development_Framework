@@ -15,4 +15,4 @@ PLAYWRIGHT_MODULE=<existing-playwright-module> CHROME_EXECUTABLE=<approved-brows
 
 build.py从model.json取节点/关系/消息顺序，从layout.json取坐标，产HTML与manifest。SVG须由锁定Skill导出，PNG须由真实浏览器截图；不要跳过浏览器而填PASS。render.cjs阻断非本地请求，记录字体/边界/遮挡/窄屏局部滚动、模型方向/分支/顺序，验证独立SVG文字并导出1280×720 PNG。实看和内容语义仍由执行者另记录，不能由脚本自动宣称完成。
 
-本次真实浏览器启动和审批故障见[RESULTS](../evidence/RESULTS.md)。本例不借用PKMS渲染结果，也不把源码静态检查等同浏览器或视觉验收。
+本次真实浏览器启动和审批故障见[RESULTS](../evidence/RESULTS.md)。本例不借用其他项目的渲染结果，也不把源码静态检查等同浏览器或视觉验收。
