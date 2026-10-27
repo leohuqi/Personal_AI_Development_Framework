@@ -10,4 +10,4 @@
 
 原始三Skill及TDD引用的`writing-good-tests.md`已核验。后者作为断言设计参考；其指向writing-skills不自动安装/采用。systematic-debugging中的root-cause-tracing/condition-based-waiting等为可选资料，不作为PADF额外依赖。未采用brainstorming/planning、Agent调度、其他Review/执行hooks；不引入自动删除历史实现、额外异常批准或第四次修复自动转交Owner等原工作流限制。
 
-唯一操作语义维护在[工程标准](../standards/engineering/README.md#tdd调试与完成核验)，Coder/QA/Reviewer按原角色交接；本集成不增加新的Skill调用或审批阶段。实际试验只证明列出的合成案例，不能据资料阅读宣称已改善所有项目或已有历史TDD。
+唯一操作语义维护在[工程标准](../standards/engineering/README.md#tdd调试与完成核验)，Coder/QA/Reviewer按原角色交接；本集成不增加新的Skill调用或审批阶段。本轮只读评估PKMS已有实践：其新增报告工具TDD有记录，产品开发的持续效果尚未证明；不据资料阅读宣称已有历史TDD或所有项目均已改善。

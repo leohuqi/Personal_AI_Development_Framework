@@ -11,6 +11,12 @@ description: 围绕整体问题和目标推进已授权工作，组织产品定�
 
 Owner 保留重大产品/UX/架构、风险接受、编码范围、合并、发布、生产和最终验收决定。Master 可推荐、退修、安排已授权工作，不替专家出具结果或替 Owner 批准。
 
+## 先确定当前工作对象
+
+在原任务的范围/输入中分清：修改哪个仓库或产物、哪些项目只读参考、允许哪些动作，以及怎样证明成果有用。不另建台账。框架方法升级、项目工程能力建设、产品功能实施按[工程标准](../../../standards/engineering/README.md#先分清本次任务)分别处理；读取应用的测试命令、批准或Handoff不自动授权执行它，也不把参考项目任务接成当前任务。
+
+收到新澄清先更新任务范围和已有分派；旧计划、会话记忆、参考资料或旧CI/Review不覆盖最新意图。若下一步从规范评估变成写程序、搭测试工程、跑参考项目或写另一仓库，先核对当前明确范围；不是则停止该动作，返回本次成果所需的最小工作。必要新范围沿用原审批，不增加固定审批轮次。
+
 ## 用一份任务推进
 
 1. 先用短段落说明目标、当前事实/缺口和可观察成果，按[最小 Task Contract](../../../contracts/task-contract.md)写范围、输入、交付、负责人、授权和停止条件。
@@ -34,9 +40,11 @@ Owner 保留重大产品/UX/架构、风险接受、编码范围、合并、发�
 - 每增加角色、流程、文档或技术方案，先判断是否解决当前交付缺口；能复用、合并或延后就裁剪。交付足以实施/验证、必要决定清楚后停止细化，不能用持续规划代替交付。
 - 要求 PA 删除无当前任务依据的功能，SA 说明复杂机制为何必要，其他角色仅补受影响内容。不能用“简化”隐藏产品行为、关键风险、独立审查或真实证据。
 
-## 必须保留的门禁
+## 工程方法的应用评估
 
-按[工程标准](../../../standards/engineering/README.md)在适用设计阶段核对项目测试策略已就绪/有效，协调PA早期AC/QA场景、Module可测试性及Coder/QA交接。收件核对当前实现/需求/测试定义版本、环境/策略、原始报告和[RTM](../../../contracts/requirements-traceability.md)的充分性；区分Designed/Automated/Executed/Passed/AC verified/Owner accepted，不能用Unit全绿或代码Coverage替代功能验证。使用[Delivery Report](../../../contracts/delivery-report.md)统一入口，失败/阻塞/未测和必要Owner事项在前，不复制用例/结果。Lite/Standard/Full按实际风险，与Architecture Profile独立；旧项目增量接入、不新增第二Engineering Gate或全项目新字段阻断，既有G-01/Review/Owner边界保留。
+对当前项目实施按[工程标准](../../../standards/engineering/README.md)协调测试策略、当前AC/TC与准确版本证据，区分技术通过、完整AC与Owner验收。评估框架方法时读取已有项目记录，说明观察到的改善、问题、成本和未证实项；不默认启动参考项目Coder/QA、重跑业务测试或造通用工具，不以测试/CI数量当效果证明。统一[交付入口](../../../contracts/delivery-report.md)先给结论与必要决定，完整资料按需链接。
+
+## 必须保留的门禁
 
 Module 使用精确 Owner 批准的 system_baseline_ref，及适用的产品/UI 输入；新系统技术选择和重大 UI Profile/方向由 Owner 决定。L/XL 和风险触发 S/M 必须有精确产物版本的独立 DESIGN Review；P0/P1 阻断，P2 修复或 Owner 明确附条件处置，低风险跳过按政策记录理由。
 

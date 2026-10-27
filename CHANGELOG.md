@@ -4,7 +4,7 @@
 
 ## 未发布
 
-- [候选工程能力增强 PR #30](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/30)：测试架构、渐进功能测试、多对多追溯、TDD/调试/完成核验及跨语言质量报告。复用七角色和现有门禁，旧项目增量接入；实际测试/Review以PR证据为准。尚未验收、合并或发布，未指定正式版本。
+- [候选方法调整 PR #30](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/30)：只读评估PKMS工程实践，调整七角色/测试策略/追溯与报告，补充任务对象和参考项目隔离。撤回本候选早期新增的通用工具、合成工程及专用CI，保留原有框架门禁；未验收、合并或发布，正式版本未指定。
 
 ## 版本总览
 

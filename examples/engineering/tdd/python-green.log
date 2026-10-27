@@ -1,8 +1,0 @@
-........                                                                 [100%]
-- generated xml file: /private/tmp/padf-engineering-qWyo8r/coder-evidence/python-green.xml -
-================================ tests coverage ================================
-_______________ coverage: platform darwin, python 3.12.0-final-0 _______________
-
-Coverage HTML written to dir /private/tmp/padf-engineering-qWyo8r/coder-evidence/python-coverage-html
-Coverage XML written to file /private/tmp/padf-engineering-qWyo8r/coder-evidence/python-coverage.xml
-8 passed in 0.04s

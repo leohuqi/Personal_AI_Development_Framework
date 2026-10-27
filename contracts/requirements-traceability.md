@@ -1,12 +1,11 @@
-# 需求与测试追溯
+# 需求与测试追溯约定
 
-Schema：`padf.traceability/v1`；[JSON Schema](engineering/traceability.schema.json)。仅关联已有权威对象，不重建Requirements Discovery或测试管理系统。方法见[工程标准](../standards/engineering/README.md#追溯与报告)。
+用已有稳定ID与引用连接`Feature → Requirement/AC → Design → Implementation → TC/Test Function → Run/Result`，支持多对多。可使用项目已有Markdown、JSON、测试元数据或报告工具，不新增PADF机器Schema、专用软件或全量填表要求。
 
-- `trace_id, context_id, requirements_revision, test_definition_revision`固定本次关系集和定义版本。
-- `requirements[]`引用稳定`id, feature_ids, kind(requirement/ac), approval(candidate/approved), approval_ref, source_ref, required_tc_ids`；批准AC完整分母按唯一AC计算，候选独立展示，禁止据测试PASS推导批准。
-- `test_cases[]`含`id, source_ref, types[], layer, selector?, required_assertions[], preconditions_ref, steps_ref`；步骤/正文留原TC。Functional是类型，层级独立。自动化selector须完整精确，不用名称子串猜测。
-- `nodes[]`仅design/implementation固定源引用；节点与需求/TC的ID全局唯一。`links[]`含唯一`id, from, to, relation, evidence_scope(NONE/PARTIAL/FULL), required_assertion_ids`。方向为refines：需求→设计；implements：设计或需求→实现；tests：TC→需求/设计/实现；引用不存在或反向均为错误。Feature沿用Catalog ID，不在此复制Catalog。
+- 需求、步骤、测试代码和运行结果各保留原权威来源；RTM记录关联及必要覆盖说明，不复制正文和手工PASS。
+- QA从当前AC找必要TC/证据，也能从测试函数反查规则/不变量；同一TC可由多个函数共同证明，但不能将不相容版本/环境的片段随意拼为完整结果。
+- 单个技术测试可支持多个AC的PARTIAL证据。只有当前AC全部必要步骤/断言有充分证据才算完整验证；空用例、关系数量或大量Unit PASS不能推导完成。
+- Feature、需求、AC、TC、测试结果和关系边各按其对象解释，不能混为计数。候选/已批准、已设计/自动化/执行/通过、完整AC与Owner验收分别保留。
+- 被测实现、需求与测试定义/代码的版本及环境须能反查；旧报告可以读，但复用到当前结论要明确未变依据和适用范围。合并不自动证明验收或当前业务覆盖。
 
-多对多关系不重复计数实际执行。同一技术测试可给多AC提供PARTIAL证据，但完整AC需全部必需TC/断言、前置/步骤及有效FULL证据。空必需TC不自动全通过；没有当前批准AC的分母显示N/A，而非100%。不要求每个Unit手工维护全链，可用现有代码元数据/现有CI生成关联，语义仍由QA/Reviewer核验。
-
-Run按[报告契约](test-reporting.md)分别固定实现、需求和测试定义版本及策略/环境；旧结果可读但不进入当前覆盖分子，不能跨不兼容环境凑齐通过。设计覆盖、自动化覆盖、执行覆盖、局部通过、完整AC验证分别展示，不推导Owner验收。原有稳定ID、Schema、批准状态、历史结果不得为接入本契约自动改名。
+不要求每个Unit人工填完整链。先关联当前切片关键AC与真实风险；缺关联只表示该处证据缺口，不让所有历史项目自动失败。大量派生关系可供检索，不以边数衡量收益。适用细节见[工程标准](../standards/engineering/README.md#追溯与交付报告)。

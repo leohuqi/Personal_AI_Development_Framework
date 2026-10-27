@@ -1,54 +1,64 @@
-# 工程测试与交付质量
+# 工程方法：应用到项目，按成果评价
 
-把当前批准的行为变成可验证实现，并让人从一处找到用例、真实结果和缺口。工程方法增强原有设计、QA、Review和交付，不新增 Engineering Gate、角色或批准轮次；测试工具由项目选择。
+PADF维护角色职责、方法和交付约定。项目选择并维护自己的测试工具、代码、CI与报告；已有能力优先复用。升级方法规范不默认开发配套程序、通用执行器、跨语言示例或专用CI，也不默认执行参考项目的业务测试。
 
-## 什么时候做什么
+## 先分清本次任务
 
-- PA在High Level Specs/Catalog明确稳定目标、规则、AC及重要正常/异常/权限场景；QA在需求形成时参与Functional Scenarios，当前切片准备实施时才细化TC。不预写全部未来用例。
-- SA在新系统或测试技术架构变化时确定[测试架构](../../contracts/testing-architecture.md)；既有批准方案按版本复用。MA结合SA/已确认UI细化实施级行为、可测试边界、Unit/Integration设计和必要真实依赖，不改变两阶段规格责任。
-- Coder依据批准行为采用下述TDD/调试/完成核验；QA独立检查断言、核心任务、异常、权限、恢复、mock边界与真实环境；Reviewer独立评价测试和证据质量。Master协调策略就绪、缺口/版本和统一交付入口，不能替Owner接受成果。
-
-## 深度按风险裁剪
-
-| 工程深度 | 当前需要的工作 |
+| 任务目标 | 适当交付与验证 |
 | --- | --- |
-| Lite | 复用测试策略，针对性测试和必要回归，准确结果；不重复架构讨论或全量RTM |
-| Standard | 当前AC、必要Functional TC、适用TDD或有理由的等效策略、CI与可追溯报告 |
-| Full | 按关键数据/安全/跨模块风险增加真实依赖、并发/恢复及独立验证；故障注入或mutation仅在有价值时采用 |
+| 框架方法升级 | 调整Skills/约定/模板；用已有项目记录评估方法作用、问题与成本，检查文档一致性及必要的只读行为场景 |
+| 项目工程能力建设 | 在该项目明确授权范围内配置测试/报告/CI，验证这些能力；不自动扩大到业务功能开发或完整产品验收 |
+| 产品功能或缺陷 | 按批准规格实施，执行适用测试、QA和Review；沿用现有授权与门禁 |
 
-它与Architecture Profile独立，不免除已触发的安全、Review、测试或授权。当前行为和风险已有足够证据后停止；不为每个微循环创建commit、报告或Agent。
+同一任务可明确包含多类，但须按最新Owner范围分别说明，不能因参考资料包含代码、CI命令或其他项目批准就自动进入下一类。现有仓库检查若自动触发，如实报告其有限作用，不把它当方法效果证据；不为文档完整而另建测试工程。确需新增工具时由本项目的具体需要另行确定范围，不作为采用规范的默认前提。
 
-## 分类与测试架构
+## 角色怎样协作
 
-`types`表达functional或non-functional；`layer`表达unit/component/api/integration/e2e。Functional检验用户目标/规则/可观察结果，可以跨多个层级；Unit不天然等于非功能测试，API也不天然等于E2E。Non-functional按性能、安全、可靠性和恢复等实际风险设计。项目可扩展类型但须定义，层级边界由SA说明。
+- **PA**在高层规格/Catalog给出稳定目标、规则、AC及重要正常/异常/权限场景，与QA早期分析Functional Scenarios。当前切片才细化TC，不预写全部未来用例。
+- **SA**在新系统或测试技术架构变化时确定[测试策略](../../contracts/testing-architecture.md)；已有批准方案固定引用，只补影响部分。
+- **MA**结合SA和已确认UI细化实施级行为、模块可测试性、Unit/Integration边界、真实依赖和关键不变量；仍遵循两阶段Feature Specs。
+- **Coder**执行适用TDD、根因调试和完成前核验，提供可复核证据；历史过程没有记录就说明未知。
+- **QA**独立设计当前必要TC，检查断言、异常/权限/恢复、mock与真实环境边界；**Reviewer**评价测试和证据是否充分，不能由自检替代。
+- **Master**收件、解决跨角色缺口，给Owner一个清楚入口；根据任务类型和风险裁剪，不把所有规范任务都送进完整应用开发流程。
 
-测试框架、数据隔离、mock与真实依赖、隐私、本地命令、CI、coverage、报告和TDD范围见[十项测试策略](../../contracts/testing-architecture.md)及[模板](../../templates/testing-architecture.md)。Python可用pytest，Java可用JUnit Jupiter/Mockito/Spring Test/JaCoCo，TypeScript可用Vitest/Playwright，.NET可用xUnit/NUnit/MSTest/Coverlet，Go可用testing/go test；仅为参考，均非框架固定依赖。真实PostgreSQL不变量不能用SQLite证明；本轮合成SQLite/文件测试也不证明生产数据库或Spring行为。
+## 项目测试策略与分类
+
+项目自主选栈：pytest、JUnit/Spring Test、Vitest/Playwright、.NET或Go原生工具均可；这些只是选择方向，不是PADF固定依赖。SA依据现有技术、真实风险和维护成本选择，不为每项Feature重新选型。
+
+Functional是测试类型，关注用户目标、规则和可观察结果，可存在于Unit、Component/API、Integration或E2E层级。Non-functional按安全、性能、可靠性和恢复风险设计。Unit通过不自动证明用户旅程或完整Feature完成。
+
+Mock/fixture服务于隔离，不能冒充真实数据库/网络/设备行为。项目用什么数据库，就用相应真实隔离依赖证明其专属事务/权限不变量；受控重建不等于真实进程崩溃，测试环境不等于生产。
 
 ## TDD、调试与完成核验
 
-选择性适配固定来源的[Superpowers Lite](../../integrations/superpowers-lite.md)，不安装全套规划/调度/审查流程。
+采用[Superpowers三方法的轻量适配](../../integrations/superpowers-lite.md)，不安装其额外规划、调度或重复审查流程。
 
-1. 对适用的新行为/缺陷，从批准AC或模块不变量选一个可测行为，先写必要测试，实际运行并确认RED来自预期行为缺失。导入、语法和环境错误不算行为RED。
-2. 最小实现使GREEN，必要重构后再跑相关测试。保留代表性命令、退出码、时间和测试/实现版本证据；测试后补不冒称TDD，历史实现不补造RED。
-3. 调试先复现，区分观察与根因假设，验证根因，最小修复，补针对性回归并检查影响。局部问题由Coder处理；复杂接口/事务/并发找MA，系统性问题找SA，产品取舍回PA/Owner。不因每次失败额外启动专家。
-4. 声明完成前核验当前代码/提交、适用测试、必要静态检查/构建、回归、失败/未测、报告和真实CI。已写测试、预计通过、历史CI均不代替本次结果。Coder核验不替独立QA/Review。
+1. 适用的新行为/缺陷从批准AC或模块规则开始：先写必要测试，实际观察预期行为缺失RED，再最小GREEN，必要重构及相关回归。导入/环境错误不算行为RED。
+2. 保留代表性命令、结果和准确版本即可；不为每个微循环新建commit、报告或Agent。后补测试不能称历史TDD，不删除历史实现重造过程。
+3. 调试先复现，区分现象与根因假设，验证根因，最小修复并做回归。局部问题Coder处理；复杂模块/系统问题才分别升级MA/SA，重大产品决定交PA/Owner。
+4. 完成前读当前源码、适用测试/构建/静态检查、回归、失败/未测和真实CI。预计通过、测试已写或历史CI不能代替本次证据；Coder核验不替QA/Review/Owner。
 
-断言使用独立、具体的预期值与实际行为；避免复制实现算法作为expected、只检查mock调用或一律拒绝却漏合法路径。QA按风险加入跨主体、失败恢复或真实依赖反例，保留缺陷复现与同一探针修复后结果。
+## 追溯与交付报告
 
-## 追溯与报告
+依[追溯约定](../../contracts/requirements-traceability.md)引用已有Feature、需求/AC、设计、实现、TC/测试函数和Run/结果，支持多对多。保留原ID，不复制需求正文、步骤或结果，不要求每个Unit人工填完整RTM。只有局部技术证据时保留PARTIAL，候选需求不由关联或测试通过升级为批准。
 
-复用稳定ID，以引用连接`Feature → Requirement/AC → Design → Implementation → TC/Test Function → Run/Result`，支持多对多；不复制规格正文、步骤或结果，不要求每个Unit人工填完整RTM。详见[追溯契约](../../contracts/requirements-traceability.md)。候选需求保留candidate，未经确认不能报告为批准、实现完成或验收。
+依[报告约定](../../contracts/test-reporting.md)区分PASS、FAIL、SKIPPED、BLOCKED、NOT_RUN，保留准确被测/测试定义/需求版本、环境及原件。Line/branch代码覆盖与AC覆盖分别解释；关系边数不能充当执行次数。测试已设计、自动化、执行、通过、AC充分验证与Owner验收是不同事实。
 
-依[报告契约](../../contracts/test-reporting.md)保留PASS、FAIL、SKIPPED、BLOCKED、NOT_RUN，精确实现/需求/测试定义版本、环境、runner、命令退出码、CI、日志和原始报告。代码line/branch分母与AC分母分开；多对多边不增加测试数，PARTIAL不等于完整AC验证。测试已设计、已自动化、已执行、已通过、AC充分验证、Owner验收是六种不同事实。
+优先用已有项目报告和一页结论：当前已知什么、还缺什么、影响哪个决定、原件在哪里。机器字段和完整关系按需展开；生成的大表不是Owner默认阅读材料。测试失败尽量保留诊断，上传成功不能掩盖runner失败。
 
-统一入口应直达原TC、Unit源码、逐项结果、失败详情、Coverage及CI。项目已有HTML/Allure/JUnit/coverage门户优先复用，不部署统一报告服务。[薄报告CLI](../../scripts/engineering-report.mjs)只消费数据，不执行项目测试，不认证批准/执行真实性。结构有效/退出0不等于验收；全部Unit PASS而Functional NOT_RUN必须保留缺口。测试失败也尽可能上传诊断，但不能吞掉runner退出码。
+## 怎样判断方法有效
 
-## 现有项目迁移
+从已有真实任务取少量案例，回答“原先什么问题、采用什么方法、观察到什么改变、还有什么证据缺口”。区分资料规则、历史记录和本次亲自执行；没有效益数据就不承诺提效。
 
-1. 项目先批准并固定PADF版本，不由本框架PR自动升级。复用其已有批准测试策略、Catalog/AC/TC、CI和报告，明确当前变更与未采集信息。
-2. 按需做已有格式到通用契约的薄映射；schema是新数据格式的声明，不追溯强制旧项目全量填表。历史缺新字段记未采集/NOT_VERIFIED，不据此自动FAIL，也不补造历史TDD。
-3. 当前切片补必要Functional场景/版本引用，选代表性运行验证多对多和PARTIAL/FULL，不维护第二份正文/手工结果。不同环境/策略的结果不能拼接完整通过。
-4. 在原Design/QA/Review/Owner流程中审查内容；新工具不接入旧G-01为全局强制门禁。若以后改变机器门禁，先提交范围、兼容回归、迁移/回退及必要批准。
-5. 回退可停止新适配器/引用，保留原始证据及旧流程。报告不得重写批准/审计历史。
+- 策略文档是否实际影响测试边界/选择？追溯能否回答“这个AC用什么证明、缺什么”？
+- 调试/Review记录是否发现并修正具体缺陷？TDD证据属于业务功能还是配套工具？不能跨对象推广。
+- Owner是否更容易作决定？若未做实际阅读反馈，报告入口存在只能证明可访问性，不能证明可用性提升。
+- 维护是否重复？复用既有来源、自动派生视图，只保留当前决定所需关系；不以文件、测试、角色或连线数量当收益。
 
-本轮[设计与实际验证入口](../../docs/enhancements/engineering/DESIGN.md)及[合成多栈示例](../../examples/engineering/README.md)与PKMS只读兼容评估分开；.NET、Go和完整Spring未在本轮执行。正式版本、验收、合并与发布另由Owner决定。
+本轮[PKMS应用评估](../../docs/enhancements/engineering/README.md)给出结论和逐项调整；不运行PKMS测试，也不升级其项目锁。
+
+## 裁剪与接入
+
+Lite复用策略、做针对性验证；Standard明确当前AC、必要Functional TC、适用TDD或有理由的等效方式和报告；Full按实际风险增加真实依赖、并发/恢复或故障验证。工程深度与Architecture Profile独立，不免除已触发的安全、授权、QA或Review。
+
+旧项目在批准采用版本后，从当前切片映射已有资料；缺历史字段记未采集/NOT_VERIFIED，不自动FAIL，不补造TDD。无需换报告平台、迁移全部测试或重新审批未变内容。原Design Gate、G-01及Owner权限保持；未来如确需改变机器门禁，另按原政策说明兼容、迁移和回退。
