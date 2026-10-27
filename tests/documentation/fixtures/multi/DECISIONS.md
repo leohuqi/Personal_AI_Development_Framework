@@ -6,7 +6,7 @@
 
 ## history
 
-DEC-101：合成历史批准，仅适用设计v1、创建工作项的既定范围。当时的PENDING文字由该记录关闭。它不批准当前v2或EX-F102，也不表示所有未来功能已验收。
+DEC-101：[合成历史批准](history/approval-v1.md)仅适用[设计v1原文](history/design-v1.md)、创建工作项的既定范围。当时的PENDING文字由该记录关闭。它不批准当前v2或EX-F102，也不表示所有未来功能已验收。
 
 ## no-pending
 

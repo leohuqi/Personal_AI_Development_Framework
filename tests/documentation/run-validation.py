@@ -11,7 +11,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 MULTI = HERE / 'fixtures/multi'
-INPUTS = ['README.md', 'CATALOG.json', 'RELATIONS.json', 'SPEC.md', 'QUALITY.md', 'DECISIONS.md', 'sample.py']
+INPUTS = ['README.md', 'CATALOG.json', 'RELATIONS.json', 'SPEC.md', 'QUALITY.md', 'DECISIONS.md', 'sample.py', 'history/design-v1.md', 'history/approval-v1.md']
 
 
 def load(root):
@@ -52,7 +52,9 @@ def render(root, adapter_revision='fixture-adapter-v1'):
         ref = f"[{f['name']}]({f['ref']})" if f['ref'] else f['name'] + '（资料缺口：尚无设计、实现或测试）'
         out.append(f"- {f['id']} / {f['milestone']} / {f['state']}：{ref}")
     out += ['', '## 双向关联', '', '| 起点 | 关系 | 终点 |', '| --- | --- | --- |']
-    out += [f'| {a} | {rel} | {b} |' for a, rel, b in graph['edges']]
+    refs = {n['id']: n['ref'] for n in graph['nodes']}
+    out += [f'| [{a}]({refs[a]}) | {rel} | [{b}]({refs[b]}) |' for a, rel, b in graph['edges']]
+    out += ['', '实现关系中partly-implemented-by仅表示标题校验的局部依据；其余业务实现缺口见原规格。']
     out += ['', '## 状态来源', '', '以下全为合成快照，非实时核验；观察时间不同于生成时间。']
     out += [f"- {i}: {o['state']} / 观察于 {o['observed_at']} / {o['source']}" for i, o in graph['observations'].items()]
     out += ['', '## 来源校验元数据', '', f'仅用于演练的适配器版本：{adapter_revision}']
@@ -107,7 +109,9 @@ class DocumentationExercises(unittest.TestCase):
             self.assertIn(feature['id'], rendered)
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
-            for p in INPUTS: (root / p).write_bytes((MULTI / p).read_bytes())
+            for p in INPUTS:
+                (root / p).parent.mkdir(parents=True, exist_ok=True)
+                (root / p).write_bytes((MULTI / p).read_bytes())
             catalog.append(dict(id='EX-F104', name='归档工作项', milestone='Iteration C', state='未来', ref=None))
             graph['nodes'].append(dict(id='EX-F104', kind='Feature', ref='CATALOG.json'))
             (root / 'CATALOG.json').write_text(json.dumps(catalog))
@@ -139,7 +143,9 @@ class DocumentationExercises(unittest.TestCase):
         check_saved(MULTI)
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
-            for p in INPUTS + ['INDEX.md']: (root / p).write_bytes((MULTI / p).read_bytes())
+            for p in INPUTS + ['INDEX.md']:
+                (root / p).parent.mkdir(parents=True, exist_ok=True)
+                (root / p).write_bytes((MULTI / p).read_bytes())
             saved = (root / 'INDEX.md').read_bytes()
             for source in INPUTS:
                 original = (root / source).read_bytes()
@@ -162,17 +168,39 @@ class DocumentationExercises(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             git(root, 'init', '-q'); git(root, 'config', 'user.name', 'Synthetic Reader'); git(root, 'config', 'user.email', 'reader@example.invalid')
-            for p in INPUTS: (root / p).write_bytes((MULTI / p).read_bytes())
+            for p in INPUTS:
+                (root / p).parent.mkdir(parents=True, exist_ok=True)
+                (root / p).write_bytes((MULTI / p).read_bytes())
+            (root / 'SPEC.md').write_bytes((root / 'history/design-v1.md').read_bytes())
             git(root, 'add', '.'); git(root, 'commit', '-qm', 'synthetic source v1'); old = git(root, 'rev-parse', 'HEAD').decode().strip()
             approval = {'revision': old, 'scope': 'synthetic design v1 only'}
-            (root / 'SPEC.md').write_text((root / 'SPEC.md').read_text() + '\n新增当前设计说明。\n')
+            approved_body = git(root, 'show', f'{old}:SPEC.md')
+            self.assertIn('合成设计 v1', approved_body.decode())
+            self.assertNotIn('候选设计v2', approved_body.decode())
+            (root / 'SPEC.md').write_text((MULTI / 'SPEC.md').read_text() + '\n新增当前设计说明。\n')
             with self.assertRaisesRegex(ValueError, 'differs'): verify_revision(root, 'SPEC.md', old)
             git(root, 'add', 'SPEC.md'); git(root, 'commit', '-qm', 'synthetic source v2'); new = git(root, 'rev-parse', 'HEAD').decode().strip()
             verify_revision(root, 'SPEC.md', new)
             self.assertEqual(approval['revision'], old)
-            self.assertIn(b'create-item', git(root, 'show', f'{old}:SPEC.md'))
+            self.assertEqual(approved_body, git(root, 'show', f'{old}:SPEC.md'))
+            self.assertIn('候选设计v2', git(root, 'show', f'{new}:SPEC.md').decode())
             with self.assertRaises(subprocess.CalledProcessError): verify_revision(root, 'SPEC.md', '0' * 40)
             with self.assertRaises(subprocess.CalledProcessError): verify_revision(MULTI, 'SPEC.md', old)
+
+    def test_reference_endpoints_and_evidence_scope(self):
+        _, graph = load(MULTI)
+        output = render(MULTI)
+        for node in graph['nodes']:
+            if any(node['id'] in (a, b) for a, _, b in graph['edges']):
+                self.assertIn(f"[{node['id']}]({node['ref']})", output)
+        implementation = next(n for n in graph['nodes'] if n['id'] == 'IMPL-101')
+        self.assertIn('局部', implementation['evidence_scope'])
+        self.assertIn(['EX-F101', 'partly-implemented-by', 'IMPL-101'], graph['edges'])
+        self.assertNotIn(['EX-F101', 'implemented-by', 'IMPL-101'], graph['edges'])
+        self.assertIn('业务实现仍缺', (MULTI / 'SPEC.md').read_text())
+        historical = (MULTI / 'history/design-v1.md').read_bytes()
+        self.assertIn(hashlib.sha256(historical).hexdigest(), (MULTI / 'history/approval-v1.md').read_text())
+        self.assertIn('不批准当前v2', (MULTI / 'history/approval-v1.md').read_text())
 
     def test_local_observation_does_not_imply_global_freshness(self):
         _, graph = load(MULTI); original = graph['observations']

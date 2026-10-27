@@ -53,7 +53,7 @@
     {
       "id": "DEC-101",
       "kind": "Approval",
-      "ref": "DECISIONS.md#history"
+      "ref": "history/approval-v1.md"
     },
     {
       "id": "DEC-102",
@@ -63,7 +63,8 @@
     {
       "id": "IMPL-101",
       "kind": "Implementation",
-      "ref": "sample.py"
+      "ref": "sample.py",
+      "evidence_scope": "标题输入的局部辅助校验；不证明创建、存储或分配已实现"
     }
   ],
   "edges": [
@@ -119,7 +120,7 @@
     ],
     [
       "EX-F101",
-      "implemented-by",
+      "partly-implemented-by",
       "IMPL-101"
     ]
   ],
