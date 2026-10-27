@@ -1,6 +1,6 @@
 # 按语境使用术语
 
-本目录提供六领域的通用词表候选和按需检查方法。新增词条均为 **PROPOSED**，待 Owner 对本次 PADF 候选明确接受；它们不继承 PKMS 项目词条的 ACCEPTED 状态，也不改写现有 PADF 契约效力。这里不新增 Agent 角色、执行阶段或术语审批流程。
+本目录提供六领域的通用词表候选和按需检查方法。新增词条均为 **PROPOSED**，待 Owner 对本次 PADF 候选明确接受；它们不继承任何接入项目词条的 ACCEPTED 状态，也不改写现有 PADF 契约效力。这里不新增 Agent 角色、执行阶段或术语审批流程。
 
 只读当前任务相关段落、必要上下文和对应领域词条。普通文档小改不先建立项目词表，不默认扫描整个仓库。成熟且自然的中文优先；易混淆专业词首次写“中文（English）”，通行英文和技术标识符可保留。用具体主体和动词表达动作；正确专业词解释不足时补解释，不一律换成日常词。写作原则参照 [Microsoft Style Guide](https://learn.microsoft.com/en-us/style-guide/word-choice/use-simple-words-concise-sentences)，中文为 PADF 建议，未核验正式中文译文。
 
@@ -15,7 +15,7 @@
 | Agent、模型、检索及评估 | `AI` | 当前AI能力、数据/工具权限和评估依据 |
 | Task、Handoff、Review、批准与基线 | `PADF_Governance` | 当前PADF契约及准确批准记录 |
 
-[GLOSSARY.yaml](GLOSSARY.yaml) 是词条与引用元数据的唯一数据源；可直接 `JSON.parse`，内容属于 YAML 1.2 的 JSON 子集，不新增运行依赖。人阅读版本只能由它生成，勿独立编辑定义。[共享 Skill](../../.agents/skills/terminology-governance/SKILL.md)用于实际检查；[Before/After](BEFORE-AFTER.md)解释少量真实短句及正反例；[SOURCES](SOURCES.md)说明本轮访问范围与限制。
+[GLOSSARY.yaml](GLOSSARY.yaml) 是词条与引用元数据的唯一数据源；可直接 `JSON.parse`，内容属于 YAML 1.2 的 JSON 子集，不新增运行依赖。人阅读版本只能由它生成，勿独立编辑定义。[共享 Skill](../../.agents/skills/terminology-governance/SKILL.md)用于实际检查；[Before/After](BEFORE-AFTER.md)解释合成正反例；[SOURCES](SOURCES.md)说明本轮访问范围与限制。
 
 ## 范围按需选择
 
@@ -29,7 +29,7 @@ Full 不自动扩展任务授权。发现范围外问题只指出具体来源/�
 
 ## 项目覆盖和冲突
 
-项目可以在自身现有词表或规格中定义专属概念与局部显示词，记录 `term_kind: project`、领域/上下文、定义、维护责任、准确来源/版本和真实状态；按需引用 PADF `term_id`，不修改 PADF 原词条或伪造通用批准。例如项目可明确自己的“知识片段”是何种证据实体；PADF 通用词条不要求其采用任何项目的字段或生命周期。
+项目可以在自身现有词表或规格中定义专属概念与局部显示词，记录 `term_kind: project`、领域/上下文、定义、维护责任、准确来源/版本和真实状态；按需引用 PADF `term_id`，不修改 PADF 原词条或伪造通用批准。例如项目可明确自己的“工单”包含哪些业务状态；PADF 通用词条不要求其采用任何项目的字段或生命周期。
 
 先辨别是否同一个概念。不同领域同名可并存，用限定词及上下文区分；同一概念的显示词按已确认项目词义使用。项目词义可细化业务含义，但不能覆盖已批准产品规则、技术不变量、API/Schema/类/数据库字段、稳定ID、SHA、枚举或机器契约字段，也不能覆盖 PADF 的权限和审批语义。
 

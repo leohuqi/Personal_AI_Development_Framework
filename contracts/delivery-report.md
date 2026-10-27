@@ -52,7 +52,7 @@ Do not infer that a visual prototype, simulated stage evaluation or designer sel
 - Commands run; tool versions:
 - GitHub Actions run URL and **observed** conclusion:
 - Desktop/mobile Playwright screenshot/report URLs if applicable:
-- Isolated PostgreSQL migration/real-data proof if applicable:
+- Project database migration/integration evidence in an isolated environment, if applicable:
 - Explicitly skipped/unavailable checks and reasons:
 - Defects with reproducible steps / assigned issues:
 

@@ -29,7 +29,7 @@ The fixture starts **separate Node processes** that communicate by a temporary o
 6. Changed approved spec blocks resume.
 7. Missing Owner approval blocks resume and new checkpoint.
 
-The temporary fixture directory is deleted at the end. No production code, PQA data, live agents, Linear or GitHub are touched. This is a **protocol behavior simulation**, not E2E.
+The temporary fixture directory is deleted at the end. No production code, application data, live agents, Linear or GitHub are touched. This is a **protocol behavior simulation**, not E2E.
 
 The suite always creates a unique child directory. Optional `PADF_CACF_STORE_DIR`
 selects an existing, non-filesystem-root **parent**, never a directory to overwrite
@@ -45,7 +45,7 @@ reconciliation and explicit event consumption/closure. These remain fixture test
 
 ## L3 — Real cross-session agent acceptance (separately authorized/manual)
 
-Use an isolated, **non-PQA** trial issue/project or designated safe test records with durable storage enabled. An owner must authorize the bounded pilot and the involved tools/permissions.
+Use an isolated, non-production trial issue/project or designated safe test records with durable storage enabled. An owner must authorize the bounded pilot and the involved tools/permissions.
 
 1. Master in session A creates the Shared Task Context with the **actual** trial issue ID, source SHA and approval. Link a Task Contract.
 2. Start Coder in a distinct session B. Coder posts `CLARIFICATION_REQUEST` in the test issue with `context_id`, `message_id`, `thread_id`, a receiver and a permalink.
@@ -61,9 +61,9 @@ Use an isolated, **non-PQA** trial issue/project or designated safe test records
 
 Record trial issue URL, source commit, separate session identifiers (without conversation transcript), message permalink/ID pair, response/ref, checkpoint and handoff URLs, exact QA/reviewed head SHA, PASS/FAIL/BLOCKED/NOT RUN for each step and reproducible blockers. A message drafted but not durably written is NOT_PERSISTED. A posted message that no agent has read does **not** count as delivered. Only successful fresh-session retrieval counts as acceptance evidence.
 
-## L4 — PQA pilot (deferred)
+## L4 — Optional project adoption pilot
 
-After L1–L3 evidence and explicit project authorization, run a small low-risk PQA task in a separate branch. **Do not modify PQA Draft PR #7** as part of this validation.
+After applicable framework checks and explicit project authorization, validate a bounded low-risk task in the adopting project. Select its branch and records there; no named project or pre-existing PR is required.
 
 ## Acceptance gates
 - L1/L2 PASS is prerequisite to consider framework merge **subject to repository governance**.

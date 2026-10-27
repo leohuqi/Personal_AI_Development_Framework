@@ -37,7 +37,7 @@ node tests/v0.3/run-tests.mjs
 
 ## Manual independent specialist-agent pilot — NOT RUN until separately executed
 
-Use an isolated **non-PQA** sample Feature and approved sandbox with a stable issue, immutable Feature ID and sample data; no production data.
+Use an isolated synthetic sample Feature and approved sandbox with a stable issue, immutable Feature ID and sample data; no production data.
 1. Master classifies L/XL or S/M scope/risks, chooses `architecture_scope` and builds minimal Stage Dependency manifest; record excluded/included roles and why. Select an approved existing architecture or first establish one by Solution Architect.
 2. For a new expense APP, **Solution Architect** resolves pinned diagram-design and produces concrete technical stack/framework decision, high-level APP code/module topology, system boundaries and matching diagrams. For an expense-import module in an existing APP, **Module Architect** reads an approved system baseline and produces actual package/class/interface code design, workflows and a matching module diagram — without changing the system stack. Test BOTH with SYSTEM -> MODULE and approved baseline version handoff.
 3. UI Designer reads the project's approved UI Profile, produces concept, high fidelity or working interactive prototype by justified level, checks responsive and interaction states. Record real paths and revisions; no invented Figma assets.
@@ -49,7 +49,7 @@ Use an isolated **non-PQA** sample Feature and approved sandbox with a stable is
 Record external plugin revision, actual artifact permalinks, screenshot/browser validation, Coder authorization, risk decisions, reviewed SHA, PASS/FAIL/BLOCKED/NOT RUN and session boundary evidence. Missing external tool, project design profile or interactive prototype means BLOCKED/NOT RUN, not PASS.
 
 ## Rollout policy
-当前正式版本为 v0.3.4，参见[版本说明](../../docs/releases/v0.3.4.md)。V0.3 的原始有边界设计试点已完成 Owner 验收，历史证据保持原样；各项目采用新版本仍须明确批准并固定 tag/SHA。历史发布标签不可变，框架升级不自动改变 PQA 的接入或授权状态。
+正式版本以[发布记录](https://github.com/leohuqi/Personal_AI_Development_Framework/releases)为准。V0.3 的原始有边界设计试点已完成 Owner 验收，历史证据保持原样；各项目采用新版本仍须明确批准并固定 tag/SHA。历史发布标签不可变，框架升级不自动改变接入项目的采用版本或授权状态。
 
 
 ## New V0.3 Master orchestration + Skill quality tests
