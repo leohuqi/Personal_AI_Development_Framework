@@ -20,3 +20,4 @@ assert.equal(validateTestRun({...run,tests:[{...run.tests[0],status:'DONE'}]}).v
 assert.ok(!renderEngineeringHtml({...summary,gaps:['<script>alert(1)</script>']}).includes('<script>'));
 const parentReq=structuredClone(trace);parentReq.requirements.push({...parentReq.requirements[0],id:'REQ-PARENT',kind:'requirement'});assert.equal(summarizeEngineering(parentReq,[run],versions).denominator,1);assert.equal(summarizeEngineering(parentReq,[run],versions).requirementScope.length,1);
 console.log('Engineering behavior assertions PASS');
+await import('./run-multi-function-tests.mjs');
