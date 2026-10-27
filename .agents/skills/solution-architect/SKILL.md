@@ -13,6 +13,8 @@ description: 基于高层产品规格初评技术可行性与逐 Feature 实现�
 
 ## 技术初评
 
+新系统或测试技术架构变化时，在系统主方案中确定[Testing Architecture & Quality Strategy](../../../contracts/testing-architecture.md)：框架/版本、类型与层级边界、mock/fixture/真实依赖隔离、数据隐私、本地命令、CI、line/branch分母、报告与TDD范围。由项目技术栈和维护成本决定工具，不统一指定pytest；已有批准策略固定版本复用，仅补本次变化，不为每项Feature重做。工程深度按[共享标准](../../../standards/engineering/README.md)裁剪，与Architecture Profile独立，必要授权与Review不变。
+
 在同一 Catalog 或关联表，逐受影响 Feature 标注 Very High / High / Medium / Low / Very Low，写具体理由、依赖、重要假设/置信及优先验证项，见[系统方案契约](../../../contracts/solution-architecture.md)。未知就给条件初评，不伪装确定估算；复杂度不是业务优先级、风险等级或工期。Master 综合价值、关系、容量和风险安排 milestone/iteration；本角色提供技术建议，不承诺排期。
 
 ## 用最小充分方案解释系统如何工作

@@ -45,6 +45,10 @@ description: 依据已批准的功能规格、架构和 UI 约束，实现一个
 
 ## 完成门禁
 
+按批准[测试策略](../../../contracts/testing-architecture.md)与[Superpowers Lite](../../../integrations/superpowers-lite.md)执行适用TDD：批准行为→必要测试→实际预期行为缺失RED→最小GREEN→必要重构/回归；导入/环境错误不是行为RED，测试后补或历史实现不得冒称TDD。保留代表性命令/退出码/时间及测试和实现版本，不逐微步强制commit/报告。局部调试先复现、区分事实与假设、验证根因并做最小修复和回归；复杂模块/系统问题按需升级，不每次失败重启专家。
+
+声明完成前核验当前代码/提交、适用测试、必要静态检查/构建、影响回归、失败和未测、原始报告及真实CI。按[报告契约](../../../contracts/test-reporting.md)固定实现/需求/测试代码版本与环境，链接TC/函数/逐项结果、line/branch与AC覆盖；已写测试、预计通过、历史CI不代本次证据，Unit绿不代表Functional完成。Coder核验不替独立QA/Review/Owner验收，工程深度和停止规则见[共享标准](../../../standards/engineering/README.md)。
+
 这是开发交接门禁，不是 Owner Done。
 
 - 批准范围已实现，并可追溯至每项验收标准。

@@ -43,6 +43,8 @@ description: 在已批准的系统架构基线内，结合产品高层规格及�
 
 ## 完成与审查
 
+依据批准[测试架构](../../../contracts/testing-architecture.md)细化当前模块的可测试边界、Unit/Component/API/Integration职责、必要真实依赖、数据隔离、正常/异常/权限/恢复不变量及独立expected；不要把mock当真实集成。把当前实施级AC/规则与必要TC/测试函数按[追溯契约](../../../contracts/requirements-traceability.md)引用关联，不要求每个Unit人工填完整RTM，不复制PA正文或QA步骤。产品规则缺口回PA/Master，系统测试栈冲突回SA；仅复杂模块调试才升级本角色，见[工程标准](../../../standards/engineering/README.md)。
+
 COMPLETED 模块设计须包含 system_baseline_ref、代码结构、公共接口、范围、测试、适用必需图表与真实证据。不能把缺失基线宣称 APPROVED，不能批准新框架或编码。
 
 即使未路由 Solution Architect，L/XL 与风险触发的 S/M 仍需精确源版本的独立 DESIGN 审查；之后由 Master 检查依赖和门禁，并单独取得有边界的 Owner 编码授权。

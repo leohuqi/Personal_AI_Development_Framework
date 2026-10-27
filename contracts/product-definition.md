@@ -12,6 +12,8 @@ Schema：`padf.product-definition/v1`。Product Analyst 负责产品级 High Lev
 
 ## 第二阶段：实施级 Feature Specs（Module Designer）
 
+PA为目标、业务规则、AC和重要正常/异常/权限场景保留稳定ID/来源版本，与QA在需求形成时分析Functional Scenarios；当前Feature准备实施时再细化必要TC，不预写全部未来用例。Module继续承担实施级具体化。按[追溯契约](requirements-traceability.md)关联已有Catalog/AC/TC/设计/实现/结果，不复制正文；候选Discovery对象与批准对象分别记录，不能由关联或测试PASS推导批准/验收。
+
 以已就绪的产品级规格、精确批准的系统方案，以及适用的已确认概念图/关键流程为输入，具体化前置条件、数据/输入输出、正常/异常流程、规则与状态转换、用户修改/撤销/确认/拒绝、接口/数据结构、并发/事务/迁移、UX 事件/反馈、依赖与可执行验收。详见[实施级模板](../templates/feature-spec.md)和[模块设计](module-design.md)。
 
 实施细化可以把产品意图转成具体行为，不得暗改价值、权限、范围或业务规则。新产品取舍由 Master 回 PA，重大变化交 Owner；技术冲突回 SA，体验冲突回 UI。详细 Spec 与模块结构可同文维护，不能让 Coder 在编码时补关键设计。

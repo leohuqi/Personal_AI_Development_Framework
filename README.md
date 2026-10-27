@@ -1,6 +1,6 @@
 # 个人 AI 开发框架（PADF）
 
-**当前版本：v0.3.6（V0.3 系列）。** 本版新增可裁剪架构设计、通用术语治理和 Agent 接续规则，保留原设计门禁、授权及项目独立采用边界。参见[v0.3.6 版本说明](docs/releases/v0.3.6.md)与[GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.6)。
+**正式版本以 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases) 为准。** [v0.3.7 版本说明](docs/releases/v0.3.7.md)结合PKMS已有实践完善工程方法，并明确当前任务与参考项目的边界；正式发布记录见[v0.3.7 Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.7)。
 
 [完整更新历史](CHANGELOG.md)汇总各正式版本及 V0.1 历史基线；发布后同步维护，详细证据保留在各版本说明和 Release 中。
 
@@ -138,6 +138,8 @@ node tests/v0.3/run-concept-mockup-tests.mjs
 - [PQA 接入示例](examples/pqa/ADOPTION.md)
 
 ## 验证
+
+v0.3.7的[工程方法规范](standards/engineering/README.md)依据[PKMS已有应用效果评估](docs/enhancements/engineering/README.md)调整七角色、测试策略、渐进追溯及报告，补充任务/参考项目隔离。项目复用自身工具，方法收益与证据不足分别说明；采用版本由各项目决定。
 
 克隆仓库后可运行无需第三方依赖的结构和回归检查：
 

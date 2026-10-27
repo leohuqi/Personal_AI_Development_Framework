@@ -23,6 +23,8 @@ description: 定义产品问题、用户场景和高层功能行为，开展面�
 
 ## 产品术语一致性
 
+在High Level Specs/Catalog稳定业务目标、规则、AC及重要正常/异常/权限场景的ID和来源版本，与QA早期分析Functional Scenarios，当前切片准备实施时再细化用例。按[追溯契约](../../../contracts/requirements-traceability.md)引用已有对象，不预写全部未来TC，不复制需求正文；Discovery候选保留candidate，不能因被关联或测试通过升级为批准/实施完成/验收。实施级细节仍交Module，见[工程标准](../../../standards/engineering/README.md)。
+
 在High Level Specs、Catalog及产品交接中，按需使用[术语治理共享方法](../terminology-governance/SKILL.md)，只加载产品/需求领域及当前任务涉及的词条和上下文；普通局部更新用Lite即可。业务词义以已确认产品输入为准，首次易混淆词补中文/英文对应，Catalog、规格和界面标签保持同一概念一致。词表不替代客户意图，不能为套用架构用词改变产品行为、权限或验收；含义变化回Master/Owner确认。项目专属词按[项目覆盖与冲突规则](../../../standards/terminology/README.md#项目覆盖和冲突)记录，不改技术标识符或既有批准状态。
 
 ## 不过度设计与人工沟通

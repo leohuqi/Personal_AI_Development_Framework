@@ -54,6 +54,8 @@ Reviewer 不能替代 Master 或 Owner：不能标记 DESIGN_READY、授权编�
 
 ## 成果质量审查
 
+按[工程标准](../../../standards/engineering/README.md)独立检查测试架构是否适合项目、Functional/层级划分、断言是否验证真实规则与合法/异常/权限/恢复路径、mock是否隐藏集成风险。核对代表性RED确为行为失败、最小修复/根因回归及当前完成核验证据；不要求历史补造TDD或逐微步报告。以[追溯](../../../contracts/requirements-traceability.md)和[报告契约](../../../contracts/test-reporting.md)检查三版本/环境、FULL/PARTIAL、候选需求、唯一计数与原始证据；Unit绿/代码Coverage不等于AC充分，Owner验收独立。薄弱测试和不充分修复须给实际场景/影响；Reviewer独立判断不代QA实际执行。
+
 除授权与形式门禁，实际阅读主方案和详细 Feature Specs：需求是否覆盖、产品任务是否有用、系统接口/数据/失败流程是否连贯、UX 与模块/实现是否一致、复杂度是否必要。只有 Catalog、目录、图表或可点击热点而缺行为/系统方案时提出具体发现，识别“合规但不好用、不完整”。按[角色成果标准](../../../contracts/role-deliverables.md)检查；Master 可要求返工，但不能取代本角色独立判断和 Owner 批准。
 
 ## 架构与术语检查（融入本轮 Review）

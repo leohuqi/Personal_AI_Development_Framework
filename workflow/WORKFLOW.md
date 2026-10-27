@@ -35,6 +35,8 @@ Imported historical Done may signify implementation archival only. Preserve the 
 Select small vertical, independently usable MVP slices; plan current 1–2 Cycles in detail, further Roadmap coarsely. Track dependencies, UI/API/data/test work and integration criteria. At Cycle end review integrated behavior, test coverage, remaining technical debt and feedback-based Bug/CR. Default separate integration review every **3–5 merged feature PRs (no later than fifth)** and at significant milestones / pre-release; project policy may be stricter.
 
 ## Failure and security gates
+
+项目实施时工程方法融入上述Feature Loop，见[共享标准](../standards/engineering/README.md)；不新增Engineering Gate/独立审批，不重复未变测试架构。框架方法评估则读取已有案例并检查规范一致性，不默认走应用设计/编码/测试全流程；现有自动CI只证明其所检查范围，不能代方法效果。参考项目不是执行授权，旧项目增量接入、不追溯判失败；安全与Owner权限保持。
 Stop on ambiguous specs, missing prerequisites, unapproved architecture changes or blocked dependencies; never invent product behavior. A green CI or self-review does not constitute independent approval. Reviewer must use fresh context for significant changes; re-review altered head. Missing evidence is NOT RUN, not PASS. Destructive migrations, production deployments, credential changes and deletion always require separate explicit authorization. No unbounded automatic retry or hidden background monitoring.
 
 ## V0.2 Context & Agent Communication gates
