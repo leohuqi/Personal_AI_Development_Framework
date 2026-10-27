@@ -72,3 +72,5 @@
 ## G-01：保留操作主动门禁
 
 MERGE_PR、START_CODING、RELEASE、DEPLOY_PRODUCTION、OWNER_ACCEPTANCE、MARK_ISSUE_DONE前必须按[Action Preflight](workflow/action-preflight.md)核对实时证据、运行只读评估、执行前再次复核并使用原子HEAD匹配。Owner请求不是隐式Review/CI/QA/Acceptance豁免。真实独立执行与准确Base/HEAD缺失仍阻断；Merge不能自动Done，事后核对异常并在适用授权内补偿。v0.3.2有界分派权限不变。
+
+文档导航与追溯按[通用文档标准](standards/documentation/README.md)增量维护；实际项目资料不进入正式上下文，Shared Skill按需调用，不新增角色或默认门户依赖。

@@ -57,3 +57,5 @@ Master 依据真实来源核对 Design Gate、CI/QA/Review、必要批准与依�
 先读取实时Task Contract/批准范围、准确Base/HEAD、当前CI/适用QA、不同实现及Master上下文的真实Reviewer Execution和精确Diff/Handoff、条件/发现/依赖及目标规则，再运行evaluateActionPreflight。BLOCKED先补证/返工，NEEDS_OWNER_DECISION仅请求所缺决定；READY不是执行令牌。缺独立Review返回INDEPENDENT_REVIEW_NOT_RUN，在已批准范围优先真实分派，缺能力给HUMAN_RELAY明确路径，不造Execution或拿Dispatch/自审/CI替代。
 
 实际调用前重读必要来源、批准有效性与HEAD，revalidateActionPreflight必须保持READY；范围/HEAD/Review/新发现/批准漂移重核受影响部分。合并必须原子匹配HEAD，不能无条件工具调用；执行后读实际回执并用reconcileActionEvidence分别报告八类状态，识别无Owner验收Done并留审计/有授权补偿，不自动修改越界项目状态。P0/P1与强制门禁不能经普通例外绕过，例外只限明确项目可选规则及Owner有界接受。当前没有服务器拦截器/后台监听，不声称平台规则已修改。
+
+文档影响：协调本次交付受影响的文档入口、Feature关系和外部状态观测；按需使用共享整理能力，复核PR/CI/Review/决定后只更新对应条目。按[共用文档标准](../../../standards/documentation/README.md)仅处理当前变更；不新增独立维护阶段。

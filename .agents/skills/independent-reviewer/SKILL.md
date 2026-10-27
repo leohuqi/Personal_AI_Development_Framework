@@ -83,3 +83,5 @@ Reviewer 不能替代 Master 或 Owner：不能标记 DESIGN_READY、授权编�
 ## 当前 UI 原型输入
 
 按[UI 契约](../../../contracts/ui-design.md)消费概念图确认和前端交互 Mockup，不要求 Figma。核对准确概念/确认、批准前端栈、原型授权、实际交互与绑定当前 Mockup/Profile/Skill 的[Impeccable报告](../../../integrations/impeccable.md)；发现、降级/未测如实报告。Impeccable审查不替代独立Review或实现QA，Mockup不证明真实后端/联测；概念确认不授予业务编码/生产权限。
+
+文档影响：核对文档与需求/代码/测试/批准的一致性、过期导航、失效版本和重复正文，专项检查是否混入实际项目专属内容。按[共用文档标准](../../../standards/documentation/README.md)仅处理当前变更；不新增独立维护阶段。

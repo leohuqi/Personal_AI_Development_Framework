@@ -56,3 +56,5 @@ COMPLETED 模块设计须包含 system_baseline_ref、代码结构、公共接�
 按[共用架构方法](../../../standards/architecture/README.md)读取目标模块入口、完整契约、精确批准系统基线和相关公共接口/已确认UI；只有当前问题需要才下钻Context/Component/Runtime/Data。不复制整套系统设计，不用Overview摘要代替完整接口或恢复约束。按[模块模板](../../../templates/module-design.md)说明职责/非职责、提供与消费接口、数据归属/权限不变量、事务/CAS/幂等、错误恢复与测试，按当前模块渐进深化。
 
 Profile只建议文档深度；即使Lite且scope module，仍保留原必需组件图/精确基线/Review和Owner权限。既有有效图仅依原门禁的版本与证据要求复用。规范迁移时逐事实标明唯一当前位置和仍需消费的固定旧来源；术语与系统一致且不改ID/Schema/状态/权限或恢复含义。PROPOSED系统可供明确授权的文档试验草案参考，不能因此完成正式Module Design或放行Coder。
+
+文档影响：维护受影响模块/接口及实施级规格的准确来源，与Feature关系保持一致，未变设计引用原批准版本。按[共用文档标准](../../../standards/documentation/README.md)仅处理当前变更；不新增独立维护阶段。

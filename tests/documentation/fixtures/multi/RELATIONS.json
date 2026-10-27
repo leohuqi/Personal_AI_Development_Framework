@@ -1,0 +1,139 @@
+{
+  "nodes": [
+    {
+      "id": "EX-F101",
+      "kind": "Feature",
+      "ref": "CATALOG.json"
+    },
+    {
+      "id": "EX-F102",
+      "kind": "Feature",
+      "ref": "CATALOG.json"
+    },
+    {
+      "id": "EX-F103",
+      "kind": "Feature",
+      "ref": "CATALOG.json"
+    },
+    {
+      "id": "REQ-101",
+      "kind": "Requirement",
+      "ref": "SPEC.md#create-item"
+    },
+    {
+      "id": "REQ-102",
+      "kind": "Requirement",
+      "ref": "SPEC.md#assign-owner"
+    },
+    {
+      "id": "AC-101",
+      "kind": "AC",
+      "ref": "SPEC.md#create-item"
+    },
+    {
+      "id": "AC-102",
+      "kind": "AC",
+      "ref": "SPEC.md#assign-owner"
+    },
+    {
+      "id": "DESIGN-101",
+      "kind": "Design",
+      "ref": "SPEC.md#design"
+    },
+    {
+      "id": "TC-101",
+      "kind": "TestCase",
+      "ref": "QUALITY.md#cases"
+    },
+    {
+      "id": "RUN-101",
+      "kind": "TestRun",
+      "ref": "QUALITY.md#run"
+    },
+    {
+      "id": "DEC-101",
+      "kind": "Approval",
+      "ref": "DECISIONS.md#history"
+    },
+    {
+      "id": "DEC-102",
+      "kind": "Decision",
+      "ref": "DECISIONS.md#current"
+    },
+    {
+      "id": "IMPL-101",
+      "kind": "Implementation",
+      "ref": "sample.py"
+    }
+  ],
+  "edges": [
+    [
+      "REQ-101",
+      "scopes",
+      "EX-F101"
+    ],
+    [
+      "REQ-102",
+      "scopes",
+      "EX-F101"
+    ],
+    [
+      "REQ-102",
+      "scopes",
+      "EX-F102"
+    ],
+    [
+      "AC-101",
+      "accepts",
+      "EX-F101"
+    ],
+    [
+      "AC-102",
+      "accepts",
+      "EX-F102"
+    ],
+    [
+      "EX-F101",
+      "designed-by",
+      "DESIGN-101"
+    ],
+    [
+      "EX-F102",
+      "designed-by",
+      "DESIGN-101"
+    ],
+    [
+      "AC-101",
+      "partly-tested-by",
+      "TC-101"
+    ],
+    [
+      "AC-102",
+      "partly-tested-by",
+      "TC-101"
+    ],
+    [
+      "TC-101",
+      "has-run",
+      "RUN-101"
+    ],
+    [
+      "EX-F101",
+      "implemented-by",
+      "IMPL-101"
+    ]
+  ],
+  "observations": {
+    "EX-F101": {
+      "state": "进行中",
+      "observed_at": "2026-01-01T10:00:00Z",
+      "source": "synthetic://tracker/work-1"
+    },
+    "EX-F102": {
+      "state": "待实施",
+      "observed_at": "2026-01-01T09:00:00Z",
+      "source": "synthetic://tracker/work-2"
+    }
+  },
+  "limitations": "All data synthetic; relationships do not approve designs or compute AC acceptance."
+}

@@ -182,3 +182,7 @@ node tests/v0.3/verify-expense-pilot.mjs
 操作前预检覆盖合并、编码、发布、生产部署、Owner验收和Issue Done；Owner请求不隐式豁免必要门禁。见[设计与现状分析](docs/governance/G-01-design.md)、[契约](contracts/action-preflight.md)、[操作手册/平台限制](workflow/action-preflight.md)及[验收模板](templates/action-preflight.md)。
 
 只读评估器不认证远端权限、不执行操作或提供服务器强制拦截；本地验证：`node tests/v0.3/run-preflight-tests.mjs`。G-01 已经独立 PR、Review 和 Owner 验收，与角色成果优化一并纳入 v0.3.3；后续 Release 仍须单独授权。
+
+## 项目文档与追溯（待审）
+
+[通用文档标准](standards/documentation/README.md)提供按阅读目的组织的统一入口、Catalog导航、引用式RTM、版本/快照及随交付维护方法。默认Lite，已有README与项目工具即可接入，不强制Linear或门户服务；固定采用版本，从当前切片开始。需要整理时由Master按需调用[project-documentation-curator](.agents/skills/project-documentation-curator/SKILL.md)共享能力，不新增角色或前置阶段。兼容范围与验证见[合成演练](tests/documentation/README.md)。
