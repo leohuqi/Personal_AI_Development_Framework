@@ -10,6 +10,7 @@
 
 | 版本 | 发布日期（北京时间） | 主题 | 发布提交 |
 | --- | --- | --- | --- |
+| [v0.3.9](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.9) | 2026-10-28 | 主动需求发现、渐进澄清与产品基线 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.9) |
 | [v0.3.8](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.8) | 2026-10-27 | 项目独立性、通用文档入口与引用式追溯 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.8) |
 | [v0.3.7](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.7) | 2026-10-27 | 工程方法与跨项目上下文边界 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.7) |
 | [v0.3.6](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.6) | 2026-10-26 | 可裁剪架构、术语治理与 Agent 接续 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.6) |
@@ -22,6 +23,15 @@
 | [v0.2.0](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.2.0) | 2026-10-13 | 共享上下文与 Agent 通信（CACF） | [c2caac0a](https://github.com/leohuqi/Personal_AI_Development_Framework/commit/c2caac0a6eac220f65667b7fe7cd5e6943dbe807) |
 
 V0.1 是发布前的历史基线，见文末；仓库没有独立的 V0.1 tag 或 Release，不将其补记为正式发布。
+
+## v0.3.9 — 2026-10-28
+
+- **需求发现与澄清：**在既有 PA Skill 和产品定义中增强主动识别角色、流程、规则、数据及异常缺口；每轮聚焦少量高影响问题，给选项、推荐和影响，复用已答内容。
+- **需求定义与基线：**可裁剪地关联业务目标、能力、流程/用例、Feature 与 AC；来源类别与决定状态分开，确认绑定实际来源及适用版本，未确认的重要规则不能进入有效基线。保留 PA 高层需求与 Module 实施细化分工。
+- **交接与追溯：**Master协调准确切片、依赖和未决影响；Feature、Work Package、Agent Run分别解释，保留最小Requirement Finding接口，不实现自动任务拆解器或持续需求管理平台。
+- **验证与修正：**真实Agent执行十类合成场景，额外发现S03跨轮ID/语义漂移；原失败保留，方法/Skill各补一句后S03定向重测六项通过。其余九例未重跑，同QA非盲重测，不能据此宣称真实项目改善或方法普遍有效。
+
+[版本说明与接入/回退](docs/releases/v0.3.9.md)；来源为[PR #33](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/33)、[精确源独立复审](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/33#pullrequestreview-5678468871)及[能力评估与实际证据入口](docs/upgrades/requirements-discovery-v0.1.md)。不新增角色、审批、运行时、需求库或专用CI；发布不会自动升级接入项目。
 
 ## v0.3.8 — 2026-10-27
 
