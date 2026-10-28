@@ -1,0 +1,173 @@
+{
+  "synthetic": true,
+  "notice": "所有参与者、项目、来源引用与确认均为合成测试材料，不证明真实Owner批准或外部调研；不得访问应用项目或实际编码。每个场景独立，turns按顺序处理。",
+  "cases": [
+    {
+      "id": "S01",
+      "turns": [
+        {
+          "id": "s01-u1",
+          "speaker": "Owner",
+          "text": "想给社区活动室做个预约工具，现在微信群里约时间经常乱，别弄得太复杂。请先帮我弄清该做什么。"
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "turns": [
+        {
+          "id": "s02-u1",
+          "speaker": "Owner",
+          "text": "我们做设备借用管理。有人建议普通成员也能借贵重设备，有人说必须管理员审批。我还没决定。请整理一个产品建议给我。"
+        }
+      ]
+    },
+    {
+      "id": "S03",
+      "turns": [
+        {
+          "id": "s03-u1",
+          "speaker": "Owner",
+          "text": "预约工具仅面向已登记成员，本期只支持一个活动室，最多提前7天预约。现在先分析并问我关键问题。"
+        },
+        {
+          "id": "s03-u2",
+          "speaker": "Owner",
+          "text": "选你建议的先到先得，不需要管理员审核；每个预约占一小时。冲突就拒绝后提交的预约。"
+        },
+        {
+          "id": "s03-u3",
+          "speaker": "Owner",
+          "text": "取消不收费，开始前可以取消；已开始的预约由管理员结束。提醒和缴费都不做。请形成当前高层需求和下游交接。"
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "turns": [
+        {
+          "id": "s04-u1",
+          "speaker": "Owner",
+          "text": "活动室预约本期只解决登记与冲突拒绝，暂时不考虑其他功能。"
+        },
+        {
+          "id": "s04-r1",
+          "speaker": "Research note",
+          "text": "这是合成的对标资料，不是实际外部研究：某同类产品提供自动候补与短信提醒。分析者建议本产品也加上。"
+        },
+        {
+          "id": "s04-u2",
+          "speaker": "Owner",
+          "text": "请更新需求和 Catalog，让我看当前已经确认的范围。"
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "turns": [
+        {
+          "id": "s05-u1",
+          "speaker": "Owner",
+          "text": "设备借用：已登记成员提交设备和归还时间，管理员批准后发放，归还时登记归还。先做这几个功能。请分析还缺什么。"
+        }
+      ]
+    },
+    {
+      "id": "S06",
+      "turns": [
+        {
+          "id": "s06-u1",
+          "speaker": "Owner",
+          "text": "我们要导出活动室预约清单给管理员。我写的验收是“导出体验好、速度快、数据正确”。请完善这个需求，我还没定具体时间要求和导出字段。"
+        }
+      ]
+    },
+    {
+      "id": "S07",
+      "artifacts": [
+        {
+          "ref": "spec@draft-1",
+          "current": false,
+          "text": "历史草案：所有成员可查看其他人的手机号。无批准记录。"
+        },
+        {
+          "ref": "spec@baseline-2",
+          "current": true,
+          "text": "当前有效规格：成员只能查看自己的手机号，管理员可查看所有预约联系人。",
+          "confirmation": {
+            "actor": "Owner",
+            "ref": "s07-owner-baseline2",
+            "applies_to": "spec@baseline-2",
+            "quote": "确认 baseline-2 的联系人权限规则，替代 draft-1。"
+          }
+        }
+      ],
+      "turns": [
+        {
+          "id": "s07-u1",
+          "speaker": "Owner",
+          "text": "请复用当前联系人权限形成交接；旧目录还有一份草案，不要重新设计权限。"
+        }
+      ]
+    },
+    {
+      "id": "S08",
+      "turns": [
+        {
+          "id": "s08-u1",
+          "speaker": "Owner",
+          "text": "设备借用逾期是否收费我尚未决定。有人建议按天收费。先把其他明确的需求整理好，收费规则需要我以后确认。"
+        },
+        {
+          "id": "s08-r1",
+          "speaker": "Agent suggestion from previous draft",
+          "text": "建议按天收取逾期费，每天10元。草稿备注写“沟通完成”，没有 Owner 确认原文或适用版本。"
+        }
+      ]
+    },
+    {
+      "id": "S09",
+      "artifacts": [
+        {
+          "ref": "feature@baseline-1",
+          "text": "活动室预约登记，成员填日期/时段；已有占用则拒绝且不新增；取消仅限开始前本人；管理员可结束已开始预约。",
+          "confirmation": {
+            "actor": "Owner",
+            "ref": "s09-owner-1",
+            "applies_to": "feature@baseline-1",
+            "quote": "确认 baseline-1 的业务范围、规则和验收。设计尚未开始；这不是编码授权。"
+          }
+        }
+      ],
+      "turns": [
+        {
+          "id": "s09-u1",
+          "speaker": "Owner",
+          "text": "请交接后续设计和候选工作安排。需求已经确认了。"
+        }
+      ]
+    },
+    {
+      "id": "S10",
+      "artifacts": [
+        {
+          "ref": "feature@baseline-1",
+          "text": "预约列表列出本人的预约，默认按开始时间升序。",
+          "confirmation": {
+            "actor": "Owner",
+            "ref": "s10-owner-1",
+            "applies_to": "feature@baseline-1",
+            "quote": "确认 baseline-1，本次只把显示顺序改成降序，其他行为不变。"
+          }
+        }
+      ],
+      "turns": [
+        {
+          "id": "s10-u1",
+          "speaker": "Owner",
+          "text": "这是三个人使用的小工具，只改排序；按我刚才确认的改动写清可观察验收并交接，不要额外弄需求文档套件。"
+        }
+      ]
+    }
+  ]
+}

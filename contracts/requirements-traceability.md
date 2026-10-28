@@ -2,6 +2,8 @@
 
 用已有稳定ID与引用连接`Feature → Requirement/AC → Design → Implementation → TC/Test Function → Run/Result`，支持多对多。可使用项目已有Markdown、JSON、测试元数据或报告工具，不新增PADF机器Schema、专用软件或全量填表要求。
 
+需要发现/定义需求时，按[产品定义](product-definition.md#需求发现与定义requirements-discovery--definition-v01)向上关联 Business Goal、必要 Capability/Process/Use Case；小项目可合并层次。来源类别与决定状态留在原需求/规则记录，CONFIRMED可反查真实确认及适用版本；RTM只引用，不能因出现关联就把候选纳入已确认基线。Feature定义产品内容，Work Package/Agent Run仅关联交付工作及执行，不用其完成计数替代需求验证。
+
 - 需求、步骤、测试代码和运行结果各保留原权威来源；RTM记录关联及必要覆盖说明，不复制正文和手工PASS。
 - QA从当前AC找必要TC/证据，也能从测试函数反查规则/不变量；同一TC可由多个函数共同证明，但不能将不相容版本/环境的片段随意拼为完整结果。
 - 单个技术测试可支持多个AC的PARTIAL证据。只有当前AC全部必要步骤/断言有充分证据才算完整验证；空用例、关系数量或大量Unit PASS不能推导完成。

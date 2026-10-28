@@ -39,6 +39,8 @@
 
 字段可引用既有精确来源，不要求逐项新建文件。省略的是不适用材料和重复填写，不是已触发的强制证据。新设计仍须适用 Design Gate 和独立 DESIGN Review；设计、编码、合并、发布、验收、Done、生产是不同动作。
 
+需求发现任务可从获授权目标与待澄清材料开始，不要求先有已确认规格；按[产品契约](product-definition.md#feature-baseline-的完成条件与交接)在原输入中注明本次切片的有效基线/确认版本、规则/AC、依赖及未决影响。Master据此提出候选Work Packages，不重写需求，也不从需求确认推导编码授权；具体Agent运行仍按原Dispatch记录。
+
 ## 已批准范围内继续执行
 
 Master 复用有效 authorization_ref / owner_approval_ref、精确 Task Contract、context_id、仓库、环境和有限 scope_items；启动、接续、返工或重试不重复请求同一批准。必要决策、允许角色/动作和范围不能由接收方自行删减或扩大。

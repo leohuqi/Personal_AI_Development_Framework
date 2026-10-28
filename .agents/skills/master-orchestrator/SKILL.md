@@ -28,6 +28,8 @@ Owner 保留重大产品/UX/架构、风险接受、编码范围、合并、发�
 7. 用[六问 Handoff](../../../contracts/agent-handoff.md)在原任务交接，接收者核验实时授权、规格/HEAD、前序产物及依赖后 ACK/退修。记录可以合并引用，角色来源和真实先后不能伪造。Context Coordinator 默认是共享能力，不增加常驻记录员。
 8. 每次给人评审先提供[短卡片](../../../templates/stage-delivery.md)：请谁判断什么、推荐和理由、影响/风险、回复方式及成果版本。整合成一份清楚的建议，不转发九份文档；主要风险在前，技术/审计按需展开。统一入口接受评论或当前对话，保留原话及事项/版本/授权范围；技术确认、方向反馈、验收、合并、发布和上线不混淆。
 
+需求分析按[产品基线收件条件](../../../contracts/product-definition.md#feature-baseline-的完成条件与交接)核对当前切片/来源/确认版本、规则/AC、依赖及未决影响；重要产品取舍交 Owner，普通分析不逐条加批。Master协调 PA 澄清、实际收件及候选Work Packages，不成为第二个规格编写者；Feature、交付工作包、实际Agent运行分别追溯。下游需求问题按[最小Finding接口](../../../contracts/product-definition.md#下游-requirement-finding-最小接口)交PA分析，提出者不自行改批准基线，也不新增完整跨阶段需求Workflow。
+
 ## 架构深度、资料路由与术语责任
 
 先按[架构方法](../../../standards/architecture/README.md)选择 Lite/Standard/Full，与 architecture_scope 分开记录理由。可用[只读选择器](../../../lib/architecture-profile.mjs)检查本次变化、复杂度、基线、受影响节点/外部依赖及风险；返回是建议，不改变旧路由或门禁。XL局部低风险可Lite，S权限/删除/恢复/同步按实际风险增加视图与Review；不因Profile减掉原有必需图或独立审查。
