@@ -5,7 +5,7 @@
 | 角色 | 主成果 | 收件时检查 |
 | --- | --- | --- |
 | Master | 问题/目标、事实和缺口、工作顺序与角色、整合方案、取舍建议及 Owner 待决事项；milestone/iteration与进度、两阶段Handoff；一个阶段阅读入口 | 是否推进整体目标，识别内容不足和跨角色矛盾；Owner 能否清楚判断；不能只提交路由/执行流水 |
-| Product Analyst | 产品定义、用户/场景、研究结论、核心旅程、High Level Specs与Feature Catalog、产品优先级/切片建议和业务验收 | 是否解决真实任务，行为是否明确，能否作为 SA/UI/模块设计输入；Catalog不能代替高层产品意图；实施级详细规格由Module细化 |
+| Product Analyst | 主动需求发现/渐进澄清、产品定义、High Level Specs/Catalog、产品优先级/切片与业务AC，来源/决定及当前基线版本 | 按[产品契约](product-definition.md#feature-baseline-的完成条件与交接)检查缺口/矛盾/异常、可测性及实际确认；当前切片足以供SA/UI/Module，实施级细化仍由Module负责 |
 | Solution Architect | 技术初评、Catalog五级实现复杂度及理由/风险，连贯系统主方案，职责依赖、公共接口与数据归属、端到端正常/失败流程、技术比较、部署安全可靠性和演进 | 能否解释整个系统如何工作，方案具体、一致、可实现；目录、图与 ADR 支持正文而非替代正文 |
 | UI/UX Designer | 任务研究/流程、概念图与Owner或获授权成员确认，随后按批准前端栈/原型授权制作交互Mockup，当前Impeccable审查及Profile/状态 | 任务完成、信息理解、组件一致性和可访问性；不强制Figma，不按页面/热点数量验收 |
 | Module Architect | 依据PA/SA/已确认UI细化实施级Feature Specs，内部职责/结构、接口与数据结构、算法、事务/并发、物理存储/迁移、异常及测试设计 | 能否据此实施并遵循系统基线；不等待PA提供实施设计；具体化意图，新的产品取舍回PA/Owner |

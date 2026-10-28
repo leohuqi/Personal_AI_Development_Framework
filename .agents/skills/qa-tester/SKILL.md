@@ -34,6 +34,8 @@ description: 为功能或 PR 设计验收场景并独立验证，按项目技术
 4. 区分原型视觉与生产行为，不得把模拟数据作为正式集成证明。
 5. 需求不可测时，先向 Master 或负责需求细化的角色报告缺口，再判断是否 Ready。
 
+对当前规则/AC核验条件、动作和可观察结果，不能自行补成已确认产品规则；缺口提交[Requirement Finding](../../../contracts/product-definition.md#下游-requirement-finding-最小接口)。采用准确基线/确认版本设计TC，研究建议或历史草案可作为待验证输入，不能代替当前正式验收条件。
+
 优先用核心用户任务和关键异常设计验收，不以页面数量或用例数量证明体验；报告真实环境、范围和未测项。需求含糊交对应 Product Analyst/Module Designer，由 Master 协调，不自行补写。按[角色成果标准](../../../contracts/role-deliverables.md)判断证据是否足以支持结论。
 
 ## 实现后的验证

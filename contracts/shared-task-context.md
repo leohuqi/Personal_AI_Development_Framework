@@ -30,6 +30,8 @@ A Shared Task Context (STC) is the **task-centered index of authoritative refere
 5. On disagreement with GitHub or Linear, stop relying on the stale snapshot and reconcile the sources; do not last-write-wins over a signed-off spec.
 6. A receiving agent must validate its authorization and pending messages before any work.
 
+需求发现阶段的STC可索引获授权目标、候选及已答问题，分别链接当前有效基线与草案，不能把所有材料合成“已批准规格”。交接时固定当前切片的规则/AC、确认记录及适用版本，保留未决影响；来源与需求决定状态按[产品契约](product-definition.md#来源与决定状态分开)解释，STC观测标签不代替确认。恢复先核验当前版本/替代关系，发现冲突停止受影响工作，不靠缓存混用旧草案。
+
 ## Minimal illustrative index (not a live project record)
 
     schema_version: padf.shared-task-context/v1

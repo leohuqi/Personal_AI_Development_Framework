@@ -17,6 +17,8 @@
 5. Escalate unresolved contradiction, missing contract or significant scope change to Master/Owner.
 6. Keep exact feature and source SHA references in Task Contract/Delivery Report; never include secrets or real customer/account data in prompts or repos.
 
+需求发现/澄清可加载获授权业务目标、原始输入、已有回答与相关候选，不以“尚无批准规格”阻断分析。按[产品契约](../contracts/product-definition.md#来源与决定状态分开)区分来源/决定、当前基线/草案与适用版本；当前有效确认优先于历史草案，不能按文件最新日期自动选版本。下游设计/实施只接收该阶段所需的有效切片；未决影响、过期确认和授权缺口保持可见，不由研究或STC标签补成批准。
+
 GitHub versioned documentation and code are authoritative for technical scope; Linear is authoritative for current execution state, dependencies, priority and Cycle.
 
 ## V0.2 shared context and resume
