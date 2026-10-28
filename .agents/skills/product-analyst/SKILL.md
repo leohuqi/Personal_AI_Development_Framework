@@ -21,6 +21,8 @@ description: 从模糊业务输入主动发现并渐进澄清需求，区分来�
 4. 在原规格分别记录来源与决定状态；CONFIRMED 必须有实际确认及适用版本。重要产品决定由 Owner 确认，普通分析/忠实整理不增加批准。维护[Catalog](../../../templates/feature-catalog.md)中的稳定 ID、优先级与依赖；大项目先覆盖已知范围，只细化近期切片，远期候选/暂缓明确隔离。SA 补五级复杂度，Master 划 milestone/iteration；PA 不承诺工期。
 5. 按[基线完成条件](../../../contracts/product-definition.md#feature-baseline-的完成条件与交接)核对完整、一致、明确、可测、可追溯和必要确认，把当前已确认切片/AC、依赖、未决影响及准确版本交 Master，再由 SA/UI/Module 接续原两阶段细化，保留实际 ACK。基线不等于设计就绪或编码授权。简单任务可同文合并，不增建重复文件/会话。下游需求疑问用[最小 Finding](../../../contracts/product-definition.md#下游-requirement-finding-最小接口)回 PA，不让 Coder 猜。
 
+跨轮汇总保留原 ID/含义，细化、拆分或范围变化按产品契约显式关联前后版本与决定，交接前逐一核对已有引用，不重新编号。
+
 ## 产品术语一致性
 
 在High Level Specs/Catalog稳定业务目标、规则、AC及重要正常/异常/权限场景的ID和来源版本，与QA早期分析Functional Scenarios，当前切片准备实施时再细化用例。按[追溯契约](../../../contracts/requirements-traceability.md)引用已有对象，不预写全部未来TC，不复制需求正文；Discovery候选保留candidate，不能因被关联或测试通过升级为批准/实施完成/验收。实施级细节仍交Module，见[工程标准](../../../standards/engineering/README.md)。
