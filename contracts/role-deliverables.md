@@ -38,4 +38,4 @@
 
 ## 文档与导航的增量责任
 
-按[文档标准](../standards/documentation/README.md#每次交付只维护受影响内容)收件：PA维护需求/Catalog，SA/MA维护设计契约，Coder说明文档影响，QA固定TC/Run与被测版本，Master协调入口与局部状态观测，Reviewer检查一致性/过期/项目隔离。沿用原角色，不新增文档管理员。
+按[文档标准](../standards/documentation/README.md#每次交付只维护受影响内容)每次主动维护并收件：PA维护需求/Catalog，SA/MA维护设计契约，Coder说明文档影响，QA固定TC/Run与被测版本，Master协调入口与局部状态观测，Reviewer检查一致性/过期/项目隔离。Master另核文档中心可访问、受影响生成/版本检查结果及未同步项；缺失不得标已同步。沿用原角色，不新增文档管理员。

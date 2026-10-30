@@ -89,4 +89,4 @@ Never represent CI green as independent business acceptance; never imply a merge
 
 ## 适用的文档影响
 
-按[文档标准](../standards/documentation/README.md)引用本次更新的权威正文、Feature关联/导航及版本检查；无影响简述理由。外部状态带来源和实际观察时间，派生页另记生成时间。只报受影响部分，不复制完整库或重复QA结果。
+按[文档标准](../standards/documentation/README.md#每次交付只维护受影响内容)在本交付给出文档中心入口、本次更新的原来源/Feature关联与导航、实际检查/生成结果及未同步项；无影响说明依据，未执行/失败不能写已同步。外部状态带真实观察时间，派生页另记生成时间。只报受影响部分，不复制完整库或重复QA结果。

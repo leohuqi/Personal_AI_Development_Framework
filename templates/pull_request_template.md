@@ -22,7 +22,7 @@
 - [ ] Project database integration / migration checks where applicable
 - [ ] Playwright desktop/mobile where applicable
 - [ ] Independent review requested for important/high-risk PR
-- [ ] Affected docs/Feature Catalog updated or N/A
+- [ ] 受影响原文档/Catalog与文档中心已同步；附入口、实际检查/生成结果及未同步项，无影响说明依据
 - Test evidence and NOT RUN checks:
 - UI screenshots/video when relevant:
 - Known P0–P3 issues or residual risks:
