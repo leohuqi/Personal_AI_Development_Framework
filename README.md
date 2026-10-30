@@ -1,6 +1,6 @@
 # 个人 AI 开发框架（PADF）
 
-**正式版本以 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases) 为准。** [v0.3.9 版本说明](docs/releases/v0.3.9.md)介绍主动需求发现、渐进澄清与版本化产品基线；正式发布记录见[v0.3.9 Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.9)。
+**正式版本以 [GitHub Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases) 为准。** [v0.4.0 版本说明](docs/releases/v0.4.0.md)介绍项目文档中心、每次交付主动维护和生成式中心自动检查要求；正式发布记录见[v0.4.0 Release](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.4.0)。
 
 [完整更新历史](CHANGELOG.md)汇总各正式版本及 V0.1 历史基线；发布后同步维护，详细证据保留在各版本说明和 Release 中。
 
