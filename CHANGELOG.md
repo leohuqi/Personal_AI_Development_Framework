@@ -4,14 +4,13 @@
 
 ## 未发布
 
-候选增强：项目文档中心作为接入/交付要求；每次交付主动维护受影响原来源与中心，生成式入口落实相关PR/主分支检查并先验旧输出再生成。沿用原角色/工具，小任务可用README；尚未合并发布，不自动升级接入项目。
-
 待发布事项以未合并PR和Owner评审入口为准；正式版本以GitHub Release为准。
 
 ## 版本总览
 
 | 版本 | 发布日期（北京时间） | 主题 | 发布提交 |
 | --- | --- | --- | --- |
+| [v0.4.0](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.4.0) | 2026-10-30 | 项目文档中心与随交付主动同步 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.4.0) |
 | [v0.3.9](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.9) | 2026-10-28 | 主动需求发现、渐进澄清与产品基线 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.9) |
 | [v0.3.8](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.8) | 2026-10-27 | 项目独立性、通用文档入口与引用式追溯 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.8) |
 | [v0.3.7](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.3.7) | 2026-10-27 | 工程方法与跨项目上下文边界 | [不可变发布标签](https://github.com/leohuqi/Personal_AI_Development_Framework/tree/v0.3.7) |
@@ -25,6 +24,15 @@
 | [v0.2.0](https://github.com/leohuqi/Personal_AI_Development_Framework/releases/tag/v0.2.0) | 2026-10-13 | 共享上下文与 Agent 通信（CACF） | [c2caac0a](https://github.com/leohuqi/Personal_AI_Development_Framework/commit/c2caac0a6eac220f65667b7fe7cd5e6943dbe807) |
 
 V0.1 是发布前的历史基线，见文末；仓库没有独立的 V0.1 tag 或 Release，不将其补记为正式发布。
+
+## v0.4.0 — 2026-10-30
+
+- **文档中心成为交付要求：**项目README链接唯一可读中心，多功能项目按用途浏览/定位，简单任务可用README本身；已有中心复用。接入时落实负责人、原来源、实际命令、CI与访问方式，不因采用Skill就声称已经生成门户。
+- **每次交付主动维护：**负责Agent检查影响、更新原来源/准确引用及受影响中心，执行实际检查/生成并报告入口、结果和未同步项；无影响说明依据。Master收件核对，不等Owner逐次提醒，不每次重建全库。
+- **生成式中心自动化：**接入项目配置相关PR/主分支检查，覆盖实际展示输入及生成器/模板；先检查已提交输出/来源版本，再隔离生成比较。缺配置或失败不能标已同步，CI不替代语义审查或自动提交修复。
+- **验证范围：**独立QA实际完成README局部维护、Catalog/派生入口更新、过期/旧SHA拒绝、缺配置保留旧页演练；独立Reviewer复核，结构96及既有文档9检查通过。实际接入项目自动化未实施，业务/浏览器/真人效果未测。
+
+[版本说明与接入/回退](docs/releases/v0.4.0.md)；来源为[PR #35](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/35)及[独立审查](https://github.com/leohuqi/Personal_AI_Development_Framework/pull/35#issuecomment-6515953363)。以v0.3.9为基线，不新增门户引擎、角色、服务、专用CI或审批；版本发布不自动升级接入项目。
 
 ## v0.3.9 — 2026-10-28
 
